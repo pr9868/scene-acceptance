@@ -1,0 +1,34 @@
+{
+  "disposition": "delivered",
+  "usda": "#usda 1.0\n(\n    defaultPrim = \"World\"\n    metersPerUnit = 0.01\n    upAxis = \"Z\"\n)\n\ndef Xform \"World\"\n{\n    def Xform \"Equipment\"\n    {\n        def Xform \"Inspection\"\n        {\n            def Cube \"Body\"\n            {\n                color3f[] primvars:displayColor = [(0.25, 0.48, 0.58)]\n                double size = 1\n                double3 xformOp:scale = (100, 80, 140)\n                double3 xformOp:translate = (229.99999999999997, 300, 70)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n\n        def Xform \"Outfeed\"\n        {\n            def Cube \"Body\"\n            {\n                color3f[] primvars:displayColor = [(0.5, 0.56, 0.6)]\n                double size = 1\n                double3 xformOp:scale = (200, 75, 90)\n                double3 xformOp:translate = (450, 350, 45)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n\n        def Xform \"Tray\"\n        {\n            double xformOp:rotateZ = 37\n            double3 xformOp:translate = (465, 220, 0)\n            uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:rotateZ\"]\n\n            def Cube \"Deck\"\n            {\n                color3f[] primvars:displayColor = [(0.67, 0.38, 0.18)]\n                double size = 1\n                double3 xformOp:scale = (140, 110, 16)\n                double3 xformOp:translate = (0, 0, 8)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n    }\n}\n",
+  "claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 1.339479953267555,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_center_y",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "center_y",
+      "value": 2.2,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_world_bounds_dimensions",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "dimensions",
+      "value": [1.780086239533463, 1.72104009346489, 0.16],
+      "unit": "m",
+      "basis": "computed"
+    }
+  ],
+  "unknowns": [
+    "Physical mass, friction and contact/support properties are unspecified; no physical measurements were supplied."
+  ],
+  "explanation": "Complete editable USDA content is supplied for saving; no filesystem write was performed. The revised translations place the deck world center at (4.65, 2.2, 0.08) metres while preserving its dimensions, 37-degree world rotation and color. Inspection and Outfeed are unchanged. All equipment fits within the cell and outside the front aisle. Tray minimum Y is 2.2 − 0.7 sin(37°) − 0.55 cos(37°) = 1.339479953267555 metres."
+}

@@ -1,0 +1,300 @@
+{
+  "protocol_sha256": "4146b756d5584486f130702c13dffd0b911aa450db7814eabe8b8ac48e2b0c39",
+  "cases": [
+    {
+      "id": "cube_layout",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Analytic 2 x 1 x .2 metre box at [3,2,.2].",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "quad_layout",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Analytic 2 x 1 x .2 metre box at [3,2,.2].",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "tri_layout",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Analytic 2 x 1 x .2 metre box at [3,2,.2].",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "translated_mesh",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Only translation changes; shape preserved.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "centimetre_rotated_parent",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Metre target computed independently from a 37 degree rotation.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "mixed_box_hollow_tray",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Cube and a 14-quad hollow tray in one USD stage.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "interior_shape_changed_same_bounds",
+      "expected": "REJECT",
+      "reason": "Inner cavity floor moves; outer AABB is unchanged.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "shape_shrunk",
+      "expected": "REJECT",
+      "reason": "Correct center with halved X/Y is not a translation-only edit.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "rotated_shape_same_bounds",
+      "expected": "REJECT",
+      "reason": "180-degree rotation keeps pyramid bounds but changes indexed shape.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "wrong_destination",
+      "expected": "REJECT",
+      "reason": "Geometry is valid but center misses the requested edit.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "aisle_intrusion",
+      "expected": "REJECT",
+      "reason": "A valid mesh crosses the minimum-Y half-plane.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "forged_extent",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Actual points win over a forged extent.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "unused_point",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Unreferenced vertex does not enlarge rendered-face bounds.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "index_out_of_range",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "count_sum_wrong",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "nonfinite_point",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "repeated_face_index",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "inconsistent_edge_direction",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "zero_area_face",
+      "expected": "REJECT",
+      "reason": "Distinct indices but collinear face.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "open_surface",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Open surface is valid for layout; consumer closure requirement changes acceptance.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "open_surface_closure_required",
+      "expected": "REJECT",
+      "reason": "Open surface is valid for layout; consumer closure requirement changes acceptance.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "concave_polygon",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Concave n-gon extrema suffice for bounds, not tessellation certification.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "subdivision",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Outside the declared static polygon profile.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "hole_indices",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Outside the declared static polygon profile.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "missing_points",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Required mesh data is absent.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "missing_shape_baseline",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Shape cannot be established without baseline.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "missing_requested_prim",
+      "expected": "REJECT",
+      "reason": "Requested path absent from otherwise complete scene.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "shape_without_check",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Declared shape requirement cannot silently go unchecked.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "legacy_profile_mesh",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Legacy cube contract has not gained mesh scope silently.",
+      "provenance": "coordinator-constructed fixture"
+    },
+    {
+      "id": "saved_astra_cubes",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "New explicit shape requirement against retained evidence.",
+      "provenance": "unchanged saved Astra scene under stronger contract",
+      "source_bundle": "experiments/fresh-astra-content-2026-09-19/trials/ordinary_edit-1/recovery-1/bundle"
+    },
+    {
+      "id": "converted_astra_meshes",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "New explicit shape requirement against retained evidence.",
+      "provenance": "coordinator conversion of saved Astra output",
+      "source_bundle": "experiments/fresh-astra-content-2026-09-19/trials/ordinary_edit-1/recovery-1/bundle"
+    },
+    {
+      "id": "previous_shrunk_derivative",
+      "expected": "REJECT",
+      "reason": "New explicit shape requirement against retained evidence.",
+      "provenance": "coordinator-shrunk derivative; not a model failure",
+      "source_bundle": "experiments/fresh-astra-content-2026-09-19/coverage-probes/shrunk_tray/bundle"
+    }
+  ],
+  "files": {
+    "aisle_intrusion/baseline.usda": "f722fbe0362ac4801a5e2de11d5f29914a9e452016db1a77ba9317a03ad91732",
+    "aisle_intrusion/contract.json": "20c01b545204e6ac9d2e5e52d68831be82e120afd01dace052eb03975898aa5b",
+    "aisle_intrusion/scene.usda": "f722fbe0362ac4801a5e2de11d5f29914a9e452016db1a77ba9317a03ad91732",
+    "centimetre_rotated_parent/baseline.usda": "eec2283156f25d4175c2887c4c62ff10e790736c93d08fbc23a2225d7ad8a0f5",
+    "centimetre_rotated_parent/contract.json": "3f55b575b6eca5c989afaa57946c21ad454d92dd3b63e25c38936c841a7d59d1",
+    "centimetre_rotated_parent/scene.usda": "eec2283156f25d4175c2887c4c62ff10e790736c93d08fbc23a2225d7ad8a0f5",
+    "concave_polygon/baseline.usda": "db80a83e9a691dac57af7dd7c865ee34e17fe64b975e9929049b110eb2a0f192",
+    "concave_polygon/contract.json": "61411658ba638e1171cb58a5420e7a69d3f17bad9712518c066ebd455e0d7bd9",
+    "concave_polygon/scene.usda": "db80a83e9a691dac57af7dd7c865ee34e17fe64b975e9929049b110eb2a0f192",
+    "converted_astra_meshes/baseline.usda": "4a38cc352809687448608b1c33bf1a8394af0707456b63b456ce179967628bc1",
+    "converted_astra_meshes/claims.json": "e2c5e2cc6417f4b7bb7106136e2f52427b448c1d1d0e85b2b1de7fac5878e26f",
+    "converted_astra_meshes/contract.json": "2a07fdf87d33243cd4ea4b40ccfb48265d68be9aa72a26f2d42ce759141c1e7f",
+    "converted_astra_meshes/scene.usda": "b9aefaafe8bb77f346114554fc8fd2bfe1478e58112ac0837a257a3c51c096b4",
+    "count_sum_wrong/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "count_sum_wrong/contract.json": "db1b81a5c59809f97bbbac408a93a78ca46343dfac11ae263b76fb17ea37d469",
+    "count_sum_wrong/scene.usda": "6515dbea8c019dd4e578547d87fc5e1c7ad9973b6d689d2b7c0e2b59e161422a",
+    "cube_layout/baseline.usda": "5204ca9c5cae4373159e9a4828a734877ca8104b3c6426ee9332b74992e6ff23",
+    "cube_layout/contract.json": "c587056881d39402f0c4e601e5f3181309fd9bfb836e27c5e6a5fc0cf066950f",
+    "cube_layout/scene.usda": "5204ca9c5cae4373159e9a4828a734877ca8104b3c6426ee9332b74992e6ff23",
+    "forged_extent/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "forged_extent/contract.json": "d7a0d9880ad431daf4a0b9dc2152d00f1fddbfa5312c5b55cb56865255df19bb",
+    "forged_extent/scene.usda": "d4165f43a72096c79ced7bd53950f008d0d35ce38043b060fed28626c2ce4bcc",
+    "hole_indices/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "hole_indices/contract.json": "6361de8c614f12f3a9f2ee64b38d96fb6e64052a9bd2ea564f3c4b50ea4cb84d",
+    "hole_indices/scene.usda": "337c484bb242aa5216ce753450ae07b48037c2e946dcd964c8d7c5d7966d8f5f",
+    "inconsistent_edge_direction/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "inconsistent_edge_direction/contract.json": "f6534335a60fe61416e5afde287f0eef5bdba6cece5163fb55efa92d6843e16b",
+    "inconsistent_edge_direction/scene.usda": "481cc1f6123529854d01208521928805800263982da4ee2fc0d13df315e0b707",
+    "index_out_of_range/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "index_out_of_range/contract.json": "fc1023fcbe6d9ba924f3c77dc9a353a5ccab788c081cce6b40e23dd2ee2ab318",
+    "index_out_of_range/scene.usda": "b0e603497d8d73018478f88dae45f5a70ac26401c9cf5e6b71769d48cf5c64f0",
+    "interior_shape_changed_same_bounds/baseline.usda": "b6593667c4e34a32d5ffc151f765e6fd6105e00500b8dbb47c181ed92950afb7",
+    "interior_shape_changed_same_bounds/contract.json": "97e9abb1e810e0054864f0e7816d763f1374f0a11e7587a54aabdbb39384d053",
+    "interior_shape_changed_same_bounds/scene.usda": "92c1fc51ad313c3410f6fab4e0eaa26afc12c424a8bfa160c777fc6ea7be1b81",
+    "legacy_profile_mesh/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "legacy_profile_mesh/contract.json": "79926c187eab844466a601aaf3c22703cb4bb0af1c4ee59038253b515043019a",
+    "legacy_profile_mesh/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "missing_points/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "missing_points/contract.json": "09e477a1eac1aef4a14984404e79925b73b3ffe90015fcfb7f6d3071137781b9",
+    "missing_points/scene.usda": "15200d278f8a4b4477cd8f7c75eff90adf0d54a5ce3b719ea63e0f73a3616483",
+    "missing_requested_prim/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "missing_requested_prim/contract.json": "aa1febfdd5e020aceb0adad5c5282ce4ae194a17805e2e79618e6adc01e882ef",
+    "missing_requested_prim/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "missing_shape_baseline/contract.json": "1a02e942e49b0cc615da5a722c6006274e42c29401d548ebeadae3d5993dff56",
+    "missing_shape_baseline/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "mixed_box_hollow_tray/baseline.usda": "fc6d36109d950e7315d16c890d627aa7c2e692f7f41f972edce215e59b8f0b67",
+    "mixed_box_hollow_tray/contract.json": "04936924de6fb67c1e7ef2807e7165a0d5f968de456a8b6647fd08ff074818ef",
+    "mixed_box_hollow_tray/scene.usda": "fc6d36109d950e7315d16c890d627aa7c2e692f7f41f972edce215e59b8f0b67",
+    "nonfinite_point/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "nonfinite_point/contract.json": "2b8fa158fc120a10a49966c1243a434d236e82cb21d550dc7f3031c9319345d4",
+    "nonfinite_point/scene.usda": "3e454ab257f00b70aa10b13ef0f17140fdabb8445383bdc035ce601229642d74",
+    "open_surface/baseline.usda": "656c92649cae7d8f9422d650fcbae950c17ef83121ad1c2e7c534fa30c9d8f5c",
+    "open_surface/contract.json": "344cc9013914b35d53203d613690f5ed03d02e9370452c3c8a43bfa59980c36e",
+    "open_surface/scene.usda": "656c92649cae7d8f9422d650fcbae950c17ef83121ad1c2e7c534fa30c9d8f5c",
+    "open_surface_closure_required/baseline.usda": "656c92649cae7d8f9422d650fcbae950c17ef83121ad1c2e7c534fa30c9d8f5c",
+    "open_surface_closure_required/contract.json": "ebae1d0ad3aa054acc4c87738b82535f3a1613864840aa1412135f23a66af08c",
+    "open_surface_closure_required/scene.usda": "656c92649cae7d8f9422d650fcbae950c17ef83121ad1c2e7c534fa30c9d8f5c",
+    "previous_shrunk_derivative/baseline.usda": "d459b7a0357d5ff9ad3e939957fc595b38c0afa3b69057680ee641647e43dcc8",
+    "previous_shrunk_derivative/claims.json": "e990deae81f318561a61f1f85c2f47240cc8a4713bf72058c5a6c632fd2b08b1",
+    "previous_shrunk_derivative/contract.json": "b1cee6dd227e539309080e63166f8bff7627f44cad42ca25197dcec666dc55a0",
+    "previous_shrunk_derivative/scene.usda": "08aa7765dec4d17a4961957543943043f9c1eab787e58aa41f028f5931ae34b8",
+    "quad_layout/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "quad_layout/contract.json": "ade74f8b2b4166f72a96b8683dab34ba4db1586d5e02a390f58672b0406b9c12",
+    "quad_layout/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "repeated_face_index/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "repeated_face_index/contract.json": "ebddccc5cedef31f19b20e8878cf914423eb10c384e2bfb39b55acce9123c7ea",
+    "repeated_face_index/scene.usda": "b1361fcc848ffc9722754f6c4762416be4fc5a4735aed1af02da8d4fc43fcdb1",
+    "rotated_shape_same_bounds/baseline.usda": "00510c510ce8fb203d5b2ef3e79ad39315709b0b82e3a4d6d050ea712bfb7732",
+    "rotated_shape_same_bounds/contract.json": "7622235ee5497ffbdc3676fe142a07adc1bb8e97d4c95250dd7927390407d4cb",
+    "rotated_shape_same_bounds/scene.usda": "ff17c0481f652a64d37650947134c35fd21adfaeedb5b9d3533ae42e9a3c9a81",
+    "saved_astra_cubes/baseline.usda": "d459b7a0357d5ff9ad3e939957fc595b38c0afa3b69057680ee641647e43dcc8",
+    "saved_astra_cubes/claims.json": "e7a87f485715d0f5a0ea9a13fdacf8d4aabf8b5bd8330fd1dbb08dedda797627",
+    "saved_astra_cubes/contract.json": "391fb254000f7677e6adb6e89d2065d4fa8e6166e61d320978918564d8dacfa6",
+    "saved_astra_cubes/scene.usda": "b6dad92fc57a05ea853364ba991de88ae4cf439266bebbaacfdb2271187742a3",
+    "shape_shrunk/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "shape_shrunk/contract.json": "5b046364060336e25a436a7d4dd29ee99c45acfe98a6e74df122ffff31fa5d0a",
+    "shape_shrunk/scene.usda": "d04bc98049db96ef42c666e326de7e7ee3f2a1dc0ae50c61a40cc52f4d007ba8",
+    "shape_without_check/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "shape_without_check/contract.json": "f4161ca8e2f52c714da58aa9a17cecab213c2f62d157f3bc510d799a6d692657",
+    "shape_without_check/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "subdivision/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "subdivision/contract.json": "a4719c26f4bb5a3a8d8229e23eb1b8d154068f1aad6f282a9e71c8d920f968ec",
+    "subdivision/scene.usda": "92170302ff33799b29498c8ff3bdea3dbd11ddc598853ef0c2b545f4f1b1a761",
+    "translated_mesh/baseline.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c",
+    "translated_mesh/contract.json": "653eec31c479de7e15678a71be9b95ecea0722f28cf1a3a6a5ada669fc4b4da6",
+    "translated_mesh/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "tri_layout/baseline.usda": "d8eb5a77986b75545d8cd6f8592cd1847d6dcf6ab7c614d956414a7879ff3c49",
+    "tri_layout/contract.json": "10ebbf991d4aa10e5a2f2373d7cff47360dbf688ee150e3526d0ac6aab25127d",
+    "tri_layout/scene.usda": "d8eb5a77986b75545d8cd6f8592cd1847d6dcf6ab7c614d956414a7879ff3c49",
+    "unused_point/baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "unused_point/contract.json": "cedf54fa27357134c0276111366b7f21690f64e37a268a5207c257d46760cd00",
+    "unused_point/scene.usda": "f6cf03a623ccca051af365ecaadcaff78c46cc5a049956baf54e082d9b110091",
+    "wrong_destination/baseline.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c",
+    "wrong_destination/contract.json": "4c5bb3dc46f73b94b24fc233e2cc8f84d9db694374938a8abc23ccbe9ed6c622",
+    "wrong_destination/scene.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c",
+    "zero_area_face/baseline.usda": "bb0e0437449c0aa6432a6ff866642df9b0db322f0c81c7878b19281be4bb595b",
+    "zero_area_face/contract.json": "cc23ca0076a1f198f72d7374393ea6d276b334812dee764318038eb509dc88a5",
+    "zero_area_face/scene.usda": "bb0e0437449c0aa6432a6ff866642df9b0db322f0c81c7878b19281be4bb595b"
+  }
+}

@@ -1,0 +1,402 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "ACCEPT_FOR_USE",
+  "complete": true,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "52cc4fb9d8015280cebf7b3615ae13271dbc196ab703f459bca1e1bf99fce355",
+    "contract_sha256": "675a5585ddce3e12b0cffd8eee3a3aac41cda58abefa7a3fd7a88b9f5fa3f04d",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c"
+      }
+    },
+    "baseline": {
+      "root": "baseline.usda",
+      "files": {
+        "baseline.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c"
+      }
+    },
+    "packs": {
+      "geometry": {
+        "id": "geometry",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Existing bounded static geometry and edit contracts",
+        "checks": {
+          "contract": {
+            "description": "Evaluate an existing v1 contract",
+            "coverage": "Existing cube/polygon/edit/evidence scope",
+            "limitations": [
+              "Fixed topology/indexing for shape preservation; no collision or rendering"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "contract_file": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "contract_file"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "0b768633afce9b2ec9e65d8014d62805bc593183ce7b2f5e63aa6ecf2ed62fe2",
+          "1:engine.py": "d4d32dd0898aab88b22575fd854a66c8db769557a90092cd0e8e90c879217c99",
+          "2:checks.py": "67914ef4a05b7bde742887bff541a8cd2351f7eb4c18797ae732601fc194b491",
+          "3:mesh.py": "780b48e440b5b438096e2c6a591d61199a541eed463854cbd59dfa0b485adcb2",
+          "4:usd_reader.py": "ceecbe58cbe5e676a31aea286d81cb809723cfe26779f95acc8ca18243947bc6",
+          "5:model.py": "a36c06aa7c70c7124b345abc48024ff2c1d805a928a33b92084caae30ecb7e64"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          },
+          "jsonschema": {
+            "version": "4.25.1",
+            "record_sha256": "7e2ab9bfcfbca9f31ee3b9b092199d6b43a040fa6d7427d2d667adf8cfec1e22"
+          }
+        },
+        "implementation_sha256": "f884691a9a72cc2714daf99700307958121dac126cbc9032dfe5dcde0f7b4ad2"
+      }
+    },
+    "input_files": {
+      "contract.json": "675a5585ddce3e12b0cffd8eee3a3aac41cda58abefa7a3fd7a88b9f5fa3f04d",
+      "geometry-contract.json": "653eec31c479de7e15678a71be9b95ecea0722f28cf1a3a6a5ada669fc4b4da6",
+      "scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+      "baseline.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "geometry.edit",
+      "status": "PASS",
+      "reason": "Existing static geometry contract evaluated through the compatibility adapter.",
+      "evidence": {
+        "pack": "geometry",
+        "check": "contract",
+        "observations": {
+          "checks": [
+            {
+              "id": "usd",
+              "status": "PASS",
+              "reason": "Native OpenUSD checks executed; their scope is format/composition metadata.",
+              "evidence": {
+                "executed": [
+                  "usdValidation:CompositionErrorTest",
+                  "usdValidation:StageMetadataChecker",
+                  "usdGeomValidators:StageMetadataChecker"
+                ],
+                "issues": []
+              },
+              "required": true,
+              "duration_ms": 0.107
+            },
+            {
+              "id": "profile",
+              "status": "PASS",
+              "reason": "Supported declared static geometry profile.",
+              "evidence": {
+                "unsupported": [],
+                "cube_count": 0,
+                "mesh_count": 1,
+                "declared_profile": "usd-static-geometry-v1",
+                "artifact_set_sha256": "5ea6fecd4c71251eaa823dbd5ea2f93605e1421ee3308dffa3ad90dcc432109f"
+              },
+              "required": true,
+              "duration_ms": 0.063
+            },
+            {
+              "id": "metadata",
+              "status": "PASS",
+              "reason": "Compare authored stage metadata, not reader defaults.",
+              "evidence": {
+                "observed": {
+                  "meters_per_unit": 1.0,
+                  "up_axis": "Z",
+                  "authored_meters_per_unit": true,
+                  "authored_up_axis": true
+                },
+                "expected": {
+                  "meters_per_unit": 1,
+                  "up_axis": "Z"
+                }
+              },
+              "required": true,
+              "duration_ms": 0.07
+            },
+            {
+              "id": "mesh",
+              "status": "PASS",
+              "reason": "Native topology, finite points, face validity and declared edge requirements; not collision or watertightness.",
+              "evidence": {
+                "violations": {},
+                "meshes": {
+                  "/World/Equipment/Part": {
+                    "point_count": 8,
+                    "face_count": 6,
+                    "index_count": 24,
+                    "native_topology": {
+                      "valid": true,
+                      "reason": ""
+                    },
+                    "closed_consistent_edges": true,
+                    "nonclosing_or_inconsistent_edge_count": 0,
+                    "edge_examples": [],
+                    "unused_point_count": 0
+                  }
+                },
+                "unsupported": [],
+                "closure_required_paths": []
+              },
+              "required": true,
+              "duration_ms": 0.056
+            },
+            {
+              "id": "layout",
+              "status": "PASS",
+              "reason": "World-space bounds from cube corners or referenced mesh vertices; no pairwise collision claim.",
+              "evidence": {
+                "children": [
+                  "Part"
+                ],
+                "violations": [],
+                "bounds": {
+                  "/World/Equipment/Part": {
+                    "min": [
+                      2.0,
+                      1.5,
+                      0.09999999850988389
+                    ],
+                    "max": [
+                      4.0,
+                      2.5,
+                      0.30000000149011613
+                    ],
+                    "center": [
+                      3.0,
+                      2.0,
+                      0.2
+                    ],
+                    "dimensions": [
+                      2.0,
+                      1.0,
+                      0.20000000298023224
+                    ],
+                    "display_color": [
+                      [
+                        0.30000001192092896,
+                        0.5,
+                        0.699999988079071
+                      ]
+                    ]
+                  }
+                },
+                "requirements": {
+                  "root": "/World/Equipment",
+                  "required_children": [
+                    "Part"
+                  ],
+                  "cell_min_m": [
+                    -5,
+                    0,
+                    0
+                  ],
+                  "cell_max_m": [
+                    10,
+                    10,
+                    3
+                  ],
+                  "aisle_min_y_m": 1
+                }
+              },
+              "required": true,
+              "duration_ms": 0.078
+            },
+            {
+              "id": "target",
+              "status": "PASS",
+              "reason": "Compare saved world-space center with the agreed target.",
+              "evidence": {
+                "path": "/World/Equipment/Part",
+                "observed_m": [
+                  3.0,
+                  2.0,
+                  0.2
+                ],
+                "expected_m": [
+                  3,
+                  2,
+                  0.2
+                ],
+                "tolerance_m": 1e-05
+              },
+              "required": true,
+              "duration_ms": 0.061
+            },
+            {
+              "id": "shape",
+              "status": "PASS",
+              "reason": "Only world translation is allowed on the consumer-declared shapes.",
+              "evidence": {
+                "mode": "translation_only",
+                "tolerance_m": 1e-05,
+                "observations": [
+                  {
+                    "path": "/World/Equipment/Part",
+                    "status": "PASS",
+                    "reason": "Centered cube-corner set or indexed mesh points and connectivity compared; equivalent reindexing/remeshing is not supported",
+                    "baseline_kind": "Mesh",
+                    "candidate_kind": "Mesh",
+                    "same_connectivity_and_representation": true,
+                    "baseline_point_count": 8,
+                    "candidate_point_count": 8,
+                    "baseline_bounds_m": {
+                      "min": [
+                        2.0,
+                        2.5,
+                        0.09999999850988389
+                      ],
+                      "max": [
+                        4.0,
+                        3.5,
+                        0.30000000149011613
+                      ]
+                    },
+                    "candidate_bounds_m": {
+                      "min": [
+                        2.0,
+                        1.5,
+                        0.09999999850988389
+                      ],
+                      "max": [
+                        4.0,
+                        2.5,
+                        0.30000000149011613
+                      ]
+                    }
+                  }
+                ]
+              },
+              "required": true,
+              "duration_ms": 0.108
+            }
+          ],
+          "coverage": {
+            "profile": "usd-static-geometry-v1",
+            "checked": "Only the declared profile and checks listed in the results: static layout, requested edit, mesh structure, optional shape preservation, protected properties, input identity and typed claims.",
+            "unchecked": [
+              "pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness",
+              "mesh normals, UVs, materials and subdivision surfaces",
+              "shape equivalence across reindexing, remeshing or Cube/Mesh conversion",
+              "photographic/visual fidelity",
+              "actual plant measurements",
+              "physical prediction or robot behavior",
+              "free-form reports",
+              "security isolation against a producer with the same filesystem permissions"
+            ],
+            "provided_claims_checked": false,
+            "provided_receipt_checked": false
+          },
+          "identity": {
+            "contract_sha256": "653eec31c479de7e15678a71be9b95ecea0722f28cf1a3a6a5ada669fc4b4da6",
+            "candidate": {
+              "root": "scene.usda",
+              "files": {
+                "scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c"
+              }
+            },
+            "baseline": {
+              "root": "baseline.usda",
+              "files": {
+                "baseline.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c"
+              }
+            },
+            "claims_sha256": null,
+            "source_sha256": {},
+            "checker_version": "0.3.0",
+            "checker_sha256": "52cc4fb9d8015280cebf7b3615ae13271dbc196ab703f459bca1e1bf99fce355",
+            "usd_version": [
+              0,
+              25,
+              11
+            ],
+            "jsonschema_version": "4.25.1"
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 13.47
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "geometry.edit",
+        "pack": "geometry",
+        "check": "contract",
+        "parameters": {
+          "contract_file": "geometry-contract.json"
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "geometry": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T04:54:25.408876+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 20.414,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

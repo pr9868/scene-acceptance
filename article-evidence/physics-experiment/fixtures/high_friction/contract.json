@@ -1,0 +1,33 @@
+{
+  "schema_version": "2.0",
+  "id": "incline-configuration",
+  "intended_use": "Check only the selected USD physics configuration rules; no stability or real-world accuracy claim.",
+  "profile": {
+    "id": "incline-configuration",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "packs": {
+    "nvidia.asset-validator": {
+      "version": "1.0.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "physics.configuration",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "MassChecker",
+          "RigidBodyChecker",
+          "ColliderChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    }
+  ]
+}

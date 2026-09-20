@@ -1,0 +1,29 @@
+{
+  "trial_id": "conflicting_edit-2",
+  "scenario": "conflicting_edit",
+  "attempt": "initial",
+  "generation_exit_code": 0,
+  "prompt_sha256": "6f2ce1790b52a503ca7c3e4a821384164ca9c38babac72e886b74507dbe86ec5",
+  "response_sha256": "02e88537a8446301f8326cdd2eb5a7d061fc9026851374f25d9ed9fbf690f8d1",
+  "model_tool_events": [],
+  "artifact_present": false,
+  "layout_verdict": "NOT_RUN",
+  "physical_evidence_verdict": "NOT_RUN",
+  "shape_audit": {
+    "status": "NOT_RUN"
+  },
+  "reason": "Model supplied no artifact; preserve its disposition and explanation.",
+  "disposition": "blocked",
+  "unknowns": [],
+  "explanation": "The claim describes the supplied baseline. At the requested world center, the preserved 1.1 m tray depth gives minimum Y = 1.45 \u2212 0.55 = 0.90 m, intruding 0.35 m into the protected aisle. This exceeds the 0.00001 m tolerance. Preserving tray size and orientation requires center Y of at least 1.80 m to clear the aisle exactly. The requirements conflict, so no revised scene is delivered.",
+  "submitted_claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 2.85,
+      "unit": "m",
+      "basis": "computed"
+    }
+  ]
+}

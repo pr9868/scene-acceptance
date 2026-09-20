@@ -1,0 +1,34 @@
+{
+  "disposition": "delivered",
+  "usda": "#usda 1.0\n(\n    defaultPrim = \"World\"\n    metersPerUnit = 1\n    upAxis = \"Z\"\n)\n\ndef Xform \"World\"\n{\n    def Xform \"Equipment\"\n    {\n        def Xform \"Inspection\"\n        {\n            def Cube \"Body\"\n            {\n                color3f[] primvars:displayColor = [(0.25, 0.48, 0.58)]\n                double size = 1\n                double3 xformOp:scale = (1, 0.8, 1.4)\n                double3 xformOp:translate = (2.3, 3, 0.7)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n\n        def Xform \"Outfeed\"\n        {\n            def Cube \"Body\"\n            {\n                color3f[] primvars:displayColor = [(0.5, 0.56, 0.6)]\n                double size = 1\n                double3 xformOp:scale = (2, 0.75, 0.9)\n                double3 xformOp:translate = (4.5, 3.5, 0.45)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n\n        def Xform \"Tray\"\n        {\n            def Cube \"Deck\"\n            {\n                color3f[] primvars:displayColor = [(0.67, 0.38, 0.18)]\n                double size = 1\n                double3 xformOp:scale = (1.4, 1.1, 0.16)\n                double3 xformOp:translate = (6.1, 1.95, 0.08)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n    }\n}\n",
+  "claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 1.4,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_center_y",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "center_y",
+      "value": 1.95,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_dimensions",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "dimensions",
+      "value": [1.4, 1.1, 0.16],
+      "unit": "m",
+      "basis": "computed"
+    }
+  ],
+  "unknowns": [
+    "Physical mass, friction and contact support are unspecified; no physical measurements were supplied."
+  ],
+  "explanation": "Complete editable USDA supplied with the tray world center at (6.1, 1.95, 0.08) metres. Only its translation changed. All equipment remains within the cell and outside the front aisle; the tray has 0.15 metre aisle clearance. No file was written because tools and code execution were prohibited."
+}

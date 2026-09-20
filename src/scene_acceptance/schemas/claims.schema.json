@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "artifact_set_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/[^.]"
+          },
+          "metric": {
+            "enum": [
+              "min_y",
+              "center_y",
+              "dimensions",
+              "friction",
+              "mass",
+              "contact_support"
+            ]
+          },
+          "value": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "unit": {
+            "enum": [
+              "m",
+              "kg",
+              "1"
+            ]
+          },
+          "basis": {
+            "enum": [
+              "authored",
+              "computed",
+              "measured",
+              "assumed"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "metric",
+          "value",
+          "unit",
+          "basis"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "artifact_set_sha256",
+    "claims"
+  ],
+  "additionalProperties": false
+}

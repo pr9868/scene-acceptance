@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>3D acceptance: EVALUATION_ERROR</title><style>body{font:16px/1.55 system-ui,sans-serif;color:#20303c;background:#fafbfc;margin:0}main{max-width:1050px;margin:40px auto;padding:0 20px}h1{line-height:1.2}p{max-width:80ch}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d0d8df;text-align:left;padding:10px;vertical-align:top}th{background:#edf2f5}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.scroll{overflow:auto}details{margin:10px 0}.PASS,.ACCEPT_FOR_USE{color:#206343}.FAIL,.REJECT{color:#ad3123}.UNKNOWN,.INSUFFICIENT_EVIDENCE{color:#805916}.ERROR,.EVALUATION_ERROR{color:#9b254c}.scope{padding:16px;border-left:4px solid #3273a4;background:#edf4fa}a{color:#145e91}footer{margin-top:30px;color:#526473}</style></head><body><main>
+<h1>3D content acceptance</h1><h2 class="EVALUATION_ERROR">EVALUATION_ERROR</h2>
+<p>Intended use: <strong>Accept the explicitly named cabinet asset requirements</strong> · Contract: cabinet-content-review · Required evidence complete: false</p>
+<p class="scope">This result applies only to the named use, supported representation and recorded revisions. It does not certify a plant, physical prediction, robot policy or every claim in a report.</p>
+<h2>Results by evaluation pack</h2><p>Counts describe selected checks, including advisory findings. They are not comparable quality scores.</p><div class="scroll"><table><thead><tr><th>Pack</th><th>Pass</th><th>Fail</th><th>Unknown</th><th>Error</th><th>N/A</th></tr></thead><tbody><tr><td>openusd</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr></tbody></table></div><details><summary>Selected profile, requirements and execution plan</summary><pre>{
+  &quot;contract_schema_version&quot;: &quot;2.0&quot;,
+  &quot;profile&quot;: {
+    &quot;id&quot;: &quot;cabinet-delivery&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;
+  },
+  &quot;planned&quot;: [
+    {
+      &quot;id&quot;: &quot;format&quot;,
+      &quot;pack&quot;: &quot;openusd&quot;,
+      &quot;check&quot;: &quot;validators&quot;,
+      &quot;parameters&quot;: {
+        &quot;validators&quot;: [
+          &quot;missing:Checker&quot;
+        ],
+        &quot;warnings_as_failures&quot;: false
+      },
+      &quot;required&quot;: true,
+      &quot;after&quot;: []
+    }
+  ],
+  &quot;by_pack&quot;: {
+    &quot;openusd&quot;: {
+      &quot;PASS&quot;: 0,
+      &quot;FAIL&quot;: 0,
+      &quot;UNKNOWN&quot;: 0,
+      &quot;ERROR&quot;: 1,
+      &quot;NOT_APPLICABLE&quot;: 0
+    }
+  },
+  &quot;checked&quot;: &quot;Only selected checks, parameters and reported coverage in this exact use profile.&quot;,
+  &quot;unchecked&quot;: [
+    &quot;Any requirement absent from the supplied contract&quot;,
+    &quot;Real-world material or physical accuracy without suitable reference evidence&quot;,
+    &quot;Security isolation from installed pack code (trusted in-process execution)&quot;,
+    &quot;Simulator execution, rendered appearance and general free-form claim grounding&quot;
+  ]
+}</pre></details>
+<div class="scroll" tabindex="0" role="region" aria-label="Check results"><table><thead><tr><th>Check</th><th>Result</th><th>Reason and evidence</th></tr></thead><tbody><tr><td>core.artifact<br>Required</td><td class="PASS">PASS</td><td>Admitted local USD dependencies; missing files remain unresolved.<details><summary>Evidence</summary><pre>{
+  &quot;missing_files&quot;: [],
+  &quot;adapter&quot;: &quot;usd-local-v1&quot;
+}</pre></details></td></tr><tr><td>format<br>Required</td><td class="ERROR">ERROR</td><td>RuntimeError: OpenUSD validator unavailable: missing:Checker<details><summary>Evidence</summary><pre>{
+  &quot;pack&quot;: &quot;openusd&quot;,
+  &quot;check&quot;: &quot;validators&quot;,
+  &quot;observations&quot;: {}
+}</pre></details></td></tr></tbody></table></div>
+<h2>Scope that remains unchecked</h2><ul><li>Any requirement absent from the supplied contract</li><li>Real-world material or physical accuracy without suitable reference evidence</li><li>Security isolation from installed pack code (trusted in-process execution)</li><li>Simulator execution, rendered appearance and general free-form claim grounding</li></ul>
+<details><summary>Exact inputs and checker identity</summary><pre>{
+  &quot;checker_version&quot;: &quot;0.3.0&quot;,
+  &quot;checker_sha256&quot;: &quot;9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79&quot;,
+  &quot;contract_sha256&quot;: &quot;12ac8ba6908a7a7118c53deecd9f2d0eb86e8bb987b07469c334d9c40739d293&quot;,
+  &quot;candidate&quot;: {
+    &quot;root&quot;: &quot;scene.usda&quot;,
+    &quot;files&quot;: {
+      &quot;pixel.png&quot;: &quot;6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f&quot;,
+      &quot;scene.usda&quot;: &quot;6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb&quot;
+    }
+  },
+  &quot;baseline&quot;: null,
+  &quot;packs&quot;: {
+    &quot;openusd&quot;: {
+      &quot;id&quot;: &quot;openusd&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;api_version&quot;: &quot;1.0&quot;,
+      &quot;description&quot;: &quot;Named native OpenUSD validators&quot;,
+      &quot;checks&quot;: {
+        &quot;validators&quot;: {
+          &quot;description&quot;: &quot;Run explicit native validators&quot;,
+          &quot;coverage&quot;: &quot;Named native validator scope&quot;,
+          &quot;limitations&quot;: [
+            &quot;Local USD admission limits apply.&quot;
+          ],
+          &quot;parameters&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;validators&quot;: {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;,
+                  &quot;minLength&quot;: 1
+                },
+                &quot;minItems&quot;: 1,
+                &quot;maxItems&quot;: 128,
+                &quot;uniqueItems&quot;: true
+              },
+              &quot;warnings_as_failures&quot;: {
+                &quot;type&quot;: &quot;boolean&quot;
+              }
+            },
+            &quot;required&quot;: [
+              &quot;validators&quot;,
+              &quot;warnings_as_failures&quot;
+            ],
+            &quot;additionalProperties&quot;: false
+          }
+        }
+      },
+      &quot;source_sha256&quot;: {
+        &quot;0:builtin_packs.py&quot;: &quot;1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0&quot;
+      },
+      &quot;dependencies&quot;: {
+        &quot;usd-core&quot;: {
+          &quot;version&quot;: &quot;25.11&quot;,
+          &quot;record_sha256&quot;: &quot;74608cd19d594fdcf209179fdd78e1876ae05d7730d018c9b90caa523e9af3dd&quot;
+        }
+      },
+      &quot;implementation_sha256&quot;: &quot;a455eead6787b451b61009dc95500daa701fa5941dfb0e7e15398b3029212dec&quot;
+    }
+  },
+  &quot;input_files&quot;: {
+    &quot;contract.json&quot;: &quot;12ac8ba6908a7a7118c53deecd9f2d0eb86e8bb987b07469c334d9c40739d293&quot;,
+    &quot;scene.usda&quot;: &quot;6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb&quot;,
+    &quot;pixel.png&quot;: &quot;6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f&quot;
+  },
+  &quot;missing_files&quot;: []
+}</pre></details>
+<p><a href="result.json">Machine-readable result</a> · <a href="manifest.json">Report file hashes</a></p>
+<footer>Checker 0.3.0; OpenUSD [0, 25, 11]. Selected packs ran as trusted local functions. The caller owns provider approval and process isolation.</footer></main></body></html>

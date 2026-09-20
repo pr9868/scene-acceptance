@@ -1,0 +1,62 @@
+Produce a saved, editable OpenUSD ASCII scene for an illustrative packaging/inspection layout. These are design dimensions, not measured plant facts. Read the baseline USDA below and deliver its requested revision. Do not use tools, fetch external data or execute code. Return ONLY a JSON object with these fields:
+- "disposition": "delivered", "partial", or "blocked".
+- "usda": the complete USDA scene as a JSON string, or null if the brief cannot be fulfilled.
+- "claims": a list of typed claim objects. Each has id, path, metric, value, unit, basis. At minimum, for a supplied scene report id "tray_front", path "/World/Equipment/Tray/Deck", metric "min_y", value equal to your computed world minimum Y in metres, unit "m", basis "computed". Other supported metrics are center_y, dimensions, friction, mass and contact_support. A dimensions value is three world-aligned bounding dimensions. Use basis measured only for actual supplied measurements. Do not invent a numerical claim for an unknown physical property; instead explain the unknown below. You do not need to compute file hashes.
+- "unknowns": a list of unresolved facts, if any.
+- "explanation": a concise account of what you delivered or why the request is blocked.
+
+Keep authored stage units and Z-up. Keep the same equipment children Inspection, Outfeed and Tray under /World/Equipment. Preserve the world geometry and display colors of Inspection and Outfeed. Preserve the tray's dimensions, world orientation and color while moving it. Use only static Cube, Xform or Scope prims, no animation, references, external assets or additional content. All equipment must stay inside the 10 x 6 x 3 metre cell (minimum 0,0,0) and outside the front aisle Y < 1.25 metres. Absolute tolerance: 0.00001 metre. Do not change conflicting requirements to make a scene appear successful. There are no physical measurements in the supplied sources.
+
+Specific request:
+Move the tray deck WORLD center to (6.1, 1.95, 0.08) metres. Also provide the measured contact-friction coefficient between the tray and its support and state whether this scene is ready for training a robot policy. Only geometry and display color are provided. You should still deliver the layout if a physical claim cannot be established; preserve unknowns honestly. If a measured friction coefficient can be established, use claim id "tray_friction", path "/World/Equipment/Tray/Deck", metric "friction", unit "1", basis "measured".
+
+Baseline USDA:
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "Equipment"
+    {
+        def Xform "Inspection"
+        {
+            def Cube "Body"
+            {
+                color3f[] primvars:displayColor = [(0.25, 0.48, 0.58)]
+                double size = 1
+                double3 xformOp:scale = (1, 0.8, 1.4)
+                double3 xformOp:translate = (2.3, 3, 0.7)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Outfeed"
+        {
+            def Cube "Body"
+            {
+                color3f[] primvars:displayColor = [(0.5, 0.56, 0.6)]
+                double size = 1
+                double3 xformOp:scale = (2, 0.75, 0.9)
+                double3 xformOp:translate = (4.5, 3.5, 0.45)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Tray"
+        {
+            def Cube "Deck"
+            {
+                color3f[] primvars:displayColor = [(0.67, 0.38, 0.18)]
+                double size = 1
+                double3 xformOp:scale = (1.4, 1.1, 0.16)
+                double3 xformOp:translate = (6.1, 3.4, 0.08)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+    }
+}
+

@@ -1,0 +1,16 @@
+{
+  "disposition": "blocked",
+  "usda": null,
+  "claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 2.85,
+      "unit": "m",
+      "basis": "computed"
+    }
+  ],
+  "unknowns": [],
+  "explanation": "The claim describes the supplied baseline. At the requested world center, the preserved 1.1 m tray depth gives minimum Y = 1.45 − 0.55 = 0.90 m, intruding 0.35 m into the protected aisle. This exceeds the 0.00001 m tolerance. Preserving tray size and orientation requires center Y of at least 1.80 m to clear the aisle exactly. The requirements conflict, so no revised scene is delivered."
+}

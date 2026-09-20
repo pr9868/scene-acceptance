@@ -1,0 +1,694 @@
+{
+  "trial_id": "missing_physics-1",
+  "scenario": "missing_physics",
+  "attempt": "initial",
+  "generation_exit_code": 0,
+  "prompt_sha256": "58c930c86730dadd6e60df940005e3289f957bfbb3c5626ec026e5d055990b7b",
+  "response_sha256": "95f3e78094dee78a1d035e06ba0ec383071dceae6dc128fe51dd928cc21d91de",
+  "model_tool_events": [],
+  "artifact_present": true,
+  "layout_verdict": "ACCEPT_FOR_USE",
+  "physical_evidence_verdict": "INSUFFICIENT_EVIDENCE",
+  "shape_audit": {
+    "status": "PASS",
+    "max_corner_offset_error_m": 2.220446049250313e-16,
+    "color_retained": true,
+    "observed_center_m": [
+      6.1,
+      1.95,
+      0.08
+    ],
+    "observed_corner_offsets_m": [
+      [
+        -0.7000000000000002,
+        -0.55,
+        -0.08
+      ],
+      [
+        -0.7000000000000002,
+        -0.55,
+        0.08
+      ],
+      [
+        -0.7000000000000002,
+        0.55,
+        -0.08
+      ],
+      [
+        -0.7000000000000002,
+        0.55,
+        0.08
+      ],
+      [
+        0.7000000000000002,
+        -0.55,
+        -0.08
+      ],
+      [
+        0.7000000000000002,
+        -0.55,
+        0.08
+      ],
+      [
+        0.7000000000000002,
+        0.55,
+        -0.08
+      ],
+      [
+        0.7000000000000002,
+        0.55,
+        0.08
+      ]
+    ],
+    "expected_corner_offsets_m": [
+      [
+        -0.7,
+        -0.55,
+        -0.08
+      ],
+      [
+        -0.7,
+        -0.55,
+        0.08
+      ],
+      [
+        -0.7,
+        0.55,
+        -0.08
+      ],
+      [
+        -0.7,
+        0.55,
+        0.08
+      ],
+      [
+        0.7,
+        -0.55,
+        -0.08
+      ],
+      [
+        0.7,
+        -0.55,
+        0.08
+      ],
+      [
+        0.7,
+        0.55,
+        -0.08
+      ],
+      [
+        0.7,
+        0.55,
+        0.08
+      ]
+    ],
+    "scope": "Supplemental consumer requirement audit, outside the unmodified v0 harness. Same coordinator and OpenUSD dependency, not an independent reviewer."
+  },
+  "reason": null,
+  "disposition": "delivered",
+  "unknowns": [
+    "Measured tray-support friction is unknown: no physical measurements or contact material properties were supplied.",
+    "Physical support and contact behavior are unestablished; no support geometry or physics configuration is supplied.",
+    "Mass, inertia, collision behavior, robot configuration, sensors, task definition and training validation are unspecified."
+  ],
+  "explanation": "Delivered complete editable USDA text with the tray world center at (6.1, 1.95, 0.08) m. Its dimensions, orientation and color, and all Inspection and Outfeed geometry and colors, are preserved. All equipment fits inside the cell and outside Y < 1.25 m; the tray front is 1.95 - 1.1/2 = 1.4 m. This geometry-only scene is not ready by itself for robot-policy training. No measured friction claim is justified. No file was written because tools and execution were prohibited; the USDA string is ready to save as a .usda file.",
+  "submitted_claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 1.4,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_center_y",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "center_y",
+      "value": 1.95,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_dimensions",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "dimensions",
+      "value": [
+        1.4,
+        1.1,
+        0.16
+      ],
+      "unit": "m",
+      "basis": "computed"
+    }
+  ],
+  "candidate_sha256": "b6dad92fc57a05ea853364ba991de88ae4cf439266bebbaacfdb2271187742a3",
+  "layout_checks": [
+    {
+      "id": "usd",
+      "status": "PASS",
+      "reason": "Native OpenUSD checks executed; their scope is format/composition metadata.",
+      "evidence": {
+        "executed": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "issues": []
+      },
+      "required": true
+    },
+    {
+      "id": "profile",
+      "status": "PASS",
+      "reason": "Supported static cube profile.",
+      "evidence": {
+        "unsupported": [],
+        "cube_count": 3,
+        "artifact_set_sha256": "1b8cd4b477628b7c55c7215f4a1369573458b861652185e375536b43859bdf0e"
+      },
+      "required": true
+    },
+    {
+      "id": "metadata",
+      "status": "PASS",
+      "reason": "Compare authored stage metadata, not reader defaults.",
+      "evidence": {
+        "observed": {
+          "meters_per_unit": 1.0,
+          "up_axis": "Z",
+          "authored_meters_per_unit": true,
+          "authored_up_axis": true
+        },
+        "expected": {
+          "meters_per_unit": 1,
+          "up_axis": "Z"
+        }
+      },
+      "required": true
+    },
+    {
+      "id": "layout",
+      "status": "PASS",
+      "reason": "World-space cube-corner bounds in metres; no general mesh collision claim.",
+      "evidence": {
+        "children": [
+          "Inspection",
+          "Outfeed",
+          "Tray"
+        ],
+        "violations": [],
+        "bounds": {
+          "/World/Equipment/Inspection/Body": {
+            "min": [
+              1.7999999999999998,
+              2.6,
+              0.0
+            ],
+            "max": [
+              2.8,
+              3.4,
+              1.4
+            ],
+            "center": [
+              2.3,
+              3.0,
+              0.7
+            ],
+            "dimensions": [
+              1.0,
+              0.7999999999999998,
+              1.4
+            ],
+            "display_color": [
+              [
+                0.25,
+                0.47999998927116394,
+                0.5799999833106995
+              ]
+            ]
+          },
+          "/World/Equipment/Outfeed/Body": {
+            "min": [
+              3.5,
+              3.125,
+              0.0
+            ],
+            "max": [
+              5.5,
+              3.875,
+              0.9
+            ],
+            "center": [
+              4.5,
+              3.5,
+              0.45
+            ],
+            "dimensions": [
+              2.0,
+              0.75,
+              0.9
+            ],
+            "display_color": [
+              [
+                0.5,
+                0.5600000023841858,
+                0.6000000238418579
+              ]
+            ]
+          },
+          "/World/Equipment/Tray/Deck": {
+            "min": [
+              5.3999999999999995,
+              1.4,
+              0.0
+            ],
+            "max": [
+              6.8,
+              2.5,
+              0.16
+            ],
+            "center": [
+              6.1,
+              1.95,
+              0.08
+            ],
+            "dimensions": [
+              1.4000000000000004,
+              1.1,
+              0.16
+            ],
+            "display_color": [
+              [
+                0.6700000166893005,
+                0.3799999952316284,
+                0.18000000715255737
+              ]
+            ]
+          }
+        },
+        "requirements": {
+          "root": "/World/Equipment",
+          "required_children": [
+            "Inspection",
+            "Outfeed",
+            "Tray"
+          ],
+          "cell_min_m": [
+            0,
+            0,
+            0
+          ],
+          "cell_max_m": [
+            10,
+            6,
+            3
+          ],
+          "aisle_min_y_m": 1.25
+        }
+      },
+      "required": true
+    },
+    {
+      "id": "target",
+      "status": "PASS",
+      "reason": "Compare saved world-space center with the agreed target.",
+      "evidence": {
+        "path": "/World/Equipment/Tray/Deck",
+        "observed_m": [
+          6.1,
+          1.95,
+          0.08
+        ],
+        "expected_m": [
+          6.1,
+          1.95,
+          0.08
+        ],
+        "tolerance_m": 1e-05
+      },
+      "required": true
+    },
+    {
+      "id": "preserved",
+      "status": "PASS",
+      "reason": "Only the declared protected properties are compared.",
+      "evidence": {
+        "properties": [
+          "world_bounds",
+          "display_color"
+        ],
+        "root": "/World/Equipment",
+        "excluded": [
+          "/World/Equipment/Tray"
+        ],
+        "differences": []
+      },
+      "required": true
+    },
+    {
+      "id": "claims",
+      "status": "PASS",
+      "reason": "Typed claims only; free-form reports remain unchecked.",
+      "evidence": {
+        "claims": [
+          {
+            "id": "tray_front",
+            "claim": {
+              "id": "tray_front",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "min_y",
+              "value": 1.4,
+              "unit": "m",
+              "basis": "computed"
+            },
+            "status": "PASS",
+            "reason": "Compared with saved cube geometry, not a plant measurement.",
+            "observed": 1.4
+          },
+          {
+            "id": "tray_center_y",
+            "claim": {
+              "id": "tray_center_y",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "center_y",
+              "value": 1.95,
+              "unit": "m",
+              "basis": "computed"
+            },
+            "status": "PASS",
+            "reason": "Compared with saved cube geometry, not a plant measurement.",
+            "observed": 1.95
+          },
+          {
+            "id": "tray_dimensions",
+            "claim": {
+              "id": "tray_dimensions",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "dimensions",
+              "value": [
+                1.4,
+                1.1,
+                0.16
+              ],
+              "unit": "m",
+              "basis": "computed"
+            },
+            "status": "PASS",
+            "reason": "Compared with saved cube geometry, not a plant measurement.",
+            "observed": [
+              1.4000000000000004,
+              1.1,
+              0.16
+            ]
+          }
+        ]
+      },
+      "required": true
+    }
+  ],
+  "physical_checks": [
+    {
+      "id": "usd",
+      "status": "PASS",
+      "reason": "Native OpenUSD checks executed; their scope is format/composition metadata.",
+      "evidence": {
+        "executed": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "issues": []
+      },
+      "required": true,
+      "duration_ms": 0.144
+    },
+    {
+      "id": "profile",
+      "status": "PASS",
+      "reason": "Supported static cube profile.",
+      "evidence": {
+        "unsupported": [],
+        "cube_count": 3,
+        "artifact_set_sha256": "1b8cd4b477628b7c55c7215f4a1369573458b861652185e375536b43859bdf0e"
+      },
+      "required": true,
+      "duration_ms": 0.076
+    },
+    {
+      "id": "metadata",
+      "status": "PASS",
+      "reason": "Compare authored stage metadata, not reader defaults.",
+      "evidence": {
+        "observed": {
+          "meters_per_unit": 1.0,
+          "up_axis": "Z",
+          "authored_meters_per_unit": true,
+          "authored_up_axis": true
+        },
+        "expected": {
+          "meters_per_unit": 1,
+          "up_axis": "Z"
+        }
+      },
+      "required": true,
+      "duration_ms": 0.074
+    },
+    {
+      "id": "layout",
+      "status": "PASS",
+      "reason": "World-space cube-corner bounds in metres; no general mesh collision claim.",
+      "evidence": {
+        "children": [
+          "Inspection",
+          "Outfeed",
+          "Tray"
+        ],
+        "violations": [],
+        "bounds": {
+          "/World/Equipment/Inspection/Body": {
+            "min": [
+              1.7999999999999998,
+              2.6,
+              0.0
+            ],
+            "max": [
+              2.8,
+              3.4,
+              1.4
+            ],
+            "center": [
+              2.3,
+              3.0,
+              0.7
+            ],
+            "dimensions": [
+              1.0,
+              0.7999999999999998,
+              1.4
+            ],
+            "display_color": [
+              [
+                0.25,
+                0.47999998927116394,
+                0.5799999833106995
+              ]
+            ]
+          },
+          "/World/Equipment/Outfeed/Body": {
+            "min": [
+              3.5,
+              3.125,
+              0.0
+            ],
+            "max": [
+              5.5,
+              3.875,
+              0.9
+            ],
+            "center": [
+              4.5,
+              3.5,
+              0.45
+            ],
+            "dimensions": [
+              2.0,
+              0.75,
+              0.9
+            ],
+            "display_color": [
+              [
+                0.5,
+                0.5600000023841858,
+                0.6000000238418579
+              ]
+            ]
+          },
+          "/World/Equipment/Tray/Deck": {
+            "min": [
+              5.3999999999999995,
+              1.4,
+              0.0
+            ],
+            "max": [
+              6.8,
+              2.5,
+              0.16
+            ],
+            "center": [
+              6.1,
+              1.95,
+              0.08
+            ],
+            "dimensions": [
+              1.4000000000000004,
+              1.1,
+              0.16
+            ],
+            "display_color": [
+              [
+                0.6700000166893005,
+                0.3799999952316284,
+                0.18000000715255737
+              ]
+            ]
+          }
+        },
+        "requirements": {
+          "root": "/World/Equipment",
+          "required_children": [
+            "Inspection",
+            "Outfeed",
+            "Tray"
+          ],
+          "cell_min_m": [
+            0,
+            0,
+            0
+          ],
+          "cell_max_m": [
+            10,
+            6,
+            3
+          ],
+          "aisle_min_y_m": 1.25
+        }
+      },
+      "required": true,
+      "duration_ms": 0.103
+    },
+    {
+      "id": "target",
+      "status": "PASS",
+      "reason": "Compare saved world-space center with the agreed target.",
+      "evidence": {
+        "path": "/World/Equipment/Tray/Deck",
+        "observed_m": [
+          6.1,
+          1.95,
+          0.08
+        ],
+        "expected_m": [
+          6.1,
+          1.95,
+          0.08
+        ],
+        "tolerance_m": 1e-05
+      },
+      "required": true,
+      "duration_ms": 0.075
+    },
+    {
+      "id": "preserved",
+      "status": "PASS",
+      "reason": "Only the declared protected properties are compared.",
+      "evidence": {
+        "properties": [
+          "world_bounds",
+          "display_color"
+        ],
+        "root": "/World/Equipment",
+        "excluded": [
+          "/World/Equipment/Tray"
+        ],
+        "differences": []
+      },
+      "required": true,
+      "duration_ms": 0.074
+    },
+    {
+      "id": "claims",
+      "status": "UNKNOWN",
+      "reason": "Typed claims only; free-form reports remain unchecked.",
+      "evidence": {
+        "claims": [
+          {
+            "id": "tray_friction",
+            "status": "UNKNOWN",
+            "reason": "Required claim absent from the submission.",
+            "required_claim": {
+              "id": "tray_friction",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "friction",
+              "unit": "1",
+              "basis": "measured"
+            }
+          },
+          {
+            "id": "tray_front",
+            "claim": {
+              "id": "tray_front",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "min_y",
+              "value": 1.4,
+              "unit": "m",
+              "basis": "computed"
+            },
+            "status": "PASS",
+            "reason": "Compared with saved cube geometry, not a plant measurement.",
+            "observed": 1.4
+          },
+          {
+            "id": "tray_center_y",
+            "claim": {
+              "id": "tray_center_y",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "center_y",
+              "value": 1.95,
+              "unit": "m",
+              "basis": "computed"
+            },
+            "status": "PASS",
+            "reason": "Compared with saved cube geometry, not a plant measurement.",
+            "observed": 1.95
+          },
+          {
+            "id": "tray_dimensions",
+            "claim": {
+              "id": "tray_dimensions",
+              "path": "/World/Equipment/Tray/Deck",
+              "metric": "dimensions",
+              "value": [
+                1.4,
+                1.1,
+                0.16
+              ],
+              "unit": "m",
+              "basis": "computed"
+            },
+            "status": "PASS",
+            "reason": "Compared with saved cube geometry, not a plant measurement.",
+            "observed": [
+              1.4000000000000004,
+              1.1,
+              0.16
+            ]
+          }
+        ]
+      },
+      "required": true,
+      "duration_ms": 0.267
+    }
+  ],
+  "coordinator_transformation": "JSON decoding to exact USDA text, copies of frozen contract/baseline, and mechanical artifact-hash binding of unmodified model claim objects; no geometry edits."
+}

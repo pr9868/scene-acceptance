@@ -1,0 +1,31 @@
+{
+  "schema_version": "2.0",
+  "id": "cabinet-content-review",
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "profile": {
+    "id": "cabinet-delivery",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [
+    "geometry-contract.json"
+  ],
+  "packs": {
+    "geometry": {
+      "version": "1.0.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "geometry.edit",
+      "pack": "geometry",
+      "check": "contract",
+      "parameters": {
+        "contract_file": "geometry-contract.json"
+      },
+      "required": true,
+      "after": []
+    }
+  ]
+}

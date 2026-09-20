@@ -1,0 +1,127 @@
+{
+  "schema_version": "2.0",
+  "id": "cabinet-content-review",
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "profile": {
+    "id": "cabinet-delivery",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "pixel.png"
+  ],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "materials": {
+      "version": "1.0.0"
+    },
+    "motion": {
+      "version": "1.0.0"
+    },
+    "nvidia.asset-validator": {
+      "version": "1.0.0"
+    },
+    "studio.mesh-budget": {
+      "version": "0.1.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "appearance.delivery",
+      "pack": "materials",
+      "check": "delivery",
+      "parameters": {
+        "bindings": {
+          "/World/Panel": "/World/Looks/Coating"
+        },
+        "purpose": "",
+        "render_context": "",
+        "surface_shader_id": "UsdPreviewSurface"
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "motion.samples",
+      "pack": "motion",
+      "check": "positions",
+      "parameters": {
+        "path": "/World/Panel",
+        "tolerance_m": 1e-06,
+        "samples": [
+          {
+            "time_code": 0,
+            "world_origin_m": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "time_code": 1,
+            "world_origin_m": [
+              0.5,
+              0,
+              0
+            ]
+          },
+          {
+            "time_code": 2,
+            "world_origin_m": [
+              1,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "nvidia.metadata",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "parameters": {
+        "rules": [
+          "StageMetadataChecker",
+          "ValidateTopologyChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "viewer.budget",
+      "pack": "studio.mesh-budget",
+      "check": "faces",
+      "parameters": {
+        "paths": [
+          "/World/Panel"
+        ],
+        "max_faces_per_mesh": 1
+      },
+      "required": true,
+      "after": []
+    }
+  ]
+}

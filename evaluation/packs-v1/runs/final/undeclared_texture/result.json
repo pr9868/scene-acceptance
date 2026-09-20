@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "complete": false,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+    "contract_sha256": "90b9457615f52bd098d3561f7a311ec13c2300ee1ba7b4d687143c04a46f1783",
+    "input_files": {
+      "contract.json": "90b9457615f52bd098d3561f7a311ec13c2300ee1ba7b4d687143c04a46f1783",
+      "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+    },
+    "missing_files": [],
+    "packs": {}
+  },
+  "checks": [
+    {
+      "id": "core.coverage",
+      "status": "UNKNOWN",
+      "reason": "Undeclared dependency: pixel.png",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "format",
+      "status": "UNKNOWN",
+      "reason": "Input or execution interruption prevented this check.",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "appearance.delivery",
+      "status": "UNKNOWN",
+      "reason": "Input or execution interruption prevented this check.",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "format",
+        "pack": "openusd",
+        "check": "validators",
+        "parameters": {
+          "validators": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "warnings_as_failures": false
+        },
+        "required": true,
+        "after": []
+      },
+      {
+        "id": "appearance.delivery",
+        "pack": "materials",
+        "check": "delivery",
+        "parameters": {
+          "bindings": {
+            "/World/Panel": "/World/Looks/Coating"
+          },
+          "purpose": "",
+          "render_context": "",
+          "surface_shader_id": "UsdPreviewSurface"
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "openusd": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNKNOWN": 1,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "materials": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNKNOWN": 1,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T05:08:57.842618+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 6.186,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "2.0",
+  "id": "cabinet-content-review",
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "profile": {
+    "id": "cabinet-delivery",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "materials": {
+      "version": "1.0.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "appearance.delivery",
+      "pack": "materials",
+      "check": "delivery",
+      "parameters": {
+        "bindings": {
+          "/World/Panel": "/World/Looks/Coating"
+        },
+        "purpose": "",
+        "render_context": "",
+        "surface_shader_id": "UsdPreviewSurface"
+      },
+      "required": true,
+      "after": []
+    }
+  ]
+}

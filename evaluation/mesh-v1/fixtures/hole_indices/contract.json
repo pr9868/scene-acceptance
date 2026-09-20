@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "id": "hole_indices",
+  "intended_use": "layout_review",
+  "profile": "usd-static-geometry-v1",
+  "unit": "m",
+  "tolerance_m": 1e-05,
+  "stage": {
+    "meters_per_unit": 1,
+    "up_axis": "Z"
+  },
+  "layout": {
+    "root": "/World/Equipment",
+    "required_children": [
+      "Part"
+    ],
+    "cell_min_m": [
+      -5,
+      0,
+      0
+    ],
+    "cell_max_m": [
+      10,
+      10,
+      3
+    ],
+    "aisle_min_y_m": 1
+  },
+  "target": {
+    "path": "/World/Equipment/Part",
+    "center_m": [
+      3,
+      2,
+      0.2
+    ]
+  },
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "checks": {
+    "required": [
+      "usd",
+      "profile",
+      "metadata",
+      "mesh",
+      "layout",
+      "target"
+    ],
+    "advisory": []
+  }
+}

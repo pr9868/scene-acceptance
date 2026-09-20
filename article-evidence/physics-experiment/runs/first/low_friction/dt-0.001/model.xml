@@ -1,0 +1,12 @@
+<mujoco model="bounded_incline_probe">
+ <compiler angle="degree"/>
+ <option timestep="0.001" gravity="0 0 -9.8100004196167" integrator="implicitfast" cone="elliptic" solver="Newton" iterations="100" tolerance="1e-10"/>
+ <worldbody>
+  <geom name="ramp" type="box" size="10 1 0.10000000149011612" pos="-0.034202014332566873 -0 -0.093969262078590854" axisangle="0 1 0 20.0"/>
+  <body name="block" pos="0.017135209180616003 0 0.047078600301374014" axisangle="0 1 0 20.0">
+   <freejoint/>
+   <geom name="block_shape" type="box" size="0.10000000149011612 0.10000000149011612 0.05000000074505806" mass="1.0"/>
+  </body>
+ </worldbody>
+ <contact><pair geom1="ramp" geom2="block_shape" condim="3" friction="0.15000000596046448 0.15000000596046448 0 0 0" solref="0.02 1" solimp="0.9 0.95 0.001"/></contact>
+</mujoco>

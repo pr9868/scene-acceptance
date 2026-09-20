@@ -1,0 +1,279 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "ACCEPT_FOR_USE",
+  "complete": true,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "52cc4fb9d8015280cebf7b3615ae13271dbc196ab703f459bca1e1bf99fce355",
+    "contract_sha256": "90b9457615f52bd098d3561f7a311ec13c2300ee1ba7b4d687143c04a46f1783",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "openusd": {
+        "id": "openusd",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Named native OpenUSD validators",
+        "checks": {
+          "validators": {
+            "description": "Run explicit native validators",
+            "coverage": "Named native validator scope",
+            "limitations": [
+              "Local USD admission limits apply."
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "validators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "validators",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "0b768633afce9b2ec9e65d8014d62805bc593183ce7b2f5e63aa6ecf2ed62fe2"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "0c48d226b9e1a225d8b6ab6b5a7556ef622010238132cd7abb8c0dfb90cc6806"
+      },
+      "materials": {
+        "id": "materials",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Material structure and delivery requirements",
+        "checks": {
+          "delivery": {
+            "description": "Check resolved bindings, shader IDs and external files",
+            "coverage": "Named material structure and dependency existence",
+            "limitations": [
+              "No rendered appearance, image decoding, UV correctness or physical parameters"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "bindings": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 256,
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "purpose": {
+                  "enum": [
+                    "",
+                    "allPurpose",
+                    "preview",
+                    "full"
+                  ]
+                },
+                "render_context": {
+                  "type": "string"
+                },
+                "surface_shader_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bindings",
+                "purpose",
+                "render_context",
+                "surface_shader_id"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "0b768633afce9b2ec9e65d8014d62805bc593183ce7b2f5e63aa6ecf2ed62fe2"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "c44fc1bddef72f8c2fd7429da779183c1f3bf94d998da306206bbfc8179a49a9"
+      }
+    },
+    "input_files": {
+      "contract.json": "90b9457615f52bd098d3561f7a311ec13c2300ee1ba7b4d687143c04a46f1783",
+      "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "format",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "evidence": {
+        "pack": "openusd",
+        "check": "validators",
+        "observations": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": [],
+          "usd_version": [
+            0,
+            25,
+            11
+          ],
+          "coverage": "Provider-specific validation; no fixes applied."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.381
+    },
+    {
+      "id": "appearance.delivery",
+      "status": "PASS",
+      "reason": "Resolved bindings, selected surface shader IDs and declared external file existence checked.",
+      "evidence": {
+        "pack": "materials",
+        "check": "delivery",
+        "observations": {
+          "findings": [
+            {
+              "object": "/World/Panel",
+              "property": "material:binding",
+              "expected": "/World/Looks/Coating",
+              "observed": "/World/Looks/Coating",
+              "relationship": "/World/Panel.material:binding",
+              "status": "PASS"
+            },
+            {
+              "object": "/World/Looks/Coating",
+              "property": "surface_shader_id",
+              "expected": "UsdPreviewSurface",
+              "observed": "UsdPreviewSurface",
+              "status": "PASS"
+            }
+          ],
+          "coverage": "Named bindings and file delivery only; no image decode, UV fidelity, rendered appearance or friction inference."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.384
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "format",
+        "pack": "openusd",
+        "check": "validators",
+        "parameters": {
+          "validators": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "warnings_as_failures": false
+        },
+        "required": true,
+        "after": []
+      },
+      {
+        "id": "appearance.delivery",
+        "pack": "materials",
+        "check": "delivery",
+        "parameters": {
+          "bindings": {
+            "/World/Panel": "/World/Looks/Coating"
+          },
+          "purpose": "",
+          "render_context": "",
+          "surface_shader_id": "UsdPreviewSurface"
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "openusd": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "materials": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T04:54:25.367153+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 7.043,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

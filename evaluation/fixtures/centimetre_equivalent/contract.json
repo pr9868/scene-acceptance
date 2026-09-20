@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "id": "packaging-layout-001",
+  "intended_use": "layout_review",
+  "profile": "usd-static-cubes-v1",
+  "unit": "m",
+  "tolerance_m": 1e-06,
+  "stage": {
+    "meters_per_unit": 0.01,
+    "up_axis": "Z"
+  },
+  "layout": {
+    "root": "/World/Equipment",
+    "required_children": [
+      "Pallet",
+      "Fixed"
+    ],
+    "cell_min_m": [
+      0,
+      0,
+      0
+    ],
+    "cell_max_m": [
+      9,
+      5,
+      3
+    ],
+    "aisle_min_y_m": 1.2
+  },
+  "target": {
+    "path": "/World/Equipment/Pallet/Deck",
+    "center_m": [
+      3,
+      1.75,
+      0.1
+    ]
+  },
+  "protected": {
+    "root": "/World/Equipment/Fixed",
+    "properties": [
+      "world_bounds",
+      "display_color"
+    ]
+  },
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "checks": {
+    "required": [
+      "usd",
+      "profile",
+      "metadata",
+      "layout",
+      "target",
+      "preserved"
+    ],
+    "advisory": []
+  }
+}

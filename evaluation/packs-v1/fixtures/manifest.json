@@ -1,0 +1,209 @@
+{
+  "cases": [
+    {
+      "id": "material_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "material_wrong_binding",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "material_missing_texture",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "omitted_material_requirement",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "missing_file_without_material_check",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "motion_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "motion_wrong_midpoint",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "endpoints_miss_midpoint",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "nvidia_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "nvidia_missing_metadata",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "nvidia_missing_normals",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "combined_profile",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [
+        "studio.mesh-budget"
+      ]
+    },
+    {
+      "id": "third_party_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [
+        "studio.mesh-budget"
+      ]
+    },
+    {
+      "id": "third_party_budget_exceeded",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [
+        "studio.mesh-budget"
+      ]
+    },
+    {
+      "id": "third_party_not_approved",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "pack_version_mismatch",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "native_validator_unavailable",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "advisory_does_not_gate",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "failed_prerequisite",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "undeclared_texture",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "pack_digest_mismatch",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": []
+    },
+    {
+      "id": "geometry_compatibility",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "unchanged existing constructed mesh via v2 adapter",
+      "approved_packs": []
+    }
+  ],
+  "files": {
+    "advisory_does_not_gate/contract.json": "b00884f48d1ba538880f8295cd310d5761f65e5ae669870ae4d1262c71278fb2",
+    "advisory_does_not_gate/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "advisory_does_not_gate/scene.usda": "b380a38d4685edd68d8ba6d8e4e830f7cc67e9aef6460133723eabe1b7d09a36",
+    "combined_profile/contract.json": "eaa7e29e131541f23c82fc7e54a9c2ed534ff4332dc87b75a3e9096ffc6f9cd1",
+    "combined_profile/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "combined_profile/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "endpoints_miss_midpoint/contract.json": "bc18cdec389c0e371b3f6a1a0478c6970a09eceef885d982d47d0f65a9e52450",
+    "endpoints_miss_midpoint/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "endpoints_miss_midpoint/scene.usda": "6a43ebf03e9174402d253f59fd2fa14d4ddaaaecf97cf5dac2ce8d5eeeb66ba8",
+    "failed_prerequisite/contract.json": "4983c948c9cc3f6943eae8b94e3b1844c0522e254bc7cbdb2bdebc6d78762830",
+    "failed_prerequisite/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "failed_prerequisite/scene.usda": "b380a38d4685edd68d8ba6d8e4e830f7cc67e9aef6460133723eabe1b7d09a36",
+    "geometry_compatibility/baseline.usda": "becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c",
+    "geometry_compatibility/contract.json": "675a5585ddce3e12b0cffd8eee3a3aac41cda58abefa7a3fd7a88b9f5fa3f04d",
+    "geometry_compatibility/geometry-contract.json": "653eec31c479de7e15678a71be9b95ecea0722f28cf1a3a6a5ada669fc4b4da6",
+    "geometry_compatibility/scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c",
+    "material_correct/contract.json": "4e72442e3bdca3e1fdd354d8e07dc944e2c8293dfc3c982b8a098fdfb06e2c8d",
+    "material_correct/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "material_correct/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "material_missing_texture/contract.json": "4e72442e3bdca3e1fdd354d8e07dc944e2c8293dfc3c982b8a098fdfb06e2c8d",
+    "material_missing_texture/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "material_wrong_binding/contract.json": "4e72442e3bdca3e1fdd354d8e07dc944e2c8293dfc3c982b8a098fdfb06e2c8d",
+    "material_wrong_binding/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "material_wrong_binding/scene.usda": "b380a38d4685edd68d8ba6d8e4e830f7cc67e9aef6460133723eabe1b7d09a36",
+    "missing_file_without_material_check/contract.json": "f552c59212ee87fb6d7ab76db937765ff3cbdfa4f5cadeded08988cacb0512b4",
+    "missing_file_without_material_check/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "motion_correct/contract.json": "22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666",
+    "motion_correct/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "motion_correct/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "motion_wrong_midpoint/contract.json": "22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666",
+    "motion_wrong_midpoint/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "motion_wrong_midpoint/scene.usda": "6a43ebf03e9174402d253f59fd2fa14d4ddaaaecf97cf5dac2ce8d5eeeb66ba8",
+    "native_validator_unavailable/contract.json": "12ac8ba6908a7a7118c53deecd9f2d0eb86e8bb987b07469c334d9c40739d293",
+    "native_validator_unavailable/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "native_validator_unavailable/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "nvidia_correct/contract.json": "469bbd525698c64733ac8d9976849bcea995f09d2f6ec1663c40fba8adad864a",
+    "nvidia_correct/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "nvidia_correct/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "nvidia_missing_metadata/contract.json": "4db09c29521df4c60d559849e67685d680916c4c307823ab36da166ceb54910f",
+    "nvidia_missing_metadata/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "nvidia_missing_metadata/scene.usda": "ebf246577ff82f27297bc606c638040cb7e50011d23f393309f39c9ac067f21c",
+    "nvidia_missing_normals/contract.json": "f2ebfcc9d6c0ea3830510350c3424deff2e38ecc96fe34ccc1fe3a159d71f98b",
+    "nvidia_missing_normals/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "nvidia_missing_normals/scene.usda": "e27616581761ab8f8634a1416a9df46a5d1e4db9597941c85a952068164beb36",
+    "omitted_material_requirement/contract.json": "f552c59212ee87fb6d7ab76db937765ff3cbdfa4f5cadeded08988cacb0512b4",
+    "omitted_material_requirement/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "omitted_material_requirement/scene.usda": "b380a38d4685edd68d8ba6d8e4e830f7cc67e9aef6460133723eabe1b7d09a36",
+    "pack_digest_mismatch/contract.json": "3d4b68e03a7ab21e0808ede55615ea51122b955aa54663d9255d94b6da75a83e",
+    "pack_digest_mismatch/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "pack_digest_mismatch/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "pack_version_mismatch/contract.json": "4abd2fe2d8a76d0e9182a9bfd938d1175615a914f5d3d74ab08314d470ae394b",
+    "pack_version_mismatch/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "pack_version_mismatch/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "third_party_budget_exceeded/contract.json": "b43ccc02352d15d77d7e8b8d0ba282f5680c296c026db3a3344b6c5c81bb7d94",
+    "third_party_budget_exceeded/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "third_party_budget_exceeded/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "third_party_correct/contract.json": "776db86ad2896e903911143edf242f34a8d3a89868354145a0a721b9ec589129",
+    "third_party_correct/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "third_party_correct/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "third_party_not_approved/contract.json": "776db86ad2896e903911143edf242f34a8d3a89868354145a0a721b9ec589129",
+    "third_party_not_approved/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "third_party_not_approved/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "undeclared_texture/contract.json": "90b9457615f52bd098d3561f7a311ec13c2300ee1ba7b4d687143c04a46f1783",
+    "undeclared_texture/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "undeclared_texture/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+  }
+}

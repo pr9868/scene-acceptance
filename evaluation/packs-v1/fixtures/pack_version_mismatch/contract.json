@@ -1,0 +1,36 @@
+{
+  "schema_version": "2.0",
+  "id": "cabinet-content-review",
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "profile": {
+    "id": "cabinet-delivery",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "pixel.png"
+  ],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "9.9.9"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "required": true,
+      "after": []
+    }
+  ]
+}

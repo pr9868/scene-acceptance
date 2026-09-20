@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.2.0",
+  "verdict": "EVALUATION_ERROR",
+  "complete": false,
+  "intended_use": "layout_review",
+  "contract_id": "shape_without_check",
+  "identity": {
+    "contract_sha256": "f4161ca8e2f52c714da58aa9a17cecab213c2f62d157f3bc510d799a6d692657"
+  },
+  "checks": [
+    {
+      "id": "input",
+      "status": "ERROR",
+      "reason": "ContractError: Declared shape preservation requires the shape check",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0
+    }
+  ],
+  "coverage": {
+    "profile": "usd-static-geometry-v1",
+    "checked": "Only the declared profile and checks listed in the results: static layout, requested edit, mesh structure, optional shape preservation, protected properties, input identity and typed claims.",
+    "unchecked": [
+      "pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness",
+      "mesh normals, UVs, materials and subdivision surfaces",
+      "shape equivalence across reindexing, remeshing or Cube/Mesh conversion",
+      "photographic/visual fidelity",
+      "actual plant measurements",
+      "physical prediction or robot behavior",
+      "free-form reports",
+      "security isolation against a producer with the same filesystem permissions"
+    ],
+    "provided_claims_checked": false,
+    "provided_receipt_checked": false
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T01:40:03.046822+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "provider_override": false,
+    "elapsed_ms": 0.739,
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "network_or_model_required": false
+  }
+}

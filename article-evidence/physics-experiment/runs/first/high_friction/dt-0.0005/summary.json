@@ -1,0 +1,12 @@
+{
+  "dt_s": 0.0005,
+  "samples": 2001,
+  "maximum_absolute_displacement_m": 0.001045453476346221,
+  "final_displacement_m": 0.001045453476346221,
+  "behavior": "PASS",
+  "matches_expected": true,
+  "ideal_coulomb_displacement_m": 0.0,
+  "max_warning_count": 0,
+  "trace_sha256": "9bfbf2c47c97ca5295a984c75b78d9a9b8772e6ff74631987da33b8efadca1a3",
+  "model_sha256": "e0e5dc9a2ec54d07580c96100ebdb7dfa1311704ec2e17effd2bcdaa02424b98"
+}

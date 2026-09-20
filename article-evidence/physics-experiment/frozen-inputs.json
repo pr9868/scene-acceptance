@@ -1,0 +1,9 @@
+{
+  "fixtures/high_friction/contract.json": "559ae2cf4f9f2a657b421fea880179ea4d1d713fbfae906aab0a84f49af9fd47",
+  "fixtures/high_friction/scene.usda": "99c890359a2ea04f592b7daa7f19a18ef9ae9f26405fafa141915573fbf511ca",
+  "fixtures/low_friction/contract.json": "559ae2cf4f9f2a657b421fea880179ea4d1d713fbfae906aab0a84f49af9fd47",
+  "fixtures/low_friction/scene.usda": "c51937edad69ae29734d7742b5d4041308f4a66b8d327757102f3618464f08df",
+  "fixtures/negative_mass/contract.json": "559ae2cf4f9f2a657b421fea880179ea4d1d713fbfae906aab0a84f49af9fd47",
+  "fixtures/negative_mass/scene.usda": "854fadec1820f3054598c0cdab7bfcd5879d58287d28faa96f53a95c7980831b",
+  "protocol.json": "3d05d1e43e143963c2b104c989fb1df41433a94d7e7cd2a6e4cb2d3b3af46418"
+}

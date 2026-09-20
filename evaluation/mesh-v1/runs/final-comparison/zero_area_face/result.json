@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.2.0",
+  "verdict": "REJECT",
+  "complete": false,
+  "intended_use": "layout_review",
+  "contract_id": "zero_area_face",
+  "identity": {
+    "contract_sha256": "cc23ca0076a1f198f72d7374393ea6d276b334812dee764318038eb509dc88a5",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "scene.usda": "bb0e0437449c0aa6432a6ff866642df9b0db322f0c81c7878b19281be4bb595b"
+      }
+    },
+    "baseline": {
+      "root": "baseline.usda",
+      "files": {
+        "baseline.usda": "bb0e0437449c0aa6432a6ff866642df9b0db322f0c81c7878b19281be4bb595b"
+      }
+    },
+    "claims_sha256": null,
+    "source_sha256": {},
+    "checker_version": "0.2.0",
+    "checker_sha256": "5f93078f6ee35aa5d0c36be7675139ae7e66eba0b3333cb3524b9caceea9c413",
+    "usd_version": [
+      0,
+      25,
+      11
+    ],
+    "jsonschema_version": "4.25.1"
+  },
+  "checks": [
+    {
+      "id": "usd",
+      "status": "PASS",
+      "reason": "Native OpenUSD checks executed; their scope is format/composition metadata.",
+      "evidence": {
+        "executed": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "issues": []
+      },
+      "required": true,
+      "duration_ms": 0.141
+    },
+    {
+      "id": "profile",
+      "status": "PASS",
+      "reason": "Supported declared static geometry profile.",
+      "evidence": {
+        "unsupported": [],
+        "cube_count": 0,
+        "mesh_count": 0,
+        "declared_profile": "usd-static-geometry-v1",
+        "artifact_set_sha256": "6bb353a77282c29552b564669f3c913341a86109be097fccb68a28f7a483ed7d"
+      },
+      "required": true,
+      "duration_ms": 0.078
+    },
+    {
+      "id": "metadata",
+      "status": "PASS",
+      "reason": "Compare authored stage metadata, not reader defaults.",
+      "evidence": {
+        "observed": {
+          "meters_per_unit": 1.0,
+          "up_axis": "Z",
+          "authored_meters_per_unit": true,
+          "authored_up_axis": true
+        },
+        "expected": {
+          "meters_per_unit": 1,
+          "up_axis": "Z"
+        }
+      },
+      "required": true,
+      "duration_ms": 0.08
+    },
+    {
+      "id": "mesh",
+      "status": "FAIL",
+      "reason": "Native topology, finite points, face validity and declared edge requirements; not collision or watertightness.",
+      "evidence": {
+        "violations": {
+          "/World/Equipment/Part": [
+            "Face 0: zero/canceling vector area"
+          ]
+        },
+        "meshes": {
+          "/World/Equipment/Part": {
+            "point_count": 3,
+            "face_count": 1,
+            "index_count": 3,
+            "native_topology": {
+              "valid": true,
+              "reason": ""
+            },
+            "closed_consistent_edges": false,
+            "nonclosing_or_inconsistent_edge_count": 3,
+            "edge_examples": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                2
+              ],
+              [
+                0,
+                2
+              ]
+            ],
+            "unused_point_count": 0,
+            "violation_count": 1
+          }
+        },
+        "unsupported": [],
+        "closure_required_paths": []
+      },
+      "required": true,
+      "duration_ms": 0.068
+    },
+    {
+      "id": "layout",
+      "status": "UNKNOWN",
+      "reason": "Mesh violations prevent complete geometry readback",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0.003
+    },
+    {
+      "id": "target",
+      "status": "UNKNOWN",
+      "reason": "Mesh violations prevent complete geometry readback",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0.001
+    }
+  ],
+  "coverage": {
+    "profile": "usd-static-geometry-v1",
+    "checked": "Only the declared profile and checks listed in the results: static layout, requested edit, mesh structure, optional shape preservation, protected properties, input identity and typed claims.",
+    "unchecked": [
+      "pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness",
+      "mesh normals, UVs, materials and subdivision surfaces",
+      "shape equivalence across reindexing, remeshing or Cube/Mesh conversion",
+      "photographic/visual fidelity",
+      "actual plant measurements",
+      "physical prediction or robot behavior",
+      "free-form reports",
+      "security isolation against a producer with the same filesystem permissions"
+    ],
+    "provided_claims_checked": false,
+    "provided_receipt_checked": false
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T01:40:02.895567+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "provider_override": false,
+    "elapsed_ms": 4.696,
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "network_or_model_required": false
+  }
+}

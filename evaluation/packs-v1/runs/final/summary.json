@@ -1,0 +1,326 @@
+{
+  "summary": {
+    "cases": 22,
+    "matches": 22,
+    "verdicts": {
+      "ACCEPT_FOR_USE": 9,
+      "REJECT": 7,
+      "INSUFFICIENT_EVIDENCE": 2,
+      "EVALUATION_ERROR": 4
+    },
+    "scope": "Constructed development cases and a saved prior fixture; no new model call, independent validation or simulator execution."
+  },
+  "cases": [
+    {
+      "id": "material_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "appearance.delivery": "PASS"
+      }
+    },
+    {
+      "id": "material_wrong_binding",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "REJECT",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "appearance.delivery": "FAIL"
+      }
+    },
+    {
+      "id": "material_missing_texture",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "REJECT",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "UNKNOWN",
+        "format": "PASS",
+        "appearance.delivery": "FAIL"
+      }
+    },
+    {
+      "id": "omitted_material_requirement",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS"
+      }
+    },
+    {
+      "id": "missing_file_without_material_check",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "UNKNOWN",
+        "format": "PASS"
+      }
+    },
+    {
+      "id": "motion_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "motion.samples": "PASS"
+      }
+    },
+    {
+      "id": "motion_wrong_midpoint",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "REJECT",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "motion.samples": "FAIL"
+      }
+    },
+    {
+      "id": "endpoints_miss_midpoint",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "motion.samples": "PASS"
+      }
+    },
+    {
+      "id": "nvidia_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "nvidia.metadata": "PASS"
+      }
+    },
+    {
+      "id": "nvidia_missing_metadata",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "REJECT",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "nvidia.metadata": "FAIL"
+      }
+    },
+    {
+      "id": "nvidia_missing_normals",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "REJECT",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "nvidia.normals": "FAIL"
+      }
+    },
+    {
+      "id": "combined_profile",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [
+        "studio.mesh-budget"
+      ],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "appearance.delivery": "PASS",
+        "motion.samples": "PASS",
+        "nvidia.metadata": "PASS",
+        "viewer.budget": "PASS"
+      }
+    },
+    {
+      "id": "third_party_correct",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [
+        "studio.mesh-budget"
+      ],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "viewer.budget": "PASS"
+      }
+    },
+    {
+      "id": "third_party_budget_exceeded",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [
+        "studio.mesh-budget"
+      ],
+      "actual": "REJECT",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "viewer.budget": "FAIL"
+      }
+    },
+    {
+      "id": "third_party_not_approved",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "EVALUATION_ERROR",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "viewer.budget": "ERROR"
+      }
+    },
+    {
+      "id": "pack_version_mismatch",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "EVALUATION_ERROR",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "ERROR"
+      }
+    },
+    {
+      "id": "native_validator_unavailable",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "EVALUATION_ERROR",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "ERROR"
+      }
+    },
+    {
+      "id": "advisory_does_not_gate",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "appearance.delivery": "FAIL"
+      }
+    },
+    {
+      "id": "failed_prerequisite",
+      "expected": "REJECT",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "REJECT",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "PASS",
+        "appearance.delivery": "FAIL",
+        "motion.samples": "UNKNOWN"
+      }
+    },
+    {
+      "id": "undeclared_texture",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.coverage": "UNKNOWN",
+        "format": "UNKNOWN",
+        "appearance.delivery": "UNKNOWN"
+      }
+    },
+    {
+      "id": "pack_digest_mismatch",
+      "expected": "EVALUATION_ERROR",
+      "provenance": "constructed development case",
+      "approved_packs": [],
+      "actual": "EVALUATION_ERROR",
+      "complete": false,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "format": "ERROR"
+      }
+    },
+    {
+      "id": "geometry_compatibility",
+      "expected": "ACCEPT_FOR_USE",
+      "provenance": "unchanged existing constructed mesh via v2 adapter",
+      "approved_packs": [],
+      "actual": "ACCEPT_FOR_USE",
+      "complete": true,
+      "match": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "geometry.edit": "PASS"
+      }
+    }
+  ]
+}

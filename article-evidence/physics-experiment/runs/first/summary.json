@@ -1,0 +1,86 @@
+{
+  "protocol_sha256": "3d05d1e43e143963c2b104c989fb1df41433a94d7e7cd2a6e4cb2d3b3af46418",
+  "runner_sha256": "7a0f82d58932ad9479e5193be294b6bcf2ee10eee3cccec7d673cd4be7b7a8fc",
+  "versions": {
+    "mujoco": "3.6.0",
+    "numpy": "2.5.3",
+    "usd-core": "25.11",
+    "usd-validation-nvidia": "1.20.0",
+    "scene-acceptance": "0.3.0"
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "new_model_calls": 0,
+  "cases": {
+    "low_friction": {
+      "configuration": "ACCEPT_FOR_USE",
+      "configuration_matches_expected": true,
+      "parameter_evidence": "UNKNOWN: friction is assumed, not measured",
+      "runs": [
+        {
+          "dt_s": 0.001,
+          "samples": 1001,
+          "maximum_absolute_displacement_m": 0.9872270726010176,
+          "final_displacement_m": 0.9872270726010176,
+          "behavior": "FAIL",
+          "matches_expected": true,
+          "ideal_coulomb_displacement_m": 0.9862299719816229,
+          "max_warning_count": 0,
+          "trace_sha256": "874ece8682815e45c4a0bca207c4cd7149df4f1217555c459964a77a97adac74",
+          "model_sha256": "b2774c09a095dd958798d0f24937510c41a24a80bec5365483f8140120c8368d"
+        },
+        {
+          "dt_s": 0.0005,
+          "samples": 2001,
+          "maximum_absolute_displacement_m": 0.9867295413391548,
+          "final_displacement_m": 0.9867295413391548,
+          "behavior": "FAIL",
+          "matches_expected": true,
+          "ideal_coulomb_displacement_m": 0.9862299719816229,
+          "max_warning_count": 0,
+          "trace_sha256": "6453c9cb586a79984728d43e4ed61a767bca54f52f7ac52d6162f70926887ce8",
+          "model_sha256": "f685ec33139bd4a394695f8cf287a9634da42b67d181339bd6edf9689f5ac6cd"
+        }
+      ],
+      "timestep_final_difference_m": 0.0004975312618628047
+    },
+    "high_friction": {
+      "configuration": "ACCEPT_FOR_USE",
+      "configuration_matches_expected": true,
+      "parameter_evidence": "UNKNOWN: friction is assumed, not measured",
+      "runs": [
+        {
+          "dt_s": 0.001,
+          "samples": 1001,
+          "maximum_absolute_displacement_m": 0.0010640641191405945,
+          "final_displacement_m": 0.0010640641191405945,
+          "behavior": "PASS",
+          "matches_expected": true,
+          "ideal_coulomb_displacement_m": 0.0,
+          "max_warning_count": 0,
+          "trace_sha256": "762c51994b39dd8ed709c9f567faf8c964428d1f92930c28d2d1d9091ab661b1",
+          "model_sha256": "77f3f324f12d2553e1d56d605a2b6c2dadf312a5cdb9a047602b5ce942a7bdcf"
+        },
+        {
+          "dt_s": 0.0005,
+          "samples": 2001,
+          "maximum_absolute_displacement_m": 0.001045453476346221,
+          "final_displacement_m": 0.001045453476346221,
+          "behavior": "PASS",
+          "matches_expected": true,
+          "ideal_coulomb_displacement_m": 0.0,
+          "max_warning_count": 0,
+          "trace_sha256": "9bfbf2c47c97ca5295a984c75b78d9a9b8772e6ff74631987da33b8efadca1a3",
+          "model_sha256": "e0e5dc9a2ec54d07580c96100ebdb7dfa1311704ec2e17effd2bcdaa02424b98"
+        }
+      ],
+      "timestep_final_difference_m": 1.861064279437357e-05
+    },
+    "negative_mass": {
+      "configuration": "REJECT",
+      "configuration_matches_expected": true,
+      "parameter_evidence": "UNKNOWN: friction is assumed, not measured",
+      "runs": []
+    }
+  },
+  "all_expected_matched": true
+}

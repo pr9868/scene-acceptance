@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>3D acceptance: REJECT</title><style>body{font:16px/1.55 system-ui,sans-serif;color:#20303c;background:#fafbfc;margin:0}main{max-width:1050px;margin:40px auto;padding:0 20px}h1{line-height:1.2}p{max-width:80ch}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d0d8df;text-align:left;padding:10px;vertical-align:top}th{background:#edf2f5}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.scroll{overflow:auto}details{margin:10px 0}.PASS,.ACCEPT_FOR_USE{color:#206343}.FAIL,.REJECT{color:#ad3123}.UNKNOWN,.INSUFFICIENT_EVIDENCE{color:#805916}.ERROR,.EVALUATION_ERROR{color:#9b254c}.scope{padding:16px;border-left:4px solid #3273a4;background:#edf4fa}a{color:#145e91}footer{margin-top:30px;color:#526473}</style></head><body><main>
+<h1>3D content acceptance</h1><h2 class="REJECT">REJECT</h2>
+<p>Intended use: <strong>layout_review</strong> · Contract: wrong_destination · Required evidence complete: true</p>
+<p class="scope">This result applies only to the named use, supported representation and recorded revisions. It does not certify a plant, physical prediction, robot policy or every claim in a report.</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Check results"><table><thead><tr><th>Check</th><th>Result</th><th>Reason and evidence</th></tr></thead><tbody><tr><td>usd<br>Required</td><td class="PASS">PASS</td><td>Native OpenUSD checks executed; their scope is format/composition metadata.<details><summary>Evidence</summary><pre>{
+  &quot;executed&quot;: [
+    &quot;usdValidation:CompositionErrorTest&quot;,
+    &quot;usdValidation:StageMetadataChecker&quot;,
+    &quot;usdGeomValidators:StageMetadataChecker&quot;
+  ],
+  &quot;issues&quot;: []
+}</pre></details></td></tr><tr><td>profile<br>Required</td><td class="PASS">PASS</td><td>Supported declared static geometry profile.<details><summary>Evidence</summary><pre>{
+  &quot;unsupported&quot;: [],
+  &quot;cube_count&quot;: 0,
+  &quot;mesh_count&quot;: 1,
+  &quot;declared_profile&quot;: &quot;usd-static-geometry-v1&quot;,
+  &quot;artifact_set_sha256&quot;: &quot;2fdfc7451ae5a1c4a5ea9a0a89f9e8d57eb459eac4650783e850250005f6c3b5&quot;
+}</pre></details></td></tr><tr><td>metadata<br>Required</td><td class="PASS">PASS</td><td>Compare authored stage metadata, not reader defaults.<details><summary>Evidence</summary><pre>{
+  &quot;observed&quot;: {
+    &quot;meters_per_unit&quot;: 1.0,
+    &quot;up_axis&quot;: &quot;Z&quot;,
+    &quot;authored_meters_per_unit&quot;: true,
+    &quot;authored_up_axis&quot;: true
+  },
+  &quot;expected&quot;: {
+    &quot;meters_per_unit&quot;: 1,
+    &quot;up_axis&quot;: &quot;Z&quot;
+  }
+}</pre></details></td></tr><tr><td>mesh<br>Required</td><td class="PASS">PASS</td><td>Native topology, finite points, face validity and declared edge requirements; not collision or watertightness.<details><summary>Evidence</summary><pre>{
+  &quot;violations&quot;: {},
+  &quot;meshes&quot;: {
+    &quot;/World/Equipment/Part&quot;: {
+      &quot;point_count&quot;: 8,
+      &quot;face_count&quot;: 6,
+      &quot;index_count&quot;: 24,
+      &quot;native_topology&quot;: {
+        &quot;valid&quot;: true,
+        &quot;reason&quot;: &quot;&quot;
+      },
+      &quot;closed_consistent_edges&quot;: true,
+      &quot;nonclosing_or_inconsistent_edge_count&quot;: 0,
+      &quot;edge_examples&quot;: [],
+      &quot;unused_point_count&quot;: 0
+    }
+  },
+  &quot;unsupported&quot;: [],
+  &quot;closure_required_paths&quot;: []
+}</pre></details></td></tr><tr><td>layout<br>Required</td><td class="PASS">PASS</td><td>World-space bounds from cube corners or referenced mesh vertices; no pairwise collision claim.<details><summary>Evidence</summary><pre>{
+  &quot;children&quot;: [
+    &quot;Part&quot;
+  ],
+  &quot;violations&quot;: [],
+  &quot;bounds&quot;: {
+    &quot;/World/Equipment/Part&quot;: {
+      &quot;min&quot;: [
+        2.0,
+        2.5,
+        0.09999999850988389
+      ],
+      &quot;max&quot;: [
+        4.0,
+        3.5,
+        0.30000000149011613
+      ],
+      &quot;center&quot;: [
+        3.0,
+        3.0,
+        0.2
+      ],
+      &quot;dimensions&quot;: [
+        2.0,
+        1.0,
+        0.20000000298023224
+      ],
+      &quot;display_color&quot;: [
+        [
+          0.30000001192092896,
+          0.5,
+          0.699999988079071
+        ]
+      ]
+    }
+  },
+  &quot;requirements&quot;: {
+    &quot;root&quot;: &quot;/World/Equipment&quot;,
+    &quot;required_children&quot;: [
+      &quot;Part&quot;
+    ],
+    &quot;cell_min_m&quot;: [
+      -5,
+      0,
+      0
+    ],
+    &quot;cell_max_m&quot;: [
+      10,
+      10,
+      3
+    ],
+    &quot;aisle_min_y_m&quot;: 1
+  }
+}</pre></details></td></tr><tr><td>target<br>Required</td><td class="FAIL">FAIL</td><td>Compare saved world-space center with the agreed target.<details><summary>Evidence</summary><pre>{
+  &quot;path&quot;: &quot;/World/Equipment/Part&quot;,
+  &quot;observed_m&quot;: [
+    3.0,
+    3.0,
+    0.2
+  ],
+  &quot;expected_m&quot;: [
+    3,
+    2,
+    0.2
+  ],
+  &quot;tolerance_m&quot;: 1e-05
+}</pre></details></td></tr></tbody></table></div>
+<h2>Scope that remains unchecked</h2><ul><li>pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness</li><li>mesh normals, UVs, materials and subdivision surfaces</li><li>shape equivalence across reindexing, remeshing or Cube/Mesh conversion</li><li>photographic/visual fidelity</li><li>actual plant measurements</li><li>physical prediction or robot behavior</li><li>free-form reports</li><li>security isolation against a producer with the same filesystem permissions</li></ul>
+<details><summary>Exact inputs and checker identity</summary><pre>{
+  &quot;contract_sha256&quot;: &quot;4c5bb3dc46f73b94b24fc233e2cc8f84d9db694374938a8abc23ccbe9ed6c622&quot;,
+  &quot;candidate&quot;: {
+    &quot;root&quot;: &quot;scene.usda&quot;,
+    &quot;files&quot;: {
+      &quot;scene.usda&quot;: &quot;becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c&quot;
+    }
+  },
+  &quot;baseline&quot;: {
+    &quot;root&quot;: &quot;baseline.usda&quot;,
+    &quot;files&quot;: {
+      &quot;baseline.usda&quot;: &quot;becee5b0db7124db9e1867487791bb73564d9ec911b2523f5a4c0a26f67c694c&quot;
+    }
+  },
+  &quot;claims_sha256&quot;: null,
+  &quot;source_sha256&quot;: {},
+  &quot;checker_version&quot;: &quot;0.2.0&quot;,
+  &quot;checker_sha256&quot;: &quot;5f93078f6ee35aa5d0c36be7675139ae7e66eba0b3333cb3524b9caceea9c413&quot;,
+  &quot;usd_version&quot;: [
+    0,
+    25,
+    11
+  ],
+  &quot;jsonschema_version&quot;: &quot;4.25.1&quot;
+}</pre></details>
+<p><a href="result.json">Machine-readable result</a> · <a href="manifest.json">Report file hashes</a></p>
+<footer>Checker 0.2.0; OpenUSD [0, 25, 11]. Checks ran locally without model calls. Separate processes and access control are still needed in an application.</footer></main></body></html>

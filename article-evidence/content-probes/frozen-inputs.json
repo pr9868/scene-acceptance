@@ -1,0 +1,15 @@
+{
+  "fixtures/between_samples/contract.json": "22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666",
+  "fixtures/between_samples/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+  "fixtures/between_samples/scene.usda": "ff4b67b7226a238d8406ab5175eb3b6a1f0ff3a9c694a8cda6a274500a2256da",
+  "fixtures/inspect_added_time/contract.json": "3ea42a4f0cd5c01b28f34986fea483bc70798325f6ab52fa9860f2fd10aa38bf",
+  "fixtures/inspect_added_time/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+  "fixtures/inspect_added_time/scene.usda": "ff4b67b7226a238d8406ab5175eb3b6a1f0ff3a9c694a8cda6a274500a2256da",
+  "fixtures/unreadable_texture/contract.json": "4e72442e3bdca3e1fdd354d8e07dc944e2c8293dfc3c982b8a098fdfb06e2c8d",
+  "fixtures/unreadable_texture/pixel.png": "105e90a75b8a3fa086657062d07f51bea3a21a0a2f3ff85e037a65d15bf520ef",
+  "fixtures/unreadable_texture/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+  "fixtures/valid_texture/contract.json": "4e72442e3bdca3e1fdd354d8e07dc944e2c8293dfc3c982b8a098fdfb06e2c8d",
+  "fixtures/valid_texture/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+  "fixtures/valid_texture/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+  "protocol.json": "4961aa863cabe9be89c60ddc886c6a69c080d713960942515ae9b33c27b2e827"
+}

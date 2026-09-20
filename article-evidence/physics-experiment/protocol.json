@@ -1,0 +1,47 @@
+{
+  "id": "incline-physics-v1",
+  "date": "2026-09-19",
+  "provenance": "Constructed by the coding assistant following the author's request for use-specific evaluation evidence; not an agent benchmark.",
+  "task": "Maximum absolute along-slope displacement <= 0.010 m over one simulated second.",
+  "angle_deg": 20,
+  "mass_kg": 1,
+  "block_dimensions_m": [
+    0.2,
+    0.2,
+    0.1
+  ],
+  "ramp_dimensions_m": [
+    20,
+    2,
+    0.2
+  ],
+  "initial_surface_gap_m": 0.0001,
+  "gravity_m_s2": 9.81,
+  "friction_assumptions": [
+    0.15,
+    0.65
+  ],
+  "timesteps_s": [
+    0.001,
+    0.0005
+  ],
+  "duration_s": 1,
+  "maximum_displacement_m": 0.01,
+  "expected": {
+    "low_friction": {
+      "configuration": "ACCEPT_FOR_USE",
+      "behavior": "FAIL"
+    },
+    "high_friction": {
+      "configuration": "ACCEPT_FOR_USE",
+      "behavior": "PASS"
+    },
+    "negative_mass": {
+      "configuration": "REJECT",
+      "behavior": "NOT_RUN"
+    }
+  },
+  "reference": "Ideal rigid Coulomb incline calculation for diagnosis only; no physical measurement. Both friction values are assumptions.",
+  "sensitivity": "Halve timestep with all other solver settings held fixed; retain difference, not a convergence proof.",
+  "scope": "Two boxes, one rigid block, fixed ramp, equal static/dynamic friction, no texture, actuator, robot or arbitrary USD import."
+}

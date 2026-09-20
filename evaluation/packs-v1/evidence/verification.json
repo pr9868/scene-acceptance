@@ -1,0 +1,20 @@
+{
+  "version": "0.3.0",
+  "pack_api": "1.0",
+  "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+  "source_matches_installed_wheel": true,
+  "software_tests_passed": 195,
+  "new_pack_cases": 22,
+  "new_pack_expected_decisions_matched": 22,
+  "mesh_regression_cases": 32,
+  "mesh_regression_check_statuses_unchanged": true,
+  "original_tests_included": 137,
+  "new_model_calls": 0,
+  "simulator_runs": 0,
+  "third_party_pack_installed_separately": true,
+  "base_install_without_nvidia_verified": true,
+  "wheel_sha256": "ab0e49cb3f28a7a3bec0b307f34135f94b9914af1beb94ca270dc49aeffee738",
+  "native_validator_catalog_count": 25,
+  "nvidia_rule_catalog_count": 40,
+  "scope": "Constructed development evidence, not independent validation or a model benchmark; discoverable rule counts are not tested coverage."
+}

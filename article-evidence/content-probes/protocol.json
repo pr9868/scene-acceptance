@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-19",
+  "provenance": "Constructed diagnostic cases, not model-generated failure samples; expectations frozen before running.",
+  "material_question": "Can the limited delivery check accept a referenced file that cannot decode as an image?",
+  "motion_brief": "Illustrative request: translate the panel uniformly from x=0 to x=1 metre over two seconds. Point-sample contracts cover only their named times.",
+  "expected": {
+    "valid_texture": {
+      "verdict": "ACCEPT_FOR_USE",
+      "png_decodes": true
+    },
+    "unreadable_texture": {
+      "verdict": "ACCEPT_FOR_USE",
+      "png_decodes": false
+    },
+    "between_samples": {
+      "verdict": "ACCEPT_FOR_USE"
+    },
+    "inspect_added_time": {
+      "verdict": "REJECT"
+    }
+  }
+}

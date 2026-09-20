@@ -1,0 +1,228 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>3D acceptance: REJECT</title><style>body{font:16px/1.55 system-ui,sans-serif;color:#20303c;background:#fafbfc;margin:0}main{max-width:1050px;margin:40px auto;padding:0 20px}h1{line-height:1.2}p{max-width:80ch}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d0d8df;text-align:left;padding:10px;vertical-align:top}th{background:#edf2f5}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.scroll{overflow:auto}details{margin:10px 0}.PASS,.ACCEPT_FOR_USE{color:#206343}.FAIL,.REJECT{color:#ad3123}.UNKNOWN,.INSUFFICIENT_EVIDENCE{color:#805916}.ERROR,.EVALUATION_ERROR{color:#9b254c}.scope{padding:16px;border-left:4px solid #3273a4;background:#edf4fa}a{color:#145e91}footer{margin-top:30px;color:#526473}</style></head><body><main>
+<h1>3D content acceptance</h1><h2 class="REJECT">REJECT</h2>
+<p>Intended use: <strong>Accept the explicitly named cabinet asset requirements</strong> · Contract: cabinet-content-review · Required evidence complete: true</p>
+<p class="scope">This result applies only to the named use, supported representation and recorded revisions. It does not certify a plant, physical prediction, robot policy or every claim in a report.</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Check results"><table><thead><tr><th>Check</th><th>Result</th><th>Reason and evidence</th></tr></thead><tbody><tr><td>core.artifact<br>Required</td><td class="PASS">PASS</td><td>Admitted local USD dependencies; missing files remain unresolved.<details><summary>Evidence</summary><pre>{
+  &quot;missing_files&quot;: [],
+  &quot;adapter&quot;: &quot;usd-local-v1&quot;
+}</pre></details></td></tr><tr><td>format<br>Required</td><td class="PASS">PASS</td><td>Selected native OpenUSD validators executed.<details><summary>Evidence</summary><pre>{
+  &quot;pack&quot;: &quot;openusd&quot;,
+  &quot;check&quot;: &quot;validators&quot;,
+  &quot;observations&quot;: {
+    &quot;executed&quot;: [
+      &quot;usdValidation:CompositionErrorTest&quot;,
+      &quot;usdValidation:StageMetadataChecker&quot;,
+      &quot;usdGeomValidators:StageMetadataChecker&quot;
+    ],
+    &quot;issues&quot;: [],
+    &quot;usd_version&quot;: [
+      0,
+      25,
+      11
+    ],
+    &quot;coverage&quot;: &quot;Provider-specific validation; no fixes applied.&quot;
+  }
+}</pre></details></td></tr><tr><td>motion.samples<br>Required</td><td class="FAIL">FAIL</td><td>World transform origins compared at the explicitly requested time codes.<details><summary>Evidence</summary><pre>{
+  &quot;pack&quot;: &quot;motion&quot;,
+  &quot;check&quot;: &quot;positions&quot;,
+  &quot;observations&quot;: {
+    &quot;findings&quot;: [
+      {
+        &quot;object&quot;: &quot;/World/Panel&quot;,
+        &quot;property&quot;: &quot;world_transform_origin_m&quot;,
+        &quot;time_code&quot;: 0,
+        &quot;observed&quot;: [
+          0.0,
+          0.0,
+          0.0
+        ],
+        &quot;expected&quot;: [
+          0,
+          0,
+          0
+        ],
+        &quot;status&quot;: &quot;PASS&quot;
+      },
+      {
+        &quot;object&quot;: &quot;/World/Panel&quot;,
+        &quot;property&quot;: &quot;world_transform_origin_m&quot;,
+        &quot;time_code&quot;: 1,
+        &quot;observed&quot;: [
+          0.8,
+          0.0,
+          0.0
+        ],
+        &quot;expected&quot;: [
+          0.5,
+          0,
+          0
+        ],
+        &quot;status&quot;: &quot;FAIL&quot;
+      },
+      {
+        &quot;object&quot;: &quot;/World/Panel&quot;,
+        &quot;property&quot;: &quot;world_transform_origin_m&quot;,
+        &quot;time_code&quot;: 2,
+        &quot;observed&quot;: [
+          1.0,
+          0.0,
+          0.0
+        ],
+        &quot;expected&quot;: [
+          1,
+          0,
+          0
+        ],
+        &quot;status&quot;: &quot;PASS&quot;
+      }
+    ],
+    &quot;time_codes&quot;: [
+      0,
+      1,
+      2
+    ],
+    &quot;time_codes_per_second&quot;: 1.0,
+    &quot;interpolation&quot;: &quot;Usd.InterpolationTypeLinear&quot;,
+    &quot;coverage&quot;: &quot;Named sampled positions only; orientation, collisions, unsampled intervals and physical feasibility are untested.&quot;
+  }
+}</pre></details></td></tr></tbody></table></div>
+<h2>Scope that remains unchecked</h2><ul><li>Any requirement absent from the supplied contract</li><li>Real-world material or physical accuracy without suitable reference evidence</li><li>Security isolation from installed pack code (trusted in-process execution)</li><li>Simulator execution, rendered appearance and general free-form claim grounding</li></ul>
+<details><summary>Exact inputs and checker identity</summary><pre>{
+  &quot;checker_version&quot;: &quot;0.3.0&quot;,
+  &quot;checker_sha256&quot;: &quot;52cc4fb9d8015280cebf7b3615ae13271dbc196ab703f459bca1e1bf99fce355&quot;,
+  &quot;contract_sha256&quot;: &quot;22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666&quot;,
+  &quot;candidate&quot;: {
+    &quot;root&quot;: &quot;scene.usda&quot;,
+    &quot;files&quot;: {
+      &quot;scene.usda&quot;: &quot;6a43ebf03e9174402d253f59fd2fa14d4ddaaaecf97cf5dac2ce8d5eeeb66ba8&quot;
+    }
+  },
+  &quot;baseline&quot;: null,
+  &quot;packs&quot;: {
+    &quot;openusd&quot;: {
+      &quot;id&quot;: &quot;openusd&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;api_version&quot;: &quot;1.0&quot;,
+      &quot;description&quot;: &quot;Named native OpenUSD validators&quot;,
+      &quot;checks&quot;: {
+        &quot;validators&quot;: {
+          &quot;description&quot;: &quot;Run explicit native validators&quot;,
+          &quot;coverage&quot;: &quot;Named native validator scope&quot;,
+          &quot;limitations&quot;: [
+            &quot;Local USD admission limits apply.&quot;
+          ],
+          &quot;parameters&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;validators&quot;: {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;,
+                  &quot;minLength&quot;: 1
+                },
+                &quot;minItems&quot;: 1,
+                &quot;maxItems&quot;: 128,
+                &quot;uniqueItems&quot;: true
+              },
+              &quot;warnings_as_failures&quot;: {
+                &quot;type&quot;: &quot;boolean&quot;
+              }
+            },
+            &quot;required&quot;: [
+              &quot;validators&quot;,
+              &quot;warnings_as_failures&quot;
+            ],
+            &quot;additionalProperties&quot;: false
+          }
+        }
+      },
+      &quot;source_sha256&quot;: {
+        &quot;0:builtin_packs.py&quot;: &quot;0b768633afce9b2ec9e65d8014d62805bc593183ce7b2f5e63aa6ecf2ed62fe2&quot;
+      },
+      &quot;dependencies&quot;: {
+        &quot;usd-core&quot;: {
+          &quot;version&quot;: &quot;25.11&quot;,
+          &quot;record_sha256&quot;: &quot;c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982&quot;
+        }
+      },
+      &quot;implementation_sha256&quot;: &quot;0c48d226b9e1a225d8b6ab6b5a7556ef622010238132cd7abb8c0dfb90cc6806&quot;
+    },
+    &quot;motion&quot;: {
+      &quot;id&quot;: &quot;motion&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;api_version&quot;: &quot;1.0&quot;,
+      &quot;description&quot;: &quot;Bounded authored-motion position samples&quot;,
+      &quot;checks&quot;: {
+        &quot;positions&quot;: {
+          &quot;description&quot;: &quot;Compare world origins at explicit time codes&quot;,
+          &quot;coverage&quot;: &quot;Only named positions at supplied times&quot;,
+          &quot;limitations&quot;: [
+            &quot;No continuous-time guarantee, collision, orientation or physics&quot;
+          ],
+          &quot;parameters&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;path&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;minLength&quot;: 1
+              },
+              &quot;tolerance_m&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0
+              },
+              &quot;samples&quot;: {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;minItems&quot;: 1,
+                &quot;maxItems&quot;: 1000,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;time_code&quot;: {
+                      &quot;type&quot;: &quot;number&quot;
+                    },
+                    &quot;world_origin_m&quot;: {
+                      &quot;type&quot;: &quot;array&quot;,
+                      &quot;items&quot;: {
+                        &quot;type&quot;: &quot;number&quot;
+                      },
+                      &quot;minItems&quot;: 3,
+                      &quot;maxItems&quot;: 3
+                    }
+                  },
+                  &quot;required&quot;: [
+                    &quot;time_code&quot;,
+                    &quot;world_origin_m&quot;
+                  ],
+                  &quot;additionalProperties&quot;: false
+                }
+              }
+            },
+            &quot;required&quot;: [
+              &quot;path&quot;,
+              &quot;tolerance_m&quot;,
+              &quot;samples&quot;
+            ],
+            &quot;additionalProperties&quot;: false
+          }
+        }
+      },
+      &quot;source_sha256&quot;: {
+        &quot;0:builtin_packs.py&quot;: &quot;0b768633afce9b2ec9e65d8014d62805bc593183ce7b2f5e63aa6ecf2ed62fe2&quot;
+      },
+      &quot;dependencies&quot;: {
+        &quot;usd-core&quot;: {
+          &quot;version&quot;: &quot;25.11&quot;,
+          &quot;record_sha256&quot;: &quot;c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982&quot;
+        }
+      },
+      &quot;implementation_sha256&quot;: &quot;10d7a7704ccf7b27c7b23479753a99a7b52cf2cf48d0ff24347108e875f17394&quot;
+    }
+  },
+  &quot;input_files&quot;: {
+    &quot;contract.json&quot;: &quot;22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666&quot;,
+    &quot;scene.usda&quot;: &quot;6a43ebf03e9174402d253f59fd2fa14d4ddaaaecf97cf5dac2ce8d5eeeb66ba8&quot;
+  },
+  &quot;missing_files&quot;: []
+}</pre></details>
+<p><a href="result.json">Machine-readable result</a> · <a href="manifest.json">Report file hashes</a></p>
+<footer>Checker 0.3.0; OpenUSD [0, 25, 11]. Checks ran locally without model calls. Separate processes and access control are still needed in an application.</footer></main></body></html>

@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "REJECT",
+  "complete": true,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+    "contract_sha256": "4db09c29521df4c60d559849e67685d680916c4c307823ab36da166ceb54910f",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+        "scene.usda": "ebf246577ff82f27297bc606c638040cb7e50011d23f393309f39c9ac067f21c"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "nvidia.asset-validator": {
+        "id": "nvidia.asset-validator",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Optional NVIDIA Asset Validator adapter",
+        "checks": {
+          "rules": {
+            "description": "Run explicit NVIDIA rules without fixes",
+            "coverage": "Named upstream rules only",
+            "limitations": [
+              "No simulator execution or SimReady profile certification"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "rules",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "74608cd19d594fdcf209179fdd78e1876ae05d7730d018c9b90caa523e9af3dd"
+          },
+          "usd-validation-nvidia": {
+            "version": "1.20.0",
+            "record_sha256": "a185b1496f500cac219d9ffcf3b68a3fc423bb7c7ec1be57fe44ead17a15b942"
+          }
+        },
+        "implementation_sha256": "b847451aa352a266d469c62b76d2acb69e461368160123404fe10235c974da4d"
+      }
+    },
+    "input_files": {
+      "contract.json": "4db09c29521df4c60d559849e67685d680916c4c307823ab36da166ceb54910f",
+      "scene.usda": "ebf246577ff82f27297bc606c638040cb7e50011d23f393309f39c9ac067f21c",
+      "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "nvidia.metadata",
+      "status": "FAIL",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "evidence": {
+        "pack": "nvidia.asset-validator",
+        "check": "rules",
+        "observations": {
+          "executed": [
+            "StageMetadataChecker",
+            "ValidateTopologyChecker"
+          ],
+          "issues": [
+            {
+              "rule": "StageMetadataChecker",
+              "severity": "FAILURE",
+              "message": "Stage does not specify an upAxis.",
+              "at": null
+            },
+            {
+              "rule": "StageMetadataChecker",
+              "severity": "FAILURE",
+              "message": "Stage does not specify its linear scale in metersPerUnit.",
+              "at": null
+            }
+          ],
+          "upstream_version": "1.20.0",
+          "coverage": "Only selected upstream rules; no SimReady profile certification or simulator run."
+        }
+      },
+      "required": true,
+      "duration_ms": 1.873
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "nvidia.metadata",
+        "pack": "nvidia.asset-validator",
+        "check": "rules",
+        "parameters": {
+          "rules": [
+            "StageMetadataChecker",
+            "ValidateTopologyChecker"
+          ],
+          "warnings_as_failures": false
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "nvidia.asset-validator": {
+        "PASS": 0,
+        "FAIL": 1,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T05:08:57.659885+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 9.509,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

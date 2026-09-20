@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.2.0",
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "complete": false,
+  "intended_use": "layout_review",
+  "contract_id": "subdivision",
+  "identity": {
+    "contract_sha256": "a4719c26f4bb5a3a8d8229e23eb1b8d154068f1aad6f282a9e71c8d920f968ec",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "scene.usda": "92170302ff33799b29498c8ff3bdea3dbd11ddc598853ef0c2b545f4f1b1a761"
+      }
+    },
+    "baseline": {
+      "root": "baseline.usda",
+      "files": {
+        "baseline.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c"
+      }
+    },
+    "claims_sha256": null,
+    "source_sha256": {},
+    "checker_version": "0.2.0",
+    "checker_sha256": "5f93078f6ee35aa5d0c36be7675139ae7e66eba0b3333cb3524b9caceea9c413",
+    "usd_version": [
+      0,
+      25,
+      11
+    ],
+    "jsonschema_version": "4.25.1"
+  },
+  "checks": [
+    {
+      "id": "usd",
+      "status": "PASS",
+      "reason": "Native OpenUSD checks executed; their scope is format/composition metadata.",
+      "evidence": {
+        "executed": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "issues": []
+      },
+      "required": true,
+      "duration_ms": 0.14
+    },
+    {
+      "id": "profile",
+      "status": "UNKNOWN",
+      "reason": "Some content is outside the supported profile.",
+      "evidence": {
+        "unsupported": [
+          "/World/Equipment/Part: Mesh subdivision is outside the polygon profile; require subdivisionScheme = none",
+          "No supported geometry found"
+        ],
+        "cube_count": 0,
+        "mesh_count": 0,
+        "declared_profile": "usd-static-geometry-v1",
+        "artifact_set_sha256": "ee05066d224aacb4337d717d6bc4770f587f86af95f30a390914fb07544612e8"
+      },
+      "required": true,
+      "duration_ms": 0.08
+    },
+    {
+      "id": "metadata",
+      "status": "PASS",
+      "reason": "Compare authored stage metadata, not reader defaults.",
+      "evidence": {
+        "observed": {
+          "meters_per_unit": 1.0,
+          "up_axis": "Z",
+          "authored_meters_per_unit": true,
+          "authored_up_axis": true
+        },
+        "expected": {
+          "meters_per_unit": 1,
+          "up_axis": "Z"
+        }
+      },
+      "required": true,
+      "duration_ms": 0.079
+    },
+    {
+      "id": "mesh",
+      "status": "UNKNOWN",
+      "reason": "Native topology, finite points, face validity and declared edge requirements; not collision or watertightness.",
+      "evidence": {
+        "violations": {},
+        "meshes": {},
+        "unsupported": [
+          "/World/Equipment/Part: Mesh subdivision is outside the polygon profile; require subdivisionScheme = none",
+          "No supported geometry found"
+        ],
+        "closure_required_paths": []
+      },
+      "required": true,
+      "duration_ms": 0.067
+    },
+    {
+      "id": "layout",
+      "status": "UNKNOWN",
+      "reason": "Complete geometry coverage unavailable: /World/Equipment/Part: Mesh subdivision is outside the polygon profile; require subdivisionScheme = none; No supported geometry found",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0.004
+    },
+    {
+      "id": "target",
+      "status": "UNKNOWN",
+      "reason": "Complete geometry coverage unavailable: /World/Equipment/Part: Mesh subdivision is outside the polygon profile; require subdivisionScheme = none; No supported geometry found",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0.001
+    }
+  ],
+  "coverage": {
+    "profile": "usd-static-geometry-v1",
+    "checked": "Only the declared profile and checks listed in the results: static layout, requested edit, mesh structure, optional shape preservation, protected properties, input identity and typed claims.",
+    "unchecked": [
+      "pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness",
+      "mesh normals, UVs, materials and subdivision surfaces",
+      "shape equivalence across reindexing, remeshing or Cube/Mesh conversion",
+      "photographic/visual fidelity",
+      "actual plant measurements",
+      "physical prediction or robot behavior",
+      "free-form reports",
+      "security isolation against a producer with the same filesystem permissions"
+    ],
+    "provided_claims_checked": false,
+    "provided_receipt_checked": false
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T01:40:02.959341+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "provider_override": false,
+    "elapsed_ms": 6.236,
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "network_or_model_required": false
+  }
+}

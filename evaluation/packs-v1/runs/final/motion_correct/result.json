@@ -1,0 +1,353 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "ACCEPT_FOR_USE",
+  "complete": true,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+    "contract_sha256": "22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+        "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "openusd": {
+        "id": "openusd",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Named native OpenUSD validators",
+        "checks": {
+          "validators": {
+            "description": "Run explicit native validators",
+            "coverage": "Named native validator scope",
+            "limitations": [
+              "Local USD admission limits apply."
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "validators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "validators",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "74608cd19d594fdcf209179fdd78e1876ae05d7730d018c9b90caa523e9af3dd"
+          }
+        },
+        "implementation_sha256": "a455eead6787b451b61009dc95500daa701fa5941dfb0e7e15398b3029212dec"
+      },
+      "motion": {
+        "id": "motion",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Bounded authored-motion position samples",
+        "checks": {
+          "positions": {
+            "description": "Compare world origins at explicit time codes",
+            "coverage": "Only named positions at supplied times",
+            "limitations": [
+              "No continuous-time guarantee, collision, orientation or physics"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tolerance_m": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "samples": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1000,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "time_code": {
+                        "type": "number"
+                      },
+                      "world_origin_m": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 3,
+                        "maxItems": 3
+                      }
+                    },
+                    "required": [
+                      "time_code",
+                      "world_origin_m"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "path",
+                "tolerance_m",
+                "samples"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "74608cd19d594fdcf209179fdd78e1876ae05d7730d018c9b90caa523e9af3dd"
+          }
+        },
+        "implementation_sha256": "339069d07501a95087c427cf8bd06f1e3ea28abe97b72b2aa0b572c16b0daf60"
+      }
+    },
+    "input_files": {
+      "contract.json": "22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666",
+      "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+      "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "format",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "evidence": {
+        "pack": "openusd",
+        "check": "validators",
+        "observations": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": [],
+          "usd_version": [
+            0,
+            25,
+            11
+          ],
+          "coverage": "Provider-specific validation; no fixes applied."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.458
+    },
+    {
+      "id": "motion.samples",
+      "status": "PASS",
+      "reason": "World transform origins compared at the explicitly requested time codes.",
+      "evidence": {
+        "pack": "motion",
+        "check": "positions",
+        "observations": {
+          "findings": [
+            {
+              "object": "/World/Panel",
+              "property": "world_transform_origin_m",
+              "time_code": 0,
+              "observed": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "expected": [
+                0,
+                0,
+                0
+              ],
+              "status": "PASS"
+            },
+            {
+              "object": "/World/Panel",
+              "property": "world_transform_origin_m",
+              "time_code": 1,
+              "observed": [
+                0.5,
+                0.0,
+                0.0
+              ],
+              "expected": [
+                0.5,
+                0,
+                0
+              ],
+              "status": "PASS"
+            },
+            {
+              "object": "/World/Panel",
+              "property": "world_transform_origin_m",
+              "time_code": 2,
+              "observed": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "expected": [
+                1,
+                0,
+                0
+              ],
+              "status": "PASS"
+            }
+          ],
+          "time_codes": [
+            0,
+            1,
+            2
+          ],
+          "time_codes_per_second": 1.0,
+          "interpolation": "Usd.InterpolationTypeLinear",
+          "coverage": "Named sampled positions only; orientation, collisions, unsampled intervals and physical feasibility are untested."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.613
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "format",
+        "pack": "openusd",
+        "check": "validators",
+        "parameters": {
+          "validators": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "warnings_as_failures": false
+        },
+        "required": true,
+        "after": []
+      },
+      {
+        "id": "motion.samples",
+        "pack": "motion",
+        "check": "positions",
+        "parameters": {
+          "path": "/World/Panel",
+          "tolerance_m": 1e-06,
+          "samples": [
+            {
+              "time_code": 0,
+              "world_origin_m": [
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "time_code": 1,
+              "world_origin_m": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            {
+              "time_code": 2,
+              "world_origin_m": [
+                1,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "openusd": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "motion": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T05:08:57.296268+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 8.55,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

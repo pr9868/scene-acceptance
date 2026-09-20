@@ -1,0 +1,354 @@
+{
+  "source_unchanged": true,
+  "cases": [
+    {
+      "case": "wrong_destination",
+      "origin": "coordinator-modified derivative, not an agent output",
+      "expected_v0": "REJECT",
+      "actual_v0": "REJECT",
+      "shape_audit": {
+        "status": "PASS",
+        "max_corner_offset_error_m": 2.220446049250313e-16,
+        "color_retained": true,
+        "observed_center_m": [
+          6.1,
+          2.25,
+          0.08
+        ],
+        "observed_corner_offsets_m": [
+          [
+            -0.7000000000000002,
+            -0.55,
+            -0.08
+          ],
+          [
+            -0.7000000000000002,
+            -0.55,
+            0.08
+          ],
+          [
+            -0.7000000000000002,
+            0.5499999999999998,
+            -0.08
+          ],
+          [
+            -0.7000000000000002,
+            0.5499999999999998,
+            0.08
+          ],
+          [
+            0.7000000000000002,
+            -0.55,
+            -0.08
+          ],
+          [
+            0.7000000000000002,
+            -0.55,
+            0.08
+          ],
+          [
+            0.7000000000000002,
+            0.5499999999999998,
+            -0.08
+          ],
+          [
+            0.7000000000000002,
+            0.5499999999999998,
+            0.08
+          ]
+        ],
+        "expected_corner_offsets_m": [
+          [
+            -0.7,
+            -0.55,
+            -0.08
+          ],
+          [
+            -0.7,
+            -0.55,
+            0.08
+          ],
+          [
+            -0.7,
+            0.55,
+            -0.08
+          ],
+          [
+            -0.7,
+            0.55,
+            0.08
+          ],
+          [
+            0.7,
+            -0.55,
+            -0.08
+          ],
+          [
+            0.7,
+            -0.55,
+            0.08
+          ],
+          [
+            0.7,
+            0.55,
+            -0.08
+          ],
+          [
+            0.7,
+            0.55,
+            0.08
+          ]
+        ],
+        "scope": "Supplemental consumer requirement audit, outside the unmodified v0 harness. Same coordinator and OpenUSD dependency, not an independent reviewer."
+      },
+      "violations": [
+        {
+          "id": "target",
+          "status": "FAIL",
+          "reason": "Compare saved world-space center with the agreed target.",
+          "evidence": {
+            "path": "/World/Equipment/Tray/Deck",
+            "observed_m": [
+              6.1,
+              2.25,
+              0.08
+            ],
+            "expected_m": [
+              6.1,
+              1.95,
+              0.08
+            ],
+            "tolerance_m": 1e-05
+          },
+          "required": true,
+          "duration_ms": 0.074
+        }
+      ]
+    },
+    {
+      "case": "protected_color",
+      "origin": "coordinator-modified derivative, not an agent output",
+      "expected_v0": "REJECT",
+      "actual_v0": "REJECT",
+      "shape_audit": {
+        "status": "PASS",
+        "max_corner_offset_error_m": 2.220446049250313e-16,
+        "color_retained": true,
+        "observed_center_m": [
+          6.1,
+          1.95,
+          0.08
+        ],
+        "observed_corner_offsets_m": [
+          [
+            -0.7000000000000002,
+            -0.55,
+            -0.08
+          ],
+          [
+            -0.7000000000000002,
+            -0.55,
+            0.08
+          ],
+          [
+            -0.7000000000000002,
+            0.55,
+            -0.08
+          ],
+          [
+            -0.7000000000000002,
+            0.55,
+            0.08
+          ],
+          [
+            0.7000000000000002,
+            -0.55,
+            -0.08
+          ],
+          [
+            0.7000000000000002,
+            -0.55,
+            0.08
+          ],
+          [
+            0.7000000000000002,
+            0.55,
+            -0.08
+          ],
+          [
+            0.7000000000000002,
+            0.55,
+            0.08
+          ]
+        ],
+        "expected_corner_offsets_m": [
+          [
+            -0.7,
+            -0.55,
+            -0.08
+          ],
+          [
+            -0.7,
+            -0.55,
+            0.08
+          ],
+          [
+            -0.7,
+            0.55,
+            -0.08
+          ],
+          [
+            -0.7,
+            0.55,
+            0.08
+          ],
+          [
+            0.7,
+            -0.55,
+            -0.08
+          ],
+          [
+            0.7,
+            -0.55,
+            0.08
+          ],
+          [
+            0.7,
+            0.55,
+            -0.08
+          ],
+          [
+            0.7,
+            0.55,
+            0.08
+          ]
+        ],
+        "scope": "Supplemental consumer requirement audit, outside the unmodified v0 harness. Same coordinator and OpenUSD dependency, not an independent reviewer."
+      },
+      "violations": [
+        {
+          "id": "preserved",
+          "status": "FAIL",
+          "reason": "Only the declared protected properties are compared.",
+          "evidence": {
+            "properties": [
+              "world_bounds",
+              "display_color"
+            ],
+            "root": "/World/Equipment",
+            "excluded": [
+              "/World/Equipment/Tray"
+            ],
+            "differences": [
+              "/World/Equipment/Inspection/Body: display_color changed"
+            ]
+          },
+          "required": true,
+          "duration_ms": 0.08
+        }
+      ]
+    },
+    {
+      "case": "shrunk_tray",
+      "origin": "coordinator-modified derivative, not an agent output",
+      "expected_v0": "ACCEPT_FOR_USE",
+      "actual_v0": "ACCEPT_FOR_USE",
+      "shape_audit": {
+        "status": "FAIL",
+        "max_corner_offset_error_m": 0.3500000000000003,
+        "color_retained": true,
+        "observed_center_m": [
+          6.1,
+          1.95,
+          0.08
+        ],
+        "observed_corner_offsets_m": [
+          [
+            -0.34999999999999964,
+            -0.27500000000000013,
+            -0.08
+          ],
+          [
+            -0.34999999999999964,
+            -0.27500000000000013,
+            0.08
+          ],
+          [
+            -0.34999999999999964,
+            0.27500000000000013,
+            -0.08
+          ],
+          [
+            -0.34999999999999964,
+            0.27500000000000013,
+            0.08
+          ],
+          [
+            0.34999999999999964,
+            -0.27500000000000013,
+            -0.08
+          ],
+          [
+            0.34999999999999964,
+            -0.27500000000000013,
+            0.08
+          ],
+          [
+            0.34999999999999964,
+            0.27500000000000013,
+            -0.08
+          ],
+          [
+            0.34999999999999964,
+            0.27500000000000013,
+            0.08
+          ]
+        ],
+        "expected_corner_offsets_m": [
+          [
+            -0.7,
+            -0.55,
+            -0.08
+          ],
+          [
+            -0.7,
+            -0.55,
+            0.08
+          ],
+          [
+            -0.7,
+            0.55,
+            -0.08
+          ],
+          [
+            -0.7,
+            0.55,
+            0.08
+          ],
+          [
+            0.7,
+            -0.55,
+            -0.08
+          ],
+          [
+            0.7,
+            -0.55,
+            0.08
+          ],
+          [
+            0.7,
+            0.55,
+            -0.08
+          ],
+          [
+            0.7,
+            0.55,
+            0.08
+          ]
+        ],
+        "scope": "Supplemental consumer requirement audit, outside the unmodified v0 harness. Same coordinator and OpenUSD dependency, not an independent reviewer."
+      },
+      "violations": []
+    }
+  ]
+}

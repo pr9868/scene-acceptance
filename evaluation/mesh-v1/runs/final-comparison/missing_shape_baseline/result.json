@@ -1,0 +1,224 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.2.0",
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "complete": false,
+  "intended_use": "layout_review",
+  "contract_id": "missing_shape_baseline",
+  "identity": {
+    "contract_sha256": "1a02e942e49b0cc615da5a722c6006274e42c29401d548ebeadae3d5993dff56",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "scene.usda": "1d9fb2cba75356c6ed418cb8c6aee16ad8436c2a00acec5c300535914090b96c"
+      }
+    },
+    "baseline": null,
+    "claims_sha256": null,
+    "source_sha256": {},
+    "checker_version": "0.2.0",
+    "checker_sha256": "5f93078f6ee35aa5d0c36be7675139ae7e66eba0b3333cb3524b9caceea9c413",
+    "usd_version": [
+      0,
+      25,
+      11
+    ],
+    "jsonschema_version": "4.25.1"
+  },
+  "checks": [
+    {
+      "id": "usd",
+      "status": "PASS",
+      "reason": "Native OpenUSD checks executed; their scope is format/composition metadata.",
+      "evidence": {
+        "executed": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "issues": []
+      },
+      "required": true,
+      "duration_ms": 0.165
+    },
+    {
+      "id": "profile",
+      "status": "PASS",
+      "reason": "Supported declared static geometry profile.",
+      "evidence": {
+        "unsupported": [],
+        "cube_count": 0,
+        "mesh_count": 1,
+        "declared_profile": "usd-static-geometry-v1",
+        "artifact_set_sha256": "5ea6fecd4c71251eaa823dbd5ea2f93605e1421ee3308dffa3ad90dcc432109f"
+      },
+      "required": true,
+      "duration_ms": 0.086
+    },
+    {
+      "id": "metadata",
+      "status": "PASS",
+      "reason": "Compare authored stage metadata, not reader defaults.",
+      "evidence": {
+        "observed": {
+          "meters_per_unit": 1.0,
+          "up_axis": "Z",
+          "authored_meters_per_unit": true,
+          "authored_up_axis": true
+        },
+        "expected": {
+          "meters_per_unit": 1,
+          "up_axis": "Z"
+        }
+      },
+      "required": true,
+      "duration_ms": 0.084
+    },
+    {
+      "id": "mesh",
+      "status": "PASS",
+      "reason": "Native topology, finite points, face validity and declared edge requirements; not collision or watertightness.",
+      "evidence": {
+        "violations": {},
+        "meshes": {
+          "/World/Equipment/Part": {
+            "point_count": 8,
+            "face_count": 6,
+            "index_count": 24,
+            "native_topology": {
+              "valid": true,
+              "reason": ""
+            },
+            "closed_consistent_edges": true,
+            "nonclosing_or_inconsistent_edge_count": 0,
+            "edge_examples": [],
+            "unused_point_count": 0
+          }
+        },
+        "unsupported": [],
+        "closure_required_paths": []
+      },
+      "required": true,
+      "duration_ms": 0.077
+    },
+    {
+      "id": "layout",
+      "status": "PASS",
+      "reason": "World-space bounds from cube corners or referenced mesh vertices; no pairwise collision claim.",
+      "evidence": {
+        "children": [
+          "Part"
+        ],
+        "violations": [],
+        "bounds": {
+          "/World/Equipment/Part": {
+            "min": [
+              2.0,
+              1.5,
+              0.09999999850988389
+            ],
+            "max": [
+              4.0,
+              2.5,
+              0.30000000149011613
+            ],
+            "center": [
+              3.0,
+              2.0,
+              0.2
+            ],
+            "dimensions": [
+              2.0,
+              1.0,
+              0.20000000298023224
+            ],
+            "display_color": [
+              [
+                0.30000001192092896,
+                0.5,
+                0.699999988079071
+              ]
+            ]
+          }
+        },
+        "requirements": {
+          "root": "/World/Equipment",
+          "required_children": [
+            "Part"
+          ],
+          "cell_min_m": [
+            -5,
+            0,
+            0
+          ],
+          "cell_max_m": [
+            10,
+            10,
+            3
+          ],
+          "aisle_min_y_m": 1
+        }
+      },
+      "required": true,
+      "duration_ms": 0.097
+    },
+    {
+      "id": "target",
+      "status": "PASS",
+      "reason": "Compare saved world-space center with the agreed target.",
+      "evidence": {
+        "path": "/World/Equipment/Part",
+        "observed_m": [
+          3.0,
+          2.0,
+          0.2
+        ],
+        "expected_m": [
+          3,
+          2,
+          0.2
+        ],
+        "tolerance_m": 1e-05
+      },
+      "required": true,
+      "duration_ms": 0.069
+    },
+    {
+      "id": "shape",
+      "status": "UNKNOWN",
+      "reason": "Translation-only shape check requires a saved baseline",
+      "evidence": {},
+      "required": true,
+      "duration_ms": 0.003
+    }
+  ],
+  "coverage": {
+    "profile": "usd-static-geometry-v1",
+    "checked": "Only the declared profile and checks listed in the results: static layout, requested edit, mesh structure, optional shape preservation, protected properties, input identity and typed claims.",
+    "unchecked": [
+      "pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness",
+      "mesh normals, UVs, materials and subdivision surfaces",
+      "shape equivalence across reindexing, remeshing or Cube/Mesh conversion",
+      "photographic/visual fidelity",
+      "actual plant measurements",
+      "physical prediction or robot behavior",
+      "free-form reports",
+      "security isolation against a producer with the same filesystem permissions"
+    ],
+    "provided_claims_checked": false,
+    "provided_receipt_checked": false
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T01:40:03.008308+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "provider_override": false,
+    "elapsed_ms": 6.178,
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "network_or_model_required": false
+  }
+}

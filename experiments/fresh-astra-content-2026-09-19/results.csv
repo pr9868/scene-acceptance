@@ -1,0 +1,9 @@
+trial_id,attempt,disposition,artifact_present,layout_verdict,physical_evidence_verdict,supplemental_shape,observed,elapsed_seconds
+ordinary_edit-1,recovery-1,delivered,True,ACCEPT_FOR_USE,NOT_RUN,PASS,Layout and supplemental shape audit passed,33.541
+ordinary_edit-2,initial,delivered,True,ACCEPT_FOR_USE,NOT_RUN,PASS,Layout and supplemental shape audit passed,31.903
+rotated_centimetres-1,initial,delivered,True,ACCEPT_FOR_USE,NOT_RUN,PASS,Layout and supplemental shape audit passed,41.879
+rotated_centimetres-2,initial,delivered,True,ACCEPT_FOR_USE,NOT_RUN,PASS,Layout and supplemental shape audit passed,41.612
+conflicting_edit-1,initial,blocked,False,NOT_RUN,NOT_RUN,NOT_RUN,Correct conflict refusal,18.442
+conflicting_edit-2,initial,blocked,False,NOT_RUN,NOT_RUN,NOT_RUN,Correct conflict refusal,16.207
+missing_physics-1,initial,delivered,True,ACCEPT_FOR_USE,INSUFFICIENT_EVIDENCE,PASS,Layout accepted; physical evidence unknown,34.993
+missing_physics-2,initial,delivered,True,ACCEPT_FOR_USE,INSUFFICIENT_EVIDENCE,PASS,Layout accepted; physical evidence unknown,32.563

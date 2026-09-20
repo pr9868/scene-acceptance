@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "artifact_set_sha256": "6fdf9bac8f91047a12592397f1682b1a33d1058f9cd6db19bafff5c3146ba27f",
+  "claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 1.339479953267555,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_center_y",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "center_y",
+      "value": 2.2,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_world_bounds_dimensions",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "dimensions",
+      "value": [
+        1.780086239533463,
+        1.72104009346489,
+        0.16
+      ],
+      "unit": "m",
+      "basis": "computed"
+    }
+  ]
+}

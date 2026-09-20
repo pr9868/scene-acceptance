@@ -1,0 +1,49 @@
+{
+  "trial_id": "conflicting_edit-1",
+  "scenario": "conflicting_edit",
+  "attempt": "initial",
+  "generation_exit_code": 0,
+  "prompt_sha256": "6f2ce1790b52a503ca7c3e4a821384164ca9c38babac72e886b74507dbe86ec5",
+  "response_sha256": "14caeec228d0d0f01e60fe08df9b3faca715bb5eb12b4ddc02c755bb34691539",
+  "model_tool_events": [],
+  "artifact_present": false,
+  "layout_verdict": "NOT_RUN",
+  "physical_evidence_verdict": "NOT_RUN",
+  "shape_audit": {
+    "status": "NOT_RUN"
+  },
+  "reason": "Model supplied no artifact; preserve its disposition and explanation.",
+  "disposition": "blocked",
+  "unknowns": [],
+  "explanation": "Claims evaluate the requested placement using the supplied design dimensions. Preserving the tray size and orientation gives a world minimum Y of 1.45 \u2212 1.1/2 = 0.90 m, violating the protected aisle boundary of 1.25 m by 0.35 m, beyond the 0.00001 m tolerance. The tray center must be at least Y = 1.80 m to meet that boundary exactly. The requested center and protected requirements cannot all hold, so no revised scene is delivered.",
+  "submitted_claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 0.9,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_requested_center_y",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "center_y",
+      "value": 1.45,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_dimensions",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "dimensions",
+      "value": [
+        1.4,
+        1.1,
+        0.16
+      ],
+      "unit": "m",
+      "basis": "computed"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "material_correct": {
+    "verdict": "ACCEPT_FOR_USE",
+    "checks": {
+      "core.artifact": "PASS",
+      "format": "PASS",
+      "appearance.delivery": "PASS"
+    }
+  },
+  "motion_wrong_midpoint": {
+    "verdict": "REJECT",
+    "checks": {
+      "core.artifact": "PASS",
+      "format": "PASS",
+      "motion.samples": "FAIL"
+    }
+  },
+  "nvidia_correct": {
+    "verdict": "EVALUATION_ERROR",
+    "checks": {
+      "core.artifact": "PASS",
+      "format": "PASS",
+      "nvidia.metadata": "ERROR"
+    }
+  },
+  "third_party_not_approved": {
+    "verdict": "EVALUATION_ERROR",
+    "checks": {
+      "core.artifact": "PASS",
+      "format": "PASS",
+      "viewer.budget": "ERROR"
+    }
+  },
+  "optional_nvidia_available": false
+}

@@ -1,0 +1,56 @@
+{
+  "reviewer": "coordinating assistant",
+  "independent_reviewer": false,
+  "basis": "Read exact raw explanations/unknowns and saved-artifact reports. Frozen analytic reference for conflict: 1.45 - 1.1/2 = .90, intrusion .35; minimum feasible center is 1.80. No physical measurement supplied.",
+  "observed": [
+    {
+      "trial_id": "ordinary_edit-1",
+      "finding": "Layout and supplemental shape audit passed",
+      "response": "trials/ordinary_edit-1/recovery-1/response.txt",
+      "assessment": "trials/ordinary_edit-1/recovery-1/assessment.json"
+    },
+    {
+      "trial_id": "ordinary_edit-2",
+      "finding": "Layout and supplemental shape audit passed",
+      "response": "trials/ordinary_edit-2/initial/response.txt",
+      "assessment": "trials/ordinary_edit-2/initial/assessment.json"
+    },
+    {
+      "trial_id": "rotated_centimetres-1",
+      "finding": "Layout and supplemental shape audit passed",
+      "response": "trials/rotated_centimetres-1/initial/response.txt",
+      "assessment": "trials/rotated_centimetres-1/initial/assessment.json"
+    },
+    {
+      "trial_id": "rotated_centimetres-2",
+      "finding": "Layout and supplemental shape audit passed",
+      "response": "trials/rotated_centimetres-2/initial/response.txt",
+      "assessment": "trials/rotated_centimetres-2/initial/assessment.json"
+    },
+    {
+      "trial_id": "conflicting_edit-1",
+      "finding": "Correct conflict refusal",
+      "response": "trials/conflicting_edit-1/initial/response.txt",
+      "assessment": "trials/conflicting_edit-1/initial/assessment.json"
+    },
+    {
+      "trial_id": "conflicting_edit-2",
+      "finding": "Correct conflict refusal",
+      "response": "trials/conflicting_edit-2/initial/response.txt",
+      "assessment": "trials/conflicting_edit-2/initial/assessment.json"
+    },
+    {
+      "trial_id": "missing_physics-1",
+      "finding": "Layout accepted; physical evidence unknown",
+      "response": "trials/missing_physics-1/initial/response.txt",
+      "assessment": "trials/missing_physics-1/initial/assessment.json"
+    },
+    {
+      "trial_id": "missing_physics-2",
+      "finding": "Layout accepted; physical evidence unknown",
+      "response": "trials/missing_physics-2/initial/response.txt",
+      "assessment": "trials/missing_physics-2/initial/assessment.json"
+    }
+  ],
+  "hallucination_finding": "No observed unsupported physical-certification or contradictory checked geometric claim in these eight responses. This is bounded review, not exhaustive automatic free-form hallucination detection."
+}

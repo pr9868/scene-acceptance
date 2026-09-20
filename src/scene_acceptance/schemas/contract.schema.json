@@ -1,0 +1,316 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intended_use": {
+      "enum": [
+        "layout_review",
+        "concept_visualization"
+      ]
+    },
+    "profile": {
+      "enum": [
+        "usd-static-cubes-v1",
+        "usd-static-geometry-v1"
+      ]
+    },
+    "unit": {
+      "const": "m"
+    },
+    "tolerance_m": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "stage": {
+      "type": "object",
+      "properties": {
+        "meters_per_unit": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "up_axis": {
+          "const": "Z"
+        }
+      },
+      "required": [
+        "meters_per_unit",
+        "up_axis"
+      ],
+      "additionalProperties": false
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "pattern": "^/[^.]"
+        },
+        "required_children": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "cell_min_m": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "cell_max_m": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "aisle_min_y_m": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "root",
+        "required_children",
+        "cell_min_m",
+        "cell_max_m",
+        "aisle_min_y_m"
+      ],
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/[^.]"
+        },
+        "center_m": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "path",
+        "center_m"
+      ],
+      "additionalProperties": false
+    },
+    "mesh_rules": {
+      "type": "object",
+      "properties": {
+        "require_closed_edges": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^.]"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "require_closed_edges"
+      ],
+      "additionalProperties": false
+    },
+    "shape": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "const": "translation_only"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^.]"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "mode",
+        "paths"
+      ],
+      "additionalProperties": false
+    },
+    "protected": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "pattern": "^/[^.]"
+        },
+        "exclude_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^.]"
+          },
+          "uniqueItems": true
+        },
+        "properties": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "world_bounds",
+              "display_color"
+            ]
+          }
+        }
+      },
+      "required": [
+        "root",
+        "properties"
+      ],
+      "additionalProperties": false
+    },
+    "required_claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^/[^.]"
+          },
+          "metric": {
+            "enum": [
+              "min_y",
+              "center_y",
+              "dimensions",
+              "friction",
+              "mass",
+              "contact_support"
+            ]
+          },
+          "unit": {
+            "enum": [
+              "m",
+              "kg",
+              "1"
+            ]
+          },
+          "basis": {
+            "enum": [
+              "authored",
+              "computed",
+              "measured",
+              "assumed"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "metric",
+          "unit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "allowed_dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "evidence_sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "checks": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "usd",
+              "profile",
+              "metadata",
+              "layout",
+              "target",
+              "mesh",
+              "shape",
+              "preserved",
+              "claims",
+              "freshness",
+              "report_grounding"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "advisory": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "usd",
+              "profile",
+              "metadata",
+              "layout",
+              "target",
+              "mesh",
+              "shape",
+              "preserved",
+              "claims",
+              "freshness",
+              "report_grounding"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "required",
+        "advisory"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "intended_use",
+    "profile",
+    "unit",
+    "tolerance_m",
+    "stage",
+    "layout",
+    "allowed_dependencies",
+    "evidence_sources",
+    "checks"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

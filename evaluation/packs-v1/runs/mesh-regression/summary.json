@@ -1,0 +1,571 @@
+{
+  "summary": {
+    "cases": 32,
+    "matches": 32,
+    "verdicts": {
+      "ACCEPT_FOR_USE": 12,
+      "REJECT": 14,
+      "INSUFFICIENT_EVIDENCE": 5,
+      "EVALUATION_ERROR": 1
+    },
+    "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+    "scope": "Same-assistant frozen development cases, including labeled derivatives of retained model evidence. No new model calls, independent validation or model reliability rate."
+  },
+  "cases": [
+    {
+      "id": "cube_layout",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Analytic 2 x 1 x .2 metre box at [3,2,.2].",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 20.039
+    },
+    {
+      "id": "quad_layout",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Analytic 2 x 1 x .2 metre box at [3,2,.2].",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 11.614
+    },
+    {
+      "id": "tri_layout",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Analytic 2 x 1 x .2 metre box at [3,2,.2].",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 10.23
+    },
+    {
+      "id": "translated_mesh",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Only translation changes; shape preserved.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "shape": "PASS"
+      },
+      "elapsed_ms": 8.4
+    },
+    {
+      "id": "centimetre_rotated_parent",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Metre target computed independently from a 37 degree rotation.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 8.524
+    },
+    {
+      "id": "mixed_box_hollow_tray",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Cube and a 14-quad hollow tray in one USD stage.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 15.427
+    },
+    {
+      "id": "interior_shape_changed_same_bounds",
+      "expected": "REJECT",
+      "reason": "Inner cavity floor moves; outer AABB is unchanged.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "shape": "FAIL"
+      },
+      "elapsed_ms": 14.815
+    },
+    {
+      "id": "shape_shrunk",
+      "expected": "REJECT",
+      "reason": "Correct center with halved X/Y is not a translation-only edit.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "shape": "FAIL"
+      },
+      "elapsed_ms": 9.11
+    },
+    {
+      "id": "rotated_shape_same_bounds",
+      "expected": "REJECT",
+      "reason": "180-degree rotation keeps pyramid bounds but changes indexed shape.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "shape": "FAIL"
+      },
+      "elapsed_ms": 7.966
+    },
+    {
+      "id": "wrong_destination",
+      "expected": "REJECT",
+      "reason": "Geometry is valid but center misses the requested edit.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "FAIL"
+      },
+      "elapsed_ms": 9.102
+    },
+    {
+      "id": "aisle_intrusion",
+      "expected": "REJECT",
+      "reason": "A valid mesh crosses the minimum-Y half-plane.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "FAIL",
+        "target": "PASS"
+      },
+      "elapsed_ms": 9.197
+    },
+    {
+      "id": "forged_extent",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Actual points win over a forged extent.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 9.11
+    },
+    {
+      "id": "unused_point",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Unreferenced vertex does not enlarge rendered-face bounds.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 9.209
+    },
+    {
+      "id": "index_out_of_range",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 6.246
+    },
+    {
+      "id": "count_sum_wrong",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 6.489
+    },
+    {
+      "id": "nonfinite_point",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 6.126
+    },
+    {
+      "id": "repeated_face_index",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 10.671
+    },
+    {
+      "id": "inconsistent_edge_direction",
+      "expected": "REJECT",
+      "reason": "Declared malformed mesh/edge condition.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 8.753
+    },
+    {
+      "id": "zero_area_face",
+      "expected": "REJECT",
+      "reason": "Distinct indices but collinear face.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 4.355
+    },
+    {
+      "id": "open_surface",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Open surface is valid for layout; consumer closure requirement changes acceptance.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 5.295
+    },
+    {
+      "id": "open_surface_closure_required",
+      "expected": "REJECT",
+      "reason": "Open surface is valid for layout; consumer closure requirement changes acceptance.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "FAIL",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 5.502
+    },
+    {
+      "id": "concave_polygon",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Concave n-gon extrema suffice for bounds, not tessellation certification.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS"
+      },
+      "elapsed_ms": 5.294
+    },
+    {
+      "id": "subdivision",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Outside the declared static polygon profile.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "UNKNOWN",
+        "metadata": "PASS",
+        "mesh": "UNKNOWN",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 5.965
+    },
+    {
+      "id": "hole_indices",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Outside the declared static polygon profile.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "UNKNOWN",
+        "metadata": "PASS",
+        "mesh": "UNKNOWN",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 5.89
+    },
+    {
+      "id": "missing_points",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Required mesh data is absent.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "UNKNOWN",
+        "metadata": "PASS",
+        "mesh": "UNKNOWN",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 6.299
+    },
+    {
+      "id": "missing_shape_baseline",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Shape cannot be established without baseline.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "shape": "UNKNOWN"
+      },
+      "elapsed_ms": 5.476
+    },
+    {
+      "id": "missing_requested_prim",
+      "expected": "REJECT",
+      "reason": "Requested path absent from otherwise complete scene.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "mesh": "PASS",
+        "layout": "PASS",
+        "target": "FAIL"
+      },
+      "elapsed_ms": 8.812
+    },
+    {
+      "id": "shape_without_check",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Declared shape requirement cannot silently go unchecked.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "checks": {
+        "input": "ERROR"
+      },
+      "elapsed_ms": 0.398
+    },
+    {
+      "id": "legacy_profile_mesh",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Legacy cube contract has not gained mesh scope silently.",
+      "provenance": "coordinator-constructed fixture",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "UNKNOWN",
+        "metadata": "PASS",
+        "layout": "UNKNOWN",
+        "target": "UNKNOWN"
+      },
+      "elapsed_ms": 4.031
+    },
+    {
+      "id": "saved_astra_cubes",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "New explicit shape requirement against retained evidence.",
+      "provenance": "unchanged saved Astra scene under stronger contract",
+      "source_bundle": "experiments/fresh-astra-content-2026-09-19/trials/ordinary_edit-1/recovery-1/bundle",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "preserved": "PASS",
+        "claims": "PASS",
+        "shape": "PASS",
+        "mesh": "PASS"
+      },
+      "elapsed_ms": 7.574
+    },
+    {
+      "id": "converted_astra_meshes",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "New explicit shape requirement against retained evidence.",
+      "provenance": "coordinator conversion of saved Astra output",
+      "source_bundle": "experiments/fresh-astra-content-2026-09-19/trials/ordinary_edit-1/recovery-1/bundle",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "preserved": "PASS",
+        "claims": "PASS",
+        "shape": "PASS",
+        "mesh": "PASS"
+      },
+      "elapsed_ms": 19.338
+    },
+    {
+      "id": "previous_shrunk_derivative",
+      "expected": "REJECT",
+      "reason": "New explicit shape requirement against retained evidence.",
+      "provenance": "coordinator-shrunk derivative; not a model failure",
+      "source_bundle": "experiments/fresh-astra-content-2026-09-19/coverage-probes/shrunk_tray/bundle",
+      "actual": "REJECT",
+      "match": true,
+      "checks": {
+        "usd": "PASS",
+        "profile": "PASS",
+        "metadata": "PASS",
+        "layout": "PASS",
+        "target": "PASS",
+        "preserved": "PASS",
+        "claims": "PASS",
+        "shape": "FAIL",
+        "mesh": "PASS"
+      },
+      "elapsed_ms": 6.143
+    }
+  ]
+}

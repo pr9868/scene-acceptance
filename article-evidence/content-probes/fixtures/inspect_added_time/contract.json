@@ -1,0 +1,84 @@
+{
+  "schema_version": "2.0",
+  "id": "cabinet-content-review",
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "profile": {
+    "id": "cabinet-delivery",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "pixel.png"
+  ],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "motion": {
+      "version": "1.0.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "motion.samples",
+      "pack": "motion",
+      "check": "positions",
+      "parameters": {
+        "path": "/World/Panel",
+        "tolerance_m": 1e-06,
+        "samples": [
+          {
+            "time_code": 0,
+            "world_origin_m": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "time_code": 0.5,
+            "world_origin_m": [
+              0.25,
+              0,
+              0
+            ]
+          },
+          {
+            "time_code": 1,
+            "world_origin_m": [
+              0.5,
+              0,
+              0
+            ]
+          },
+          {
+            "time_code": 2,
+            "world_origin_m": [
+              1,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "required": true,
+      "after": []
+    }
+  ]
+}

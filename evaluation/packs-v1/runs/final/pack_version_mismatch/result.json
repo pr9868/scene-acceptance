@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "EVALUATION_ERROR",
+  "complete": false,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+    "contract_sha256": "4abd2fe2d8a76d0e9182a9bfd938d1175615a914f5d3d74ab08314d470ae394b",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+        "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "openusd": {
+        "id": "openusd",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Named native OpenUSD validators",
+        "checks": {
+          "validators": {
+            "description": "Run explicit native validators",
+            "coverage": "Named native validator scope",
+            "limitations": [
+              "Local USD admission limits apply."
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "validators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "validators",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "74608cd19d594fdcf209179fdd78e1876ae05d7730d018c9b90caa523e9af3dd"
+          }
+        },
+        "implementation_sha256": "a455eead6787b451b61009dc95500daa701fa5941dfb0e7e15398b3029212dec"
+      }
+    },
+    "input_files": {
+      "contract.json": "4abd2fe2d8a76d0e9182a9bfd938d1175615a914f5d3d74ab08314d470ae394b",
+      "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+      "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "format",
+      "status": "ERROR",
+      "reason": "ContractError: Pack version mismatch: openusd",
+      "evidence": {
+        "pack": "openusd",
+        "check": "validators",
+        "observations": {}
+      },
+      "required": true,
+      "duration_ms": 0.26
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "format",
+        "pack": "openusd",
+        "check": "validators",
+        "parameters": {
+          "validators": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "warnings_as_failures": false
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "openusd": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 1,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T05:08:57.778706+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 7.346,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

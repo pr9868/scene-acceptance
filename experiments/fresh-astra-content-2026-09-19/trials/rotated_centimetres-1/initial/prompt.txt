@@ -1,0 +1,66 @@
+Produce a saved, editable OpenUSD ASCII scene for an illustrative packaging/inspection layout. These are design dimensions, not measured plant facts. Read the baseline USDA below and deliver its requested revision. Do not use tools, fetch external data or execute code. Return ONLY a JSON object with these fields:
+- "disposition": "delivered", "partial", or "blocked".
+- "usda": the complete USDA scene as a JSON string, or null if the brief cannot be fulfilled.
+- "claims": a list of typed claim objects. Each has id, path, metric, value, unit, basis. At minimum, for a supplied scene report id "tray_front", path "/World/Equipment/Tray/Deck", metric "min_y", value equal to your computed world minimum Y in metres, unit "m", basis "computed". Other supported metrics are center_y, dimensions, friction, mass and contact_support. A dimensions value is three world-aligned bounding dimensions. Use basis measured only for actual supplied measurements. Do not invent a numerical claim for an unknown physical property; instead explain the unknown below. You do not need to compute file hashes.
+- "unknowns": a list of unresolved facts, if any.
+- "explanation": a concise account of what you delivered or why the request is blocked.
+
+Keep authored stage units and Z-up. Keep the same equipment children Inspection, Outfeed and Tray under /World/Equipment. Preserve the world geometry and display colors of Inspection and Outfeed. Preserve the tray's dimensions, world orientation and color while moving it. Use only static Cube, Xform or Scope prims, no animation, references, external assets or additional content. All equipment must stay inside the 10 x 6 x 3 metre cell (minimum 0,0,0) and outside the front aisle Y < 1.25 metres. Absolute tolerance: 0.00001 metre. Do not change conflicting requirements to make a scene appear successful. There are no physical measurements in the supplied sources.
+
+Specific request:
+This scene uses centimetres and the tray has a transformed parent. Move the tray deck WORLD center to (4.65, 2.2, 0.08) metres. Preserve its world orientation and dimensions. You may choose the USD authoring approach, but the saved world result must satisfy the brief.
+
+Baseline USDA:
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "Equipment"
+    {
+        def Xform "Inspection"
+        {
+            def Cube "Body"
+            {
+                color3f[] primvars:displayColor = [(0.25, 0.48, 0.58)]
+                double size = 1
+                double3 xformOp:scale = (100, 80, 140)
+                double3 xformOp:translate = (229.99999999999997, 300, 70)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Outfeed"
+        {
+            def Cube "Body"
+            {
+                color3f[] primvars:displayColor = [(0.5, 0.56, 0.6)]
+                double size = 1
+                double3 xformOp:scale = (200, 75, 90)
+                double3 xformOp:translate = (450, 350, 45)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Tray"
+        {
+            double xformOp:rotateZ = 37
+            double3 xformOp:translate = (400, 250, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ"]
+
+            def Cube "Deck"
+            {
+                color3f[] primvars:displayColor = [(0.67, 0.38, 0.18)]
+                double size = 1
+                double3 xformOp:scale = (140, 110, 16)
+                double3 xformOp:translate = (120, 80, 8)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+    }
+}
+

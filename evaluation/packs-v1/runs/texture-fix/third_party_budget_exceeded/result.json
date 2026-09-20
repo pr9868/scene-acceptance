@@ -1,0 +1,260 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "REJECT",
+  "complete": true,
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "contract_id": "cabinet-content-review",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "3225e6ab6e09954cf4dcae2c830c6c2e08109c0b3ee115759630b667c9c59bf5",
+    "contract_sha256": "b43ccc02352d15d77d7e8b8d0ba282f5680c296c026db3a3344b6c5c81bb7d94",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+        "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "openusd": {
+        "id": "openusd",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Named native OpenUSD validators",
+        "checks": {
+          "validators": {
+            "description": "Run explicit native validators",
+            "coverage": "Named native validator scope",
+            "limitations": [
+              "Local USD admission limits apply."
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "validators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "validators",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "0b768633afce9b2ec9e65d8014d62805bc593183ce7b2f5e63aa6ecf2ed62fe2"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "0c48d226b9e1a225d8b6ab6b5a7556ef622010238132cd7abb8c0dfb90cc6806"
+      },
+      "studio.mesh-budget": {
+        "id": "studio.mesh-budget",
+        "version": "0.1.0",
+        "api_version": "1.0",
+        "description": "Example third-party polygon budget policy",
+        "checks": {
+          "faces": {
+            "description": "Require each selected static mesh to fit a polygon budget",
+            "coverage": "Named meshes at default time",
+            "limitations": [
+              "No mesh validity or measured rendering performance claim"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "paths": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 256,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "max_faces_per_mesh": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "paths",
+                "max_faces_per_mesh"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:studio_mesh_pack.py": "29fa038e7cb1b64a06e8e3037dd0d96454eff9daac232ffa75559fa7ae9f705a"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "65692d30f5507764174d1b3218dbe8bd7412c8811435b4a15f962180b707c048"
+      }
+    },
+    "input_files": {
+      "contract.json": "b43ccc02352d15d77d7e8b8d0ba282f5680c296c026db3a3344b6c5c81bb7d94",
+      "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+      "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "format",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "evidence": {
+        "pack": "openusd",
+        "check": "validators",
+        "observations": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": [],
+          "usd_version": [
+            0,
+            25,
+            11
+          ],
+          "coverage": "Provider-specific validation; no fixes applied."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.499
+    },
+    {
+      "id": "viewer.budget",
+      "status": "FAIL",
+      "reason": "Compared polygon face counts to the consumer's budget.",
+      "evidence": {
+        "pack": "studio.mesh-budget",
+        "check": "faces",
+        "observations": {
+          "findings": [
+            {
+              "object": "/World/Panel",
+              "observed_faces": 1,
+              "maximum_faces": 0
+            }
+          ],
+          "coverage": "Polygon counts only, not topology validity, triangulation cost or frame rate."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.334
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "cabinet-delivery",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "format",
+        "pack": "openusd",
+        "check": "validators",
+        "parameters": {
+          "validators": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "warnings_as_failures": false
+        },
+        "required": true,
+        "after": []
+      },
+      {
+        "id": "viewer.budget",
+        "pack": "studio.mesh-budget",
+        "check": "faces",
+        "parameters": {
+          "paths": [
+            "/World/Panel"
+          ],
+          "max_faces_per_mesh": 0
+        },
+        "required": true,
+        "after": []
+      }
+    ],
+    "by_pack": {
+      "openusd": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "studio.mesh-budget": {
+        "PASS": 0,
+        "FAIL": 1,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T04:55:03.635672+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 7.656,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": [
+      "studio.mesh-budget"
+    ]
+  }
+}

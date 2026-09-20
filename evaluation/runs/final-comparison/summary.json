@@ -1,0 +1,802 @@
+{
+  "summary": {
+    "total": 30,
+    "harness_matching_labels": 30,
+    "harness_false_accepts": 0,
+    "harness_false_rejects": 0,
+    "expected_verdict_counts": {
+      "ACCEPT_FOR_USE": 8,
+      "REJECT": 10,
+      "INSUFFICIENT_EVIDENCE": 6,
+      "EVALUATION_ERROR": 6
+    },
+    "script_supported": 18,
+    "script_matches_on_supported": 18,
+    "script_false_accepts": 0,
+    "scope": "Constructed same-assistant suite, not blind or independently labeled; no population reliability or review-time savings established."
+  },
+  "cases": [
+    {
+      "id": "valid_edit",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Center Y 1.75; front 1.25 >= 1.2; protected cube unchanged.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 21.598124993033707,
+      "baseline": {
+        "verdict": "ACCEPT_FOR_USE",
+        "scope_supported": true,
+        "issues": [],
+        "elapsed_ms": 2.124041027855128
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "unchanged",
+      "expected": "REJECT",
+      "reason": "Center Y 2.4 differs from requested 1.75.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.118749988265336,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Target not reached"
+        ],
+        "elapsed_ms": 1.838417025282979
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "wrong_but_clear",
+      "expected": "REJECT",
+      "reason": "Center Y 1.9 is feasible but does not meet target.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.159584001172334,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Target not reached"
+        ],
+        "elapsed_ms": 1.4714169665239751
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "aisle_intrusion",
+      "expected": "REJECT",
+      "reason": "Exact requested Y 1.4 puts front at .9, violating aisle by .3.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.28587500937283,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Aisle intrusion"
+        ],
+        "elapsed_ms": 1.5567909576930106
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "rotated_parent_valid",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "90 degree parent rotation maps (1.75,-3) to (3,1.75); dimensions swapped locally.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 3.965541021898389,
+      "baseline": {
+        "verdict": "ACCEPT_FOR_USE",
+        "scope_supported": true,
+        "issues": [],
+        "elapsed_ms": 1.6232500202022493
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "rotated_parent_intrusion",
+      "expected": "REJECT",
+      "reason": "World Y 1.1 implies front .6, even though local Y=-3 is not a world coordinate.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.208667029161006,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Aisle intrusion",
+          "Target not reached"
+        ],
+        "elapsed_ms": 1.6196250217035413
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "centimetre_equivalent",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Geometry scaled to cm with .01 m/unit produces the same world-metre bounds.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 3.8061660015955567,
+      "baseline": {
+        "verdict": "ACCEPT_FOR_USE",
+        "scope_supported": true,
+        "issues": [],
+        "elapsed_ms": 2.100875019095838
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "missing_units",
+      "expected": "REJECT",
+      "reason": "Metadata is explicitly required; parser fallback is not authored evidence.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.533792030997574,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Missing authored metadata",
+          "Wrong stage units/axis",
+          "Aisle intrusion",
+          "Aisle intrusion",
+          "Target not reached",
+          "Protected bounds changed"
+        ],
+        "elapsed_ms": 1.6605409909971058
+      },
+      "native": {
+        "status": "FAIL",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": [
+            {
+              "validator": "usdGeomValidators:StageMetadataChecker",
+              "id": "usdGeomValidators:StageMetadataChecker.MissingMetersPerUnitMetadata",
+              "severity": "UsdValidation.ValidationErrorType.Error",
+              "message": "Stage with root layer </private/tmp/spatial-harness-build-20260919/evaluation/fixtures/missing_units/scene.usda> does not specify its linear scale in metersPerUnit."
+            }
+          ]
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "wrong_up_axis",
+      "expected": "REJECT",
+      "reason": "Authored Y-up violates the Z-up layout contract.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 3.7882920005358756,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Wrong stage units/axis"
+        ],
+        "elapsed_ms": 1.6499590128660202
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "protected_color_changed",
+      "expected": "REJECT",
+      "reason": "Protected cube display color changed.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.186415986623615,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Protected color changed"
+        ],
+        "elapsed_ms": 1.7115420196205378
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "forged_extent",
+      "expected": "REJECT",
+      "reason": "Authored extents cannot hide actual deck position: center 1.4, front .9.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 3.752124961465597,
+      "baseline": {
+        "verdict": "REJECT",
+        "scope_supported": true,
+        "issues": [
+          "Aisle intrusion",
+          "Target not reached"
+        ],
+        "elapsed_ms": 2.313832985237241
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "unsupported_sphere",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "A sphere requires a geometry adapter this cube profile does not supply.",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "harness_ms": 4.039250023197383,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Unsupported representation.",
+        "elapsed_ms": 1.6313750529661775
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "time_sampled",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "A time-sampled transform is outside this static profile.",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "harness_ms": 3.637208021245897,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Only static single-layer inputs are supported.",
+        "elapsed_ms": 0.784332980401814
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "malformed_scene",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Scene cannot parse.",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "harness_ms": 1.1031669564545155,
+      "baseline": {
+        "verdict": "EVALUATION_ERROR",
+        "scope_supported": true,
+        "reason": "ErrorException: \n\tError in 'pxrInternal_v0_25_11__pxrReserved__::Sdf_TextFileFormatParser::_RaiseErrorPEGTL' at line 48 in file /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/sdf/textParserHelpers.h : '/private/tmp/spatial-harness-build-20260919/evaluation/fixtures/malformed_scene/scene.usda:2:1: parse error matching PXR_INTERNAL_NS_pegtl::internal::eof at 'INVALID' in </>\n'",
+        "elapsed_ms": 0.7707920158281922
+      },
+      "native": {
+        "status": "NOT_RUN",
+        "reason": "ErrorException: \n\tError in 'pxrInternal_v0_25_11__pxrReserved__::Sdf_TextFileFormatParser::_RaiseErrorPEGTL' at line 48 in file /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/sdf/textParserHelpers.h : '/private/tmp/spatial-harness-build-20260919/evaluation/fixtures/malformed_scene/scene.usda:2:1: parse error matching PXR_INTERNAL_NS_pegtl::internal::eof at 'INVALID' in </>\n'",
+        "scope": "Preflight/readback prevented native execution; retained in total."
+      }
+    },
+    {
+      "id": "unknown_check",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Unknown required check is a contract error.",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "harness_ms": 0.5087919998914003,
+      "baseline": {
+        "verdict": "EVALUATION_ERROR",
+        "scope_supported": true,
+        "reason": "ContractError: ['checks', 'required', 6]: 'magic' is not one of ['usd', 'profile', 'metadata', 'layout', 'target', 'preserved', 'claims', 'freshness', 'report_grounding']",
+        "elapsed_ms": 0.5054170032963157
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "empty_checks",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Empty required list is an invalid contract.",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "harness_ms": 0.5887500010430813,
+      "baseline": {
+        "verdict": "EVALUATION_ERROR",
+        "scope_supported": true,
+        "reason": "ContractError: ['checks', 'required']: [] should be non-empty",
+        "elapsed_ms": 0.2987090265378356
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "missing_tolerance",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Comparison tolerance must be explicit.",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "harness_ms": 0.5460829706862569,
+      "baseline": {
+        "verdict": "EVALUATION_ERROR",
+        "scope_supported": true,
+        "reason": "ContractError: []: 'tolerance_m' is a required property",
+        "elapsed_ms": 0.3165839589200914
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "required_report_grounding",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Unrestricted report grounding is outside v0.",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "harness_ms": 6.11058296635747,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Required claim, receipt or report coverage is outside this script.",
+        "elapsed_ms": 0.32062502577900887
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "optional_report_grounding",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Missing advisory report coverage does not block layout acceptance.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 3.7833339883945882,
+      "baseline": {
+        "verdict": "ACCEPT_FOR_USE",
+        "scope_supported": true,
+        "issues": [],
+        "elapsed_ms": 2.1254579769447446
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "required_claims_missing",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Required claims were not supplied.",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "harness_ms": 3.5592089989222586,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Required claim, receipt or report coverage is outside this script.",
+        "elapsed_ms": 0.334500044118613
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "claim_geometry_supported",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Computed front-edge claim equals 1.25 m.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 4.641500010620803,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Required claim, receipt or report coverage is outside this script.",
+        "elapsed_ms": 0.32650004141032696
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "claim_geometry_wrong",
+      "expected": "REJECT",
+      "reason": "Claim front-edge 1.8 contradicts actual 1.25 m.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.635499964933842,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Required claim, receipt or report coverage is outside this script.",
+        "elapsed_ms": 0.29137497767806053
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "missing_friction_required",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Geometry alone does not establish a friction coefficient.",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "harness_ms": 4.352874995674938,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Required claim, receipt or report coverage is outside this script.",
+        "elapsed_ms": 0.33441599225625396
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "missing_friction_advisory",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Unknown advisory friction does not block an authored layout use.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 4.813415987882763,
+      "baseline": {
+        "verdict": "ACCEPT_FOR_USE",
+        "scope_supported": true,
+        "issues": [],
+        "elapsed_ms": 1.7050830065272748
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "assumption_as_measurement",
+      "expected": "REJECT",
+      "reason": "Claim says measured; cited record explicitly says assumed.",
+      "actual": "REJECT",
+      "match": true,
+      "harness_ms": 4.822540970053524,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Required claim, receipt or report coverage is outside this script.",
+        "elapsed_ms": 0.33474998781457543
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "declared_assumption",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "An explicitly declared assumed value remains unknown but advisory.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 4.4592919875867665,
+      "baseline": {
+        "verdict": "ACCEPT_FOR_USE",
+        "scope_supported": true,
+        "issues": [],
+        "elapsed_ms": 1.8660409841686487
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "declared_local_reference",
+      "expected": "ACCEPT_FOR_USE",
+      "reason": "Declared local reference composes the same cubes.",
+      "actual": "ACCEPT_FOR_USE",
+      "match": true,
+      "harness_ms": 4.446750041097403,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Only static single-layer inputs are supported.",
+        "elapsed_ms": 0.7405420183204114
+      },
+      "native": {
+        "status": "PASS",
+        "evidence": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": []
+        },
+        "scope": "Only the three native format/composition metadata validators. Not task acceptance."
+      }
+    },
+    {
+      "id": "missing_reference",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "reason": "Declared dependent layer is missing; geometry coverage cannot pass.",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "match": true,
+      "harness_ms": 1.5347920125350356,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Only static single-layer inputs are supported.",
+        "elapsed_ms": 1.0235410300083458
+      },
+      "native": {
+        "status": "NOT_RUN",
+        "reason": "MissingEvidence: Missing declared input: part.usda",
+        "scope": "Preflight/readback prevented native execution; retained in total."
+      }
+    },
+    {
+      "id": "remote_reference",
+      "expected": "EVALUATION_ERROR",
+      "reason": "External URI is not allowed; must be rejected before stage composition.",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "harness_ms": 1.274125010240823,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Only static single-layer inputs are supported.",
+        "elapsed_ms": 0.9239579667337239
+      },
+      "native": {
+        "status": "NOT_RUN",
+        "reason": "BoundaryError: External URI/package reference is not allowed",
+        "scope": "Preflight/readback prevented native execution; retained in total."
+      }
+    },
+    {
+      "id": "outside_bundle_reference",
+      "expected": "EVALUATION_ERROR",
+      "reason": "Path traversal is outside the declared input bundle.",
+      "actual": "EVALUATION_ERROR",
+      "match": true,
+      "harness_ms": 1.2742499820888042,
+      "baseline": {
+        "verdict": "INSUFFICIENT_EVIDENCE",
+        "scope_supported": false,
+        "reason": "Only static single-layer inputs are supported.",
+        "elapsed_ms": 0.893334043212235
+      },
+      "native": {
+        "status": "NOT_RUN",
+        "reason": "BoundaryError: Input path leaves the declared bundle",
+        "scope": "Preflight/readback prevented native execution; retained in total."
+      }
+    }
+  ]
+}

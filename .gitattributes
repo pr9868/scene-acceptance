@@ -1,0 +1,2 @@
+# Preserve byte identity of retained evidence, including original CSV line endings.
+* -text

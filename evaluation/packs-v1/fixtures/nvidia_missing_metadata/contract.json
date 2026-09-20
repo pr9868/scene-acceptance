@@ -1,0 +1,35 @@
+{
+  "schema_version": "2.0",
+  "id": "cabinet-content-review",
+  "intended_use": "Accept the explicitly named cabinet asset requirements",
+  "profile": {
+    "id": "cabinet-delivery",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "pixel.png"
+  ],
+  "evidence_sources": [],
+  "packs": {
+    "nvidia.asset-validator": {
+      "version": "1.0.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "nvidia.metadata",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "parameters": {
+        "rules": [
+          "StageMetadataChecker",
+          "ValidateTopologyChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "required": true,
+      "after": []
+    }
+  ]
+}

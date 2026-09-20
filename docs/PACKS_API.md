@@ -1,0 +1,126 @@
+# Evaluation packs: extension API 1.0 / harness 0.3.0
+
+One application-owned contract selects checks from installed packs. A pack supplies measurements and findings. The core records coverage, prerequisites, versions and input identity, then reduces the required results. It never repairs a scene. The calling application routes feedback and decides whether to ask its producer for another candidate.
+
+## Implemented architecture
+
+```mermaid
+flowchart TD
+    H[Human or domain owner: use, references and acceptance requirements] --> C[Versioned use profile / contract]
+    A[Producer agent or authoring tools] --> S[Saved USD bundle]
+    C --> E[Core: validate contract, admit inputs, resolve approved packs]
+    S --> E
+    E --> U[OpenUSD native validators]
+    E --> G[Existing geometry / edit contract adapter]
+    E --> M[Material structure via UsdShade]
+    E --> T[Sampled motion via UsdGeom]
+    E --> N[NVIDIA USD Validation: selected rules]
+    E --> P[Explicitly enabled third-party pack]
+    U --> R[Common findings, coverage and revision evidence]
+    G --> R
+    M --> R
+    T --> R
+    N --> R
+    P --> R
+    R --> D[Core: required-check acceptance decision]
+    D --> APP[Calling application: consume accepted revision or route findings]
+    APP -. producer handles revisions .-> A
+    classDef human fill:#e6eef8,stroke:#47709c,color:#262626
+    classDef agent fill:#eee8f5,stroke:#75609a,color:#262626
+    classDef application fill:#e9edf2,stroke:#64758a,color:#262626
+    classDef evaluator fill:#e3f1e5,stroke:#45764b,color:#262626
+    class H human
+    class A agent
+    class C,S,E,R,D,APP application
+    class U,G,M,T,N,P evaluator
+```
+
+Legend: blue = human responsibility; purple = producer agent; gray = application/core code; green = evaluation packs and upstream tools. The evaluator runs selected checks sequentially in prerequisite order. Independent checks continue after a provider error. This implementation has no automatic producer loop, worker scheduler or repair function.
+
+## Packs available in this version
+
+| Pack | Selected checks | Evidence boundary |
+|---|---|---|
+| `openusd` 1.0.0 | Named `UsdValidation` validators; warning policy is explicit | Native provider-specific scope. Available validators include geometry, shading and physics schema checks; they are not all enabled or individually certified by this project. |
+| `geometry` 1.0.0 | Existing contract v1 through the compatibility evaluator | Current cube/polygon/edit rules and their original coverage limits. A nested contract must be declared as evidence and cannot add undeclared dependencies. |
+| `materials` 1.0.0 | Named resolved bindings, expected surface shader IDs and external asset existence | Does not decode textures, validate UV mapping or render/reference appearance. A material shader says nothing about measured friction. |
+| `motion` 1.0.0 | World transform origin at specified time codes, in meters | Does not prove orientation, collision, continuous motion or physical feasibility. Time codes are not implicitly seconds. |
+| `nvidia.asset-validator` 1.0.0 | Named rules from `usd-validation-nvidia==1.20.0`; optional dependency | Reports upstream rule and severity. Does not call fixers, stamp an asset or claim SimReady profile/task acceptance. |
+| `studio.mesh-budget` 0.1.0 | Independently installed example: named static mesh polygon budgets | Consumer policy example; does not establish topology validity or rendering performance. |
+
+Native/NVIDIA catalog size measures discoverability, not tested coverage. Use the catalog command to inspect the exact installed versions and names. Unsupported or unavailable requirements cannot become silent passes.
+
+## Install and inspect
+
+Use a fresh Python 3.12 environment. From the project folder:
+
+```sh
+python3.12 -m venv .venv
+.venv/bin/python -m pip install .
+.venv/bin/check-3d-packs
+.venv/bin/check-3d-packs --upstream openusd
+```
+
+For the optional NVIDIA adapter:
+
+```sh
+.venv/bin/python -m pip install '.[nvidia]'
+.venv/bin/check-3d-packs --upstream nvidia
+```
+
+The base install only requires OpenUSD and JSON Schema. Listing the default pack catalog reports a missing optional dependency without failing unrelated profiles. Required use of an unavailable dependency returns an evaluation error.
+
+## A use profile is a contract, not a pack
+
+`contract-v2.schema.json` defines the format. A profile has an ID and version, with its requirements embedded in the contract. Version 0.3 does not yet implement profile inheritance, a remote catalog or profile includes. Reuse a reviewed contract template and pin its hash in the calling application when needed.
+
+Each check instance has a unique ID, pack ID, check name, required/advisory flag, strict parameters and optional `after` prerequisites. This permits the same measurement under different tolerances or consumers. Pack versions must match exactly; an optional `sha256` pins the descriptor, declared source hashes and dependency identities. Repeated checks still retain individual findings. No averaged quality score can hide a required failure.
+
+See the complete [combined profile](../evaluation/packs-v1/fixtures/combined_profile/contract.json). It selects material, motion, native, NVIDIA and third-party budget checks for the same artifact.
+
+```sh
+.venv/bin/python -m pip install ./examples/studio-mesh-pack
+.venv/bin/check-3d --contract contract.json --candidate scene.usda \
+  --bundle-root evaluation/packs-v1/fixtures/combined_profile \
+  --allow-pack studio.mesh-budget --out /tmp/my-scene-review
+```
+
+The output directory must be new and outside the input bundle. The JSON and HTML reports retain individual findings and pack summaries. An accepted geometry-only profile is not acceptance for a different material or motion requirement.
+
+## Add a third-party pack without changing the core
+
+The complete [example package](../examples/studio-mesh-pack/studio_mesh_pack.py) has its own `pyproject.toml` and uses a Python packaging entry point:
+
+```toml
+[project.entry-points."scene_acceptance.packs"]
+"studio.mesh-budget" = "studio_mesh_pack:get_pack"
+```
+
+The factory returns `Pack(id, version, description, checks, source_files, dependencies)`. A `CheckSpec` declares the function, JSON parameter schema, description, coverage and limitations. Its function receives a `Context` and a private copy of its parameters and returns `Outcome(status, reason, evidence)`.
+
+- `Context.artifact.stage` is the admitted OpenUSD stage. `baseline` is optional.
+- `Context.bundle.record(path)` records a local input and its initial digest; changed inputs cannot be re-recorded to erase the change.
+- `Context.sources` lists declared reference files. Missing required evidence should raise `MissingEvidence` or return `UNKNOWN`.
+- Evidence should identify the object/property, observed and expected values, units, time/sample where relevant, and the measurement's coverage. Provider-specific data remain inside the common evidence record.
+- Declare every implementation file and relevant dependency. The core fingerprints the descriptor and declared source files and records installed dependency versions/RECORD identity. This is provenance for trusted code, not cryptographic proof of every transitive runtime dependency.
+- Use `PASS`, `FAIL`, `UNKNOWN` or `ERROR`. A required `NOT_APPLICABLE` is an evaluation error. A pack cannot override the caller's required flag or the overall decision.
+
+Discovery reads entry-point metadata without importing third-party code. Installation alone does not enable a pack. Pass `--allow-pack` or explicitly register a trusted `Pack` in the Python API. Duplicate pack IDs, mismatched entry-point IDs, invalid parameter schemas and incompatible API versions are rejected. Candidate contracts name approved packs; they cannot supply module paths or installation commands.
+
+The plugin and its dependencies are trusted installed code. In-process functions have no security isolation or enforced wall-clock timeout. They must not mutate submitted files or USD layers; the core checks file, in-memory layer and declared pack identity changes and invalidates affected runs. These checks are not a sandbox against hostile Python. Put expensive/untrusted evaluators in a caller-managed process/container with read-only input mounts before using such providers. A versioned worker protocol and scheduler remain future work.
+
+## Verdict and dependency behavior
+
+A required failure yields `REJECT`; required unknowns or errors remain visible even when a known failure already rejects the artifact. Without a required failure, an error yields `EVALUATION_ERROR`, an unknown yields `INSUFFICIENT_EVIDENCE`, and all required passes yield `ACCEPT_FOR_USE`. Input/contract/integrity errors always invalidate the run. Advisory findings are visible but do not gate acceptance. A failed prerequisite leaves dependent checks `UNKNOWN` rather than pretending they ran.
+
+## Admission and limits
+
+`usd-local-v1` admits local USD layers plus explicitly declared local assets, including asset-valued shader attributes and time-sampled assets. It fingerprints file dependencies before composition. Limits: 32 MiB per file, 64 files per USD dependency closure, 10,000 prims and 10,000 time samples per asset dependency attribute. Paths outside the bundle, resolver URLs, packaged assets and dependency patterns such as UDIM tokens are rejected. Variants, payloads, value clips, inherits/specializes, cycles and instances remain outside this reader's coverage. Add another tested reader contract before claiming those representations.
+
+Old contract v1 still dispatches to the original static evaluator. Old records remain immutable; new runs identify checker 0.3.0. The GitHub v0.3.0 release includes the pack implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
+
+## What to add next
+
+A new pack is appropriate when it adds a distinct measurement or source of evidence: renderer/reference comparisons, runtime contact tests, sensor/label alignment or observed-data consistency. Reuse upstream validators rather than reproducing them. A profile selects the subset relevant to its use; it should not enable every available check merely to make the report look comprehensive.
+
+The SimReady validator is publicly discoverable in the package index inspected for this work. Integrating its approved profile definitions and runtime benchmarks remains separate work; an asset rule adapter alone does not establish SimReady profile conformance. Physics simulation needs a named engine, version, reset/timestep/seed policy, runtime evidence and a justified reference. The core pack evaluation did not run a renderer or simulator. The repository also includes a separate, restricted CPU MuJoCo experiment; it is not exposed as an installed pack. No robot training or hardware run is included.

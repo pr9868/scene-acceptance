@@ -1,0 +1,6 @@
+# Article replay dependencies in addition to requirements-test.lock.
+# Python 3.12; tested on macOS arm64. No model calls or GPU needed.
+usd-validation-nvidia==1.20.0
+mujoco==3.6.0
+numpy==2.5.3
+Pillow==12.3.0

@@ -1,0 +1,52 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 0.01
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "Equipment"
+    {
+        def Xform "Inspection"
+        {
+            def Cube "Body"
+            {
+                color3f[] primvars:displayColor = [(0.25, 0.48, 0.58)]
+                double size = 1
+                double3 xformOp:scale = (100, 80, 140)
+                double3 xformOp:translate = (229.99999999999997, 300, 70)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Outfeed"
+        {
+            def Cube "Body"
+            {
+                color3f[] primvars:displayColor = [(0.5, 0.56, 0.6)]
+                double size = 1
+                double3 xformOp:scale = (200, 75, 90)
+                double3 xformOp:translate = (450, 350, 45)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+
+        def Xform "Tray"
+        {
+            double xformOp:rotateZ = 37
+            double3 xformOp:translate = (465, 220, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ"]
+
+            def Cube "Deck"
+            {
+                color3f[] primvars:displayColor = [(0.67, 0.38, 0.18)]
+                double size = 1
+                double3 xformOp:scale = (140, 110, 16)
+                double3 xformOp:translate = (0, 0, 8)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+        }
+    }
+}

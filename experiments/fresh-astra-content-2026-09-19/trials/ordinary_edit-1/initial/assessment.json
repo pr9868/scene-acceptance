@@ -1,0 +1,16 @@
+{
+  "trial_id": "ordinary_edit-1",
+  "scenario": "ordinary_edit",
+  "attempt": "initial",
+  "generation_exit_code": 1,
+  "prompt_sha256": "936797311ce1ee83cb832475145615eceffc00ff1aa88f9a3bac1a5a35807659",
+  "response_sha256": null,
+  "model_tool_events": [],
+  "artifact_present": false,
+  "layout_verdict": "NOT_RUN",
+  "physical_evidence_verdict": "NOT_RUN",
+  "shape_audit": {
+    "status": "NOT_RUN"
+  },
+  "reason": "Generation process failed or timed out; no accepted deliverable."
+}

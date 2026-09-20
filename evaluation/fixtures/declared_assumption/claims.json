@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "artifact_set_sha256": "6b2c4369f574b9ad83a1386f54086e684cfae7f4652205be3b4bb8017aad3107",
+  "claims": [
+    {
+      "id": "claim-1",
+      "path": "/World/Equipment/Pallet/Deck",
+      "metric": "friction",
+      "value": 0.5,
+      "unit": "1",
+      "basis": "assumed"
+    }
+  ]
+}

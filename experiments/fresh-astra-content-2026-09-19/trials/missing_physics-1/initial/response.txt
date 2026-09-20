@@ -1,0 +1,36 @@
+{
+  "disposition": "delivered",
+  "usda": "#usda 1.0\n(\n    defaultPrim = \"World\"\n    metersPerUnit = 1\n    upAxis = \"Z\"\n)\n\ndef Xform \"World\"\n{\n    def Xform \"Equipment\"\n    {\n        def Xform \"Inspection\"\n        {\n            def Cube \"Body\"\n            {\n                color3f[] primvars:displayColor = [(0.25, 0.48, 0.58)]\n                double size = 1\n                double3 xformOp:scale = (1, 0.8, 1.4)\n                double3 xformOp:translate = (2.3, 3, 0.7)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n\n        def Xform \"Outfeed\"\n        {\n            def Cube \"Body\"\n            {\n                color3f[] primvars:displayColor = [(0.5, 0.56, 0.6)]\n                double size = 1\n                double3 xformOp:scale = (2, 0.75, 0.9)\n                double3 xformOp:translate = (4.5, 3.5, 0.45)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n\n        def Xform \"Tray\"\n        {\n            def Cube \"Deck\"\n            {\n                color3f[] primvars:displayColor = [(0.67, 0.38, 0.18)]\n                double size = 1\n                double3 xformOp:scale = (1.4, 1.1, 0.16)\n                double3 xformOp:translate = (6.1, 1.95, 0.08)\n                uniform token[] xformOpOrder = [\"xformOp:translate\", \"xformOp:scale\"]\n            }\n        }\n    }\n}\n",
+  "claims": [
+    {
+      "id": "tray_front",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "min_y",
+      "value": 1.4,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_center_y",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "center_y",
+      "value": 1.95,
+      "unit": "m",
+      "basis": "computed"
+    },
+    {
+      "id": "tray_dimensions",
+      "path": "/World/Equipment/Tray/Deck",
+      "metric": "dimensions",
+      "value": [1.4, 1.1, 0.16],
+      "unit": "m",
+      "basis": "computed"
+    }
+  ],
+  "unknowns": [
+    "Measured tray-support friction is unknown: no physical measurements or contact material properties were supplied.",
+    "Physical support and contact behavior are unestablished; no support geometry or physics configuration is supplied.",
+    "Mass, inertia, collision behavior, robot configuration, sensors, task definition and training validation are unspecified."
+  ],
+  "explanation": "Delivered complete editable USDA text with the tray world center at (6.1, 1.95, 0.08) m. Its dimensions, orientation and color, and all Inspection and Outfeed geometry and colors, are preserved. All equipment fits inside the cell and outside Y < 1.25 m; the tray front is 1.95 - 1.1/2 = 1.4 m. This geometry-only scene is not ready by itself for robot-policy training. No measured friction claim is justified. No file was written because tools and execution were prohibited; the USDA string is ready to save as a .usda file."
+}

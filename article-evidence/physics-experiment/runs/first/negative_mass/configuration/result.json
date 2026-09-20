@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.3.0",
+  "verdict": "REJECT",
+  "complete": true,
+  "intended_use": "Check only the selected USD physics configuration rules; no stability or real-world accuracy claim.",
+  "contract_id": "incline-configuration",
+  "identity": {
+    "checker_version": "0.3.0",
+    "checker_sha256": "9b3cc4327d18a00d6dc60771d06d5af772e3d86db543bdefb87b910584f50e79",
+    "contract_sha256": "559ae2cf4f9f2a657b421fea880179ea4d1d713fbfae906aab0a84f49af9fd47",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "scene.usda": "854fadec1820f3054598c0cdab7bfcd5879d58287d28faa96f53a95c7980831b"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "nvidia.asset-validator": {
+        "id": "nvidia.asset-validator",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Optional NVIDIA Asset Validator adapter",
+        "checks": {
+          "rules": {
+            "description": "Run explicit NVIDIA rules without fixes",
+            "coverage": "Named upstream rules only",
+            "limitations": [
+              "No simulator execution or SimReady profile certification"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "rules",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          },
+          "usd-validation-nvidia": {
+            "version": "1.20.0",
+            "record_sha256": "4fd3a4b8c493e45f2af818c9defe51ff13f784145a55a298632cf63cd7465376"
+          }
+        },
+        "implementation_sha256": "3a8e2009dfc58a0d49ecd83246dda051aa1db1889d1cc33f61cf8fa0969a8a1a"
+      }
+    },
+    "input_files": {
+      "contract.json": "559ae2cf4f9f2a657b421fea880179ea4d1d713fbfae906aab0a84f49af9fd47",
+      "scene.usda": "854fadec1820f3054598c0cdab7bfcd5879d58287d28faa96f53a95c7980831b"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "physics.configuration",
+      "status": "FAIL",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "evidence": {
+        "pack": "nvidia.asset-validator",
+        "check": "rules",
+        "observations": {
+          "executed": [
+            "MassChecker",
+            "RigidBodyChecker",
+            "ColliderChecker"
+          ],
+          "issues": [
+            {
+              "rule": "MassChecker",
+              "severity": "FAILURE",
+              "message": "Mass must be a positive value or 0.0.",
+              "at": "PrimId(stage_id=StageId(root_layer=LayerId(identifier='<article-evidence-root>/physics-experiment/fixtures/negative_mass/scene.usda')), path=/World/Block)"
+            },
+            {
+              "rule": "RigidBodyChecker",
+              "severity": "FAILURE",
+              "message": "Mass is negative, prim path: /World/Block",
+              "at": "PrimId(stage_id=StageId(root_layer=LayerId(identifier='<article-evidence-root>/physics-experiment/fixtures/negative_mass/scene.usda')), path=/World/Block)"
+            },
+            {
+              "rule": "ColliderChecker",
+              "severity": "FAILURE",
+              "message": "Mass is negative, prim path: /World/Block",
+              "at": "PrimId(stage_id=StageId(root_layer=LayerId(identifier='<article-evidence-root>/physics-experiment/fixtures/negative_mass/scene.usda')), path=/World/Block)"
+            }
+          ],
+          "upstream_version": "1.20.0",
+          "coverage": "Only selected upstream rules; no SimReady profile certification or simulator run."
+        }
+      },
+      "required": true,
+      "duration_ms": 3.243
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "incline-configuration",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "physics.configuration",
+        "pack": "nvidia.asset-validator",
+        "check": "rules",
+        "required": true,
+        "parameters": {
+          "rules": [
+            "MassChecker",
+            "RigidBodyChecker",
+            "ColliderChecker"
+          ],
+          "warnings_as_failures": false
+        }
+      }
+    ],
+    "by_pack": {
+      "nvidia.asset-validator": {
+        "PASS": 0,
+        "FAIL": 1,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T05:47:48.895313+00:00",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 10.914,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

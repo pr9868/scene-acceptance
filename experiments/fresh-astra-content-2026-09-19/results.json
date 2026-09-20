@@ -1,0 +1,312 @@
+{
+  "summary": {
+    "completed_at_utc": "2026-09-20T00:50:09.018743+00:00",
+    "requested_model": "gpt-6-astra",
+    "reasoning": "high",
+    "reported_backend_snapshot": null,
+    "cli_version": "codex-cli 0.155.0-alpha.2.6",
+    "assigned_trials": 8,
+    "cli_launches": 9,
+    "infrastructure_failures": 1,
+    "model_responses": 8,
+    "generated_scene_files": 6,
+    "layout_acceptances": 6,
+    "correct_conflict_refusals": 2,
+    "physical_evidence_unknowns": 2,
+    "content_repair_calls": 0,
+    "supplemental_shape_passes": 6,
+    "generation_wall_seconds_sum": 251.14,
+    "reviewer": "coordinating assistant, not an independent human reviewer",
+    "limits": [
+      "Two calls per selected brief; no population reliability estimate.",
+      "Tool-disabled generation, not a tool-using agent workflow.",
+      "Same coordinator authored briefs, harness and review.",
+      "No observed hallucination in the checked outputs; free-form statements and physical truth are not comprehensively evaluated.",
+      "Three deliberately modified derivatives are separate from model outcomes; one exposes a known shape-coverage gap."
+    ]
+  },
+  "trials": [
+    {
+      "trial_id": "ordinary_edit-1",
+      "scenario": "ordinary_edit",
+      "attempt": "recovery-1",
+      "disposition": "delivered",
+      "artifact_present": true,
+      "layout_verdict": "ACCEPT_FOR_USE",
+      "physical_evidence_verdict": "NOT_RUN",
+      "supplemental_shape": "PASS",
+      "observed": "Layout and supplemental shape audit passed",
+      "elapsed_seconds": 33.541,
+      "base": "trials/ordinary_edit-1/recovery-1",
+      "explanation": "Delivered complete editable USDA content with the tray world center at (6.1, 1.95, 0.08) metres. Only its translation changed. All equipment remains inside the cell and outside the front aisle; the tray minimum Y is 1.95 \u2212 1.1/2 = 1.4 metres. No file was written because tools and code execution were prohibited.",
+      "unknowns": [
+        "Physical mass, friction and contact support are unspecified; no physical measurements were supplied."
+      ],
+      "candidate_sha256": "b6dad92fc57a05ea853364ba991de88ae4cf439266bebbaacfdb2271187742a3"
+    },
+    {
+      "trial_id": "ordinary_edit-2",
+      "scenario": "ordinary_edit",
+      "attempt": "initial",
+      "disposition": "delivered",
+      "artifact_present": true,
+      "layout_verdict": "ACCEPT_FOR_USE",
+      "physical_evidence_verdict": "NOT_RUN",
+      "supplemental_shape": "PASS",
+      "observed": "Layout and supplemental shape audit passed",
+      "elapsed_seconds": 31.903,
+      "base": "trials/ordinary_edit-2/initial",
+      "explanation": "Complete editable USDA supplied with the tray world center at (6.1, 1.95, 0.08) metres. Only its translation changed. All equipment remains within the cell and outside the front aisle; the tray has 0.15 metre aisle clearance. No file was written because tools and code execution were prohibited.",
+      "unknowns": [
+        "Physical mass, friction and contact support are unspecified; no physical measurements were supplied."
+      ],
+      "candidate_sha256": "b6dad92fc57a05ea853364ba991de88ae4cf439266bebbaacfdb2271187742a3"
+    },
+    {
+      "trial_id": "rotated_centimetres-1",
+      "scenario": "rotated_centimetres",
+      "attempt": "initial",
+      "disposition": "delivered",
+      "artifact_present": true,
+      "layout_verdict": "ACCEPT_FOR_USE",
+      "physical_evidence_verdict": "NOT_RUN",
+      "supplemental_shape": "PASS",
+      "observed": "Layout and supplemental shape audit passed",
+      "elapsed_seconds": 41.879,
+      "base": "trials/rotated_centimetres-1/initial",
+      "explanation": "Complete editable USDA content is supplied for saving; no filesystem write was performed. The revised translations place the deck world center at (4.65, 2.2, 0.08) metres while preserving its dimensions, 37-degree world rotation and color. Inspection and Outfeed are unchanged. All equipment fits within the cell and outside the front aisle. Tray minimum Y is 2.2 \u2212 0.7 sin(37\u00b0) \u2212 0.55 cos(37\u00b0) = 1.339479953267555 metres.",
+      "unknowns": [
+        "Physical mass, friction and contact/support properties are unspecified; no physical measurements were supplied."
+      ],
+      "candidate_sha256": "23bd3e10423c4b728006e6bac53a115f7a507f458463ee3f1f0f4973273b089d"
+    },
+    {
+      "trial_id": "rotated_centimetres-2",
+      "scenario": "rotated_centimetres",
+      "attempt": "initial",
+      "disposition": "delivered",
+      "artifact_present": true,
+      "layout_verdict": "ACCEPT_FOR_USE",
+      "physical_evidence_verdict": "NOT_RUN",
+      "supplemental_shape": "PASS",
+      "observed": "Layout and supplemental shape audit passed",
+      "elapsed_seconds": 41.612,
+      "base": "trials/rotated_centimetres-2/initial",
+      "explanation": "Complete editable USDA places the deck world center at (4.65, 2.2, 0.08) metres while preserving its dimensions, 37-degree world Z rotation, and color. Inspection and Outfeed remain unchanged. All equipment fits inside the cell and clears the front aisle. Stage units remain centimetres with Z-up. Scene text is supplied; no file was written because tools were prohibited.",
+      "unknowns": [
+        "Mass, friction, and physical contact/support conditions are unspecified. No physical measurements were supplied."
+      ],
+      "candidate_sha256": "23bd3e10423c4b728006e6bac53a115f7a507f458463ee3f1f0f4973273b089d"
+    },
+    {
+      "trial_id": "conflicting_edit-1",
+      "scenario": "conflicting_edit",
+      "attempt": "initial",
+      "disposition": "blocked",
+      "artifact_present": false,
+      "layout_verdict": "NOT_RUN",
+      "physical_evidence_verdict": "NOT_RUN",
+      "supplemental_shape": "NOT_RUN",
+      "observed": "Correct conflict refusal",
+      "elapsed_seconds": 18.442,
+      "base": "trials/conflicting_edit-1/initial",
+      "explanation": "Claims evaluate the requested placement using the supplied design dimensions. Preserving the tray size and orientation gives a world minimum Y of 1.45 \u2212 1.1/2 = 0.90 m, violating the protected aisle boundary of 1.25 m by 0.35 m, beyond the 0.00001 m tolerance. The tray center must be at least Y = 1.80 m to meet that boundary exactly. The requested center and protected requirements cannot all hold, so no revised scene is delivered.",
+      "unknowns": [],
+      "candidate_sha256": null
+    },
+    {
+      "trial_id": "conflicting_edit-2",
+      "scenario": "conflicting_edit",
+      "attempt": "initial",
+      "disposition": "blocked",
+      "artifact_present": false,
+      "layout_verdict": "NOT_RUN",
+      "physical_evidence_verdict": "NOT_RUN",
+      "supplemental_shape": "NOT_RUN",
+      "observed": "Correct conflict refusal",
+      "elapsed_seconds": 16.207,
+      "base": "trials/conflicting_edit-2/initial",
+      "explanation": "The claim describes the supplied baseline. At the requested world center, the preserved 1.1 m tray depth gives minimum Y = 1.45 \u2212 0.55 = 0.90 m, intruding 0.35 m into the protected aisle. This exceeds the 0.00001 m tolerance. Preserving tray size and orientation requires center Y of at least 1.80 m to clear the aisle exactly. The requirements conflict, so no revised scene is delivered.",
+      "unknowns": [],
+      "candidate_sha256": null
+    },
+    {
+      "trial_id": "missing_physics-1",
+      "scenario": "missing_physics",
+      "attempt": "initial",
+      "disposition": "delivered",
+      "artifact_present": true,
+      "layout_verdict": "ACCEPT_FOR_USE",
+      "physical_evidence_verdict": "INSUFFICIENT_EVIDENCE",
+      "supplemental_shape": "PASS",
+      "observed": "Layout accepted; physical evidence unknown",
+      "elapsed_seconds": 34.993,
+      "base": "trials/missing_physics-1/initial",
+      "explanation": "Delivered complete editable USDA text with the tray world center at (6.1, 1.95, 0.08) m. Its dimensions, orientation and color, and all Inspection and Outfeed geometry and colors, are preserved. All equipment fits inside the cell and outside Y < 1.25 m; the tray front is 1.95 - 1.1/2 = 1.4 m. This geometry-only scene is not ready by itself for robot-policy training. No measured friction claim is justified. No file was written because tools and execution were prohibited; the USDA string is ready to save as a .usda file.",
+      "unknowns": [
+        "Measured tray-support friction is unknown: no physical measurements or contact material properties were supplied.",
+        "Physical support and contact behavior are unestablished; no support geometry or physics configuration is supplied.",
+        "Mass, inertia, collision behavior, robot configuration, sensors, task definition and training validation are unspecified."
+      ],
+      "candidate_sha256": "b6dad92fc57a05ea853364ba991de88ae4cf439266bebbaacfdb2271187742a3"
+    },
+    {
+      "trial_id": "missing_physics-2",
+      "scenario": "missing_physics",
+      "attempt": "initial",
+      "disposition": "delivered",
+      "artifact_present": true,
+      "layout_verdict": "ACCEPT_FOR_USE",
+      "physical_evidence_verdict": "INSUFFICIENT_EVIDENCE",
+      "supplemental_shape": "PASS",
+      "observed": "Layout accepted; physical evidence unknown",
+      "elapsed_seconds": 32.563,
+      "base": "trials/missing_physics-2/initial",
+      "explanation": "Delivered complete editable USDA text with the tray world center at (6.1, 1.95, 0.08) metres. Required geometry, orientation, colors, hierarchy, and stage units are preserved. All equipment fits inside the cell and clears the front aisle; tray minimum Y is 1.95 - 1.1/2 = 1.4 metres. This geometry-only scene is not ready for robot policy training. No file was saved because tools and code execution were prohibited.",
+      "unknowns": [
+        "Measured tray-support friction is unknown; no physical measurements or material properties are supplied.",
+        "Physical support and contact behavior are unspecified. The tray bottom at Z = 0 does not establish physical contact.",
+        "Mass, inertia, collision and dynamics configuration, robot configuration, and training task definition are unspecified."
+      ],
+      "candidate_sha256": "b6dad92fc57a05ea853364ba991de88ae4cf439266bebbaacfdb2271187742a3"
+    }
+  ],
+  "launches": [
+    {
+      "trial_id": "ordinary_edit-1",
+      "attempt": "initial",
+      "exit_code": 1,
+      "elapsed_seconds": 0.668,
+      "usage": [],
+      "response_sha256": null
+    },
+    {
+      "trial_id": "ordinary_edit-1",
+      "attempt": "recovery-1",
+      "exit_code": 0,
+      "elapsed_seconds": 33.541,
+      "usage": [
+        {
+          "input_tokens": 10467,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1018,
+          "reasoning_output_tokens": 225
+        }
+      ],
+      "response_sha256": "1aa674220dd034b78a920495881952f2882fe92a7838650e4ccb77678824e6e8"
+    },
+    {
+      "trial_id": "ordinary_edit-2",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 31.903,
+      "usage": [
+        {
+          "input_tokens": 10469,
+          "cached_input_tokens": 7552,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 922,
+          "reasoning_output_tokens": 142
+        }
+      ],
+      "response_sha256": "7325b0f934aef616d03f87102e3223fa367200704f146281e1a439b256b83453"
+    },
+    {
+      "trial_id": "rotated_centimetres-1",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 41.879,
+      "usage": [
+        {
+          "input_tokens": 10538,
+          "cached_input_tokens": 2304,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1247,
+          "reasoning_output_tokens": 371
+        }
+      ],
+      "response_sha256": "c90c5d0c61e64ed2fc6c40d2024a0af7819f76d39d219ac0e284839967673ae0"
+    },
+    {
+      "trial_id": "rotated_centimetres-2",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 41.612,
+      "usage": [
+        {
+          "input_tokens": 10538,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1296,
+          "reasoning_output_tokens": 448
+        }
+      ],
+      "response_sha256": "54b0afe7ded2991a8dc13e56153a3d23cf8106f8a8e058850e2490e4b699bede"
+    },
+    {
+      "trial_id": "conflicting_edit-1",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 18.442,
+      "usage": [
+        {
+          "input_tokens": 10494,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 506,
+          "reasoning_output_tokens": 178
+        }
+      ],
+      "response_sha256": "14caeec228d0d0f01e60fe08df9b3faca715bb5eb12b4ddc02c755bb34691539"
+    },
+    {
+      "trial_id": "conflicting_edit-2",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 16.207,
+      "usage": [
+        {
+          "input_tokens": 10490,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 446,
+          "reasoning_output_tokens": 249
+        }
+      ],
+      "response_sha256": "02e88537a8446301f8326cdd2eb5a7d061fc9026851374f25d9ed9fbf690f8d1"
+    },
+    {
+      "trial_id": "missing_physics-1",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 34.993,
+      "usage": [
+        {
+          "input_tokens": 10562,
+          "cached_input_tokens": 7552,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1017,
+          "reasoning_output_tokens": 128
+        }
+      ],
+      "response_sha256": "95f3e78094dee78a1d035e06ba0ec383071dceae6dc128fe51dd928cc21d91de"
+    },
+    {
+      "trial_id": "missing_physics-2",
+      "attempt": "initial",
+      "exit_code": 0,
+      "elapsed_seconds": 32.563,
+      "usage": [
+        {
+          "input_tokens": 10560,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 971,
+          "reasoning_output_tokens": 112
+        }
+      ],
+      "response_sha256": "99773afc3a6fefd9eba4ecb797fcba060aaafdac5f1407f441478f91893e33c4"
+    }
+  ]
+}
