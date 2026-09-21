@@ -1,0 +1,9 @@
+Execution environment supplied by the coordinator:
+- Work only in <PRODUCER_WORKSPACE>. This is an empty disposable output workspace.
+- <BLENDER_ENV>/bin/python has Blender bpy 4.5.12, Pillow 12.3.0 and imageio-ffmpeg 0.6.0. You may use Blender through Python; no desktop Blender app is needed. This is an available tool, not a mandated approach.
+- Preflight found that importing bpy crashes under the restricted macOS sandbox while querying CPU cache properties. The exact same temporary installation imports successfully with an approved escalated execution (4.5.12 LTS). Request the normal per-command escalation if Blender needs it; do not disable the sandbox globally. This is a coordinator setup observation, before your run.
+- <USD_ENV>/bin/python has OpenUSD pxr 25.11 for readback or validation. Use separate processes if library runtimes conflict.
+- Node.js is available. Local browser testing can use Playwright from <PLAYWRIGHT_PACKAGE>/index.mjs and Chrome at <CHROME_EXECUTABLE>. Use an isolated profile and only localhost. There is no in-app browser execution tool in this setup.
+- You may install open-source packages into this workspace and read public documentation. Keep client-side runtime dependencies local. Do not read personal files or credentials, access other projects, install globally, change system settings, or publish.
+- The brief and this environment description are the only supplied task context. Choose an effective workflow. Retain scripts, outputs and diagnostic logs. Test actual exported data and local viewing behavior before concluding.
+- Finish within 20 minutes. You may iterate within that session, but report failures and fixes. Do not wait for feedback from another agent. End with exact deliverable paths and known limits.

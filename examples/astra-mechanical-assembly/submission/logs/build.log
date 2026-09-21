@@ -1,0 +1,335 @@
+Info: Saved as "crank_slider.blend"
+INFO Draco mesh compression is available, use library at /private<BLENDER_ENV>/lib/python3.11/site-packages/bpy/4.5/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+15:37:41 | INFO: Starting glTF 2.0 export
+15:37:41 | INFO: Extracting primitive: Cube
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Connecting rod
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.069
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.073
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.072
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.076
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.071
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.075
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.070
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.074
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.023
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Crank arm
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.038
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.049
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.048
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.039
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.040
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.041
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.042
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.043
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.044
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.047
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.046
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.045
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.003
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.007
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.011
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.015
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.002
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.006
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.010
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.014
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.001
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.005
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.009
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.013
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Deck subtitle
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Deck title
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.001
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.003
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.004
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Guide label
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.020
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.024
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.028
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.032
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.036
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.037
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.019
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.004
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.008
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.012
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.006
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.007
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.008
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.009
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.010
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.011
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.012
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.013
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.014
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.015
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.016
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.017
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.018
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.019
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.020
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Carriage mark
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.059
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.062
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.065
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.068
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.058
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.061
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.064
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.067
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.057
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.060
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.063
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.066
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.021
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.050
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.053
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.051
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.052
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.054
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.055
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.022
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.056
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.016
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.017
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.018
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.002
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.023
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.027
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.031
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.035
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.022
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.026
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.030
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.034
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.021
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.025
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.029
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cylinder.033
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Extracting primitive: Cube.005
+15:37:41 | INFO: Primitives created: 1
+15:37:41 | INFO: Finished glTF 2.0 export in 0.2415170669555664 s
+USD export of '<PRODUCER_WORKSPACE>/output/crank_slider.usdc' took 280.72 ms
+Fra:35 Mem:36.36M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Base | cobalt plinth
+Fra:35 Mem:36.36M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener washer
+Fra:35 Mem:36.41M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener hex recess
+Fra:35 Mem:36.50M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rubber isolator.002
+Fra:35 Mem:36.51M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener socket head.002
+Fra:35 Mem:36.57M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener hex recess.002
+Fra:35 Mem:36.71M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rubber isolator.003
+Fra:35 Mem:37.06M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener washer.003
+Fra:35 Mem:37.42M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener socket head.003
+Fra:35 Mem:37.49M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck fastener hex recess.003
+Fra:35 Mem:37.54M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Spindle bearing race
+Fra:35 Mem:37.72M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Spindle bearing seal
+Fra:35 Mem:37.64M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Front fill
+Fra:35 Mem:37.75M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Guide support collar
+Fra:35 Mem:37.83M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Support mount socket head
+Fra:35 Mem:38.07M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Warm rim
+Fra:35 Mem:38.14M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Key softbox
+Fra:35 Mem:38.18M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Connecting rod
+Fra:35 Mem:38.17M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Guide support collar.001
+Fra:35 Mem:38.27M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Support mount washer.001
+Fra:35 Mem:38.34M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Support mount hex recess.001
+Fra:35 Mem:38.45M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Guide end support.001
+Fra:35 Mem:38.52M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Guide support collar.002
+Fra:35 Mem:38.59M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Support mount washer.002
+Fra:35 Mem:38.52M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Support mount socket head.002
+Fra:35 Mem:38.57M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Guide support collar.003
+Fra:35 Mem:39.00M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Support mount hex recess.003
+Fra:35 Mem:39.35M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Linear guide rail
+Fra:35 Mem:39.08M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Linear guide rail.001
+Fra:35 Mem:39.30M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Travel scale
+Fra:35 Mem:39.50M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 00
+Fra:35 Mem:39.56M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 01
+Fra:35 Mem:39.69M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 02
+Fra:35 Mem:39.59M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 05
+Fra:35 Mem:39.75M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 07
+Fra:35 Mem:39.76M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 08
+Fra:35 Mem:39.73M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 09
+Fra:35 Mem:39.81M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 10
+Fra:35 Mem:39.79M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 12
+Fra:35 Mem:39.80M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 13
+Fra:35 Mem:39.91M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Scale tick 14
+Fra:35 Mem:39.93M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Disk silver pocket
+Fra:35 Mem:39.94M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Disk silver pocket.001
+Fra:35 Mem:39.89M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Disk silver pocket.002
+Fra:35 Mem:39.97M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Disk silver pocket.004
+Fra:35 Mem:40.07M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Disk silver pocket.005
+Fra:35 Mem:40.08M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Spindle cap hex recess
+Fra:35 Mem:40.17M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Crank pin lower spacer
+Fra:35 Mem:40.24M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Orange slider carriage
+Fra:35 Mem:40.48M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Slider bushing barrel
+Fra:35 Mem:40.87M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Slider bushing end ring
+Fra:35 Mem:41.06M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Slider bushing end ring.001
+Fra:35 Mem:41.36M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Slider bushing barrel.001
+Fra:35 Mem:41.46M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Slider bushing end ring.002
+Fra:35 Mem:41.62M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck subtitle
+Fra:35 Mem:41.94M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Slider pin shaft
+Fra:35 Mem:41.69M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw washer
+Fra:35 Mem:41.77M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw hex recess
+Fra:35 Mem:41.94M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Deck title
+Fra:35 Mem:41.86M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw washer.001
+Fra:35 Mem:42.05M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw socket head.001
+Fra:35 Mem:42.32M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw hex recess.001
+Fra:35 Mem:42.34M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw washer.002
+Fra:35 Mem:42.37M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw socket head.003
+Fra:35 Mem:42.46M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rod pivot hex recess.001
+Fra:35 Mem:42.53M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Carriage screw hex recess.003
+Fra:35 Mem:42.64M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rod recessed spine
+Fra:35 Mem:42.60M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rod pivot washer
+Fra:35 Mem:42.69M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rod pivot socket head
+Fra:35 Mem:42.94M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rod bearing bronze seat.001
+Fra:35 Mem:42.94M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | Rod pivot washer.001
+Fra:35 Mem:43.23M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:35 Mem:31.07M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:35 Mem:31.07M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:35 Mem:31.07M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:35 Mem:31.07M (Peak 45.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:35 Mem:31.16M (Peak 45.61M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Procedurals
+Fra:35 Mem:31.16M (Peak 45.61M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Background
+Fra:35 Mem:31.16M (Peak 45.61M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Camera
+Fra:35 Mem:31.16M (Peak 45.61M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:35 Mem:31.16M (Peak 45.61M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects
+Fra:35 Mem:31.16M (Peak 45.61M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:35 Mem:31.19M (Peak 45.61M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems
+Fra:35 Mem:31.19M (Peak 45.61M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:35 Mem:31.19M (Peak 45.61M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Meshes
+Fra:35 Mem:31.19M (Peak 45.61M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:35 Mem:31.19M (Peak 45.61M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:35 Mem:32.41M (Peak 45.61M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:35 Mem:32.39M (Peak 45.61M) | Time:00:00.01 | Mem:1.24M, Peak:1.24M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:35 Mem:32.39M (Peak 45.61M) | Time:00:00.01 | Mem:1.24M, Peak:1.24M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:35 Mem:32.39M (Peak 45.61M) | Time:00:00.01 | Mem:3.51M, Peak:3.51M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:35 Mem:32.39M (Peak 45.61M) | Time:00:00.02 | Mem:6.23M, Peak:8.51M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:35 Mem:32.39M (Peak 45.61M) | Time:00:00.02 | Mem:6.23M, Peak:8.51M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:6.23M, Peak:8.51M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.77M, Peak:9.77M | Scene, ViewLayer | Updating Objects Flags
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.77M, Peak:9.77M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.77M, Peak:9.77M | Scene, ViewLayer | Updating Images
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.77M, Peak:9.77M | Scene, ViewLayer | Updating Camera Volume
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.77M, Peak:9.77M | Scene, ViewLayer | Updating Lookup Tables
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Updating Lights
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Updating Integrator
+Fra:35 Mem:35.93M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Updating Film
+Fra:35 Mem:35.94M (Peak 45.61M) | Time:00:00.02 | Mem:9.77M, Peak:9.85M | Scene, ViewLayer | Updating Lookup Tables
+Fra:35 Mem:35.94M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Updating Baking
+Fra:35 Mem:35.94M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:35 Mem:35.94M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+Fra:35 Mem:35.94M (Peak 45.61M) | Time:00:00.02 | Mem:9.85M, Peak:9.85M | Scene, ViewLayer | Sample 0/64
+Fra:35 Mem:218.75M (Peak 218.75M) | Time:00:00.27 | Remaining:00:15.78 | Mem:192.50M, Peak:192.50M | Scene, ViewLayer | Sample 1/64
+Fra:35 Mem:295.65M (Peak 411.01M) | Time:00:17.88 | Mem:192.50M, Peak:192.50M | Scene, ViewLayer | Sample 64/64
+Fra:35 Mem:295.65M (Peak 411.01M) | Time:00:17.88 | Mem:192.50M, Peak:192.50M | Scene, ViewLayer | Finished
+Saved: '<PRODUCER_WORKSPACE>/output/overview.png'
+Time: 00:18.02 (Saving: 00:00.14)
+
+
+BUILD COMPLETE

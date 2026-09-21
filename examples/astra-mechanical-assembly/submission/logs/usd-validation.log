@@ -1,0 +1,132 @@
+ ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
+ Function: Arch_ValidateAssumptions
+     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     Line: 140
+{
+  "status": "PASS",
+  "usd_version": [
+    0,
+    25,
+    11
+  ],
+  "metadata": {
+    "metersPerUnit": 1,
+    "upAxis": "Z",
+    "fps": 60,
+    "timeCodesPerSecond": 60,
+    "start": 0,
+    "end": 240,
+    "seconds": 4
+  },
+  "mesh_count": 107,
+  "material_count": 7,
+  "samples_tested": 961,
+  "maximum_errors": {
+    "radius_m": 1.49011643302277e-10,
+    "rod_length_m": 3.949325026772477e-06,
+    "slider_guide_m": 1.907348626262184e-09,
+    "rod_start_pin_m": 3.0051634859580523e-06,
+    "rod_end_pin_m": 9.545229895190016e-07,
+    "analytical_slider_m": 3.952786569234867e-06
+  },
+  "loop_matrix_max_error": 3.605343029407388e-16,
+  "reference_paths": {
+    "Crank_Center": "/root/CRANK_SLIDER_ASSEMBLY/Crank_Center",
+    "Crank_Pin": "/root/CRANK_SLIDER_ASSEMBLY/Crank_Rotation/Crank_Pin",
+    "Slider_Pin": "/root/CRANK_SLIDER_ASSEMBLY/Slider_Translation/Slider_Pin",
+    "Connecting_Rod_Pose": "/root/CRANK_SLIDER_ASSEMBLY/Connecting_Rod_Pose"
+  },
+  "quarter_cycle_poses": [
+    {
+      "frame": 0.0,
+      "crank_center": [
+        -0.09000000357627869,
+        0.0,
+        0.10199999809265137
+      ],
+      "crank_pin": [
+        -0.055000003427267075,
+        0.0,
+        0.10199999809265137
+      ],
+      "slider_pin": [
+        0.054999999701976776,
+        0.0,
+        0.10199999809265137
+      ]
+    },
+    {
+      "frame": 60.0,
+      "crank_center": [
+        -0.09000000357627869,
+        0.0,
+        0.10199999809265137
+      ],
+      "crank_pin": [
+        -0.09000000357627867,
+        0.03500000014901161,
+        0.10199999809265137
+      ],
+      "slider_pin": [
+        0.01428326778113842,
+        0.0,
+        0.10199999809265137
+      ]
+    },
+    {
+      "frame": 120.0,
+      "crank_center": [
+        -0.09000000357627869,
+        0.0,
+        0.10199999809265137
+      ],
+      "crank_pin": [
+        -0.1250000037252903,
+        4.286263815264395e-18,
+        0.10199999809265137
+      ],
+      "slider_pin": [
+        -0.014999999664723873,
+        0.0,
+        0.10199999809265137
+      ]
+    },
+    {
+      "frame": 180.0,
+      "crank_center": [
+        -0.09000000357627869,
+        0.0,
+        0.10199999809265137
+      ],
+      "crank_pin": [
+        -0.0900000035762787,
+        -0.03500000014901161,
+        0.10199999809265137
+      ],
+      "slider_pin": [
+        0.01428326778113842,
+        0.0,
+        0.10199999809265137
+      ]
+    },
+    {
+      "frame": 240.0,
+      "crank_center": [
+        -0.09000000357627869,
+        0.0,
+        0.10199999809265137
+      ],
+      "crank_pin": [
+        -0.055000003427267075,
+        -8.57252763052879e-18,
+        0.10199999809265137
+      ],
+      "slider_pin": [
+        0.054999999701976776,
+        0.0,
+        0.10199999809265137
+      ]
+    }
+  ],
+  "note": "Subframe transforms linearly interpolate 60 Hz samples; up to 15 micrometres tolerance, not physical validation."
+}

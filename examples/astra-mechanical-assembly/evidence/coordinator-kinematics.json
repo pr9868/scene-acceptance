@@ -1,0 +1,580 @@
+{
+  "method": "Coordinator measurements from frozen USD plus the GLB actually loaded by the browser; separate from producer self-checks. Same coordinated exercise, not independent validation.",
+  "usd_sha256": "91aa868345cb1f1ff26b73901963b57e0531e9e42480cd74c77c67f9ddb54fbd",
+  "preselected_seconds": [
+    0,
+    0.5,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    3.5,
+    4
+  ],
+  "tolerance_m": 0.0005,
+  "metrics": {
+    "radius_error_m": 1.490116155467014e-10,
+    "pin_spacing_error_m": 4.060566424768375e-09,
+    "slider_line_error_m": 0.0,
+    "phase_position_error_m": 1.4901162175272964e-10,
+    "rod_endpoint_error_m": 5.1535907866273164e-09,
+    "loop_pin_error_m": 8.57252763052879e-18,
+    "usd_glb_pin_error_m": 5.569808172934857e-09
+  },
+  "passed": true,
+  "samples": [
+    {
+      "elapsed_s": 0,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.055000003427267075,
+          0.0,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          0.054999999701976776,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116086078075e-10,
+      "pin_spacing_error_m": 3.1292438501528963e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.490116086078075e-10,
+      "rod_endpoint_error_m": 3.725290298461914e-09
+    },
+    {
+      "elapsed_s": 0.5,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.0652512661293824,
+          0.024748737446896287,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          0.0419284924864769,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116155467014e-10,
+      "pin_spacing_error_m": 3.009860277680687e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.4901162175272964e-10,
+      "rod_endpoint_error_m": 5.153590772497664e-09
+    },
+    {
+      "elapsed_s": 1,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.09000000357627867,
+          0.03500000014901161,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          0.01428326778113842,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116086078075e-10,
+      "pin_spacing_error_m": 3.1610704193107964e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.4901160860780813e-10,
+      "rod_endpoint_error_m": 3.860414085422055e-09
+    },
+    {
+      "elapsed_s": 1.5,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.11474874102317498,
+          0.02474873744689629,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          -0.0075689819641411304,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116155467014e-10,
+      "pin_spacing_error_m": 3.4416724609132032e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.4901162175272964e-10,
+      "rod_endpoint_error_m": 2.3612024293962007e-09
+    },
+    {
+      "elapsed_s": 2,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.1250000037252903,
+          4.286263815264395e-18,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          -0.014999999664723873,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116086078075e-10,
+      "pin_spacing_error_m": 4.060566424768375e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.490116086078075e-10,
+      "rod_endpoint_error_m": 3.725290298461914e-09
+    },
+    {
+      "elapsed_s": 2.5,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.11474874102317498,
+          -0.024748737446896284,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          -0.0075689819641411304,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116155467014e-10,
+      "pin_spacing_error_m": 3.4416724609132032e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.4901160948638225e-10,
+      "rod_endpoint_error_m": 2.3612024280607974e-09
+    },
+    {
+      "elapsed_s": 3,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.0900000035762787,
+          -0.03500000014901161,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          0.01428326778113842,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116086078075e-10,
+      "pin_spacing_error_m": 3.161070433188584e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.4901160860780813e-10,
+      "rod_endpoint_error_m": 3.860414085422055e-09
+    },
+    {
+      "elapsed_s": 3.5,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.06525126612938241,
+          -0.02474873744689629,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          0.0419284924864769,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116086078075e-10,
+      "pin_spacing_error_m": 3.009860291558475e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.4901160703311275e-10,
+      "rod_endpoint_error_m": 5.1535907866273164e-09
+    },
+    {
+      "elapsed_s": 4,
+      "pins_usd_m": {
+        "Crank_Center": [
+          -0.09000000357627869,
+          0.0,
+          0.10199999809265137
+        ],
+        "Crank_Pin": [
+          -0.055000003427267075,
+          -8.57252763052879e-18,
+          0.10199999809265137
+        ],
+        "Slider_Pin": [
+          0.054999999701976776,
+          0.0,
+          0.10199999809265137
+        ]
+      },
+      "radius_error_m": 1.490116086078075e-10,
+      "pin_spacing_error_m": 3.1292438501528963e-09,
+      "slider_line_error_m": 0.0,
+      "phase_position_error_m": 1.490116086078075e-10,
+      "rod_endpoint_error_m": 3.725290298461914e-09
+    }
+  ],
+  "format_comparisons": [
+    {
+      "device": "desktop",
+      "elapsed_s": 0,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 0,
+      "pin": "Crank_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 0,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 0.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 0.5,
+      "pin": "Crank_Pin",
+      "error_m": 2.679716478716024e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 0.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 1,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 1,
+      "pin": "Crank_Pin",
+      "error_m": 4.852759291939754e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 1,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 1.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 1.5,
+      "pin": "Crank_Pin",
+      "error_m": 4.0714745325004445e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 1.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 2,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 2,
+      "pin": "Crank_Pin",
+      "error_m": 3.0597971973849277e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 2,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 2.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 2.5,
+      "pin": "Crank_Pin",
+      "error_m": 4.3140841421568746e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 2.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 3,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 3,
+      "pin": "Crank_Pin",
+      "error_m": 4.8527592650432504e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 3,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 3.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 3.5,
+      "pin": "Crank_Pin",
+      "error_m": 1.4776631978334742e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 3.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 4,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 4,
+      "pin": "Crank_Pin",
+      "error_m": 5.569808172934857e-09
+    },
+    {
+      "device": "desktop",
+      "elapsed_s": 4,
+      "pin": "Slider_Pin",
+      "error_m": 9.486085528198629e-12
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 0,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 0,
+      "pin": "Crank_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 0,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 0.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 0.5,
+      "pin": "Crank_Pin",
+      "error_m": 2.679716478716024e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 0.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 1,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 1,
+      "pin": "Crank_Pin",
+      "error_m": 4.852759291939754e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 1,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 1.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 1.5,
+      "pin": "Crank_Pin",
+      "error_m": 4.0714745325004445e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 1.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 2,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 2,
+      "pin": "Crank_Pin",
+      "error_m": 3.0597971973849277e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 2,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 2.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 2.5,
+      "pin": "Crank_Pin",
+      "error_m": 4.3140841421568746e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 2.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 3,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 3,
+      "pin": "Crank_Pin",
+      "error_m": 4.8527592650432504e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 3,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 3.5,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 3.5,
+      "pin": "Crank_Pin",
+      "error_m": 1.4776631978334742e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 3.5,
+      "pin": "Slider_Pin",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 4,
+      "pin": "Crank_Center",
+      "error_m": 0.0
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 4,
+      "pin": "Crank_Pin",
+      "error_m": 5.569808172934857e-09
+    },
+    {
+      "device": "mobile",
+      "elapsed_s": 4,
+      "pin": "Slider_Pin",
+      "error_m": 9.486085528198629e-12
+    }
+  ],
+  "limits": "Finite saved-transform samples. No whole-interval guarantee, contact/collision check, physical calibration, manufacturing suitability or material render equivalence. The preselected half-second samples would not have caught the intermediate Euler-wrap defect."
+}

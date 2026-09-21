@@ -1,0 +1,67 @@
+ ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
+ Function: Arch_ValidateAssumptions
+     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     Line: 140
+{
+  "status": "PASS",
+  "usd_ascii_binary_parity": true,
+  "usd_python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "files": {
+    "README.md": {
+      "bytes": 11870,
+      "sha256": "26887f38e5a47611e80d3b60f6418ef23770b3bf2e71d16c8790db6abfdd92a2"
+    },
+    "scripts/build_scene.py": {
+      "bytes": 11319,
+      "sha256": "58c06fd95e6b9c10cb1fc95eb852cc0b59c9e2a2fe71e8734293da7fdfec7bc9"
+    },
+    "scripts/finalize_usd.py": {
+      "bytes": 1505,
+      "sha256": "84fc96c73d8cf08920461127a551676677649a46ce6ad2d08e329f3ec2d96076"
+    },
+    "scripts/rebuild.sh": {
+      "bytes": 671,
+      "sha256": "28e6336a8ec4e41a20ebcef91fa6054009c3470557e18ba47fdccfe04da2d49e"
+    },
+    "scripts/serve.py": {
+      "bytes": 552,
+      "sha256": "e5afb10ef03cf002971f9c07c41328a6ff20d3a3da5bb4055cef07866c8ddc85"
+    },
+    "output/crank_slider.blend": {
+      "bytes": 2410573,
+      "sha256": "a2cbe325c44b5ac8b26aed9ff558037d526444b0f29113223cc1dd900986140e"
+    },
+    "output/crank_slider.usdc": {
+      "bytes": 2180658,
+      "sha256": "91aa868345cb1f1ff26b73901963b57e0531e9e42480cd74c77c67f9ddb54fbd"
+    },
+    "output/crank_slider.usda": {
+      "bytes": 11367363,
+      "sha256": "a780b4b7d16b6ec437507327840d4c0824d586464ff5783e10f9891c5e17d22e"
+    },
+    "output/crank_slider.glb": {
+      "bytes": 2574332,
+      "sha256": "5356cb1e7dcf85874c1f2152795b7011f43f01c2bfc899a5fa75a198687204ad"
+    },
+    "output/overview.png": {
+      "bytes": 2873996,
+      "sha256": "119b1c97f1752d76ae18ec3a18cf48bc7f2c428c8f2ec2bc03a68d06fe2a78b4"
+    },
+    "output/viewer-overview.png": {
+      "bytes": 442865,
+      "sha256": "3378388a2136d3f89e3d8578af5cc42915203e891b457aa49e861cfc5813cb96"
+    },
+    "viewer/index.html": {
+      "bytes": 3256,
+      "sha256": "783f70fbd3295ff71b208a418b74d7e792b643f713919efcb5bf7325d6c5140f"
+    },
+    "viewer/app.js": {
+      "bytes": 4990,
+      "sha256": "d965a34f1121f9103d67ededca2da92396beaaa3fcb7a943e84f3902f0157bd2"
+    },
+    "viewer/style.css": {
+      "bytes": 5472,
+      "sha256": "c66250ea6af0301553cb7c7889d81e7cb91878755a391c401a2220e9075cb901"
+    }
+  }
+}

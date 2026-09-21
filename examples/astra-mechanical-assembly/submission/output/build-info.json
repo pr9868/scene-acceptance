@@ -1,0 +1,10 @@
+{
+  "blender": "4.5.12 LTS",
+  "fps": 60,
+  "start_frame": 0,
+  "end_frame": 240,
+  "duration_s": 4,
+  "crank_radius_m": 0.035,
+  "rod_length_m": 0.11,
+  "overview_frame": 35
+}

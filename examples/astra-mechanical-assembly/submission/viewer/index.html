@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kinetic 01 — Crank-slider study</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23f88449'/%3E%3Cpath d='M8 24L24 8M12 8h12v12' fill='none' stroke='%23101720' stroke-width='3'/%3E%3C/svg%3E"><link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"./vendor/build/three.module.js","three/addons/":"./vendor/examples/jsm/"}}</script>
+</head><body>
+<header><a class="brand" href="./"><span class="brand-icon">↗</span> FORM / MOTION</a><span class="edition">MECHANISM STUDIES <b>001</b></span></header>
+<main>
+<section class="stage" aria-label="Interactive 3D assembly"><div class="stage-heading"><span class="eyebrow">TABLETOP SERIES</span><h1>Kinetic <em>01</em></h1><p>Rotary input. Linear output.</p></div>
+<div id="viewport"></div><div id="loading" role="status">Loading the assembly…</div>
+<div class="view-tools" aria-label="Camera views"><button data-view="overview" class="active">Perspective</button><button data-view="top">Top</button><button data-view="end">End</button></div>
+<div class="interaction-hint">DRAG TO ORBIT <span>·</span> SCROLL TO ZOOM <span>·</span> RIGHT-DRAG TO PAN</div>
+<div class="axis-badge"><i></i> LIVE 3D / METRE SCALE</div></section>
+<aside><div><span class="eyebrow orange">THE CRANK–SLIDER</span><h2>A simple turn.<br>A precise relationship.</h2><p class="intro">Follow the orange carriage as a rotating crank transfers motion through a steel connecting rod.</p></div>
+<div class="specs"><div><span>Crank radius</span><strong>35 <small>mm</small></strong></div><div><span>Connecting rod</span><strong>110 <small>mm</small></strong></div><div><span>Slider stroke</span><strong>70 <small>mm</small></strong></div><div><span>Cycle period</span><strong>4.00 <small>s</small></strong></div></div>
+<div class="readout"><span class="eyebrow">CURRENT POSE</span><div><span>Crank angle</span><output id="angle">0°</output></div><div><span>Slider from crank center</span><output id="displacement">145.0 mm</output></div></div>
+<div class="legend"><span><i class="blue"></i>Structure</span><span><i class="steel"></i>Linkage</span><span><i class="orange-bg"></i>Carriage</span></div>
+<p class="note">A kinematic visualization for exploration.<br>Not a physics simulation or manufacturing design.</p>
+<a class="download" href="../output/crank_slider.usdc" download>Download editable USD <span>↗</span></a></aside>
+</main>
+<footer><button id="play" class="play" aria-label="Pause animation">Ⅱ</button><div class="transport"><div class="timeline-caption"><span>ONE REVOLUTION <b id="status">PLAYING</b></span><span><output id="time">0.00</output> / 4.00 s</span></div><input id="timeline" type="range" min="0" max="4" step="0.001" value="0" aria-label="Animation time in seconds"><div class="ticks"><span>0°</span><span>90°</span><span>180°</span><span>270°</span><span>360°</span></div></div><button id="reset" title="Restart animation">↺ <span>Restart</span></button></footer>
+<script type="module" src="app.js"></script></body></html>

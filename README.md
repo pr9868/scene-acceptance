@@ -134,6 +134,10 @@ The first pack run matched 19 of 22 expected decisions. Three texture-dependency
 - [Physics experiment](article-evidence/physics-experiment): selected configuration rules pass while task behavior differs with assumed friction. [Workflow](docs/images/physics-flow.png).
 - [Pack API](docs/PACKS_API.md) and [external example](examples/studio-mesh-pack): how to add another evaluation without modifying the core.
 
+## Recorded agent delivery
+
+The [animated assembly example](examples/astra-mechanical-assembly) retains the source, USD, GLB, local viewer, brief and evidence from one Astra task. Its separate acceptance profile uses the pinned 0.4 development timing pack; the released 0.3 API and results above are unchanged. The [four-part project series](https://roughcut.dev/threads/accepting-agent-generated-3d) explains the core, materials, motion and physics checks.
+
 ## What I want to test next
 
 My next application trial would use independently supplied edit briefs and a producer connected by the caller. I would record first-attempt acceptance, violations missed by the evaluator, false rejections, unresolved requirements, repair attempts, total runtime cost and human review time. Comparing contract prechecking with findings received only after submission would test whether that feedback helps the producer.

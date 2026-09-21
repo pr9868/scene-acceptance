@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "blender": "4.5.12 LTS",
+  "source_reopened": true,
+  "frames_checked": 241,
+  "max_radius_error_m": 5.820432989744884e-09,
+  "max_rod_error_m": 1.3724730588138279e-08,
+  "render_exposure": -1.25,
+  "camera": "Overview camera",
+  "objects": 119,
+  "mesh_objects": 108
+}

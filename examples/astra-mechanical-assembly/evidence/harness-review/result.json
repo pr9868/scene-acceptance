@@ -1,0 +1,484 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.4.0",
+  "verdict": "ACCEPT_FOR_USE",
+  "complete": true,
+  "intended_use": "Selected USD metadata, material-delivery and four-second stage-duration checks; excludes full shader compliance and physical certification",
+  "contract_id": "astra-mechanism-delivery-demo",
+  "identity": {
+    "checker_version": "0.4.0",
+    "checker_sha256": "55086460b6669852b0b4d0fb8e473d1378dc5fc64f2cc15b3f53aed3346f803c",
+    "contract_sha256": "02491bea7f8393588340e6eceb5f75cac9e7e2fc1ebe0c8232b3ebee0b851240",
+    "candidate": {
+      "root": "scene.usdc",
+      "files": {
+        "scene.usdc": "91aa868345cb1f1ff26b73901963b57e0531e9e42480cd74c77c67f9ddb54fbd",
+        "textures/color_455881.hdr": "be61e38963745f039a8703b3697fa22228316f3f5778f33b562451c85f4227f9"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "openusd": {
+        "id": "openusd",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Named native OpenUSD validators",
+        "checks": {
+          "validators": {
+            "description": "Run explicit native validators",
+            "coverage": "Named native validator scope",
+            "limitations": [
+              "Local USD admission limits apply."
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "validators": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "maxItems": 128,
+                  "uniqueItems": true
+                },
+                "warnings_as_failures": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "validators",
+                "warnings_as_failures"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "7152da7482bbda19e370c9762aa5bd96708885ccf238e2418bf8336c127cf810"
+      },
+      "materials": {
+        "id": "materials",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Material structure and delivery requirements",
+        "checks": {
+          "delivery": {
+            "description": "Check resolved bindings, shader IDs and external files",
+            "coverage": "Named material structure and dependency existence",
+            "limitations": [
+              "No rendered appearance, image decoding, UV correctness or physical parameters"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "bindings": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "maxProperties": 256,
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "purpose": {
+                  "enum": [
+                    "",
+                    "allPurpose",
+                    "preview",
+                    "full"
+                  ]
+                },
+                "render_context": {
+                  "type": "string"
+                },
+                "surface_shader_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bindings",
+                "purpose",
+                "render_context",
+                "surface_shader_id"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "8a68db961a678e01f61a45b15a78f7ecafda25c82e59ac68c7d00d2208af06c3"
+      },
+      "motion.timing": {
+        "id": "motion.timing",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Authored clock requirements and world-origin samples in elapsed seconds",
+        "checks": {
+          "clock": {
+            "description": "Check authored stage duration and optionally require an exact clock rate",
+            "coverage": "Authored stage time range converted to seconds",
+            "limitations": [
+              "Does not infer active motion duration; an authored positive clock and complete time range are required"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "duration_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "tolerance_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "time_codes_per_second": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "duration_s",
+                "tolerance_s"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "positions": {
+            "description": "Compare named world origins at elapsed seconds from the authored stage start",
+            "coverage": "Named world origins at the requested elapsed seconds",
+            "limitations": [
+              "No continuous-time, orientation, collision or physics proof",
+              "Requires authored clock and time range"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tolerance_m": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "samples": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1000,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "elapsed_s": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "world_origin_m": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 3,
+                        "maxItems": 3
+                      }
+                    },
+                    "required": [
+                      "elapsed_s",
+                      "world_origin_m"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "path",
+                "tolerance_m",
+                "samples"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:motion_timing.py": "a0d37fbe4e31fdef93090cf9c5835d76f787f5fa0d5f514e1e8a465067443b12",
+          "1:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "5d9a0236e80d786e8e886d6e8c4c1ce5fdba5e92e39e0754c2a3556a925ef0f5"
+      }
+    },
+    "input_files": {
+      "contract.json": "02491bea7f8393588340e6eceb5f75cac9e7e2fc1ebe0c8232b3ebee0b851240",
+      "scene.usdc": "91aa868345cb1f1ff26b73901963b57e0531e9e42480cd74c77c67f9ddb54fbd",
+      "textures/color_455881.hdr": "be61e38963745f039a8703b3697fa22228316f3f5778f33b562451c85f4227f9"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "usd.metadata",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "evidence": {
+        "pack": "openusd",
+        "check": "validators",
+        "observations": {
+          "executed": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "issues": [],
+          "usd_version": [
+            0,
+            25,
+            11
+          ],
+          "coverage": "Provider-specific validation; no fixes applied."
+        }
+      },
+      "required": true,
+      "duration_ms": 32.827
+    },
+    {
+      "id": "materials.delivery",
+      "status": "PASS",
+      "reason": "Resolved bindings, selected surface shader IDs and declared external file existence checked.",
+      "evidence": {
+        "pack": "materials",
+        "check": "delivery",
+        "observations": {
+          "findings": [
+            {
+              "object": "/root/CRANK_SLIDER_ASSEMBLY/Base___cobalt_plinth/Cube",
+              "property": "material:binding",
+              "expected": "/root/_materials/Structure___cobalt_enamel",
+              "observed": "/root/_materials/Structure___cobalt_enamel",
+              "relationship": "/root/CRANK_SLIDER_ASSEMBLY/Base___cobalt_plinth/Cube.material:binding",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/_materials/Structure___cobalt_enamel",
+              "property": "surface_shader_id",
+              "expected": "UsdPreviewSurface",
+              "observed": "UsdPreviewSurface",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/CRANK_SLIDER_ASSEMBLY/Slider_Translation/Orange_slider_carriage/Cube_021",
+              "property": "material:binding",
+              "expected": "/root/_materials/Slider___signal_orange",
+              "observed": "/root/_materials/Slider___signal_orange",
+              "relationship": "/root/CRANK_SLIDER_ASSEMBLY/Slider_Translation/Orange_slider_carriage/Cube_021.material:binding",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/_materials/Slider___signal_orange",
+              "property": "surface_shader_id",
+              "expected": "UsdPreviewSurface",
+              "observed": "UsdPreviewSurface",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/CRANK_SLIDER_ASSEMBLY/Connecting_Rod_Pose/Connecting_rod/Connecting_rod",
+              "property": "material:binding",
+              "expected": "/root/_materials/Linkage___satin_steel",
+              "observed": "/root/_materials/Linkage___satin_steel",
+              "relationship": "/root/CRANK_SLIDER_ASSEMBLY/Connecting_Rod_Pose/Connecting_rod/Connecting_rod.material:binding",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/_materials/Linkage___satin_steel",
+              "property": "surface_shader_id",
+              "expected": "UsdPreviewSurface",
+              "observed": "UsdPreviewSurface",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/CRANK_SLIDER_ASSEMBLY/Rubber_isolator/Cylinder",
+              "property": "material:binding",
+              "expected": "/root/_materials/Feet___dark_rubber",
+              "observed": "/root/_materials/Feet___dark_rubber",
+              "relationship": "/root/CRANK_SLIDER_ASSEMBLY/Rubber_isolator/Cylinder.material:binding",
+              "status": "PASS"
+            },
+            {
+              "object": "/root/_materials/Feet___dark_rubber",
+              "property": "surface_shader_id",
+              "expected": "UsdPreviewSurface",
+              "observed": "UsdPreviewSurface",
+              "status": "PASS"
+            },
+            {
+              "object": "textures/color_455881.hdr",
+              "property": "external_asset_exists",
+              "expected": true,
+              "observed": true,
+              "status": "PASS",
+              "sha256": "be61e38963745f039a8703b3697fa22228316f3f5778f33b562451c85f4227f9"
+            }
+          ],
+          "coverage": "Bindings and surface shader IDs at default time; external file existence across authored asset values. No image decode, UV fidelity, rendered appearance or friction inference."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.592
+    },
+    {
+      "id": "motion.clock",
+      "status": "PASS",
+      "reason": "Authored stage duration and optional exact time-code rate compared with the contract.",
+      "evidence": {
+        "pack": "motion.timing",
+        "check": "clock",
+        "observations": {
+          "clock": {
+            "time_codes_per_second": 60.0,
+            "start_time_code": 0.0,
+            "end_time_code": 240.0,
+            "duration_s": 4.0
+          },
+          "findings": [
+            {
+              "object": "/",
+              "property": "stage_duration_s",
+              "observed": 4.0,
+              "expected": 4,
+              "tolerance_s": 1e-09,
+              "status": "PASS"
+            }
+          ],
+          "coverage": "Authored stage interval only; not the onset, completion or continuous path of object motion."
+        }
+      },
+      "required": true,
+      "duration_ms": 0.72
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "mechanism-visual-delivery-subset",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "usd.metadata",
+        "pack": "openusd",
+        "check": "validators",
+        "required": true,
+        "parameters": {
+          "validators": [
+            "usdValidation:CompositionErrorTest",
+            "usdValidation:StageMetadataChecker",
+            "usdGeomValidators:StageMetadataChecker"
+          ],
+          "warnings_as_failures": false
+        }
+      },
+      {
+        "id": "materials.delivery",
+        "pack": "materials",
+        "check": "delivery",
+        "required": true,
+        "parameters": {
+          "bindings": {
+            "/root/CRANK_SLIDER_ASSEMBLY/Base___cobalt_plinth/Cube": "/root/_materials/Structure___cobalt_enamel",
+            "/root/CRANK_SLIDER_ASSEMBLY/Slider_Translation/Orange_slider_carriage/Cube_021": "/root/_materials/Slider___signal_orange",
+            "/root/CRANK_SLIDER_ASSEMBLY/Connecting_Rod_Pose/Connecting_rod/Connecting_rod": "/root/_materials/Linkage___satin_steel",
+            "/root/CRANK_SLIDER_ASSEMBLY/Rubber_isolator/Cylinder": "/root/_materials/Feet___dark_rubber"
+          },
+          "purpose": "",
+          "render_context": "",
+          "surface_shader_id": "UsdPreviewSurface"
+        }
+      },
+      {
+        "id": "motion.clock",
+        "pack": "motion.timing",
+        "check": "clock",
+        "required": true,
+        "parameters": {
+          "duration_s": 4,
+          "tolerance_s": 1e-09
+        }
+      }
+    ],
+    "by_pack": {
+      "openusd": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "materials": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      },
+      "motion.timing": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNKNOWN": 0,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T22:48:42.925841+00:00",
+    "platform": "macOS-26.7-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 610.59,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

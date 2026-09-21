@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Animated crank-slider: front, top, end and perspective</title>
+<link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"../submission/viewer/vendor/build/three.module.js","three/addons/":"../submission/viewer/vendor/examples/jsm/"}}</script>
+</head><body>
+<header><span>Animated crank-slider</span><span class="dimensions">35 mm crank · 110 mm rod</span></header>
+<nav class="views" aria-label="Camera views">
+  <button data-view="overview" aria-pressed="true" class="active">Perspective</button>
+  <button data-view="front" aria-pressed="false">Front</button>
+  <button data-view="top" aria-pressed="false">Top</button>
+  <button data-view="end" aria-pressed="false">End</button>
+</nav>
+<main><div id="viewport"></div><div id="loading" role="status">Loading the assembly…</div><span class="hint">Drag to orbit · Scroll or pinch to zoom</span></main>
+<footer>
+ <button id="play" class="play" aria-label="Play animation">▶</button>
+ <div class="transport"><div class="time-row"><span id="status">PAUSED</span><span><output id="time">0.00</output> / 4.00 s</span></div><input id="timeline" type="range" min="0" max="4" step="0.001" value="0" aria-label="Animation time in seconds"></div>
+ <button id="reset" aria-label="Restart animation" title="Restart animation">↺</button>
+</footer>
+<div class="readout"><span>Crank <output id="angle">0°</output></span><span>Slider from center <output id="displacement">145.0 mm</output></span></div>
+<script type="module" src="app.js"></script></body></html>
