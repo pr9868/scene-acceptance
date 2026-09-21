@@ -19,3 +19,5 @@ The measured submission remains one coordinated exercise. A successful package r
 ## Release verification
 
 The [publication check record](evidence/publication-verification.json) distinguishes the unchanged recorded artifacts from a rebuild in a disposable copy. The source reopened, the rebuild completed, the portable browser test passed, and the selected harness decision replayed. These used the existing Blender/OpenUSD environments, not a second clean installation. Full shader compliance remains incomplete.
+
+The development-revision link was updated after correcting commit email metadata. The referenced development source tree is unchanged.
