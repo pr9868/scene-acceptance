@@ -1,0 +1,66 @@
+{
+  "requested_model": "gpt-6-astra",
+  "reasoning": "high",
+  "cli_version": "codex-cli 0.155.0-alpha.2.6",
+  "prompt_sha256": "514e6f6ee9dc6570ff7f508ab7cfa3c2cda572030c5759904397f9492966f6de",
+  "protocol_sha256": "bb807a3b3e5149aa979028551588b1873429538d8089a19b8702a0f237366942",
+  "started_utc": "2026-09-20T22:28:27.195506+00:00",
+  "ended_utc": "2026-09-20T22:44:34.515138+00:00",
+  "elapsed_s": 967.321,
+  "attempt": "initial",
+  "exit_code": 0,
+  "usage": [
+    {
+      "input_tokens": 1296520,
+      "cached_input_tokens": 1226496,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 26841,
+      "reasoning_output_tokens": 4543
+    }
+  ],
+  "reported_model_identifiers": [],
+  "task_count": 1,
+  "coordinator_feedback_attempts": 0,
+  "backend_snapshot": "Not reported by service; requested identifier retained.",
+  "attribution": {
+    "user": "Chose animated mechanical assembly and requested an actual positive example.",
+    "coordinator": "Detailed synthetic brief, tool provisioning, frozen assessment plan, separate acceptance checks, article drafting and video capture.",
+    "producer": "Scene, generator, USD finalizer, render, exports, interactive viewer, self-checks and internal corrections."
+  },
+  "timing_scope": "Producer CLI wall time only. Excludes environment setup, separate coordinator acceptance and article production. No human-time savings or monetary cost measured.",
+  "usage_scope": "Raw cumulative CLI counters, including cached input; not a billing statement.",
+  "inputs": {
+    "exact_task_brief": "../brief.txt",
+    "full_prompt_with_environment": "../prompt.txt",
+    "environment": "../environment.txt",
+    "frozen_assessment_plan": "../PROTOCOL.md",
+    "hashes": "../frozen-inputs.json"
+  },
+  "evidence": {
+    "raw_events": "Retained privately; SHA-256 and event references are in producer-workflow.json.",
+    "final_response": "Retained privately; not included in the public distribution.",
+    "frozen_submission_manifest": "submission-manifest.json",
+    "coordinator_saved_usd": "coordinator-usd-readback.json",
+    "coordinator_browser": "coordinator-browser-review.json",
+    "coordinator_kinematics": "coordinator-kinematics.json",
+    "selected_harness": "harness-review/result.json"
+  },
+  "frozen_submission": {
+    "files": 79,
+    "bytes": 36119750,
+    "unmodified": true
+  },
+  "limits": [
+    "One coordinator-designed worked example; not an independent producer trial or representative benchmark.",
+    "Producer self-corrections are part of the one task; initial exports did fail.",
+    "Full USD shader compliance remains incomplete due missing standard shader definitions in the checker environment.",
+    "No physics, collision, manufacturing, measured material, comparative cost or model-ranking claim.",
+    "Coordinator nine-time measurements would not have detected the initial subframe Euler-wrap defect."
+  ],
+  "archive_note": "Public derivative. Local machine paths are redacted in prompt/environment/logs, launch scripts are portable, PNG text metadata is removed and the Blender file-browser directory is reset. USD and GLB are unchanged. Original submission hashes and a public file manifest are retained; raw session events are not public. See ../PUBLICATION.md.",
+  "publication": {
+    "original_run_summary_sha256": "250a4ed4c778d840300736832b7fbeecb9d9ee9593eb4213c93eab5f46b38ebc",
+    "recorded_submission_hashes": "submission-manifest.json",
+    "public_distribution_manifest": "../MANIFEST.json"
+  }
+}

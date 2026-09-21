@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "browser": "153.0.8010.50",
+  "playwright": "1.62.1",
+  "three": "0.180.0",
+  "animationDuration": 4,
+  "sampledPoses": 481,
+  "maximumErrorsMetres": {
+    "radius": 8.376339032112323e-9,
+    "rod": 0.000003949330169478182,
+    "guide": 1.907348626262184e-9,
+    "analyticSlider": 0.000003952794108100233,
+    "rodStartPin": 0.000003006163802180093,
+    "rodEndPin": 9.545229858311362e-7
+  },
+  "checks": [
+    "GLB loaded",
+    "named reference nodes",
+    "radius and rod distance",
+    "linear guide",
+    "analytic slider position",
+    "play/pause",
+    "pause holds pose",
+    "timeline input",
+    "keyboard scrubbing",
+    "loop playback",
+    "restart",
+    "orbit drag",
+    "wheel zoom",
+    "three camera presets",
+    "desktop screenshot",
+    "mobile no horizontal overflow",
+    "local-only network"
+  ],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "requestURLs": [
+    "http://127.0.0.1:8765/viewer/",
+    "http://127.0.0.1:8765/viewer/style.css",
+    "http://127.0.0.1:8765/viewer/app.js",
+    "http://127.0.0.1:8765/viewer/vendor/build/three.module.js",
+    "http://127.0.0.1:8765/viewer/vendor/examples/jsm/loaders/GLTFLoader.js",
+    "http://127.0.0.1:8765/viewer/vendor/examples/jsm/controls/OrbitControls.js",
+    "http://127.0.0.1:8765/viewer/vendor/examples/jsm/environments/RoomEnvironment.js",
+    "http://127.0.0.1:8765/viewer/vendor/examples/jsm/utils/BufferGeometryUtils.js",
+    "http://127.0.0.1:8765/viewer/vendor/build/three.core.js",
+    "http://127.0.0.1:8765/output/crank_slider.glb"
+  ]
+}

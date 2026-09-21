@@ -1,0 +1,31 @@
+{
+  "method": "Coordinator read-only inspection of the submitted USD through OpenUSD, after the original production task. No solver, simulation, agent repair or behavioral evaluation was run.",
+  "scene_sha256": "91aa868345cb1f1ff26b73901963b57e0531e9e42480cd74c77c67f9ddb54fbd",
+  "openusd_version": [
+    0,
+    25,
+    11
+  ],
+  "schema_counts": {
+    "rigid_bodies": 0,
+    "colliders": 0,
+    "mass_properties": 0,
+    "physics_materials": 0,
+    "articulation_roots": 0,
+    "joints": 0,
+    "physics_scenes": 0
+  },
+  "schema_paths": {
+    "rigid_bodies": [],
+    "colliders": [],
+    "mass_properties": [],
+    "physics_materials": [],
+    "articulation_roots": [],
+    "joints": [],
+    "physics_scenes": []
+  },
+  "authored_physics_properties": [],
+  "applied_physics_schemas": [],
+  "interpretation": "The inspected stage has no authored UsdPhysics bodies, colliders, mass APIs, physical-material APIs, articulation roots, joints or physics scene. Its saved animation is not a delivered rigid-body simulation model.",
+  "limits": "Checks the composed stage in its saved configuration, not another file, engine-side model or future conversion. It neither validates dynamic behavior nor rejects the original visualization brief."
+}

@@ -1,0 +1,9 @@
+ ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
+ Function: Arch_ValidateAssumptions
+     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     Line: 140
+Traceback (most recent call last):
+  File "<PRODUCER_WORKSPACE>/scripts/validate_usd.py", line 26, in <module>
+    assert max(maxerr.values())<.000015,maxerr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'radius_m': 1.490116363633831e-10, 'rod_length_m': 0.06999028579047835, 'slider_guide_m': 1.907348626262184e-09, 'rod_start_pin_m': 0.06999699713369133, 'rod_end_pin_m': 9.545229895190016e-07, 'analytical_slider_m': 3.952786569234867e-06}

@@ -1,0 +1,19 @@
+ ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
+ Function: Arch_ValidateAssumptions
+     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     Line: 140
+Traceback (most recent call last):
+  File "<PRODUCER_WORKSPACE>/scripts/check_usd_compliance.py", line 6, in <module>
+    checker.CheckCompliance(str(root/'output/crank_slider.usdc'))
+  File "<USD_ENV>/lib/python3.12/site-packages/pxr/UsdUtils/complianceChecker.py", line 1136, in CheckCompliance
+    self._TraverseRange(allPrimsIt, isStageRoot=True)
+  File "<USD_ENV>/lib/python3.12/site-packages/pxr/UsdUtils/complianceChecker.py", line 1194, in _TraverseRange
+    self._CheckPrim(prim)
+  File "<USD_ENV>/lib/python3.12/site-packages/pxr/UsdUtils/complianceChecker.py", line 1180, in _CheckPrim
+    rule.CheckPrim(prim)
+  File "<USD_ENV>/lib/python3.12/site-packages/pxr/UsdUtils/complianceChecker.py", line 696, in CheckPrim
+    Sdr.Registry().GetShaderNodeByIdentifier(shaderId)
+    ^^^^^^^^^^^^^^
+pxr.Tf.ErrorException: 
+	Error in 'pxrInternal_v0_25_11__pxrReserved__::_GetShaderResourcePath' at line 37 in file /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/usdHydra/discoveryPlugin.cpp : 'Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
+'

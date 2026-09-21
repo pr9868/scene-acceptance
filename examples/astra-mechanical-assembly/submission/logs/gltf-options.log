@@ -1,0 +1,5 @@
+export_animation_mode ACTIONS Export Animation mode
+[('ACTIONS', 'Export actions (actives and on NLA tracks) as separate animations'), ('ACTIVE_ACTIONS', 'All the currently assigned actions become one glTF animation'), ('BROADCAST', 'Broadcast all compatible actions to all objects. Animated objects will get all actions compatible with them, others will get no animation at all'), ('NLA_TRACKS', 'Export individual NLA Tracks as separate animation'), ('SCENE', 'Export baked scene as a single animation')]
+export_merge_animation ACTION Merge Animations
+[('NLA_TRACK', 'Merge by NLA Track Names'), ('ACTION', 'Merge by Actions'), ('NONE', 'Do Not Merge Animations')]
+export_apply False Apply modifiers (excluding Armatures) to mesh objects -WARNING: prevents exporting shape keys

@@ -1,0 +1,13 @@
+Build an attractive animated mechanical assembly that I can inspect in a browser and reuse as editable 3D content.
+
+Make a tabletop crank-slider mechanism. A rotating crank drives a connecting rod and a slider constrained to move along a straight guide. Use a nominal crank radius of 35 mm and a connecting-rod pin-to-pin length of 110 mm. One complete crank revolution should take four seconds and loop smoothly. The mechanism should remain connected throughout the motion, with supports and hardware that make the assembly understandable from multiple angles.
+
+Give it visibly distinct materials: blue painted or anodized structure, metallic shafts/linkage, an orange moving component, and dark rubber feet. Choose the remaining dimensions, geometry, lighting and presentation yourself. Aim for a clear product or instructional visualization, not a certified engineering design or physics simulation.
+
+Deliver:
+- An editable USD scene with named parts, materials, animation, explicit metre scale and timing metadata. Keep the working source file and generator so I can revise it.
+- A self-contained local web viewer that displays the same assembly and motion, lets me orbit and zoom, and has play/pause and a timeline scrubber. Include a browser-friendly model such as GLB if needed; explain which file the viewer actually loads.
+- A good overview PNG of the actual generated scene, not a separately imagined illustration.
+- A README with launch/rebuild instructions, the tools and library versions you actually used, checks you ran, and anything that remains unverified. Identify the crank center, crank pin and slider pin so the motion can be checked in the saved scene.
+
+You may choose and use the available tools autonomously, inspect the results and correct your own work before submitting. Test the exported files and the actual browser viewer. Do not claim physical validation, manufacturing suitability or a measured material property. Do not download finished 3D assets, use paid services, publish anything, or access unrelated files. Use only this synthetic brief and your new workspace. Retain diagnostic logs and report encountered problems honestly.

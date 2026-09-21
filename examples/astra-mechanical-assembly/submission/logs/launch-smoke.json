@@ -1,0 +1,14 @@
+{
+  "http://127.0.0.1:8766/viewer/": {
+    "status": 200,
+    "bytes": 3256
+  },
+  "http://127.0.0.1:8766/output/crank_slider.glb": {
+    "status": 200,
+    "bytes": 2574332
+  },
+  "http://127.0.0.1:8765/viewer/": {
+    "status": 200,
+    "bytes": 3256
+  }
+}

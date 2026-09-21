@@ -1,0 +1,32 @@
+ ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
+ Function: Arch_ValidateAssumptions
+     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     Line: 140
+Coding Error (secondary thread): in _GetShaderResourcePath at line 37 of /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/usdHydra/discoveryPlugin.cpp -- Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
+
+Coding Error (secondary thread): in _GetShaderResourcePath at line 37 of /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/plugin/usdShaders/discoveryPlugin.cpp -- Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
+
+{
+  "status": "INCOMPLETE",
+  "shaderRegistryAvailable": false,
+  "checkerException": null,
+  "errors": [],
+  "warnings": [],
+  "failedChecks": [
+    "Shader </root/_materials/Lettering___ivory/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')",
+    "Shader </root/_materials/Linkage___satin_steel/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')",
+    "Shader </root/_materials/Hardware___polished_alloy/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')",
+    "Shader </root/_materials/Hardware___graphite/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')",
+    "Shader </root/_materials/Feet___dark_rubber/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')",
+    "Shader </root/_materials/Structure___cobalt_enamel/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')",
+    "Shader </root/_materials/Slider___signal_orange/Principled_BSDF> has invalid shader node.  (fails 'ShaderPropertyTypeConformanceChecker')"
+  ],
+  "layers": [
+    "<PRODUCER_WORKSPACE>/output/crank_slider.usdc"
+  ],
+  "assets": [
+    "<PRODUCER_WORKSPACE>/output/textures/color_455881.hdr"
+  ],
+  "unresolved": []
+}
+Full compliance remains unverified: installed OpenUSD shader discovery resources are missing. Dependency and custom geometry/motion checks ran separately.

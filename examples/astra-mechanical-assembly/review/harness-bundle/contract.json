@@ -1,0 +1,68 @@
+{
+  "schema_version": "2.0",
+  "id": "astra-mechanism-delivery-demo",
+  "intended_use": "Selected USD metadata, material-delivery and four-second stage-duration checks; excludes full shader compliance and physical certification",
+  "profile": {
+    "id": "mechanism-visual-delivery-subset",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "textures/color_455881.hdr"
+  ],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "materials": {
+      "version": "1.0.0"
+    },
+    "motion.timing": {
+      "version": "1.0.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "usd.metadata",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "materials.delivery",
+      "pack": "materials",
+      "check": "delivery",
+      "required": true,
+      "parameters": {
+        "bindings": {
+          "/root/CRANK_SLIDER_ASSEMBLY/Base___cobalt_plinth/Cube": "/root/_materials/Structure___cobalt_enamel",
+          "/root/CRANK_SLIDER_ASSEMBLY/Slider_Translation/Orange_slider_carriage/Cube_021": "/root/_materials/Slider___signal_orange",
+          "/root/CRANK_SLIDER_ASSEMBLY/Connecting_Rod_Pose/Connecting_rod/Connecting_rod": "/root/_materials/Linkage___satin_steel",
+          "/root/CRANK_SLIDER_ASSEMBLY/Rubber_isolator/Cylinder": "/root/_materials/Feet___dark_rubber"
+        },
+        "purpose": "",
+        "render_context": "",
+        "surface_shader_id": "UsdPreviewSurface"
+      }
+    },
+    {
+      "id": "motion.clock",
+      "pack": "motion.timing",
+      "check": "clock",
+      "required": true,
+      "parameters": {
+        "duration_s": 4,
+        "tolerance_s": 1e-09
+      }
+    }
+  ]
+}
