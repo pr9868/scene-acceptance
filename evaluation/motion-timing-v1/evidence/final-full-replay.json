@@ -1,0 +1,13 @@
+{
+  "checker_sha256": "55086460b6669852b0b4d0fb8e473d1378dc5fc64f2cc15b3f53aed3346f803c",
+  "retained_files_verified": 916,
+  "software_tests": 224,
+  "pack_cases": 22,
+  "mesh_cases": 32,
+  "timing_cases": 17,
+  "content_probes": 4,
+  "physics_configuration_cases": 3,
+  "simulator_runs": 4,
+  "model_calls": 0,
+  "decisions_and_recorded_physics_observations_match": true
+}

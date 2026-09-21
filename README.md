@@ -4,7 +4,9 @@ An extensible acceptance harness for applications that delegate 3D content produ
 
 I want the application to own what a deliverable must satisfy while the producer chooses how to build it. This project evaluates a saved OpenUSD bundle against an explicit contract, runs the selected evaluation packs and returns findings tied to the submitted revision. The application can use those findings to accept the artifact, request evidence or send a new brief to its producer.
 
-**Status:** experimental, version 0.3.0. The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion and selected OpenUSD/NVIDIA rules. Texture decoding and simulated behavior are separate, reproducible experiments.
+**Status:** experimental, version 0.4.0 development. The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion, explicit timing requirements and selected OpenUSD/NVIDIA rules. Texture decoding and simulated behavior are separate, reproducible experiments. The [v0.3.0 release](https://github.com/pr9868/scene-acceptance/releases/tag/v0.3.0) remains unchanged.
+
+The [timing walkthrough](docs/MOTION_TIMING.md) reproduces a gap in a time-code-only contract, then rejects a changed playback rate while accepting a correctly rescaled animation. Producer prechecks may use the same harness; the consuming application still owns the approved requirements and acceptance of the delivered revision. Shared validators can share bugs, so reference cases and coverage review remain necessary.
 
 ![Application ownership and the producer-to-acceptance workflow](docs/images/architecture.png)
 
@@ -15,7 +17,7 @@ Blue is human responsibility, purple is the producer agent, gray is application 
 Use Python 3.12. These commands install the core and its pinned test dependencies; NVIDIA and the experiment tools are optional for this first example.
 
 ```bash
-git clone --branch v0.3.0 https://github.com/pr9868/scene-acceptance.git
+git clone --branch codex/motion-timing https://github.com/pr9868/scene-acceptance.git
 cd scene-acceptance
 python3.12 -m venv .venv
 source .venv/bin/activate
@@ -68,6 +70,7 @@ The caller owns the brief, approved providers, references, retry policy and rele
 | `geometry` | Cube and polygon geometry, placement, bounds and declared edit constraints | Bounded representations; shape-preserving translation uses corresponding points/connectivity. |
 | `materials` | Resolved bindings, expected surface shader IDs and declared dependencies | No texture decoding, UV or rendered appearance acceptance. |
 | `motion` | World-space transform origins at contract-specified time codes | No whole-interval collision, orientation or dynamics proof. |
+| `motion.timing` | Authored duration, optional exact clock rate, and sampled origins at elapsed seconds | Separate from the legacy time-code check; does not infer active motion duration or prove a continuous path. |
 | `nvidia.asset-validator` | Explicitly selected NVIDIA USD Validation rules | Optional dependency; no SimReady certification or automatic fixers. |
 | `studio.mesh-budget` | A separately installed example of a consumer's polygon budget | Example extension; face count does not establish rendering performance. |
 
@@ -111,9 +114,10 @@ The output directory must be new and outside this checkout. The replay verifies 
 
 | Evidence | What is reproduced |
 |---|---|
-| 195 software tests | Core, geometry and pack behavior. These tests include cases counted below. |
+| 224 software tests | The original 195 plus 29 timing controls and regression checks. These tests include cases counted below. |
 | 22 pack cases | Selected validators, materials, motion, external packs and error handling. |
 | 32 mesh cases | Prior geometry and edit decisions, including the changed interior. |
+| 17 timing cases | Clock changes, legal rescaling, duration, sampled seconds and unusable timing evidence. |
 | Four content probes | Material decoding and motion-sampling coverage comparisons. |
 | Three configuration cases and four CPU simulation runs | Positive/negative mass controls, then two friction assumptions at two timesteps. |
 
@@ -126,12 +130,15 @@ The first pack run matched 19 of 22 expected decisions. Three texture-dependency
 - [Evidence guide](docs/EVIDENCE.md): where to find protocols, fixtures, first failures, corrected results and historical model outputs.
 - [Material delivery](article-evidence/content-probes): an unreadable PNG can pass the current delivery checks. [Workflow](docs/images/materials-flow.png).
 - [Motion sampling](article-evidence/content-probes): the same motion accepts at three requested times and rejects when a missed excursion is checked. [Workflow](docs/images/motion-flow.png).
+- [Motion timing](docs/MOTION_TIMING.md): require the declared duration and sample positions in elapsed seconds; preserve valid clock/keyframe rescaling.
 - [Physics experiment](article-evidence/physics-experiment): selected configuration rules pass while task behavior differs with assumed friction. [Workflow](docs/images/physics-flow.png).
 - [Pack API](docs/PACKS_API.md) and [external example](examples/studio-mesh-pack): how to add another evaluation without modifying the core.
 
 ## What I want to test next
 
 My next application trial would use independently supplied edit briefs and a producer connected by the caller. I would record first-attempt acceptance, violations missed by the evaluator, false rejections, unresolved requirements, repair attempts, total runtime cost and human review time. Comparing contract prechecking with findings received only after submission would test whether that feedback helps the producer.
+
+The [trial protocol](evaluation/producer-trial-v1/PROTOCOL.md) defines the inputs, comparison and record before execution. It is awaiting an independently supplied brief and external assessment; no workflow benefit is reported from that plan.
 
 The concrete extensions suggested by the current probes are a required texture-decoding pack, better motion-interval coverage and a simulation worker with an explicit task/reference protocol. These are opportunities to develop and test, not capabilities included in this release.
 

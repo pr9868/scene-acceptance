@@ -1,4 +1,4 @@
-# Evaluation packs: extension API 1.0 / harness 0.3.0
+# Evaluation packs: extension API 1.0 / harness 0.4.0 development
 
 One application-owned contract selects checks from installed packs. A pack supplies measurements and findings. The core records coverage, prerequisites, versions and input identity, then reduces the required results. It never repairs a scene. The calling application routes feedback and decides whether to ask its producer for another candidate.
 
@@ -45,6 +45,7 @@ Legend: blue = human responsibility; purple = producer agent; gray = application
 | `geometry` 1.0.0 | Existing contract v1 through the compatibility evaluator | Current cube/polygon/edit rules and their original coverage limits. A nested contract must be declared as evidence and cannot add undeclared dependencies. |
 | `materials` 1.0.0 | Named resolved bindings, expected surface shader IDs and external asset existence | Does not decode textures, validate UV mapping or render/reference appearance. A material shader says nothing about measured friction. |
 | `motion` 1.0.0 | World transform origin at specified time codes, in meters | Does not prove orientation, collision, continuous motion or physical feasibility. Time codes are not implicitly seconds. |
+| `motion.timing` 1.0.0 | Authored stage duration, optional exact rate, and world origins at elapsed seconds from stage start | Requires an explicit valid clock/range. Does not infer active motion duration or prove a continuous path. See [timing requirements](MOTION_TIMING.md). |
 | `nvidia.asset-validator` 1.0.0 | Named rules from `usd-validation-nvidia==1.20.0`; optional dependency | Reports upstream rule and severity. Does not call fixers, stamp an asset or claim SimReady profile/task acceptance. |
 | `studio.mesh-budget` 0.1.0 | Independently installed example: named static mesh polygon budgets | Consumer policy example; does not establish topology validity or rendering performance. |
 
@@ -117,7 +118,7 @@ A required failure yields `REJECT`; required unknowns or errors remain visible e
 
 `usd-local-v1` admits local USD layers plus explicitly declared local assets, including asset-valued shader attributes and time-sampled assets. It fingerprints file dependencies before composition. Limits: 32 MiB per file, 64 files per USD dependency closure, 10,000 prims and 10,000 time samples per asset dependency attribute. Paths outside the bundle, resolver URLs, packaged assets and dependency patterns such as UDIM tokens are rejected. Variants, payloads, value clips, inherits/specializes, cycles and instances remain outside this reader's coverage. Add another tested reader contract before claiming those representations.
 
-Old contract v1 still dispatches to the original static evaluator. Old records remain immutable; new runs identify checker 0.3.0. The GitHub v0.3.0 release includes the pack implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
+Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; this development revision identifies checker 0.4.0. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
 
 ## What to add next
 

@@ -1,0 +1,193 @@
+{
+  "cases": 17,
+  "matches": 17,
+  "results": [
+    {
+      "id": "correct",
+      "expected": "ACCEPT_FOR_USE",
+      "actual": "ACCEPT_FOR_USE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "PASS"
+      }
+    },
+    {
+      "id": "clock_rate_changed",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "FAIL",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "rescaled_24",
+      "expected": "ACCEPT_FOR_USE",
+      "actual": "ACCEPT_FOR_USE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "PASS"
+      }
+    },
+    {
+      "id": "shifted_start",
+      "expected": "ACCEPT_FOR_USE",
+      "actual": "ACCEPT_FOR_USE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "PASS"
+      }
+    },
+    {
+      "id": "padded_fast_motion",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "FAIL"
+      }
+    },
+    {
+      "id": "missing_clock",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "UNKNOWN",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "zero_clock",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "UNKNOWN",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "negative_clock",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "UNKNOWN",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "missing_range",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "UNKNOWN",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "reversed_range",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "UNKNOWN",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "wrong_duration",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "FAIL",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "wrong_position",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "FAIL"
+      }
+    },
+    {
+      "id": "required_rate_changed",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "FAIL",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "missing_units",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "sample_outside_interval",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "actual": "INSUFFICIENT_EVIDENCE",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "UNKNOWN"
+      }
+    },
+    {
+      "id": "unordered_samples",
+      "expected": "EVALUATION_ERROR",
+      "actual": "EVALUATION_ERROR",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "ERROR"
+      }
+    },
+    {
+      "id": "negative_sample",
+      "expected": "EVALUATION_ERROR",
+      "actual": "EVALUATION_ERROR",
+      "matched": true,
+      "checks": {
+        "core.artifact": "PASS",
+        "motion.clock": "PASS",
+        "motion.seconds": "ERROR"
+      }
+    }
+  ]
+}

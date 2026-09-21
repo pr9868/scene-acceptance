@@ -1,0 +1,216 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>3D acceptance: INSUFFICIENT_EVIDENCE</title><style>body{font:16px/1.55 system-ui,sans-serif;color:#20303c;background:#fafbfc;margin:0}main{max-width:1050px;margin:40px auto;padding:0 20px}h1{line-height:1.2}p{max-width:80ch}table{border-collapse:collapse;width:100%;font-size:14px}td,th{border:1px solid #d0d8df;text-align:left;padding:10px;vertical-align:top}th{background:#edf2f5}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.scroll{overflow:auto}details{margin:10px 0}.PASS,.ACCEPT_FOR_USE{color:#206343}.FAIL,.REJECT{color:#ad3123}.UNKNOWN,.INSUFFICIENT_EVIDENCE{color:#805916}.ERROR,.EVALUATION_ERROR{color:#9b254c}.scope{padding:16px;border-left:4px solid #3273a4;background:#edf4fa}a{color:#145e91}footer{margin-top:30px;color:#526473}</style></head><body><main>
+<h1>3D content acceptance</h1><h2 class="INSUFFICIENT_EVIDENCE">INSUFFICIENT_EVIDENCE</h2>
+<p>Intended use: <strong>Check stage duration and panel origins at elapsed seconds; no continuous-path claim</strong> · Contract: panel-two-second-motion · Required evidence complete: false</p>
+<p class="scope">This result applies only to the named use, supported representation and recorded revisions. It does not certify a plant, physical prediction, robot policy or every claim in a report.</p>
+<h2>Results by evaluation pack</h2><p>Counts describe selected checks, including advisory findings. They are not comparable quality scores.</p><div class="scroll"><table><thead><tr><th>Pack</th><th>Pass</th><th>Fail</th><th>Unknown</th><th>Error</th><th>N/A</th></tr></thead><tbody><tr><td>motion.timing</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td></tr></tbody></table></div><details><summary>Selected profile, requirements and execution plan</summary><pre>{
+  &quot;contract_schema_version&quot;: &quot;2.0&quot;,
+  &quot;profile&quot;: {
+    &quot;id&quot;: &quot;panel-seconds&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;
+  },
+  &quot;planned&quot;: [
+    {
+      &quot;id&quot;: &quot;motion.clock&quot;,
+      &quot;pack&quot;: &quot;motion.timing&quot;,
+      &quot;check&quot;: &quot;clock&quot;,
+      &quot;required&quot;: true,
+      &quot;parameters&quot;: {
+        &quot;duration_s&quot;: 2,
+        &quot;tolerance_s&quot;: 1e-09
+      }
+    },
+    {
+      &quot;id&quot;: &quot;motion.seconds&quot;,
+      &quot;pack&quot;: &quot;motion.timing&quot;,
+      &quot;check&quot;: &quot;positions&quot;,
+      &quot;required&quot;: true,
+      &quot;after&quot;: [
+        &quot;motion.clock&quot;
+      ],
+      &quot;parameters&quot;: {
+        &quot;path&quot;: &quot;/World/Panel&quot;,
+        &quot;tolerance_m&quot;: 1e-06,
+        &quot;samples&quot;: [
+          {
+            &quot;elapsed_s&quot;: 0,
+            &quot;world_origin_m&quot;: [
+              0.0,
+              0,
+              0
+            ]
+          },
+          {
+            &quot;elapsed_s&quot;: 1,
+            &quot;world_origin_m&quot;: [
+              0.5,
+              0,
+              0
+            ]
+          },
+          {
+            &quot;elapsed_s&quot;: 2,
+            &quot;world_origin_m&quot;: [
+              1.0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  &quot;by_pack&quot;: {
+    &quot;motion.timing&quot;: {
+      &quot;PASS&quot;: 0,
+      &quot;FAIL&quot;: 0,
+      &quot;UNKNOWN&quot;: 2,
+      &quot;ERROR&quot;: 0,
+      &quot;NOT_APPLICABLE&quot;: 0
+    }
+  },
+  &quot;checked&quot;: &quot;Only selected checks, parameters and reported coverage in this exact use profile.&quot;,
+  &quot;unchecked&quot;: [
+    &quot;Any requirement absent from the supplied contract&quot;,
+    &quot;Real-world material or physical accuracy without suitable reference evidence&quot;,
+    &quot;Security isolation from installed pack code (trusted in-process execution)&quot;,
+    &quot;Simulator execution, rendered appearance and general free-form claim grounding&quot;
+  ]
+}</pre></details>
+<div class="scroll" tabindex="0" role="region" aria-label="Check results"><table><thead><tr><th>Check</th><th>Result</th><th>Reason and evidence</th></tr></thead><tbody><tr><td>core.artifact<br>Required</td><td class="PASS">PASS</td><td>Admitted local USD dependencies; missing files remain unresolved.<details><summary>Evidence</summary><pre>{
+  &quot;missing_files&quot;: [],
+  &quot;adapter&quot;: &quot;usd-local-v1&quot;
+}</pre></details></td></tr><tr><td>motion.clock<br>Required</td><td class="UNKNOWN">UNKNOWN</td><td>An authored timeCodesPerSecond is required; fallback rates are not accepted<details><summary>Evidence</summary><pre>{
+  &quot;pack&quot;: &quot;motion.timing&quot;,
+  &quot;check&quot;: &quot;clock&quot;,
+  &quot;observations&quot;: {}
+}</pre></details></td></tr><tr><td>motion.seconds<br>Required</td><td class="UNKNOWN">UNKNOWN</td><td>Prerequisite did not pass: motion.clock<details><summary>Evidence</summary><pre>{
+  &quot;pack&quot;: &quot;motion.timing&quot;,
+  &quot;check&quot;: &quot;positions&quot;,
+  &quot;observations&quot;: {}
+}</pre></details></td></tr></tbody></table></div>
+<h2>Scope that remains unchecked</h2><ul><li>Any requirement absent from the supplied contract</li><li>Real-world material or physical accuracy without suitable reference evidence</li><li>Security isolation from installed pack code (trusted in-process execution)</li><li>Simulator execution, rendered appearance and general free-form claim grounding</li></ul>
+<details><summary>Exact inputs and checker identity</summary><pre>{
+  &quot;checker_version&quot;: &quot;0.4.0&quot;,
+  &quot;checker_sha256&quot;: &quot;2ab0016aa320cc227dd43c4315ec69465ba48b910660d74b92ce010510bd012c&quot;,
+  &quot;contract_sha256&quot;: &quot;b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7&quot;,
+  &quot;candidate&quot;: {
+    &quot;root&quot;: &quot;scene.usda&quot;,
+    &quot;files&quot;: {
+      &quot;pixel.png&quot;: &quot;6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f&quot;,
+      &quot;scene.usda&quot;: &quot;d2a309f520e6da094567833daaa5e28c520674d94d82b93336fcc5112420b71a&quot;
+    }
+  },
+  &quot;baseline&quot;: null,
+  &quot;packs&quot;: {
+    &quot;motion.timing&quot;: {
+      &quot;id&quot;: &quot;motion.timing&quot;,
+      &quot;version&quot;: &quot;1.0.0&quot;,
+      &quot;api_version&quot;: &quot;1.0&quot;,
+      &quot;description&quot;: &quot;Authored clock requirements and world-origin samples in elapsed seconds&quot;,
+      &quot;checks&quot;: {
+        &quot;clock&quot;: {
+          &quot;description&quot;: &quot;Check authored stage duration and optionally require an exact clock rate&quot;,
+          &quot;coverage&quot;: &quot;Authored stage time range converted to seconds&quot;,
+          &quot;limitations&quot;: [
+            &quot;Does not infer active motion duration; an authored positive clock and complete time range are required&quot;
+          ],
+          &quot;parameters&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;duration_s&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0
+              },
+              &quot;tolerance_s&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0
+              },
+              &quot;time_codes_per_second&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;exclusiveMinimum&quot;: 0
+              }
+            },
+            &quot;required&quot;: [
+              &quot;duration_s&quot;,
+              &quot;tolerance_s&quot;
+            ],
+            &quot;additionalProperties&quot;: false
+          }
+        },
+        &quot;positions&quot;: {
+          &quot;description&quot;: &quot;Compare named world origins at elapsed seconds from the authored stage start&quot;,
+          &quot;coverage&quot;: &quot;Named world origins at the requested elapsed seconds&quot;,
+          &quot;limitations&quot;: [
+            &quot;No continuous-time, orientation, collision or physics proof&quot;,
+            &quot;Requires authored clock and time range&quot;
+          ],
+          &quot;parameters&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;path&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;minLength&quot;: 1
+              },
+              &quot;tolerance_m&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0
+              },
+              &quot;samples&quot;: {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;minItems&quot;: 1,
+                &quot;maxItems&quot;: 1000,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;elapsed_s&quot;: {
+                      &quot;type&quot;: &quot;number&quot;,
+                      &quot;minimum&quot;: 0
+                    },
+                    &quot;world_origin_m&quot;: {
+                      &quot;type&quot;: &quot;array&quot;,
+                      &quot;items&quot;: {
+                        &quot;type&quot;: &quot;number&quot;
+                      },
+                      &quot;minItems&quot;: 3,
+                      &quot;maxItems&quot;: 3
+                    }
+                  },
+                  &quot;required&quot;: [
+                    &quot;elapsed_s&quot;,
+                    &quot;world_origin_m&quot;
+                  ],
+                  &quot;additionalProperties&quot;: false
+                }
+              }
+            },
+            &quot;required&quot;: [
+              &quot;path&quot;,
+              &quot;tolerance_m&quot;,
+              &quot;samples&quot;
+            ],
+            &quot;additionalProperties&quot;: false
+          }
+        }
+      },
+      &quot;source_sha256&quot;: {
+        &quot;0:motion_timing.py&quot;: &quot;fdf7547917ddd5184d2914e94309933b3e9378006d4f2ed7158056b829c26bfd&quot;,
+        &quot;1:builtin_packs.py&quot;: &quot;1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0&quot;
+      },
+      &quot;dependencies&quot;: {
+        &quot;usd-core&quot;: {
+          &quot;version&quot;: &quot;25.11&quot;,
+          &quot;record_sha256&quot;: &quot;c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982&quot;
+        }
+      },
+      &quot;implementation_sha256&quot;: &quot;71815e4943c23889426c3d16c6a84dd33c8f83842ddc903c0df13c0155e9e4d5&quot;
+    }
+  },
+  &quot;input_files&quot;: {
+    &quot;contract.json&quot;: &quot;b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7&quot;,
+    &quot;scene.usda&quot;: &quot;d2a309f520e6da094567833daaa5e28c520674d94d82b93336fcc5112420b71a&quot;,
+    &quot;pixel.png&quot;: &quot;6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f&quot;
+  },
+  &quot;missing_files&quot;: []
+}</pre></details>
+<p><a href="result.json">Machine-readable result</a> · <a href="manifest.json">Report file hashes</a></p>
+<footer>Checker 0.4.0; OpenUSD [0, 25, 11]. Selected packs ran as trusted local functions. The caller owns provider approval and process isolation.</footer></main></body></html>
