@@ -19,7 +19,7 @@ from .model import (
 from .usd_reader import Bundle, Scene
 from .checks import REGISTRY
 
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 
 
 def implementation_digest():

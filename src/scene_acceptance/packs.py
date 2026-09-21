@@ -132,8 +132,9 @@ class PackRegistry:
 
 def default_registry(approved=()):
     from .builtin_packs import builtin_packs
+    from .motion_timing import timing_pack
 
-    return PackRegistry(builtin_packs()).load_approved(approved)
+    return PackRegistry([*builtin_packs(), timing_pack()]).load_approved(approved)
 
 
 def installed_pack_names():

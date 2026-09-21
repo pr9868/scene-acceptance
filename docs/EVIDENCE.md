@@ -5,6 +5,7 @@ The release keeps the inputs and observations needed to inspect the bounded clai
 | Directory or record | What it contains | How to read it |
 |---|---|---|
 | `evaluation/packs-v1/fixtures` | 22 frozen development cases | Expected decisions test the evaluator, not a producer's failure rate. |
+| `evaluation/motion-timing-v1` | 17 frozen timing controls and the first run | Rate-only changes reject, legal rescaling accepts, and missing timing evidence stays unresolved. These are additional constructed cases. |
 | `evaluation/packs-v1/runs/first` | The first run, matching 19 of 22 cases | Three texture-dependency cases falsely accepted. These failures are retained. |
 | `evaluation/packs-v1/runs/final` | Corrected results for the same fixtures | Asset-valued attribute inspection fixed the reader. All 22 matched. |
 | `evaluation/mesh-v1` | 32 geometry cases and retained reports | Includes unchanged bounds with a changed interior, wrong destinations and missing evidence. |
@@ -24,6 +25,8 @@ Run the README setup and `python reproduce.py --out /tmp/scene-replay-01`. It ve
 `MANIFEST.json` covers the distributed files other than itself. `checker_sha256` identifies the runtime implementation. `original_files_sha256` and `portable_report_views` preserve the lineage of report copies whose local workspace prefixes were replaced for portability. Numeric observations and input artifacts were not changed. Internal hashes inside historical reports may identify their original copies; the distribution manifest identifies the published copies.
 
 The initial GitHub release packages the same 0.3.0 runtime as the earlier article companion. Its README, contribution instructions, project metadata and visual documentation are revised for a standalone repository. The prior archive's hash is retained in the manifest's `distribution_origin` field. The original archive remains unchanged.
+
+The 0.4.0 development revision preserves that original manifest and replay script in `release-records/v0.3.0`. Its current distribution manifest covers the new source and timing evidence. Existing fixtures and historical reports are preserved; the updated replay compares old decisions and per-check statuses, and reports new timing cases separately. Test counts come from the executed pytest report.
 
 ## Limits that matter when extending this project
 

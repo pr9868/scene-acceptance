@@ -1,0 +1,131 @@
+{
+  "scope": "Constructed development controls; no model trials or independent assessment",
+  "source_sha256": {
+    "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "contract.json": "22ba80404900f0acf9920ed1821f68c6caeb92eb57ffac02e23fba5ff37a1666"
+  },
+  "cases": [
+    {
+      "id": "correct",
+      "expected": "ACCEPT_FOR_USE"
+    },
+    {
+      "id": "clock_rate_changed",
+      "expected": "REJECT"
+    },
+    {
+      "id": "rescaled_24",
+      "expected": "ACCEPT_FOR_USE"
+    },
+    {
+      "id": "shifted_start",
+      "expected": "ACCEPT_FOR_USE"
+    },
+    {
+      "id": "padded_fast_motion",
+      "expected": "REJECT"
+    },
+    {
+      "id": "missing_clock",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "zero_clock",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "negative_clock",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "missing_range",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "reversed_range",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "wrong_duration",
+      "expected": "REJECT"
+    },
+    {
+      "id": "wrong_position",
+      "expected": "REJECT"
+    },
+    {
+      "id": "required_rate_changed",
+      "expected": "REJECT"
+    },
+    {
+      "id": "missing_units",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "sample_outside_interval",
+      "expected": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "id": "unordered_samples",
+      "expected": "EVALUATION_ERROR"
+    },
+    {
+      "id": "negative_sample",
+      "expected": "EVALUATION_ERROR"
+    }
+  ],
+  "files": {
+    "clock_rate_changed/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "clock_rate_changed/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "clock_rate_changed/scene.usda": "4f9a544c305da9757e209841d6d216213ed3269f06c668cc74dfd9c9c413b102",
+    "correct/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "correct/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "correct/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "missing_clock/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "missing_clock/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "missing_clock/scene.usda": "d2a309f520e6da094567833daaa5e28c520674d94d82b93336fcc5112420b71a",
+    "missing_range/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "missing_range/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "missing_range/scene.usda": "0c7295054a0753019fc9821fb3d40ab41b5fdf8a810ec085e14771165a60ef64",
+    "missing_units/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "missing_units/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "missing_units/scene.usda": "104ffc523e95e5163b2ac535977c4f2cbbde5747d4647f147df6e6b1c29e5c5c",
+    "negative_clock/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "negative_clock/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "negative_clock/scene.usda": "e21bcc435e1ef68f930c61ad82bd9ac9944c982eff904c1beeb27257e27aec3f",
+    "negative_sample/contract.json": "4ac7a805eb56716d027f08d64ac55bfd59d72d00bc06114a4da58e32a9880776",
+    "negative_sample/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "negative_sample/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "padded_fast_motion/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "padded_fast_motion/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "padded_fast_motion/scene.usda": "f0c8795c1b909709efa02487d6958a41e2bd2308f85f3b5d32daecae2fca3e52",
+    "required_rate_changed/contract.json": "d164c264d7677776bf8802d4dc03eebc5c43beb6d7313ce571202221b28416da",
+    "required_rate_changed/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "required_rate_changed/scene.usda": "ca6b1d95fcff6fb505a67368b2c81adf100ad415a95b23f745a4344828ef9ece",
+    "rescaled_24/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "rescaled_24/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "rescaled_24/scene.usda": "ca6b1d95fcff6fb505a67368b2c81adf100ad415a95b23f745a4344828ef9ece",
+    "reversed_range/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "reversed_range/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "reversed_range/scene.usda": "43e79d2a722cb721ef8190cfe38fd1eedf6a09d8660684263aa6e6ce7049b057",
+    "sample_outside_interval/contract.json": "4f746461d9d87f85e9a23f2c7f8928e79eaf43543451512f9ada06d665092ede",
+    "sample_outside_interval/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "sample_outside_interval/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "shifted_start/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "shifted_start/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "shifted_start/scene.usda": "ea41e9e813d811a03a7d6a53179aa300e937ca60aac33850d553d4d359673649",
+    "unordered_samples/contract.json": "91635f1479ce50192185385c7959ae7a3476cec7390537c5739233dfc6163c76",
+    "unordered_samples/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "unordered_samples/scene.usda": "6048f54b5db48e09a375463da1f0124f669af0432605a3ea0399563d8e1f9aeb",
+    "wrong_duration/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "wrong_duration/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "wrong_duration/scene.usda": "b99e154d4bff69ca0aede9059306dcd47223fcc33f2f691ed50fb7e0c78c07eb",
+    "wrong_position/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "wrong_position/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "wrong_position/scene.usda": "6a43ebf03e9174402d253f59fd2fa14d4ddaaaecf97cf5dac2ce8d5eeeb66ba8",
+    "zero_clock/contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "zero_clock/pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+    "zero_clock/scene.usda": "8f57903d90280b7b27f6477495ce86074bde2a20385770121d5bd685e1de826a"
+  }
+}

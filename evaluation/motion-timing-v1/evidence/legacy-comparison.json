@@ -1,0 +1,10 @@
+{
+  "packs": {
+    "cases": 22,
+    "verdicts_and_per_check_statuses_unchanged": true
+  },
+  "mesh": {
+    "cases": 32,
+    "verdicts_and_per_check_statuses_unchanged": true
+  }
+}
