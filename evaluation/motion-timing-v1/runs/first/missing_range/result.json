@@ -1,0 +1,255 @@
+{
+  "schema_version": "1.0",
+  "checker_version": "0.4.0",
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "complete": false,
+  "intended_use": "Check stage duration and panel origins at elapsed seconds; no continuous-path claim",
+  "contract_id": "panel-two-second-motion",
+  "identity": {
+    "checker_version": "0.4.0",
+    "checker_sha256": "2ab0016aa320cc227dd43c4315ec69465ba48b910660d74b92ce010510bd012c",
+    "contract_sha256": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+    "candidate": {
+      "root": "scene.usda",
+      "files": {
+        "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f",
+        "scene.usda": "0c7295054a0753019fc9821fb3d40ab41b5fdf8a810ec085e14771165a60ef64"
+      }
+    },
+    "baseline": null,
+    "packs": {
+      "motion.timing": {
+        "id": "motion.timing",
+        "version": "1.0.0",
+        "api_version": "1.0",
+        "description": "Authored clock requirements and world-origin samples in elapsed seconds",
+        "checks": {
+          "clock": {
+            "description": "Check authored stage duration and optionally require an exact clock rate",
+            "coverage": "Authored stage time range converted to seconds",
+            "limitations": [
+              "Does not infer active motion duration; an authored positive clock and complete time range are required"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "duration_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "tolerance_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "time_codes_per_second": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "duration_s",
+                "tolerance_s"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "positions": {
+            "description": "Compare named world origins at elapsed seconds from the authored stage start",
+            "coverage": "Named world origins at the requested elapsed seconds",
+            "limitations": [
+              "No continuous-time, orientation, collision or physics proof",
+              "Requires authored clock and time range"
+            ],
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tolerance_m": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "samples": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 1000,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "elapsed_s": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "world_origin_m": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 3,
+                        "maxItems": 3
+                      }
+                    },
+                    "required": [
+                      "elapsed_s",
+                      "world_origin_m"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "path",
+                "tolerance_m",
+                "samples"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "source_sha256": {
+          "0:motion_timing.py": "fdf7547917ddd5184d2914e94309933b3e9378006d4f2ed7158056b829c26bfd",
+          "1:builtin_packs.py": "1bbbe1a0109d7e4e598729b65edd71d87eada3308cf9f3c505fa2c77c9b6c2b0"
+        },
+        "dependencies": {
+          "usd-core": {
+            "version": "25.11",
+            "record_sha256": "c3e3b86b8aee250d2d23d28815bbd0d5034d78fc34f01474981ae443066c5982"
+          }
+        },
+        "implementation_sha256": "71815e4943c23889426c3d16c6a84dd33c8f83842ddc903c0df13c0155e9e4d5"
+      }
+    },
+    "input_files": {
+      "contract.json": "b9242bb4ae2c91797ca6395b9b6e495d11ca206daa458fe52b9bd03de359e0a7",
+      "scene.usda": "0c7295054a0753019fc9821fb3d40ab41b5fdf8a810ec085e14771165a60ef64",
+      "pixel.png": "6120027eb0698bcfe0de4e6d416842c69ceed4979a4d7be46c4511ea69d55d4f"
+    },
+    "missing_files": []
+  },
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; missing files remain unresolved.",
+      "evidence": {
+        "missing_files": [],
+        "adapter": "usd-local-v1"
+      },
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "motion.clock",
+      "status": "UNKNOWN",
+      "reason": "An authored start and end time code are required",
+      "evidence": {
+        "pack": "motion.timing",
+        "check": "clock",
+        "observations": {}
+      },
+      "required": true,
+      "duration_ms": 0.288
+    },
+    {
+      "id": "motion.seconds",
+      "status": "UNKNOWN",
+      "reason": "Prerequisite did not pass: motion.clock",
+      "evidence": {
+        "pack": "motion.timing",
+        "check": "positions",
+        "observations": {}
+      },
+      "required": true,
+      "duration_ms": 0.287
+    }
+  ],
+  "coverage": {
+    "contract_schema_version": "2.0",
+    "profile": {
+      "id": "panel-seconds",
+      "version": "1.0.0"
+    },
+    "planned": [
+      {
+        "id": "motion.clock",
+        "pack": "motion.timing",
+        "check": "clock",
+        "required": true,
+        "parameters": {
+          "duration_s": 2,
+          "tolerance_s": 1e-09
+        }
+      },
+      {
+        "id": "motion.seconds",
+        "pack": "motion.timing",
+        "check": "positions",
+        "required": true,
+        "after": [
+          "motion.clock"
+        ],
+        "parameters": {
+          "path": "/World/Panel",
+          "tolerance_m": 1e-06,
+          "samples": [
+            {
+              "elapsed_s": 0,
+              "world_origin_m": [
+                0.0,
+                0,
+                0
+              ]
+            },
+            {
+              "elapsed_s": 1,
+              "world_origin_m": [
+                0.5,
+                0,
+                0
+              ]
+            },
+            {
+              "elapsed_s": 2,
+              "world_origin_m": [
+                1.0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "by_pack": {
+      "motion.timing": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNKNOWN": 2,
+        "ERROR": 0,
+        "NOT_APPLICABLE": 0
+      }
+    },
+    "checked": "Only selected checks, parameters and reported coverage in this exact use profile.",
+    "unchecked": [
+      "Any requirement absent from the supplied contract",
+      "Real-world material or physical accuracy without suitable reference evidence",
+      "Security isolation from installed pack code (trusted in-process execution)",
+      "Simulator execution, rendered appearance and general free-form claim grounding"
+    ]
+  },
+  "runtime": {
+    "evaluated_at_utc": "2026-09-20T20:34:50.774921+00:00",
+    "platform": "macOS-26.7-arm64-arm-64bit",
+    "python": "3.12.14",
+    "usd": [
+      0,
+      25,
+      11
+    ],
+    "elapsed_ms": 9.417,
+    "execution_mode": "trusted-local-functions",
+    "approved_entry_points": []
+  }
+}

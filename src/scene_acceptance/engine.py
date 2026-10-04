@@ -19,7 +19,7 @@ from .model import (
 from .usd_reader import Bundle, Scene
 from .checks import REGISTRY
 
-VERSION = "0.3.0"
+VERSION = "0.5.0"
 
 
 def implementation_digest():
@@ -43,6 +43,7 @@ def _evaluate_v1(
     receipt_path=None,
     expected_contract_sha256=None,
     registry=None,
+    max_dependency_files=64,
 ):
     started = time.perf_counter()
     results = []
@@ -50,8 +51,12 @@ def _evaluate_v1(
     identity = {}
     planned = []
     ctx = None
+    admission_limits = {}
     try:
-        preliminary = Bundle(bundle_root, [])
+        preliminary = Bundle(
+            bundle_root, [], max_dependency_files=max_dependency_files
+        )
+        admission_limits = {"max_dependency_files": preliminary.max_dependency_files}
         cp = preliminary.record(contract_path)
         contract_sha = sha(cp)
         identity = {"contract_sha256": contract_sha}
@@ -67,7 +72,10 @@ def _evaluate_v1(
         planned = [(n, True) for n in contract["checks"]["required"]] + [
             (n, False) for n in contract["checks"]["advisory"]
         ]
-        bundle = Bundle(bundle_root, contract["allowed_dependencies"])
+        bundle = Bundle(
+            bundle_root, contract["allowed_dependencies"],
+            max_dependency_files=max_dependency_files,
+        )
         bundle.record(cp)
         for source in contract["evidence_sources"]:
             bundle.record(source, missing=True)
@@ -139,7 +147,9 @@ def _evaluate_v1(
                 )
             )
     except MissingEvidence as exc:
-        results = [check("input_coverage", "UNKNOWN", str(exc))] + [
+        results = [
+            check("input_coverage", "UNKNOWN", str(exc), getattr(exc, "evidence", {}))
+        ] + [
             check(
                 name, "UNKNOWN", "Input coverage prevents execution.", required=required
             )
@@ -198,6 +208,7 @@ def _evaluate_v1(
             ),
         },
         "runtime": {
+            "admission_limits": admission_limits,
             "evaluated_at_utc": datetime.now(timezone.utc).isoformat(),
             "platform": platform.platform(),
             "provider_override": registry is not None,
@@ -223,6 +234,10 @@ def evaluate(
     registry=None,
     pack_registry=None,
     approved_packs=(),
+    max_dependency_files=64,
+    runtime_dependency_policy="local-only",
+    runtime_environment_sha256=None,
+    runtime_dependency_evidence=None,
 ):
     # Old malformed inputs still receive the original structured input-error report.
     try:
@@ -241,10 +256,15 @@ def evaluate(
             expected_contract_sha256=expected_contract_sha256,
             pack_registry=pack_registry,
             approved_packs=approved_packs,
+            max_dependency_files=max_dependency_files,
+            runtime_dependency_policy=runtime_dependency_policy, runtime_environment_sha256=runtime_environment_sha256,
+            runtime_dependency_evidence=runtime_dependency_evidence,
             legacy_inputs_present=bool(
                 claims_path or receipt_path or registry is not None
             ),
         )
+    if runtime_dependency_evidence is not None or runtime_dependency_policy != "local-only" or runtime_environment_sha256 is not None:
+        raise model.ContractError("Runtime dependency evidence requires contract v2")
     return _evaluate_v1(
         contract_path,
         candidate_path,
@@ -254,4 +274,5 @@ def evaluate(
         receipt_path=receipt_path,
         expected_contract_sha256=expected_contract_sha256,
         registry=registry,
+        max_dependency_files=max_dependency_files,
     )

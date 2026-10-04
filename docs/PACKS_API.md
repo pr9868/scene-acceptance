@@ -1,6 +1,8 @@
-# Evaluation packs: extension API 1.0 / harness 0.3.0
+# Evaluation packs: extension API 1.0 / harness 0.5.0
 
 One application-owned contract selects checks from installed packs. A pack supplies measurements and findings. The core records coverage, prerequisites, versions and input identity, then reduces the required results. It never repairs a scene. The calling application routes feedback and decides whether to ask its producer for another candidate.
+
+The same distribution includes the explicitly selected [four-job supplemental preset](SUPPLEMENTAL_CHECKS.md) and [declared-scope review](DECLARED_SCOPE_REVIEW.md). Add a measurement as a `Pack`/`CheckSpec`; add its intended-use obligation and evidence mapping to the caller's review plan. These are separate extension points. A passing measurement does not automatically approve the mapping or fill an absent requirement.
 
 ## Implemented architecture
 
@@ -35,17 +37,22 @@ flowchart TD
     class U,G,M,T,N,P evaluator
 ```
 
-Legend: blue = human responsibility; purple = producer agent; gray = application/core code; green = evaluation packs and upstream tools. The evaluator runs selected checks sequentially in prerequisite order. Independent checks continue after a provider error. This implementation has no automatic producer loop, worker scheduler or repair function.
+Legend: blue = human responsibility; purple = producer agent; gray = application/core code; green = evaluation packs and upstream tools. The evaluator runs selected checks sequentially in prerequisite order. Independent checks continue after a provider error. This implementation has no automatic producer loop or repair function. The optional bounded incline worker is explicitly selected by a contract; the batch runner can schedule at most two independent local evaluations.
 
 ## Packs available in this version
 
 | Pack | Selected checks | Evidence boundary |
 |---|---|---|
-| `openusd` 1.0.0 | Named `UsdValidation` validators; warning policy is explicit | Native provider-specific scope. Available validators include geometry, shading and physics schema checks; they are not all enabled or individually certified by this project. |
+| `openusd` 1.1.0 | Named `UsdValidation` validators; warning policy is explicit | Native provider-specific scope. Available validators include geometry, shading and physics schema checks; they are not all enabled or individually certified by this project. |
 | `geometry` 1.0.0 | Existing contract v1 through the compatibility evaluator | Current cube/polygon/edit rules and their original coverage limits. A nested contract must be declared as evidence and cannot add undeclared dependencies. |
-| `materials` 1.0.0 | Named resolved bindings, expected surface shader IDs and external asset existence | Does not decode textures, validate UV mapping or render/reference appearance. A material shader says nothing about measured friction. |
-| `motion` 1.0.0 | World transform origin at specified time codes, in meters | Does not prove orientation, collision, continuous motion or physical feasibility. Time codes are not implicitly seconds. |
-| `nvidia.asset-validator` 1.0.0 | Named rules from `usd-validation-nvidia==1.20.0`; optional dependency | Reports upstream rule and severity. Does not call fixers, stamp an asset or claim SimReady profile/task acceptance. |
+| `materials` 1.1.0 | Named resolved bindings, expected surface shader IDs and external asset existence | Does not decode textures, validate UV mapping or render/reference appearance. A material shader says nothing about measured friction. |
+| `motion` 1.1.0 | World transform origin at specified time codes, in meters | Does not prove orientation, collision, continuous motion or physical feasibility. Time codes are not implicitly seconds. |
+| `motion.timing` 1.1.0 | Authored stage duration, optional exact rate, and world origins at elapsed seconds from stage start | Requires an explicit valid clock/range. Does not infer active motion duration or prove a continuous path. See [timing requirements](MOTION_TIMING.md). |
+| `nvidia.asset-validator` 1.1.0 | Named rules from `usd-validation-nvidia==1.20.0`; optional dependency | Reports upstream rule and severity. Does not call fixers, stamp an asset or claim SimReady profile/task acceptance. |
+| `textures.decode` 0.2.0 | Verify and fully decode a selected PNG/JPEG | No expected-image, UV or render acceptance. |
+| `motion.connection` 0.1.0 | Sample the gap between two named local points | No continuous-time or collision proof. |
+| `physics.incline-worker` 0.2.0 | Execute the fixed incline model and validate the matching trajectory | No general physics importer or measured calibration. |
+| `scene.audit` 1.1.0 | Discover file availability, image readability and finite authored transform samples | Generic diagnostic scope; no inferred task requirements. |
 | `studio.mesh-budget` 0.1.0 | Independently installed example: named static mesh polygon budgets | Consumer policy example; does not establish topology validity or rendering performance. |
 
 Native/NVIDIA catalog size measures discoverability, not tested coverage. Use the catalog command to inspect the exact installed versions and names. Unsupported or unavailable requirements cannot become silent passes.
@@ -76,12 +83,16 @@ The base install only requires OpenUSD and JSON Schema. Listing the default pack
 
 Each check instance has a unique ID, pack ID, check name, required/advisory flag, strict parameters and optional `after` prerequisites. This permits the same measurement under different tolerances or consumers. Pack versions must match exactly; an optional `sha256` pins the descriptor, declared source hashes and dependency identities. Repeated checks still retain individual findings. No averaged quality score can hide a required failure.
 
+Historical contracts retain their original pins. The current evaluator requires matching versions; use an explicit upgrade proposal in a copied bundle and review its changes. This does not approve changed requirements or replace an implementation digest pin.
+
 See the complete [combined profile](../evaluation/packs-v1/fixtures/combined_profile/contract.json). It selects material, motion, native, NVIDIA and third-party budget checks for the same artifact.
 
 ```sh
 .venv/bin/python -m pip install ./examples/studio-mesh-pack
+.venv/bin/python -m scene_acceptance.contract_upgrade \
+  --bundle-root evaluation/packs-v1/fixtures/combined_profile --out /tmp/combined-input-01
 .venv/bin/check-3d --contract contract.json --candidate scene.usda \
-  --bundle-root evaluation/packs-v1/fixtures/combined_profile \
+  --bundle-root /tmp/combined-input-01 \
   --allow-pack studio.mesh-budget --out /tmp/my-scene-review
 ```
 
@@ -115,12 +126,20 @@ A required failure yields `REJECT`; required unknowns or errors remain visible e
 
 ## Admission and limits
 
-`usd-local-v1` admits local USD layers plus explicitly declared local assets, including asset-valued shader attributes and time-sampled assets. It fingerprints file dependencies before composition. Limits: 32 MiB per file, 64 files per USD dependency closure, 10,000 prims and 10,000 time samples per asset dependency attribute. Paths outside the bundle, resolver URLs, packaged assets and dependency patterns such as UDIM tokens are rejected. Variants, payloads, value clips, inherits/specializes, cycles and instances remain outside this reader's coverage. Add another tested reader contract before claiming those representations.
+`usd-local-v1` admits local USD layers plus explicitly declared local assets, including asset-valued shader attributes and time-sampled assets. It fingerprints file dependencies before composition. Limits: 32 MiB per file, a caller-configurable file budget per USD dependency closure (default 64), 10,000 prims and 10,000 time samples per asset dependency attribute. Paths outside the bundle, resolver URLs, packaged assets and dependency patterns such as UDIM tokens are rejected. Variants, payloads, value clips, inherits/specializes, cycles and instances remain outside this reader's coverage. Add another tested reader contract before claiming those representations.
 
-Old contract v1 still dispatches to the original static evaluator. Old records remain immutable; new runs identify checker 0.3.0. The GitHub v0.3.0 release includes the pack implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
+The CLI `--max-dependency-files N` and API `evaluate(..., max_dependency_files=N)` accept integers from 1 to 1024. This is caller-owned resource configuration, not a contract field or producer-selectable acceptance threshold. The effective value is recorded in `runtime.admission_limits.max_dependency_files`. Candidate and baseline closures are counted separately; each count includes its root and unique dependent layers/assets, including missing declared assets. The v1 static evaluator and the v2 geometry compatibility adapter also honor the caller's file budget.
+
+A file-budget overrun yields a required `UNKNOWN` coverage record containing `kind: resource_limit`, `limit_name`, `limit` and `observed_at_least`; selected checks that did not run remain `UNKNOWN`. The overall result is `INSUFFICIENT_EVIDENCE`, CLI exit 3. Earlier immutable reports may show this condition as `EVALUATION_ERROR`. All path, type, composition, integrity, per-file-size and prim-count controls remain active. Larger budgets increase possible resource use; the caller still provides process memory/time isolation.
+
+Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; this release identifies checker 0.5.0. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
 
 ## What to add next
 
 A new pack is appropriate when it adds a distinct measurement or source of evidence: renderer/reference comparisons, runtime contact tests, sensor/label alignment or observed-data consistency. Reuse upstream validators rather than reproducing them. A profile selects the subset relevant to its use; it should not enable every available check merely to make the report look comprehensive.
 
-The SimReady validator is publicly discoverable in the package index inspected for this work. Integrating its approved profile definitions and runtime benchmarks remains separate work; an asset rule adapter alone does not establish SimReady profile conformance. Physics simulation needs a named engine, version, reset/timestep/seed policy, runtime evidence and a justified reference. The core pack evaluation did not run a renderer or simulator. The repository also includes a separate, restricted CPU MuJoCo experiment; it is not exposed as an installed pack. No robot training or hardware run is included.
+The SimReady validator is publicly discoverable in the package index inspected for this work. Integrating its approved profile definitions and runtime benchmarks remains separate work; an asset rule adapter alone does not establish SimReady profile conformance. Physics simulation needs a named engine, version, reset/timestep/seed policy, runtime evidence and a justified reference. The core pack evaluation did not run a renderer or simulator. The restricted CPU MuJoCo follow-up is now exposed as the explicitly selected `physics.incline-worker` pack in release 0.5.0. No robot training or hardware run is included.
+
+## Coverage reports and baseline
+
+See [REPORTING.md](REPORTING.md) for count definitions, provider coverage, the caller-selected baseline, generated contracts and portable report formats. Per-check assessments do not alter the original contract reducer. The historical release remains unchanged.

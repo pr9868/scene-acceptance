@@ -106,6 +106,30 @@
               "pattern": "^[a-z][a-z0-9_.-]*$"
             },
             "uniqueItems": true
+          },
+          "specification_source": {
+            "type": "object",
+            "properties": {
+              "provided_by": {
+                "enum": [
+                  "human",
+                  "application",
+                  "agent",
+                  "preset",
+                  "unrecorded"
+                ]
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "provided_by",
+              "reference"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -117,6 +141,17 @@
         ],
         "additionalProperties": false
       }
+    },
+    "report_context": {
+      "type": "object",
+      "properties": {
+        "scene_name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": [

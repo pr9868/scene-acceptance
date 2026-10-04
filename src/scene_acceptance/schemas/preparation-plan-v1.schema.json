@@ -1,0 +1,395 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "kind": {
+      "const": "scene-preparation"
+    },
+    "runtime_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "python": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "platform": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "record_sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "version",
+                  "record_sha256"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "python",
+        "platform",
+        "dependencies"
+      ],
+      "additionalProperties": false
+    },
+    "max_dependency_files": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1024
+    },
+    "mapping_adapter_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "review_profile": {
+      "enum": [
+        "general",
+        "static-visual",
+        "animated-visual"
+      ]
+    },
+    "scene_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scene_identity": {
+      "type": "object"
+    },
+    "bundle": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "candidate": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "brief": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    },
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "mapping_review": {
+      "enum": [
+        "pending",
+        "not_applicable"
+      ]
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "previous_plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "scope_unchanged": {
+          "type": "boolean"
+        },
+        "model_calls": {
+          "const": 0
+        },
+        "previous_scene_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "previous_scope_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "evaluation_policy_changed": {
+          "type": "boolean"
+        },
+        "requires_scope_approval": {
+          "type": "boolean"
+        },
+        "policy_changes": {
+          "type": "object"
+        },
+        "runtime_migration": {
+          "type": "boolean"
+        },
+        "reviewer": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previous_environment": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "python": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "platform": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "dependencies": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "version": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "\\S"
+                          },
+                          "record_sha256": {
+                            "type": "string",
+                            "pattern": "^[a-f0-9]{64}$"
+                          }
+                        },
+                        "required": [
+                          "version",
+                          "record_sha256"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "python",
+                "platform",
+                "dependencies"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "previous_runtime_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "judge_coverage_drift": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "needs_review",
+                "unchanged"
+              ]
+            },
+            "basis": {
+              "const": "original_preparation_inventory"
+            },
+            "prepared_applicability": {
+              "type": "object",
+              "properties": {
+                "motion": {
+                  "type": "boolean"
+                },
+                "materials": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "motion",
+                "materials"
+              ],
+              "additionalProperties": false
+            },
+            "current_applicability": {
+              "type": "object",
+              "properties": {
+                "motion": {
+                  "type": "boolean"
+                },
+                "materials": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "motion",
+                "materials"
+              ],
+              "additionalProperties": false
+            },
+            "newly_applicable_areas": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "motion",
+                  "materials"
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 256,
+              "uniqueItems": true
+            },
+            "missing_requirement_ids": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "review.motion",
+                  "review.material-use"
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 256,
+              "uniqueItems": true
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "status",
+            "basis",
+            "prepared_applicability",
+            "current_applicability",
+            "newly_applicable_areas",
+            "missing_requirement_ids",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "scope_unchanged",
+        "model_calls",
+        "previous_scene_sha256",
+        "previous_scope_sha256",
+        "evaluation_policy_changed",
+        "requires_scope_approval",
+        "policy_changes",
+        "runtime_migration",
+        "reviewer",
+        "reason",
+        "previous_environment",
+        "previous_runtime_sha256"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "runtime_sha256",
+    "scope_sha256",
+    "environment",
+    "max_dependency_files",
+    "mapping_adapter_version",
+    "review_profile",
+    "scene_sha256",
+    "scene_identity",
+    "bundle",
+    "candidate",
+    "brief",
+    "files",
+    "request_sha256",
+    "mapping_review",
+    "routes",
+    "limitations",
+    "plan_sha256"
+  ],
+  "additionalProperties": false
+}

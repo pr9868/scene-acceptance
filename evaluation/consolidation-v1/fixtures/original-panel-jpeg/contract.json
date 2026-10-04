@@ -1,0 +1,148 @@
+{
+  "schema_version": "2.0",
+  "id": "fresh-panel-jpeg",
+  "intended_use": "Selected production requirements from the frozen brief; broader review is separate",
+  "profile": {
+    "id": "fresh-producer-v1",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "textures/label.jpg"
+  ],
+  "evidence_sources": [
+    "reference.usda"
+  ],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "materials": {
+      "version": "1.0.0"
+    },
+    "textures.decode": {
+      "version": "0.1.0"
+    },
+    "fresh.brief": {
+      "version": "1.0.0",
+      "sha256": "93d6012e25117d3555edb4ac2964db97989e30f5e00489ddb860727c76f3ca20"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "material",
+      "pack": "materials",
+      "check": "delivery",
+      "required": true,
+      "parameters": {
+        "bindings": {
+          "/World/Panel": "/World/Looks/Label"
+        },
+        "purpose": "",
+        "render_context": "",
+        "surface_shader_id": "UsdPreviewSurface"
+      }
+    },
+    {
+      "id": "texture.decode",
+      "pack": "textures.decode",
+      "check": "image",
+      "required": true,
+      "parameters": {
+        "asset_attribute": "/World/Looks/Label/Texture.inputs:file",
+        "max_pixels": 65536,
+        "max_bytes": 1048576
+      }
+    },
+    {
+      "id": "material.schema",
+      "pack": "openusd",
+      "check": "validators",
+      "required": false,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingRelationships",
+          "usdShadeValidators:MaterialBindingApiAppliedValidator"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "brief.common.metadata",
+      "pack": "fresh.brief",
+      "check": "common.metadata",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    },
+    {
+      "id": "brief.common.geometry",
+      "pack": "fresh.brief",
+      "check": "common.geometry",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    },
+    {
+      "id": "brief.panel.dimensions",
+      "pack": "fresh.brief",
+      "check": "panel.dimensions",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    },
+    {
+      "id": "brief.panel.shader",
+      "pack": "fresh.brief",
+      "check": "panel.shader",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    },
+    {
+      "id": "brief.panel.uv",
+      "pack": "fresh.brief",
+      "check": "panel.uv",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    },
+    {
+      "id": "brief.panel.pixels",
+      "pack": "fresh.brief",
+      "check": "panel.pixels",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    },
+    {
+      "id": "brief.panel.equivalence",
+      "pack": "fresh.brief",
+      "check": "panel.equivalence",
+      "required": true,
+      "parameters": {
+        "job": "panel-jpeg"
+      }
+    }
+  ]
+}

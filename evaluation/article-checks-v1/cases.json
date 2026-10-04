@@ -1,0 +1,106 @@
+{
+  "texture-valid_png": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "texture"
+  },
+  "texture-valid_jpeg": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "texture"
+  },
+  "texture-text_png": {
+    "expected": "REJECT",
+    "kind": "texture"
+  },
+  "texture-damaged_png": {
+    "expected": "REJECT",
+    "kind": "texture"
+  },
+  "texture-wrong_color": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "texture"
+  },
+  "texture-gif": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "texture"
+  },
+  "texture-animated_png": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "texture"
+  },
+  "texture-pixel_budget": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "texture"
+  },
+  "texture-byte_budget": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "texture"
+  },
+  "texture-missing": {
+    "expected": "REJECT",
+    "kind": "texture"
+  },
+  "texture-advisory_bad": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "texture"
+  },
+  "motion-unwrapped": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "motion"
+  },
+  "motion-wrapped": {
+    "expected": "REJECT",
+    "kind": "motion"
+  },
+  "motion-brief_excursion": {
+    "expected": "REJECT",
+    "kind": "motion"
+  },
+  "motion-two_turns": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "motion"
+  },
+  "motion-millimetres": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "motion"
+  },
+  "motion-ancestor_motion": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "motion"
+  },
+  "motion-missing_clock": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "motion"
+  },
+  "motion-beyond_range": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "motion"
+  },
+  "physics-high": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "physics"
+  },
+  "physics-low": {
+    "expected": "REJECT",
+    "kind": "physics"
+  },
+  "physics-high_half": {
+    "expected": "ACCEPT_FOR_USE",
+    "kind": "physics"
+  },
+  "physics-low_half": {
+    "expected": "REJECT",
+    "kind": "physics"
+  },
+  "physics-measured_required": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "physics"
+  },
+  "physics-unsupported": {
+    "expected": "INSUFFICIENT_EVIDENCE",
+    "kind": "physics"
+  },
+  "physics-timeout": {
+    "expected": "EVALUATION_ERROR",
+    "kind": "physics"
+  }
+}

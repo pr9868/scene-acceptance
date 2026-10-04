@@ -8,6 +8,7 @@ import numpy as np
 import mujoco
 from pxr import Usd, UsdGeom, UsdPhysics, UsdShade
 from scene_acceptance.engine import evaluate
+from scene_acceptance.contract_upgrade import copy_replay_bundle
 from scene_acceptance.report import write_report
 ROOT=Path(__file__).resolve().parent
 
@@ -58,7 +59,7 @@ def main():
  p=json.loads((ROOT/'protocol.json').read_text()); out.mkdir(parents=True)
  result={'protocol_sha256':sha(ROOT/'protocol.json'),'runner_sha256':sha(Path(__file__)), 'versions':{x:version(x) for x in ['mujoco','numpy','usd-core','usd-validation-nvidia','scene-acceptance']},'platform':platform.platform(),'new_model_calls':0,'cases':{}}
  for name,expect in p['expected'].items():
-  d=ROOT/'fixtures'/name; dest=out/name; dest.mkdir()
+  d=copy_replay_bundle(ROOT/'fixtures'/name, out/'inputs'/name); dest=out/name; dest.mkdir()
   report=evaluate(d/'contract.json',d/'scene.usda',bundle_root=d)
   write_report(report,dest/'configuration')
   f=read_fixture(d/'scene.usda'); (dest/'adapter-readback.json').write_text(json.dumps(f,indent=2)+'\n')

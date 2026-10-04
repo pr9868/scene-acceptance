@@ -1,21 +1,68 @@
 # Scene Acceptance
 
-An extensible acceptance harness for applications that delegate 3D content production to an agent.
+Application integration: [versioned CLI/library protocol](docs/APPLICATION_PROTOCOL.md) covers preflight, prepare, scope approval, revised-scene binding, caller evidence, checks/judge/both, progress, cancellation and verified replay.
+
+An extensible acceptance workflow for applications that delegate 3D content production to an agent.
 
 I want the application to own what a deliverable must satisfy while the producer chooses how to build it. This project evaluates a saved OpenUSD bundle against an explicit contract, runs the selected evaluation packs and returns findings tied to the submitted revision. The application can use those findings to accept the artifact, request evidence or send a new brief to its producer.
 
-**Status:** experimental, version 0.3.0. The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion and selected OpenUSD/NVIDIA rules. Texture decoding and simulated behavior are separate, reproducible experiments.
+I built it for my own 3D jobs, working backward from the intended outcome to the geometry, materials, motion, views or physical behavior that needed evidence. The brief supplies task-specific targets; general delivery checks remain necessary alongside them. The common workflow keeps selected checks and unanswered requirements together, while each pack has its own depth and limits. Specialized validators or simulators can supply that depth through a suitable adapter. I intend to extend the packs as my work needs them.
+
+Simulation support is currently a fixed ramp-and-block CPU example with bounded parameter variations. It exercises the handoff from a simulator's trace to a task decision; it does not cover arbitrary articulated mechanisms or establish physical calibration. A broader acceptance report does not imply comprehensive validation in every domain.
+
+**Status:** experimental, version [0.5.0](https://github.com/pr9868/scene-acceptance/releases/tag/v0.5.0). The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion, explicit timing requirements and selected OpenUSD/NVIDIA rules. This release also includes the texture-decoding, sampled-connection and bounded simulation article packs, plus coverage-aware reports and a reusable diagnostic baseline. The [v0.3.0 release](https://github.com/pr9868/scene-acceptance/releases/tag/v0.3.0) remains unchanged.
+
+The [0.5 integration and release notes](docs/INTEGRATION_RELEASE_0_5.md) cover scope routing, judge coverage drift, caller-attested renderer libraries and versioned replay.
+
+The [October 3 compatibility and review fixes](docs/COMPATIBILITY_AND_REVIEW_FIXES.md) describe connected texture inputs, MDL library classification, separate visual-reference and pixel-comparison limits, timing boundaries, policy-bound approvals and verified worker identities. These fixes are included in 0.5.0; historical results retain their original policy and runtime.
+
+The [timing walkthrough](docs/MOTION_TIMING.md) reproduces a gap in a time-code-only contract, then rejects a changed playback rate while accepting a correctly rescaled animation. Producer prechecks may use the same harness; the consuming application still owns the approved requirements and acceptance of the delivered revision. Shared validators can share bugs, so reference cases and coverage review remain necessary.
 
 ![Application ownership and the producer-to-acceptance workflow](docs/images/architecture.png)
 
 Blue is human responsibility, purple is the producer agent, gray is application code and green is acceptance. The feedback loop is an application integration design; this release does not run a producer automatically.
+
+## Prepare a brief and request caller evidence
+
+The [preparation and skills guide](docs/PREPARATION_AND_SKILLS.md) adds `check-3d-prepare` and `check-3d-run-plan`: a raw text/image brief becomes a pending, frozen check map and visual-evidence plan; the application renders requested views and returns a receipt. Scripts, model opinions and missing evidence remain separate. Two reusable adopter skills ship in the wheel and can be exported with `check-3d-skills --out NEW_DIRECTORY`. Rendering stays with the caller.
+
+## See what a run checked
+
+The [test inventory](docs/TEST_INVENTORY.md) explains each baseline rule, configurable check and advisory review item. `check-3d --list-tests` returns the catalog; `--capabilities` returns the invocation/evidence schemas. The [unified CLI guide](docs/EVALUATION_MODES.md) covers `--mode checks`, `--mode judge` and `--mode both`, with an optional mapped brief and caller-configured model CLI. Measured results and evidence-bounded opinions stay separate. Omitting `--mode` preserves the existing scripted invocation below.
+
+The [reporting guide](docs/REPORTING.md) covers the reusable 27-check baseline, per-object outcomes, coverage gaps, CSV exports and batch reports. Install optional providers and run:
+
+```sh
+python -m pip install -e '.[nvidia,article_checks]'
+check-3d --bundle-root /path/to/delivery \
+  --candidate scene.usda --max-dependency-files 256 --out /path/to/new-report
+```
+
+With no brief, contract or review plan, the command selects the 27-check general baseline. `--profile usd-delivery-baseline` remains an equivalent explicit selection. The report separates passes, failures, warnings, skipped subjects and unknown evidence. Object inventory is not the same as evaluated coverage. Task-specific motion, appearance and simulation requirements still need explicit contracts and suitable evidence.
+
+The report now starts with [the scene and its specifications](docs/SCENE_AND_SPECIFICATION_REPORTS.md): saved structure, general checks versus checks linked to supplied requirements, a simple outcome matrix, and coverage/gaps for each specification. Human input is labeled only when its source is explicitly recorded; presets and unrecorded sources remain distinct.
+
+[Text/image briefs and optional model review](docs/BRIEFS_AND_MODEL_REVIEW.md) add `check-3d --brief`: original source files, an explicit requirement map, reference-image comparisons and unchanged-input receipts. A separate, opt-in `check-3d-judge` command can request advisory analysis through a caller-configured CLI. It never changes the scripted verdict or supplies human approval. Sample briefs and deterministic adapter controls are included; no model is called during ordinary checks or software tests.
+
+The primary application interface is the executable. [Call the harness from an application](docs/APPLICATION_CLI.md) describes scene/brief inputs, JSON results, exit handling and runnable Python/Node host examples. An application launches the process and reads its report. The [HTTP proposal](docs/HTTP_API_PROPOSAL.md) is retained as an optional future wrapper for remote execution; no HTTP service is implemented.
+
+The [brief-depth study tooling](evaluation/brief-depth-v1/README.md) prepares three synthetic scene families at four levels of creation detail, preserves first deliveries and compares general checks, supplied requirements and a shared full target. It includes frozen measurement controls, separate denser motion sampling and reports with exact affected subjects. Model generation is explicit and separate from replaying saved evidence. Owner-local results are not part of the public release.
+
+The distribution also consolidates [21 supplemental checks](docs/SUPPLEMENTAL_CHECKS.md) and the [five-layer declared-scope review](docs/DECLARED_SCOPE_REVIEW.md). Use `check-3d --review-plan` for one report containing artifact findings and requirement/review gaps. The generic baseline remains 27 checks; the four-job preset requires explicitly selected target requirements. These integrations are included in 0.5.0.
+
+```sh
+python examples/declared-scope/prepare.py --out /tmp/declared-scope-example
+# Run the command printed by the example. Expected: NEEDS_REVIEW.
+```
+
+The example deliberately leaves continuous-motion evidence and mapping approval pending. See the [consolidation protocol](evaluation/consolidation-v1/PROTOCOL.md) and [results](evaluation/consolidation-v1/RESULTS.md) for verification and limits.
 
 ## Try a passing edit and a rejected edit
 
 Use Python 3.12. These commands install the core and its pinned test dependencies; NVIDIA and the experiment tools are optional for this first example.
 
 ```bash
-git clone --branch v0.3.0 https://github.com/pr9868/scene-acceptance.git
+git clone --branch v0.5.0 https://github.com/pr9868/scene-acceptance.git
 cd scene-acceptance
 python3.12 -m venv .venv
 source .venv/bin/activate
@@ -43,7 +90,20 @@ Expected: `REJECT`, exit code 2. Six checks pass; shape preservation fails becau
 
 ![Projection of the saved tray geometry: unchanged outer bounds conceal a changed interior point](docs/images/tray-evidence.svg)
 
-Choose a new output directory for each run. Outputs must be outside the submitted bundle. Relative input paths resolve inside `--bundle-root`. A command-line usage error also returns 2, so an integration must inspect the structured report rather than interpreting an exit code alone.
+Choose a new output directory for each run. Outputs must be outside the submitted bundle. Relative input paths resolve inside `--bundle-root`. A command-line usage error returns 4. Measured scene rejection returns 2; scope review or missing evidence returns 3. Use the structured report and its next action to decide what to do next.
+
+## Evaluate a larger local bundle
+
+The default dependency budget is 64 files per scene, including its root USD layer. The calling application can raise it for a larger approved delivery without editing the contract or flattening the scene:
+
+```bash
+check-3d --bundle-root ./delivery --contract contract.json \
+  --candidate scene.usda --max-dependency-files 256 --out /tmp/larger-scene-01
+```
+
+The Python API accepts the same `max_dependency_files=256` keyword. Values must be integers from 1 to 1024. The report records the selected budget in `runtime.admission_limits`. Exceeding it produces `INSUFFICIENT_EVIDENCE` (CLI exit 3), with a `resource_limit` observation and unexecuted checks left `UNKNOWN`. This records a coverage gap; it does not establish a scene defect.
+
+The budget belongs to the caller, not the submitted contract. Unique local layers and external assets count toward it, including missing declared assets; the root counts once and repeated dependencies count once. The limit applies separately to candidate and baseline. The 32 MiB per-file limit, 10,000-prim limit, dependency allowlist, path containment and supported-composition rules still apply. This option does not add a default validation profile or change acceptance criteria. Run large evaluations in a caller-managed process with a suitable memory and time budget.
 
 ## How it fits into an application
 
@@ -68,6 +128,7 @@ The caller owns the brief, approved providers, references, retry policy and rele
 | `geometry` | Cube and polygon geometry, placement, bounds and declared edit constraints | Bounded representations; shape-preserving translation uses corresponding points/connectivity. |
 | `materials` | Resolved bindings, expected surface shader IDs and declared dependencies | No texture decoding, UV or rendered appearance acceptance. |
 | `motion` | World-space transform origins at contract-specified time codes | No whole-interval collision, orientation or dynamics proof. |
+| `motion.timing` | Authored duration, optional exact clock rate, and sampled origins at elapsed seconds | Separate from the legacy time-code check; does not infer active motion duration or prove a continuous path. |
 | `nvidia.asset-validator` | Explicitly selected NVIDIA USD Validation rules | Optional dependency; no SimReady certification or automatic fixers. |
 | `studio.mesh-budget` | A separately installed example of a consumer's polygon budget | Example extension; face count does not establish rendering performance. |
 
@@ -91,7 +152,7 @@ OpenUSD and NVIDIA validators already cover more than syntax and allow custom ru
 | OpenUSD (`usd-core` 25.11) | Compose admitted scenes, inspect geometry/materials/transforms and run selected native validators. |
 | JSON Schema (`jsonschema` 4.25.1) | Validate contracts, parameters and structured records. |
 | NVIDIA USD Validation 1.20.0 | Reuse selected asset and physics configuration rules through an optional adapter. |
-| Pillow 12.3.0 | Decode the valid/unreadable PNG pair in a separate diagnostic experiment. |
+| Pillow 12.3.0 | Decode admitted image evidence and source textures; compare explicitly selected source pixels. |
 | MuJoCo 3.6.0 | Execute the restricted two-box incline experiment on CPU. |
 | NumPy 2.5.3 | Support the experiment's numerical operations. |
 
@@ -107,13 +168,14 @@ python -m pip install --no-deps --no-build-isolation ./examples/studio-mesh-pack
 python reproduce.py --out /tmp/scene-acceptance-replay-01
 ```
 
-The output directory must be new and outside this checkout. The replay verifies the distribution hashes and installed implementation identity before and after execution, and compares the new decisions and physics observations with the retained records.
+The output directory must be new and outside this checkout. The replay verifies the distribution hashes and installed implementation identity before and after execution, and compares the new decisions and physics observations with the retained records. Changed pack pins are proposed explicitly in separate replay copies, with `contract-upgrades.json` recording each change. The original inputs and reports remain unchanged; direct evaluation rejects outdated pins.
 
 | Evidence | What is reproduced |
 |---|---|
-| 195 software tests | Core, geometry and pack behavior. These tests include cases counted below. |
+| Software tests in this checkout | Core, pack, CLI, approval, evidence and integration regressions. The executed count and zero-failure requirement are recorded in the replay’s `pytest.xml` and `verification.json`. These tests include cases counted below. |
 | 22 pack cases | Selected validators, materials, motion, external packs and error handling. |
 | 32 mesh cases | Prior geometry and edit decisions, including the changed interior. |
+| 17 timing cases | Clock changes, legal rescaling, duration, sampled seconds and unusable timing evidence. |
 | Four content probes | Material decoding and motion-sampling coverage comparisons. |
 | Three configuration cases and four CPU simulation runs | Positive/negative mass controls, then two friction assumptions at two timesteps. |
 
@@ -123,21 +185,21 @@ The first pack run matched 19 of 22 expected decisions. Three texture-dependency
 
 ## Inspect the evidence by question
 
+- [Astra mechanical assembly](examples/astra-mechanical-assembly/README.md): the recorded producer delivery, portable viewer, checks and evidence limits.
 - [Evidence guide](docs/EVIDENCE.md): where to find protocols, fixtures, first failures, corrected results and historical model outputs.
 - [Material delivery](article-evidence/content-probes): an unreadable PNG can pass the current delivery checks. [Workflow](docs/images/materials-flow.png).
 - [Motion sampling](article-evidence/content-probes): the same motion accepts at three requested times and rejects when a missed excursion is checked. [Workflow](docs/images/motion-flow.png).
+- [Motion timing](docs/MOTION_TIMING.md): require the declared duration and sample positions in elapsed seconds; preserve valid clock/keyframe rescaling.
 - [Physics experiment](article-evidence/physics-experiment): selected configuration rules pass while task behavior differs with assumed friction. [Workflow](docs/images/physics-flow.png).
 - [Pack API](docs/PACKS_API.md) and [external example](examples/studio-mesh-pack): how to add another evaluation without modifying the core.
-
-## Recorded agent delivery
-
-The [animated assembly example](examples/astra-mechanical-assembly) retains the source, USD, GLB, local viewer, brief and evidence from one Astra task. Its separate acceptance profile uses the pinned 0.4 development timing pack; the released 0.3 API and results above are unchanged. The [four-part project series](https://roughcut.dev/threads/accepting-agent-generated-3d) explains the core, materials, motion and physics checks.
 
 ## What I want to test next
 
 My next application trial would use independently supplied edit briefs and a producer connected by the caller. I would record first-attempt acceptance, violations missed by the evaluator, false rejections, unresolved requirements, repair attempts, total runtime cost and human review time. Comparing contract prechecking with findings received only after submission would test whether that feedback helps the producer.
 
-The concrete extensions suggested by the current probes are a required texture-decoding pack, better motion-interval coverage and a simulation worker with an explicit task/reference protocol. These are opportunities to develop and test, not capabilities included in this release.
+The [trial protocol](evaluation/producer-trial-v1/PROTOCOL.md) defines the inputs, comparison and record before execution. It is awaiting an independently supplied brief and external assessment; no workflow benefit is reported from that plan.
+
+Version 0.5.0 includes the bounded texture-decoding, sampled-connection and incline-worker follow-ups. The historical v0.3.0 release remains unchanged. General continuous-motion guarantees, arbitrary physics import, rendered appearance comparisons and physical calibration remain future work.
 
 ## Contribute
 

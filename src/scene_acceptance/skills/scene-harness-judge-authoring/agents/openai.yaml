@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scene Judge Authoring"
+  short_description: "Customize judge criteria and validate evidence expectations"
+  default_prompt: "Use $scene-harness-judge-authoring to extend this application's review rubric and test its evidence requirements."

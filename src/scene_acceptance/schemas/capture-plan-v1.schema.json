@@ -1,0 +1,248 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "scene_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256,
+            "uniqueItems": true
+          },
+          "times_seconds": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 1,
+            "maxItems": 12,
+            "uniqueItems": true
+          },
+          "camera_guidance": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "view_role": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          },
+          "sharing_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "camera_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "projection": {
+            "anyOf": [
+              {
+                "enum": [
+                  "orthographic",
+                  "perspective"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "geometry",
+                "surface_materials"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 256,
+            "uniqueItems": true
+          },
+          "min_width": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 4096
+          },
+          "min_height": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 4096
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "requirement_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "evidence_kind": {
+            "enum": [
+              "scene_view",
+              "textured_view",
+              "motion_frames"
+            ]
+          },
+          "feasibility_gaps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          }
+        },
+        "required": [
+          "id",
+          "purpose",
+          "targets",
+          "times_seconds",
+          "camera_guidance",
+          "view_role",
+          "sharing_group",
+          "camera_id",
+          "projection",
+          "capabilities",
+          "min_width",
+          "min_height",
+          "limitations",
+          "requirement_ids",
+          "evidence_kind",
+          "feasibility_gaps"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "capabilities": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "geometry",
+              "surface_materials"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "max_images": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "max_width": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 4096
+        },
+        "max_height": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 4096
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        }
+      },
+      "required": [
+        "schema_version",
+        "capabilities",
+        "max_images",
+        "max_width",
+        "max_height",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "image_budget_after_references": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12
+    },
+    "note": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    }
+  },
+  "required": [
+    "schema_version",
+    "scene_sha256",
+    "requests",
+    "capabilities",
+    "image_budget_after_references",
+    "note"
+  ],
+  "additionalProperties": false
+}

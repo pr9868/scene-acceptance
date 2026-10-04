@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scene-acceptance"
-version = "0.3.0"
+version = "0.5.0"
 description = "Contract-based acceptance of bounded OpenUSD layouts and declared claims"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -20,16 +20,29 @@ Issues = "https://github.com/pr9868/scene-acceptance/issues"
 [project.optional-dependencies]
 test = ["pytest==8.4.2"]
 nvidia = ["usd-validation-nvidia==1.20.0"]
+visual = ["Pillow==12.3.0"]
+article_checks = ["Pillow==12.3.0", "mujoco==3.6.0", "numpy==2.5.3"]
 
 [project.scripts]
 check-3d = "scene_acceptance.cli:main"
+assess-3d = "scene_acceptance.review.__main__:main"
 check-3d-packs = "scene_acceptance.catalog_cli:main"
+check-3d-judge = "scene_acceptance.judge:main"
+check-3d-prepare = "scene_acceptance.preparation:main"
+check-3d-run-plan = "scene_acceptance.prepared_run:main"
+check-3d-app = "scene_acceptance.application:main"
+check-3d-approve = "scene_acceptance.application:approve_main"
+check-3d-bind = "scene_acceptance.application:bind_main"
+check-3d-evidence = "scene_acceptance.application:evidence_main"
+check-3d-doctor = "scene_acceptance.application:doctor_main"
+check-3d-skills = "scene_acceptance.skill_package:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-scene_acceptance = ["schemas/*.json"]
+scene_acceptance = ["schemas/*.json", "profiles/*.json", "skills/*/SKILL.md", "skills/*/agents/*.yaml", "skills/*/references/*"]
+"scene_acceptance.followups" = ["*.usda"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

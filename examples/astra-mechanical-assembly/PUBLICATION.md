@@ -6,7 +6,7 @@ This is a derived distribution, not a byte-identical dump of the producer worksp
 
 Changes:
 
-- Local machine paths in textual records are replaced with named placeholders. The brief itself is unchanged. Prompt/environment changes are path redactions only; the original frozen input hashes remain evidence of the private record.
+- Local machine paths in textual records are replaced with named placeholders. The 0.5.0 distribution also replaces remaining upstream OpenUSD build-machine prefixes in six diagnostic logs; messages and outcomes are unchanged. The brief itself is unchanged. Prompt/environment changes are path redactions only; the original frozen input hashes remain evidence of the private record.
 - `submission/scripts/rebuild.sh` uses relative virtual-environment defaults; `test_viewer.mjs` imports installed Playwright and accepts Chrome/localhost environment settings. The README explains these portable launch paths.
 - PNG text metadata is stripped without changing image data. The Blender file's null-terminated file-browser directory is reset to `./`, using the same byte length. The file is reopened and checked during release verification. Scene geometry, materials and animation are not edited by packaging.
 - Unused Three.js builds, an intermediate Blender snapshot and fetched package tarballs are omitted. Runtime dependencies and their licenses are retained.

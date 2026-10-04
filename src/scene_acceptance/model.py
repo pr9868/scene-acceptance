@@ -29,6 +29,20 @@ class MissingEvidence(ValueError):
     pass
 
 
+class DependencyLimitExceeded(MissingEvidence):
+    """The caller's resource budget prevented evaluation, not a scene failure."""
+
+    def __init__(self, limit, observed):
+        super().__init__(f"Dependency closure exceeds caller limit of {limit} files")
+        self.evidence = {
+            "kind": "resource_limit",
+            "limit_name": "max_dependency_files",
+            "limit": limit,
+            "observed_at_least": observed,
+            "scope": "per-artifact closure, including the root layer",
+        }
+
+
 class BoundaryError(ValueError):
     pass
 

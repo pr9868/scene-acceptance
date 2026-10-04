@@ -3,16 +3,33 @@
 from pathlib import Path
 import math
 from pxr import Sdf, Usd, UsdGeom, Gf
-from .model import BoundaryError, MissingEvidence, sha, digest_json
+from .model import (
+    BoundaryError,
+    MissingEvidence,
+    ContractError,
+    DependencyLimitExceeded,
+    sha,
+    digest_json,
+)
 
 
 class Bundle:
-    def __init__(self, root, dependencies):
+    def __init__(self, root, dependencies, *, max_dependency_files=64):
+        if (
+            type(max_dependency_files) is not int
+            or not 1 <= max_dependency_files <= 1024
+        ):
+            raise ContractError("max_dependency_files must be an integer from 1 to 1024")
+        self.max_dependency_files = max_dependency_files
         self.root = Path(root).resolve(strict=True)
         if not self.root.is_dir():
             raise BoundaryError("Bundle root must be a directory")
         self.allowed = {self.path(p) for p in dependencies}
         self.hashes = {}
+
+    def check_dependency_count(self, observed):
+        if observed > self.max_dependency_files:
+            raise DependencyLimitExceeded(self.max_dependency_files, observed)
 
     def path(self, path):
         raw = str(path)
@@ -113,8 +130,7 @@ class Scene:
             raise MissingEvidence("Cyclic layer dependency is not supported")
         if path in self.files:
             return
-        if len(self.files) >= 64:
-            raise BoundaryError("Dependency closure exceeds 64 files")
+        self.bundle.check_dependency_count(len(self.files) + 1)
         self.bundle.record(path, missing=True)
         self.files[path] = sha(path)
         layer = Sdf.Layer.FindOrOpen(str(path))

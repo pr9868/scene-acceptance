@@ -1,6 +1,6 @@
  ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
  Function: Arch_ValidateAssumptions
-     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     File: <upstream-build-root>/OpenUSD/pxr/base/arch/assumptions.cpp
      Line: 140
 Traceback (most recent call last):
   File "<PRODUCER_WORKSPACE>/scripts/check_usd_compliance.py", line 6, in <module>
@@ -15,5 +15,5 @@ Traceback (most recent call last):
     Sdr.Registry().GetShaderNodeByIdentifier(shaderId)
     ^^^^^^^^^^^^^^
 pxr.Tf.ErrorException: 
-	Error in 'pxrInternal_v0_25_11__pxrReserved__::_GetShaderResourcePath' at line 37 in file /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/usdHydra/discoveryPlugin.cpp : 'Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
+	Error in 'pxrInternal_v0_25_11__pxrReserved__::_GetShaderResourcePath' at line 37 in file <upstream-build-root>/OpenUSD/pxr/usd/usdHydra/discoveryPlugin.cpp : 'Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
 '

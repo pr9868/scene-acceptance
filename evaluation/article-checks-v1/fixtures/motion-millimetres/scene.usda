@@ -1,0 +1,37 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 24
+    metersPerUnit = 0.001
+    startTimeCode = 0
+    timeCodesPerSecond = 24
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "Parent"
+    {
+        double3 xformOp:translate = (1000, 2000, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        def Xform "Arm"
+        {
+            float xformOp:rotateZ.timeSamples = {
+                0: 355,
+                24: 365,
+            }
+            uniform token[] xformOpOrder = ["xformOp:rotateZ"]
+        }
+
+        def Xform "Follower"
+        {
+            double3 xformOp:translate.timeSamples = {
+                0: (34.8668144332111, -3.0504509961680415, 0),
+                24: (34.8668144332111, 3.0504509961680246, 0),
+            }
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+    }
+}
+

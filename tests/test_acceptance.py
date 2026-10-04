@@ -338,7 +338,7 @@ def test_cli_reports_and_exit_codes(tmp_path, fixture, exit_code):
     manifest = json.loads((out / "manifest.json").read_text())
     assert all(sha(out / k) == v for k, v in manifest["files"].items())
     again = subprocess.run(cmd, capture_output=True, text=True)
-    assert again.returncode == 2 and "must be a new directory" in again.stderr
+    assert again.returncode == 4 and "must be a new directory" in again.stderr
 
 
 @pytest.mark.parametrize(

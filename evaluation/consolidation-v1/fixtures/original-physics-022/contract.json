@@ -1,0 +1,121 @@
+{
+  "schema_version": "2.0",
+  "id": "fresh-physics-022",
+  "intended_use": "Selected production requirements from the frozen brief; broader review is separate",
+  "profile": {
+    "id": "fresh-producer-v1",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [
+    "physics-base.usda"
+  ],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "nvidia.asset-validator": {
+      "version": "1.0.0"
+    },
+    "physics.incline-worker": {
+      "version": "0.1.0"
+    },
+    "fresh.brief": {
+      "version": "1.0.0",
+      "sha256": "6ecf80128083e05184e79c5d3373c236f8ff6f12ba024f5688ed7bb70c7f8046"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "physics.configuration",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "MassChecker",
+          "RigidBodyChecker",
+          "ColliderChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "behavior.001",
+      "pack": "physics.incline-worker",
+      "check": "displacement",
+      "required": false,
+      "parameters": {
+        "dt_s": 0.001,
+        "duration_s": 1,
+        "timeout_s": 30,
+        "maximum_displacement_m": 0.01,
+        "require_measured_parameters": false
+      }
+    },
+    {
+      "id": "behavior.0005",
+      "pack": "physics.incline-worker",
+      "check": "displacement",
+      "required": false,
+      "parameters": {
+        "dt_s": 0.0005,
+        "duration_s": 1,
+        "timeout_s": 30,
+        "maximum_displacement_m": 0.01,
+        "require_measured_parameters": false
+      }
+    },
+    {
+      "id": "brief.common.metadata",
+      "pack": "fresh.brief",
+      "check": "common.metadata",
+      "required": true,
+      "parameters": {
+        "job": "physics-022"
+      }
+    },
+    {
+      "id": "brief.common.geometry",
+      "pack": "fresh.brief",
+      "check": "common.geometry",
+      "required": true,
+      "parameters": {
+        "job": "physics-022"
+      }
+    },
+    {
+      "id": "brief.physics.parameters",
+      "pack": "fresh.brief",
+      "check": "physics.parameters",
+      "required": true,
+      "parameters": {
+        "job": "physics-022"
+      }
+    },
+    {
+      "id": "brief.physics.preserved",
+      "pack": "fresh.brief",
+      "check": "physics.preserved",
+      "required": true,
+      "parameters": {
+        "job": "physics-022"
+      }
+    }
+  ]
+}

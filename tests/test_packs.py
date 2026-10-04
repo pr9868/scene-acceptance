@@ -6,6 +6,7 @@ import shutil
 import pytest
 from pxr import Usd, Sdf
 from scene_acceptance import evaluate
+from scene_acceptance.contract_upgrade import copy_replay_bundle, upgrade_copied_contracts
 from scene_acceptance.model import sha, ContractError, MissingEvidence
 from scene_acceptance.packs import (
     Pack,
@@ -31,8 +32,8 @@ def run(d, **kwargs):
 
 
 @pytest.mark.parametrize("case", MANIFEST["cases"], ids=lambda x: x["id"])
-def test_frozen_cases(case):
-    d = FIXTURES / case["id"]
+def test_frozen_cases(case, tmp_path):
+    d = copy_replay_bundle(FIXTURES / case["id"], tmp_path / "bundle")
     if any(
         x["pack"] == "nvidia.asset-validator"
         for x in json.loads((d / "contract.json").read_text())["checks"]
@@ -51,6 +52,7 @@ def test_frozen_cases(case):
 def bundle(tmp_path):
     d = tmp_path / "bundle"
     shutil.copytree(FIXTURES / "material_correct", d)
+    upgrade_copied_contracts(d)
     return d
 
 
@@ -289,7 +291,7 @@ def test_time_sampled_asset_dependency_is_recorded(bundle):
 
 def test_pack_version_and_parameters_survive_in_report(bundle):
     r = run(bundle)
-    assert r["identity"]["packs"]["materials"]["version"] == "1.0.0"
+    assert r["identity"]["packs"]["materials"]["version"] == default_registry().get("materials").version
     assert len(r["identity"]["packs"]["materials"]["implementation_sha256"]) == 64
     assert r["coverage"]["by_pack"]["materials"]["PASS"] == 1
     assert r["coverage"]["planned"][1]["parameters"]["bindings"] == {
@@ -303,8 +305,9 @@ def test_contract_pin_blocks_changed_requirements(bundle):
     assert run(bundle, expected_contract_sha256=digest)["verdict"] == "EVALUATION_ERROR"
 
 
-def test_prerequisite_failure_keeps_unknown_visible():
-    r = run(FIXTURES / "failed_prerequisite")
+def test_prerequisite_failure_keeps_unknown_visible(tmp_path):
+    d = copy_replay_bundle(FIXTURES / "failed_prerequisite", tmp_path / "bundle")
+    r = run(d)
     assert r["verdict"] == "REJECT" and r["complete"] is False
     assert {x["id"]: x["status"] for x in r["checks"]}["motion.samples"] == "UNKNOWN"
 
@@ -326,5 +329,6 @@ def test_legacy_extra_inputs_on_v2_return_structured_error(bundle):
 def test_motion_does_not_accept_outside_authored_range(tmp_path):
     d = tmp_path / "bundle"
     shutil.copytree(FIXTURES / "motion_correct", d)
+    upgrade_copied_contracts(d)
     edit(d, lambda c: c["checks"][1]["parameters"]["samples"][-1].update(time_code=10))
     assert run(d)["verdict"] == "INSUFFICIENT_EVIDENCE"

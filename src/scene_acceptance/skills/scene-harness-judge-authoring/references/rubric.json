@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "id": "assembly-review",
+  "version": "1.0.0",
+  "criteria": [
+    {"id": "assembly-connections", "statement": "Do visible hoses and connectors appear joined in the supplied views? Identify the particular connection and view for any concern.", "area": "geometry", "evidence_kind": "scene_view", "limitation": "Visible appearance only; apparent gaps require source geometry measurement before concluding disconnection."},
+    {"id": "label-legibility", "statement": "Are the displayed labels legible and unobscured at the supplied view scale?", "area": "textures", "evidence_kind": "textured_view", "limitation": "Only the shown labels, angles and resolution; no conclusion about hidden labels or physical print quality."}
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": "2.0",
+  "id": "followup-development-control",
+  "intended_use": "Constructed bounded control; see the frozen protocol",
+  "profile": {
+    "id": "harness-followups",
+    "version": "0.1.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "packs": {
+    "motion.connection": {
+      "version": "0.1.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "motion.connection.distance",
+      "pack": "motion.connection",
+      "check": "distance",
+      "required": true,
+      "parameters": {
+        "a": {
+          "path": "/World/Parent/Arm",
+          "local_point": [
+            0.035,
+            0,
+            0
+          ]
+        },
+        "b": {
+          "path": "/World/Parent/Follower",
+          "local_point": [
+            0,
+            0,
+            0
+          ]
+        },
+        "interval_s": [
+          0,
+          2
+        ],
+        "segments": 256,
+        "schedule": "uniform",
+        "max_gap_m": 0.0005
+      }
+    }
+  ]
+}

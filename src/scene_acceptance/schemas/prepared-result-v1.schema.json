@@ -1,0 +1,484 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scene_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "candidate": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "mode": {
+      "enum": [
+        "checks",
+        "judge",
+        "both"
+      ]
+    },
+    "mapping_review": {
+      "enum": [
+        "reviewed",
+        "pending",
+        "not_applicable"
+      ]
+    },
+    "scope_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "approval": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "const": "1.0"
+            },
+            "scope_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "status": {
+              "enum": [
+                "approved",
+                "rejected",
+                "needs_review"
+              ]
+            },
+            "reviewer": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "created_at_utc": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "schema_version",
+            "scope_sha256",
+            "status",
+            "reviewer",
+            "reason",
+            "created_at_utc"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "execution_status": {
+      "enum": [
+        "completed",
+        "partial",
+        "failed"
+      ]
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        2,
+        3,
+        4
+      ]
+    },
+    "unchanged": {
+      "type": "boolean"
+    },
+    "capture_counts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "capture_requests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "requirement_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "times_seconds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "status": {
+            "enum": [
+              "supplied",
+              "missing",
+              "invalid"
+            ]
+          },
+          "gaps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "view_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "view_role": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "camera_guidance": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "camera_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "projection": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sharing_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "eligible_view_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "caller_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "requirement_ids",
+          "purpose",
+          "targets",
+          "times_seconds",
+          "status",
+          "gaps",
+          "view_ids"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "evidence_policy": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "evaluation_report": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "script_verdict": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scope_verdict": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "judge_counts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "comparison": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "next_action": {
+      "enum": [
+        "none",
+        "review_specification",
+        "repair_scene",
+        "provide_evidence",
+        "review_finding",
+        "fix_environment"
+      ]
+    },
+    "judge_coverage_drift": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "needs_review",
+            "unchanged"
+          ]
+        },
+        "basis": {
+          "const": "original_preparation_inventory"
+        },
+        "prepared_applicability": {
+          "type": "object",
+          "properties": {
+            "motion": {
+              "type": "boolean"
+            },
+            "materials": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "motion",
+            "materials"
+          ],
+          "additionalProperties": false
+        },
+        "current_applicability": {
+          "type": "object",
+          "properties": {
+            "motion": {
+              "type": "boolean"
+            },
+            "materials": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "motion",
+            "materials"
+          ],
+          "additionalProperties": false
+        },
+        "newly_applicable_areas": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "motion",
+              "materials"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "missing_requirement_ids": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "review.motion",
+              "review.material-use"
+            ]
+          },
+          "minItems": 0,
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "status",
+        "basis",
+        "prepared_applicability",
+        "current_applicability",
+        "newly_applicable_areas",
+        "missing_requirement_ids",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "plan_sha256",
+    "scene_sha256",
+    "candidate",
+    "mode",
+    "mapping_review",
+    "scope_sha256",
+    "approval",
+    "execution_status",
+    "errors",
+    "routes",
+    "decision",
+    "exit_code",
+    "unchanged",
+    "capture_counts",
+    "capture_requests",
+    "evidence_policy",
+    "evaluation_report",
+    "script_verdict",
+    "scope_verdict",
+    "judge_counts",
+    "limitations",
+    "findings",
+    "comparison"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,66 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    endTimeCode = 2
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 0
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Mesh "Panel" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        int[] faceVertexCounts = [3]
+        int[] faceVertexIndices = [0, 1, 2]
+        rel material:binding = </World/Looks/Coating>
+        normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1)] (
+            interpolation = "vertex"
+        )
+        point3f[] points = [(0, 0, 0), (1, 0, 0), (0, 1, 0)]
+        uniform token subdivisionScheme = "none"
+        double3 xformOp:translate.timeSamples = {
+            0: (0, 0, 0),
+            1: (0.5, 0, 0),
+            2: (1, 0, 0),
+        }
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Scope "Looks"
+    {
+        def Material "Coating"
+        {
+            token outputs:surface.connect = </World/Looks/Coating/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor.connect = </World/Looks/Coating/Texture.outputs:rgb>
+                token outputs:surface
+            }
+
+            def Shader "Texture"
+            {
+                uniform token info:id = "UsdUVTexture"
+                asset inputs:file = @pixel.png@
+                float3 outputs:rgb
+            }
+        }
+
+        def Material "Other"
+        {
+            token outputs:surface.connect = </World/Looks/Other/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                token outputs:surface
+            }
+        }
+    }
+}
+

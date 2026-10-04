@@ -1,0 +1,1747 @@
+{
+  "schema_version": "1.0",
+  "baseline": [
+    {
+      "id": "usd.00",
+      "rule": "usdValidation:CompositionErrorTest",
+      "description": "Validator aims at providing all composition errors, which were generated while composing the stage.",
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.01",
+      "rule": "usdValidation:StageMetadataChecker",
+      "description": "Stages that can be consumed as referenceable assets must have a valid 'defaultPrim' specified.",
+      "parameters": {
+        "validators": [
+          "usdValidation:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.02",
+      "rule": "usdGeomValidators:StageMetadataChecker",
+      "description": "All stages must declare their 'upAxis' and 'metersPerUnit'.",
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.03",
+      "rule": "usdGeomValidators:EncapsulationChecker",
+      "description": "Validates there are no nested Gprims.",
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:EncapsulationChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.04",
+      "rule": "usdGeomValidators:SubsetParentIsImageable",
+      "description": "Validates that GeomSubset prims are direct descendants of an Imageable prim.",
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:SubsetParentIsImageable"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.05",
+      "rule": "usdGeomValidators:SubsetFamilies",
+      "description": "Validates all of the geom subset families authored beneath an Imageable prim.",
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:SubsetFamilies"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.06",
+      "rule": "usdShadeValidators:MaterialBindingRelationships",
+      "description": "All properties named 'material:binding' or in that namespace should be relationships.",
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingRelationships"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.07",
+      "rule": "usdShadeValidators:MaterialBindingApiAppliedValidator",
+      "description": "Verify a prim has the MaterialBindingAPI applied if it has a material binding relationship.",
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingApiAppliedValidator"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.08",
+      "rule": "usdShadeValidators:MaterialBindingCollectionValidator",
+      "description": "Verify that a collection defining a material binding is well-formed",
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingCollectionValidator"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.09",
+      "rule": "usdShadeValidators:SubsetMaterialBindFamilyName",
+      "description": "Geom subsets with authored material bindings should have the 'materialBind' family name.",
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:SubsetMaterialBindFamilyName"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.10",
+      "rule": "usdShadeValidators:SubsetsMaterialBindFamily",
+      "description": "Geom subsets of the 'materialBind' family should have a restricted family type.",
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:SubsetsMaterialBindFamily"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.11",
+      "rule": "usdShadeValidators:EncapsulationRulesValidator",
+      "description": "Connectable prims (e.g. Shader, Material, etc) can only be nested inside other Container-like Connectable prims. Container-like prims include Material, NodeGraph, Light, LightFilter. Shader is not a Container-like prim.",
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:EncapsulationRulesValidator"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.12",
+      "rule": "usdUtilsValidators:MissingReferenceValidator",
+      "description": "The composed USD stage should not contain any unresolvable asset dependencies (in every possible variation of the asset), when using the default asset resolver.",
+      "parameters": {
+        "validators": [
+          "usdUtilsValidators:MissingReferenceValidator"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.13",
+      "rule": "usdPhysicsValidators:RigidBodyChecker",
+      "description": "Validates all of the UsdPhysicsRigidBodyAPIs applied to a prim.",
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:RigidBodyChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.14",
+      "rule": "usdPhysicsValidators:ColliderChecker",
+      "description": "Validates all of the UsdPhysicsCollisionAPIs applied to a prim.",
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:ColliderChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.15",
+      "rule": "usdPhysicsValidators:PhysicsJointChecker",
+      "description": "Validates all of the UsdPhysicsJoint prims.",
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:PhysicsJointChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "usd.16",
+      "rule": "usdPhysicsValidators:ArticulationChecker",
+      "description": "Validates all of the UsdPhysicsArticulationRootAPIs applied to a prim.",
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:ArticulationChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.00",
+      "rule": "ValidateTopologyChecker",
+      "description": "Validate the topology of a mesh on all time samples.",
+      "parameters": {
+        "rules": [
+          "ValidateTopologyChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.01",
+      "rule": "ExtentsChecker",
+      "description": "Boundable prims have the extent attribute. For point based prims, the value of the extent must be correct at each\n    time sample of the point attribute",
+      "parameters": {
+        "rules": [
+          "ExtentsChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.02",
+      "rule": "NormalsValidChecker",
+      "description": "Check that all normals have unit length, and that there are no non-finite values.\n    Also checks that the supplied number of normal values agrees with the interpolation.",
+      "parameters": {
+        "rules": [
+          "NormalsValidChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.03",
+      "rule": "NormalsExistChecker",
+      "description": "Check that meshes have normals. All meshes should have normals\n    unless they have the subdivision scheme set. Meshes cannot have\n    both normals and subdivision set.",
+      "parameters": {
+        "rules": [
+          "NormalsExistChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.04",
+      "rule": "NormalsWindingsChecker",
+      "description": "Check that the mesh has normals that are consistent with the face windings,\n    taking into account the 'orientation' attribute.\n\n    We define the meaning of agreement between a normal attribute value and the\n    reference normal of a face (quite loosely) as the two having a positive inner product.\n    We then sum these inner products, and if the sum is positive, it would be a relatively\n    large number (close to the area of the surface) and this would indicate that the winding\n    is right-handed. Otherwise, the sum would be a relatively large negative number to\n    indicate a left-handed rule having been used for generation of normals.\n\n    Works on non time varying geometry.",
+      "parameters": {
+        "rules": [
+          "NormalsWindingsChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.05",
+      "rule": "ZeroAreaFaceChecker",
+      "description": "Faces with zero area can be removed. May produce welding after removal.\n\n    Works on non time varying geometry.",
+      "parameters": {
+        "rules": [
+          "ZeroAreaFaceChecker"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "nv.06",
+      "rule": "UsdDanglingMaterialBinding",
+      "description": "Rule ensuring that the bound material exists in the scene.",
+      "parameters": {
+        "rules": [
+          "UsdDanglingMaterialBinding"
+        ],
+        "warnings_as_failures": false
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "audit.files",
+      "rule": "audit.files",
+      "description": "Check referenced local dependency files are present.",
+      "parameters": {},
+      "requires_task_target": false
+    },
+    {
+      "id": "audit.textures",
+      "rule": "audit.textures",
+      "description": "Decode discovered image files within byte/pixel limits; no UV or visual comparison.",
+      "parameters": {
+        "max_bytes": 33554432,
+        "max_pixels": 16000000
+      },
+      "requires_task_target": false
+    },
+    {
+      "id": "audit.authored_motion",
+      "rule": "audit.authored_motion",
+      "description": "Inspect authored transform samples, boundaries and midpoints for usable timing and finite values; no intended path or continuous guarantee.",
+      "parameters": {
+        "max_samples_per_prim": 4097,
+        "max_total_samples": 100000
+      },
+      "requires_task_target": false
+    }
+  ],
+  "configurable_checks": [
+    {
+      "id": "openusd.validators",
+      "pack": "openusd",
+      "check": "validators",
+      "description": "Run explicit native validators",
+      "coverage": "Named native validator scope",
+      "limitations": [
+        "Local USD admission limits apply."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "validators": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true
+          },
+          "warnings_as_failures": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "validators",
+          "warnings_as_failures"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "geometry.contract",
+      "pack": "geometry",
+      "check": "contract",
+      "description": "Evaluate an existing v1 contract",
+      "coverage": "Existing cube/polygon/edit/evidence scope",
+      "limitations": [
+        "Fixed topology/indexing for shape preservation; no collision or rendering"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "contract_file": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "contract_file"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "materials.delivery",
+      "pack": "materials",
+      "check": "delivery",
+      "description": "Check resolved bindings, shader IDs and external files",
+      "coverage": "Named material structure and dependency existence",
+      "limitations": [
+        "No rendered appearance, image decoding, UV correctness or physical parameters"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "bindings": {
+            "type": "object",
+            "minProperties": 1,
+            "maxProperties": 256,
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "purpose": {
+            "enum": [
+              "",
+              "allPurpose",
+              "preview",
+              "full"
+            ]
+          },
+          "render_context": {
+            "type": "string"
+          },
+          "surface_shader_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "bindings",
+          "purpose",
+          "render_context",
+          "surface_shader_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "motion.positions",
+      "pack": "motion",
+      "check": "positions",
+      "description": "Compare world origins at explicit time codes",
+      "coverage": "Only named positions at supplied times",
+      "limitations": [
+        "No continuous-time guarantee, collision, orientation or physics"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "samples": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "properties": {
+                "time_code": {
+                  "type": "number"
+                },
+                "world_origin_m": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              },
+              "required": [
+                "time_code",
+                "world_origin_m"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "path",
+          "tolerance_m",
+          "samples"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "nvidia.asset-validator.rules",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "description": "Run explicit NVIDIA rules without fixes",
+      "coverage": "Named upstream rules only",
+      "limitations": [
+        "No simulator execution or SimReady profile certification"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true
+          },
+          "warnings_as_failures": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rules",
+          "warnings_as_failures"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "motion.timing.clock",
+      "pack": "motion.timing",
+      "check": "clock",
+      "description": "Check authored stage duration and optionally require an exact clock rate",
+      "coverage": "Authored stage time range converted to seconds",
+      "limitations": [
+        "Does not infer active motion duration; an authored positive timeCodesPerSecond or framesPerSecond rate and complete time range are required"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "duration_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "tolerance_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "time_codes_per_second": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "duration_s",
+          "tolerance_s"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "motion.timing.positions",
+      "pack": "motion.timing",
+      "check": "positions",
+      "description": "Compare named world origins at elapsed seconds from the authored stage start",
+      "coverage": "Named world origins at the requested elapsed seconds",
+      "limitations": [
+        "Tolerance is per coordinate in metres, not Euclidean distance",
+        "No continuous-time, orientation, collision or physics proof",
+        "Requires authored clock rate (including FPS fallback) and time range"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "samples": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 1000,
+            "items": {
+              "type": "object",
+              "properties": {
+                "elapsed_s": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "world_origin_m": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              },
+              "required": [
+                "elapsed_s",
+                "world_origin_m"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "path",
+          "tolerance_m",
+          "samples"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "textures.decode.image",
+      "pack": "textures.decode",
+      "check": "image",
+      "description": "Verify and load one required image",
+      "coverage": "Selected static image bytes",
+      "limitations": [
+        "No UV, color-management, rendered appearance or hostile-input isolation claim"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "asset_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "max_pixels": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16000000
+          },
+          "max_bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          }
+        },
+        "required": [
+          "asset_attribute",
+          "max_pixels",
+          "max_bytes"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "motion.connection.distance",
+      "pack": "motion.connection",
+      "check": "distance",
+      "description": "Compare the gap between two task-named points",
+      "coverage": "World-space distances at explicit times",
+      "limitations": [
+        "Points are caller-defined, not inferred joints; finite sampling can miss motion defects"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "b": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "interval_s": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "segments": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2048
+          },
+          "schedule": {
+            "enum": [
+              "uniform",
+              "keys-and-midpoints"
+            ]
+          },
+          "max_gap_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "interval_s",
+          "segments",
+          "schedule",
+          "max_gap_m"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "physics.incline-worker.displacement",
+      "pack": "physics.incline-worker",
+      "check": "displacement",
+      "description": "Run the fixed incline model and compare displacement",
+      "coverage": "A one-body CPU experiment and its execution record",
+      "limitations": [
+        "Fixed fixture profile; no general USD physics importer or hostile-code sandbox",
+        "Assumed friction does not establish real-world task validity"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "dt_s": {
+            "type": "number",
+            "minimum": 0.0001,
+            "maximum": 0.01
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 2
+          },
+          "timeout_s": {
+            "type": "number",
+            "minimum": 0.001,
+            "maximum": 60
+          },
+          "maximum_displacement_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "require_measured_parameters": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "dt_s",
+          "duration_s",
+          "timeout_s",
+          "maximum_displacement_m",
+          "require_measured_parameters"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "scene.audit.files",
+      "pack": "scene.audit",
+      "check": "files",
+      "description": "Check discovered external files",
+      "coverage": "Admitted external dependencies; missing MDL source assets are unknown unless local delivery is explicitly required",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "runtime_libraries": {
+            "enum": [
+              "unknown",
+              "require_local"
+            ]
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "scene.audit.textures",
+      "pack": "scene.audit",
+      "check": "textures",
+      "description": "Decode discovered PNG/JPEG dependencies",
+      "coverage": "Discovered image files; other formats remain unknown",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "max_bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 33554432
+          },
+          "max_pixels": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16000000
+          }
+        },
+        "required": [
+          "max_bytes",
+          "max_pixels"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "scene.audit.authored_motion",
+      "pack": "scene.audit",
+      "check": "authored_motion",
+      "description": "Check finite authored world transforms",
+      "coverage": "Explicitly bounded samples; no motion intent",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "max_samples_per_prim": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4097
+          },
+          "max_total_samples": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "max_samples_per_prim",
+          "max_total_samples"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.common.metadata",
+      "pack": "brief.four-job",
+      "check": "common.metadata",
+      "description": "Four-job preset: common.metadata",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated",
+              "panel-png",
+              "panel-jpeg",
+              "motion",
+              "physics-022",
+              "physics-042",
+              "physics-068"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.common.geometry",
+      "pack": "brief.four-job",
+      "check": "common.geometry",
+      "description": "Four-job preset: common.geometry",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated",
+              "panel-png",
+              "panel-jpeg",
+              "motion",
+              "physics-022",
+              "physics-042",
+              "physics-068"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.tray.dimensions",
+      "pack": "brief.four-job",
+      "check": "tray.dimensions",
+      "description": "Four-job preset: tray.dimensions",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.tray.cavity",
+      "pack": "brief.four-job",
+      "check": "tray.cavity",
+      "description": "Four-job preset: tray.cavity",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.tray.closure",
+      "pack": "brief.four-job",
+      "check": "tray.closure",
+      "description": "Four-job preset: tray.closure",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.tray.transform",
+      "pack": "brief.four-job",
+      "check": "tray.transform",
+      "description": "Four-job preset: tray.transform",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.tray.fixture",
+      "pack": "brief.four-job",
+      "check": "tray.fixture",
+      "description": "Four-job preset: tray.fixture",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-baseline",
+              "tray-translated"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.tray.preserved",
+      "pack": "brief.four-job",
+      "check": "tray.preserved",
+      "description": "Four-job preset: tray.preserved",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "tray-translated"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.panel.dimensions",
+      "pack": "brief.four-job",
+      "check": "panel.dimensions",
+      "description": "Four-job preset: panel.dimensions",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "panel-png",
+              "panel-jpeg"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.panel.shader",
+      "pack": "brief.four-job",
+      "check": "panel.shader",
+      "description": "Four-job preset: panel.shader",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "panel-png",
+              "panel-jpeg"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.panel.uv",
+      "pack": "brief.four-job",
+      "check": "panel.uv",
+      "description": "Four-job preset: panel.uv",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "panel-png",
+              "panel-jpeg"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.panel.pixels",
+      "pack": "brief.four-job",
+      "check": "panel.pixels",
+      "description": "Four-job preset: panel.pixels",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "panel-png",
+              "panel-jpeg"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.panel.equivalence",
+      "pack": "brief.four-job",
+      "check": "panel.equivalence",
+      "description": "Four-job preset: panel.equivalence",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "panel-png",
+              "panel-jpeg"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.motion.clock",
+      "pack": "brief.four-job",
+      "check": "motion.clock",
+      "description": "Four-job preset: motion.clock",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "motion"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.motion.lengths",
+      "pack": "brief.four-job",
+      "check": "motion.lengths",
+      "description": "Four-job preset: motion.lengths",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "motion"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.motion.cycle",
+      "pack": "brief.four-job",
+      "check": "motion.cycle",
+      "description": "Four-job preset: motion.cycle",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "motion"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.motion.trajectory",
+      "pack": "brief.four-job",
+      "check": "motion.trajectory",
+      "description": "Four-job preset: motion.trajectory",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "motion"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.motion.connections",
+      "pack": "brief.four-job",
+      "check": "motion.connections",
+      "description": "Four-job preset: motion.connections",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "motion"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.motion.geometry",
+      "pack": "brief.four-job",
+      "check": "motion.geometry",
+      "description": "Four-job preset: motion.geometry",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "motion"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.physics.parameters",
+      "pack": "brief.four-job",
+      "check": "physics.parameters",
+      "description": "Four-job preset: physics.parameters",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "physics-022",
+              "physics-042",
+              "physics-068"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.four-job.physics.preserved",
+      "pack": "brief.four-job",
+      "check": "physics.preserved",
+      "description": "Four-job preset: physics.preserved",
+      "coverage": "Explicit named comparison; see docs/SUPPLEMENTAL_CHECKS.md for every fixed target.",
+      "limitations": [
+        "Fixed four-job paths, targets and tolerances; selecting a job explicitly adopts that scope.",
+        "No general CAD certificate, rendered appearance, continuous-time proof or physical calibration.",
+        "Preservation compares root-layer authored fields; it does not prove composed dependency equivalence."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "enum": [
+              "physics-022",
+              "physics-042",
+              "physics-068"
+            ]
+          }
+        },
+        "required": [
+          "job"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.metadata",
+      "pack": "brief.measurements",
+      "check": "metadata",
+      "description": "Authored stage metadata matches specified values",
+      "coverage": "Selected authored metadata fields",
+      "limitations": [
+        "No active motion or world-coordinate interpretation claim"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "object",
+            "minProperties": 1,
+            "properties": {
+              "upAxis": {
+                "enum": [
+                  "Y",
+                  "Z"
+                ]
+              },
+              "metersPerUnit": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "startTimeCode": {
+                "type": "number"
+              },
+              "endTimeCode": {
+                "type": "number"
+              },
+              "timeCodesPerSecond": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "additionalProperties": false
+          },
+          "tolerance": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "values",
+          "tolerance"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.bounds",
+      "pack": "brief.measurements",
+      "check": "bounds",
+      "description": "Named geometry size and centre",
+      "coverage": "World Cube/Mesh bounds at one time",
+      "limitations": [
+        "No shape equivalence"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "time_code": {
+            "type": "number"
+          },
+          "size_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "center_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "path",
+          "time_code",
+          "tolerance_m"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "size_m"
+            ]
+          },
+          {
+            "required": [
+              "center_m"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "brief.measurements.children",
+      "pack": "brief.measurements",
+      "check": "children",
+      "description": "Required direct-child count",
+      "coverage": "One parent and type",
+      "limitations": [
+        "Count does not establish function or dimensions"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "parent": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "parent",
+          "type",
+          "count"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.axis_gap",
+      "pack": "brief.measurements",
+      "check": "axis_gap",
+      "description": "Required directed axis gap",
+      "coverage": "Two named Cube/Mesh world bounding boxes",
+      "limitations": [
+        "Not a walkability or safety test"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "string",
+            "minLength": 1
+          },
+          "b": {
+            "type": "string",
+            "minLength": 1
+          },
+          "axis": {
+            "enum": [
+              "x",
+              "y",
+              "z"
+            ]
+          },
+          "time_code": {
+            "type": "number"
+          },
+          "minimum_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "axis",
+          "time_code",
+          "minimum_m",
+          "tolerance_m"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.image_pixels",
+      "pack": "brief.measurements",
+      "check": "image_pixels",
+      "description": "Delivered texture matches a reference image",
+      "coverage": "Declared regions/mask of static decoded RGB source pixels",
+      "limitations": [
+        "Does not prove rendered appearance; excluded pixels are not accepted"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "asset_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference_image": {
+            "type": "string",
+            "minLength": 1
+          },
+          "max_channel_error": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "max_mean_channel_error": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "excluded_regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "mask_image": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "asset_attribute",
+          "reference_image",
+          "max_channel_error"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "pack_versions": {
+    "openusd": "1.1.0",
+    "geometry": "1.0.0",
+    "materials": "1.1.0",
+    "motion": "1.1.0",
+    "nvidia.asset-validator": "1.1.0",
+    "motion.timing": "1.1.0",
+    "textures.decode": "0.2.0",
+    "motion.connection": "0.1.0",
+    "physics.incline-worker": "0.2.0",
+    "scene.audit": "1.1.0",
+    "brief.four-job": "1.0.0",
+    "brief.measurements": "1.2.0"
+  },
+  "baseline_profile": {
+    "id": "usd-delivery-baseline",
+    "version": "1.2.0"
+  }
+}

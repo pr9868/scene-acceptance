@@ -1,2 +1,6 @@
 # Preserve byte identity of retained evidence, including original CSV line endings.
 * -text
+# Imported frozen controls and their original implementation retain final blank lines.
+evaluation/article-checks-v1/fixtures/** whitespace=-blank-at-eof
+src/scene_acceptance/followups/** whitespace=-blank-at-eof
+evaluation/consolidation-v1/fixtures/** whitespace=-blank-at-eof

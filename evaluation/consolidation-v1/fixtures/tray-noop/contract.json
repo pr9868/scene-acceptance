@@ -1,0 +1,123 @@
+{
+  "schema_version": "2.0",
+  "id": "fresh-tray-translated",
+  "intended_use": "Selected production requirements from the frozen brief; broader review is separate",
+  "profile": {
+    "id": "fresh-producer-v1",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [
+    "geometry.json"
+  ],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "geometry": {
+      "version": "1.0.0"
+    },
+    "fresh.brief": {
+      "version": "1.0.0",
+      "sha256": "a32a4d1ce902af68c4ef9ad39b0cdbb9b528c32cc71a6a071d0b0da8b651dee5"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "geometry",
+      "pack": "geometry",
+      "check": "contract",
+      "required": true,
+      "parameters": {
+        "contract_file": "geometry.json"
+      }
+    },
+    {
+      "id": "brief.common.metadata",
+      "pack": "fresh.brief",
+      "check": "common.metadata",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.common.geometry",
+      "pack": "fresh.brief",
+      "check": "common.geometry",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.tray.dimensions",
+      "pack": "fresh.brief",
+      "check": "tray.dimensions",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.tray.cavity",
+      "pack": "fresh.brief",
+      "check": "tray.cavity",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.tray.closure",
+      "pack": "fresh.brief",
+      "check": "tray.closure",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.tray.transform",
+      "pack": "fresh.brief",
+      "check": "tray.transform",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.tray.fixture",
+      "pack": "fresh.brief",
+      "check": "tray.fixture",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    },
+    {
+      "id": "brief.tray.preserved",
+      "pack": "fresh.brief",
+      "check": "tray.preserved",
+      "required": true,
+      "parameters": {
+        "job": "tray-translated"
+      }
+    }
+  ]
+}

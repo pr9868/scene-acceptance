@@ -1,0 +1,175 @@
+{
+  "implementation_sha256": "7e451d118798d35db5c841fd7c462f1e212981971e415597057ec67c524250a7",
+  "controls": [
+    {
+      "case": "texture-valid_png",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "texture-valid_jpeg",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "texture-text_png",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "texture-damaged_png",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "texture-wrong_color",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "texture-gif",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "texture-animated_png",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "texture-pixel_budget",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "texture-byte_budget",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "texture-missing",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "texture-advisory_bad",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "motion-unwrapped",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "motion-wrapped",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "motion-brief_excursion",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "motion-two_turns",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "motion-millimetres",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "motion-ancestor_motion",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "motion-missing_clock",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "motion-beyond_range",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "physics-high",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "physics-low",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "physics-high_half",
+      "expected": "ACCEPT_FOR_USE",
+      "observed": "ACCEPT_FOR_USE",
+      "match": true
+    },
+    {
+      "case": "physics-low_half",
+      "expected": "REJECT",
+      "observed": "REJECT",
+      "match": true
+    },
+    {
+      "case": "physics-measured_required",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "physics-unsupported",
+      "expected": "INSUFFICIENT_EVIDENCE",
+      "observed": "INSUFFICIENT_EVIDENCE",
+      "match": true
+    },
+    {
+      "case": "physics-timeout",
+      "expected": "EVALUATION_ERROR",
+      "observed": "EVALUATION_ERROR",
+      "match": true
+    }
+  ],
+  "automated_tests": {
+    "passed": 304,
+    "skipped": 3,
+    "skip_reason": "Optional studio_mesh_pack example not installed"
+  },
+  "wheel_checks": [
+    "texture-valid_png",
+    "texture-damaged_png",
+    "motion-wrapped",
+    "physics-high",
+    "physics-low"
+  ],
+  "wheel_dependencies": "Reused pinned dependencies; installed package and worker loaded from fresh wheel",
+  "not_an_independent_model_benchmark": true
+}

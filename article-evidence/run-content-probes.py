@@ -3,6 +3,7 @@ import hashlib,json,sys
 from PIL import Image
 from pxr import Usd,UsdGeom,UsdShade
 from scene_acceptance.engine import evaluate
+from scene_acceptance.contract_upgrade import copy_replay_bundle
 from scene_acceptance.report import write_report
 R=Path(__file__).resolve().parent/'content-probes'
 O=Path(sys.argv[1]).resolve(); O.mkdir(parents=True,exist_ok=False)
@@ -10,7 +11,7 @@ frozen=json.loads((R/'frozen-inputs.json').read_text())
 for p,h in frozen.items(): assert hashlib.sha256((R/p).read_bytes()).hexdigest()==h
 protocol=json.loads((R/'protocol.json').read_text()); result={}
 for name,expected in protocol['expected'].items():
- d=R/'fixtures'/name
+ d=copy_replay_bundle(R/'fixtures'/name, O/'inputs'/name)
  report=evaluate(d/'contract.json',d/'scene.usda',bundle_root=d); write_report(report,O/name)
  s=Usd.Stage.Open(str(d/'scene.usda'))
  item={'verdict':report['verdict'],'expected':expected,'scene_sha256':hashlib.sha256((d/'scene.usda').read_bytes()).hexdigest()}

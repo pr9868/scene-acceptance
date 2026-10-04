@@ -1,10 +1,10 @@
  ArchWarn: ARCH_CACHE_LINE_SIZE != Arch_ObtainCacheLineSize()
  Function: Arch_ValidateAssumptions
-     File: /Users/runner/work/OpenUSD/OpenUSD/pxr/base/arch/assumptions.cpp
+     File: <upstream-build-root>/OpenUSD/pxr/base/arch/assumptions.cpp
      Line: 140
-Coding Error (secondary thread): in _GetShaderResourcePath at line 37 of /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/usdHydra/discoveryPlugin.cpp -- Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
+Coding Error (secondary thread): in _GetShaderResourcePath at line 37 of <upstream-build-root>/OpenUSD/pxr/usd/usdHydra/discoveryPlugin.cpp -- Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
 
-Coding Error (secondary thread): in _GetShaderResourcePath at line 37 of /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/plugin/usdShaders/discoveryPlugin.cpp -- Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
+Coding Error (secondary thread): in _GetShaderResourcePath at line 37 of <upstream-build-root>/OpenUSD/pxr/usd/plugin/usdShaders/discoveryPlugin.cpp -- Failed verification: ' !path.empty() ' -- Could not find shader resource: shaderDefs.usda
 
 {
   "status": "INCOMPLETE",

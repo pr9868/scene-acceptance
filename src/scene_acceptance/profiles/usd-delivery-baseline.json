@@ -1,0 +1,340 @@
+{
+  "schema_version": "2.0",
+  "id": "usd-delivery-baseline-v1",
+  "intended_use": "Generic USD delivery diagnostics: selected structural rules, local dependencies, image decoding and finite authored-transform samples. Task success, appearance and physical behavior are outside this baseline.",
+  "profile": {
+    "id": "usd-delivery-baseline",
+    "version": "1.2.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "1.1.0"
+    },
+    "nvidia.asset-validator": {
+      "version": "1.1.0"
+    },
+    "scene.audit": {
+      "version": "1.1.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "usd.00",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.01",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.02",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.03",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:EncapsulationChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.04",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:SubsetParentIsImageable"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.05",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdGeomValidators:SubsetFamilies"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.06",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingRelationships"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.07",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingApiAppliedValidator"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.08",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:MaterialBindingCollectionValidator"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.09",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:SubsetMaterialBindFamilyName"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.10",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:SubsetsMaterialBindFamily"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.11",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdShadeValidators:EncapsulationRulesValidator"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.12",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdUtilsValidators:MissingReferenceValidator"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.13",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:RigidBodyChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.14",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:ColliderChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.15",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:PhysicsJointChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "usd.16",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdPhysicsValidators:ArticulationChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.00",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "ValidateTopologyChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.01",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "ExtentsChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.02",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "NormalsValidChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.03",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "NormalsExistChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.04",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "NormalsWindingsChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.05",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "ZeroAreaFaceChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "nv.06",
+      "pack": "nvidia.asset-validator",
+      "check": "rules",
+      "required": true,
+      "parameters": {
+        "rules": [
+          "UsdDanglingMaterialBinding"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "audit.files",
+      "pack": "scene.audit",
+      "check": "files",
+      "required": true,
+      "parameters": {}
+    },
+    {
+      "id": "audit.textures",
+      "pack": "scene.audit",
+      "check": "textures",
+      "required": true,
+      "parameters": {
+        "max_bytes": 33554432,
+        "max_pixels": 16000000
+      }
+    },
+    {
+      "id": "audit.authored_motion",
+      "pack": "scene.audit",
+      "check": "authored_motion",
+      "required": true,
+      "parameters": {
+        "max_samples_per_prim": 4097,
+        "max_total_samples": 100000
+      }
+    }
+  ]
+}

@@ -120,6 +120,8 @@ class PackRegistry:
     def load_approved(self, names):
         entries = metadata.entry_points(group=ENTRY_POINT_GROUP)
         for name in names:
+            if name in self._packs:
+                continue  # Bundled provider is already trusted; do not import a shadowing entry point.
             matches = [ep for ep in entries if ep.name == name]
             if len(matches) != 1:
                 raise ContractError("Expected one installed entry point for: " + name)
@@ -132,8 +134,16 @@ class PackRegistry:
 
 def default_registry(approved=()):
     from .builtin_packs import builtin_packs
+    from .motion_timing import timing_pack
 
-    return PackRegistry(builtin_packs()).load_approved(approved)
+    from .followups.packs import texture_pack, connection_pack
+    from .followups.simulation import simulation_pack
+    from .scene_audit import audit_pack
+    from .supplemental import four_job_pack
+    from .brief_measurements import brief_measurement_pack
+
+    return PackRegistry([*builtin_packs(), timing_pack(), texture_pack(),
+                         connection_pack(), simulation_pack(), audit_pack(), four_job_pack(), brief_measurement_pack()]).load_approved(approved)
 
 
 def installed_pack_names():

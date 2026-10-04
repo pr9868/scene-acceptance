@@ -6,6 +6,7 @@ import collections
 import html
 import json
 from scene_acceptance import evaluate
+from scene_acceptance.contract_upgrade import copy_replay_bundle
 from scene_acceptance.model import sha
 from scene_acceptance.report import write_report, STYLE
 
@@ -27,7 +28,7 @@ def main():
     verify()
     rows = []
     for case in manifest["cases"]:
-        d = fixtures / case["id"]
+        d = copy_replay_bundle(fixtures / case["id"], out / "inputs" / case["id"])
         report = evaluate(
             "contract.json",
             "scene.usda",

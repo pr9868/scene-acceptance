@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scene Harness Handoff"
+  short_description: "Prepare scene checks and return requested visual evidence"
+  default_prompt: "Use $scene-harness-handoff to prepare and evaluate this scene with a clear caller evidence report."

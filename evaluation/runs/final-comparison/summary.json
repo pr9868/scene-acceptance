@@ -394,12 +394,12 @@
       "baseline": {
         "verdict": "EVALUATION_ERROR",
         "scope_supported": true,
-        "reason": "ErrorException: \n\tError in 'pxrInternal_v0_25_11__pxrReserved__::Sdf_TextFileFormatParser::_RaiseErrorPEGTL' at line 48 in file /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/sdf/textParserHelpers.h : '/private/tmp/spatial-harness-build-20260919/evaluation/fixtures/malformed_scene/scene.usda:2:1: parse error matching PXR_INTERNAL_NS_pegtl::internal::eof at 'INVALID' in </>\n'",
+        "reason": "ErrorException: \n\tError in 'pxrInternal_v0_25_11__pxrReserved__::Sdf_TextFileFormatParser::_RaiseErrorPEGTL' at line 48 in file <upstream-build-root>/OpenUSD/pxr/usd/sdf/textParserHelpers.h : '/private/tmp/spatial-harness-build-20260919/evaluation/fixtures/malformed_scene/scene.usda:2:1: parse error matching PXR_INTERNAL_NS_pegtl::internal::eof at 'INVALID' in </>\n'",
         "elapsed_ms": 0.7707920158281922
       },
       "native": {
         "status": "NOT_RUN",
-        "reason": "ErrorException: \n\tError in 'pxrInternal_v0_25_11__pxrReserved__::Sdf_TextFileFormatParser::_RaiseErrorPEGTL' at line 48 in file /Users/runner/work/OpenUSD/OpenUSD/pxr/usd/sdf/textParserHelpers.h : '/private/tmp/spatial-harness-build-20260919/evaluation/fixtures/malformed_scene/scene.usda:2:1: parse error matching PXR_INTERNAL_NS_pegtl::internal::eof at 'INVALID' in </>\n'",
+        "reason": "ErrorException: \n\tError in 'pxrInternal_v0_25_11__pxrReserved__::Sdf_TextFileFormatParser::_RaiseErrorPEGTL' at line 48 in file <upstream-build-root>/OpenUSD/pxr/usd/sdf/textParserHelpers.h : '/private/tmp/spatial-harness-build-20260919/evaluation/fixtures/malformed_scene/scene.usda:2:1: parse error matching PXR_INTERNAL_NS_pegtl::internal::eof at 'INVALID' in </>\n'",
         "scope": "Preflight/readback prevented native execution; retained in total."
       }
     },

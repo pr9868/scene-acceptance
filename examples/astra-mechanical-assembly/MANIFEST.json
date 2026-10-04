@@ -2,7 +2,7 @@
   "files": {
     "LICENSE": "8f694d23cac4bad2c9f97c5b21f20a891c018445594edc179a39555c17c79728",
     "PROTOCOL.md": "bb807a3b3e5149aa979028551588b1873429538d8089a19b8702a0f237366942",
-    "PUBLICATION.md": "07b3e80afa800dcc55f296cce69222373d4ec02cfeb112e0bacfe5c9917a803b",
+    "PUBLICATION.md": "35c57fc77d623545232fb55559570986e19625f6cbe27bb0d0179dd8a501079d",
     "README.md": "c1a785b444942fe3dc123acb9690b3c767a9fa405248343c04ddc0bfd9ef15a7",
     "article-viewer/README.md": "b52f7f54d230e54c8ee2e88e181b9b8206fdb90e696001f6bab75cf490f98000",
     "article-viewer/app.js": "80de5273e5066866e58b92a8342073da23d4ba337c719baae312d99e4437c054",
@@ -38,7 +38,7 @@
     "submission/logs/build.log": "550e71216fa811124d2fece56b50365d0e87578980f5b65dc391a375a24e73da",
     "submission/logs/exporter-properties.json": "adf2bbbff8be1a52f995357fa0beecab819a0ff74bb723fadfa15b7e60438e30",
     "submission/logs/final-inventory.json": "3420fa3a07da028f7547caa741182b8c1de9bdd6c6fc6401fc4b89ad0ab7552e",
-    "submission/logs/final-inventory.log": "110fe4588c78c3a6d75f1c686603565bb3617c2e04ad6c8a8eb9fea04c5cc165",
+    "submission/logs/final-inventory.log": "46f785534d7e959b03f58e21ff59fd65cd949ec1d2a18d5d3a947e38fc7787fa",
     "submission/logs/gltf-options.log": "3e374934872fecd0b7c74de9b13ba21a8026772f0dda58b70a5b7c7b61dfae3b",
     "submission/logs/gltf-validation.log": "b8ddbe2f23e67e0bca711ed5ad25d04f291a53c5019229236c1ef4a10b492c91",
     "submission/logs/gltf-validator.json": "3e945ee64fcd5d8b6d1c12231223bb0c6ed0d364b1df5830b8e19ac839c75d9a",
@@ -50,13 +50,13 @@
     "submission/logs/server.log": "d8355a4b18d0555b410ffb10c8a00eb67c9bbd92c2eb10584fb602ed6fb94cab",
     "submission/logs/source-validation.json": "177021f84e150c3e040c76a11494e3fb605e15cb6c1fb1ba7c1a7c56c9e0bed5",
     "submission/logs/source-validation.log": "10c5fcf5f620162d6ed661d13b96c0698e81dcdfec5ab384fede63f7f8350a15",
-    "submission/logs/usd-compliance-initial-failure.log": "16679505073ee46fd9838434cb3534ffbb78926d2b0d52495e1652009cbca6f5",
+    "submission/logs/usd-compliance-initial-failure.log": "dde02673266fcd86d14bb67a228c2d4c1aa99c32d35b532dc8928910b53972d2",
     "submission/logs/usd-compliance.json": "0aa340bc2d165e9a887b3ab39ccaace8919b60c8c3f398c7845f33617fc9b589",
-    "submission/logs/usd-compliance.log": "1e90592f791ad4121aaf266fcf403e7d9b14f6ca5662723e03e4a5d557abc06b",
-    "submission/logs/usd-finalize.log": "1073ae2e3d4c226273609cddb43d25931954b77e112f69fc0d35d8b5490ca650",
-    "submission/logs/usd-validation-initial-failure.log": "f610720c707446d568b916f4575b509ab7dfea3d5d4ea2374200fb57f3721572",
+    "submission/logs/usd-compliance.log": "225f5f00e66d69e7d00c4be1798baccd8307193f8793e03741d62d3362845661",
+    "submission/logs/usd-finalize.log": "a4e4bd0a3fc72b8f806704fd4d3e56c5a1cae182cbdcbb6e50bb2b4f86609165",
+    "submission/logs/usd-validation-initial-failure.log": "1426c5e1058ea9bca361ff7ae1907ba559ba067962220bc2bfc00fcd7ad8f50f",
     "submission/logs/usd-validation.json": "018350a64e9c80b02f18b85d6efbb83bbb8df00fb99d39123822eccc34174054",
-    "submission/logs/usd-validation.log": "4cbdcd2da6ba8e3c1bb13e7d08c9e1e8b3937a2e26a713e52978a5a229b38c93",
+    "submission/logs/usd-validation.log": "ba6c58e010416aa4f5b5e786679e6545ab214b4d2f57fcf92296f1418f2dbfbf",
     "submission/logs/viewer-end.png": "ffdfb23aabe9335bdb7b6937e4049a31acda4f610c2edb8d36912abe7820d95d",
     "submission/logs/viewer-mobile.png": "b871bf61e72a4cf9234893aa6fdd27f73f6be8f8999850b1df51c15c23d9de70",
     "submission/logs/viewer-top.png": "c0f7b71e26f7f9b28c078034b3d3b5ec3cb5bbd765526e81be84051de34aa6d2",
@@ -141,17 +141,17 @@
     {
       "path": "submission/logs/usd-compliance-initial-failure.log",
       "original_sha256": "382588cb70d9d284e64f5e5820ae8f9cf11af74092c7ea614666e4bb90e27cbb",
-      "public_sha256": "16679505073ee46fd9838434cb3534ffbb78926d2b0d52495e1652009cbca6f5"
+      "public_sha256": "dde02673266fcd86d14bb67a228c2d4c1aa99c32d35b532dc8928910b53972d2"
     },
     {
       "path": "submission/logs/usd-compliance.log",
       "original_sha256": "798f9d5a50dd1bac9b6ce248fa668080830b80a3a9cda490503d5a76def0dd35",
-      "public_sha256": "1e90592f791ad4121aaf266fcf403e7d9b14f6ca5662723e03e4a5d557abc06b"
+      "public_sha256": "225f5f00e66d69e7d00c4be1798baccd8307193f8793e03741d62d3362845661"
     },
     {
       "path": "submission/logs/usd-validation-initial-failure.log",
       "original_sha256": "fb6e6287a013599a4906e003f412388f65e761e393e648c9621c6ce41313d7e5",
-      "public_sha256": "f610720c707446d568b916f4575b509ab7dfea3d5d4ea2374200fb57f3721572"
+      "public_sha256": "1426c5e1058ea9bca361ff7ae1907ba559ba067962220bc2bfc00fcd7ad8f50f"
     },
     {
       "path": "submission/logs/source-validation.log",
@@ -172,6 +172,21 @@
       "path": "submission/scripts/rebuild.sh",
       "original_sha256": "28e6336a8ec4e41a20ebcef91fa6054009c3470557e18ba47fdccfe04da2d49e",
       "public_sha256": "2396459dbe106938a91c50239ddbae343dbba5a849d39a2ac6699b71e797a420"
+    },
+    {
+      "path": "submission/logs/final-inventory.log",
+      "original_sha256": "110fe4588c78c3a6d75f1c686603565bb3617c2e04ad6c8a8eb9fea04c5cc165",
+      "public_sha256": "46f785534d7e959b03f58e21ff59fd65cd949ec1d2a18d5d3a947e38fc7787fa"
+    },
+    {
+      "path": "submission/logs/usd-finalize.log",
+      "original_sha256": "1073ae2e3d4c226273609cddb43d25931954b77e112f69fc0d35d8b5490ca650",
+      "public_sha256": "a4e4bd0a3fc72b8f806704fd4d3e56c5a1cae182cbdcbb6e50bb2b4f86609165"
+    },
+    {
+      "path": "submission/logs/usd-validation.log",
+      "original_sha256": "4cbdcd2da6ba8e3c1bb13e7d08c9e1e8b3937a2e26a713e52978a5a229b38c93",
+      "public_sha256": "ba6c58e010416aa4f5b5e786679e6545ab214b4d2f57fcf92296f1418f2dbfbf"
     }
   ],
   "omitted_submission_files": [
@@ -186,5 +201,43 @@
     "viewer/vendor/build/three.webgpu.js",
     "logs/crank_slider-initial.blend"
   ],
-  "scope": "Public derived distribution; originals remain frozen."
+  "scope": "Public derived distribution; originals remain frozen.",
+  "distribution_revisions": [
+    {
+      "version": "0.5.0",
+      "changes": "Remaining upstream OpenUSD build-machine prefixes removed from six logs; no diagnostic outcomes, code, scenes or media changed.",
+      "files": [
+        {
+          "path": "submission/logs/final-inventory.log",
+          "previous_public_sha256": "110fe4588c78c3a6d75f1c686603565bb3617c2e04ad6c8a8eb9fea04c5cc165",
+          "public_sha256": "46f785534d7e959b03f58e21ff59fd65cd949ec1d2a18d5d3a947e38fc7787fa"
+        },
+        {
+          "path": "submission/logs/usd-compliance-initial-failure.log",
+          "previous_public_sha256": "16679505073ee46fd9838434cb3534ffbb78926d2b0d52495e1652009cbca6f5",
+          "public_sha256": "dde02673266fcd86d14bb67a228c2d4c1aa99c32d35b532dc8928910b53972d2"
+        },
+        {
+          "path": "submission/logs/usd-compliance.log",
+          "previous_public_sha256": "1e90592f791ad4121aaf266fcf403e7d9b14f6ca5662723e03e4a5d557abc06b",
+          "public_sha256": "225f5f00e66d69e7d00c4be1798baccd8307193f8793e03741d62d3362845661"
+        },
+        {
+          "path": "submission/logs/usd-finalize.log",
+          "previous_public_sha256": "1073ae2e3d4c226273609cddb43d25931954b77e112f69fc0d35d8b5490ca650",
+          "public_sha256": "a4e4bd0a3fc72b8f806704fd4d3e56c5a1cae182cbdcbb6e50bb2b4f86609165"
+        },
+        {
+          "path": "submission/logs/usd-validation-initial-failure.log",
+          "previous_public_sha256": "f610720c707446d568b916f4575b509ab7dfea3d5d4ea2374200fb57f3721572",
+          "public_sha256": "1426c5e1058ea9bca361ff7ae1907ba559ba067962220bc2bfc00fcd7ad8f50f"
+        },
+        {
+          "path": "submission/logs/usd-validation.log",
+          "previous_public_sha256": "4cbdcd2da6ba8e3c1bb13e7d08c9e1e8b3937a2e26a713e52978a5a229b38c93",
+          "public_sha256": "ba6c58e010416aa4f5b5e786679e6545ab214b4d2f57fcf92296f1418f2dbfbf"
+        }
+      ]
+    }
+  ]
 }

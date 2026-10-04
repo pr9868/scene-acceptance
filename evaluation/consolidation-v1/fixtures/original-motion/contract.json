@@ -1,0 +1,188 @@
+{
+  "schema_version": "2.0",
+  "id": "fresh-motion",
+  "intended_use": "Selected production requirements from the frozen brief; broader review is separate",
+  "profile": {
+    "id": "fresh-producer-v1",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "motion.timing": {
+      "version": "1.0.0"
+    },
+    "motion.connection": {
+      "version": "0.1.0"
+    },
+    "fresh.brief": {
+      "version": "1.0.0",
+      "sha256": "241633c33d1fa296708aa13948f24a97e782e72839a76c47e2f41abe1ab84057"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "clock",
+      "pack": "motion.timing",
+      "check": "clock",
+      "required": true,
+      "parameters": {
+        "duration_s": 3,
+        "tolerance_s": 1e-09,
+        "time_codes_per_second": 48
+      }
+    },
+    {
+      "id": "connection.crank",
+      "pack": "motion.connection",
+      "check": "distance",
+      "required": true,
+      "parameters": {
+        "a": {
+          "path": "/World/Mechanism/Rod",
+          "local_point": [
+            0,
+            0,
+            0
+          ]
+        },
+        "b": {
+          "path": "/World/Mechanism/Crank/Pin",
+          "local_point": [
+            0,
+            0,
+            0
+          ]
+        },
+        "interval_s": [
+          0,
+          3
+        ],
+        "segments": 256,
+        "schedule": "keys-and-midpoints",
+        "max_gap_m": 0.0005
+      }
+    },
+    {
+      "id": "connection.slider",
+      "pack": "motion.connection",
+      "check": "distance",
+      "required": true,
+      "parameters": {
+        "a": {
+          "path": "/World/Mechanism/Rod",
+          "local_point": [
+            0.14,
+            0,
+            0
+          ]
+        },
+        "b": {
+          "path": "/World/Mechanism/Slider/Pin",
+          "local_point": [
+            0,
+            0,
+            0
+          ]
+        },
+        "interval_s": [
+          0,
+          3
+        ],
+        "segments": 256,
+        "schedule": "keys-and-midpoints",
+        "max_gap_m": 0.0005
+      }
+    },
+    {
+      "id": "brief.common.metadata",
+      "pack": "fresh.brief",
+      "check": "common.metadata",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.common.geometry",
+      "pack": "fresh.brief",
+      "check": "common.geometry",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.motion.clock",
+      "pack": "fresh.brief",
+      "check": "motion.clock",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.motion.lengths",
+      "pack": "fresh.brief",
+      "check": "motion.lengths",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.motion.cycle",
+      "pack": "fresh.brief",
+      "check": "motion.cycle",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.motion.trajectory",
+      "pack": "fresh.brief",
+      "check": "motion.trajectory",
+      "required": false,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.motion.connections",
+      "pack": "fresh.brief",
+      "check": "motion.connections",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    },
+    {
+      "id": "brief.motion.geometry",
+      "pack": "fresh.brief",
+      "check": "motion.geometry",
+      "required": true,
+      "parameters": {
+        "job": "motion"
+      }
+    }
+  ]
+}

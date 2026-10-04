@@ -1,0 +1,114 @@
+{
+  "schema_version": "2.0",
+  "id": "fresh-tray-baseline",
+  "intended_use": "Selected production requirements from the frozen brief; broader review is separate",
+  "profile": {
+    "id": "fresh-producer-v1",
+    "version": "1.0.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [
+    "geometry.json"
+  ],
+  "packs": {
+    "openusd": {
+      "version": "1.0.0"
+    },
+    "geometry": {
+      "version": "1.0.0"
+    },
+    "fresh.brief": {
+      "version": "1.0.0",
+      "sha256": "772adc25f4a53c60de7efd73a0edb4a937e56e58782049557e286eba12caed43"
+    }
+  },
+  "checks": [
+    {
+      "id": "format",
+      "pack": "openusd",
+      "check": "validators",
+      "required": true,
+      "parameters": {
+        "validators": [
+          "usdValidation:CompositionErrorTest",
+          "usdValidation:StageMetadataChecker",
+          "usdGeomValidators:StageMetadataChecker"
+        ],
+        "warnings_as_failures": false
+      }
+    },
+    {
+      "id": "geometry",
+      "pack": "geometry",
+      "check": "contract",
+      "required": true,
+      "parameters": {
+        "contract_file": "geometry.json"
+      }
+    },
+    {
+      "id": "brief.common.metadata",
+      "pack": "fresh.brief",
+      "check": "common.metadata",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    },
+    {
+      "id": "brief.common.geometry",
+      "pack": "fresh.brief",
+      "check": "common.geometry",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    },
+    {
+      "id": "brief.tray.dimensions",
+      "pack": "fresh.brief",
+      "check": "tray.dimensions",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    },
+    {
+      "id": "brief.tray.cavity",
+      "pack": "fresh.brief",
+      "check": "tray.cavity",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    },
+    {
+      "id": "brief.tray.closure",
+      "pack": "fresh.brief",
+      "check": "tray.closure",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    },
+    {
+      "id": "brief.tray.transform",
+      "pack": "fresh.brief",
+      "check": "tray.transform",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    },
+    {
+      "id": "brief.tray.fixture",
+      "pack": "fresh.brief",
+      "check": "tray.fixture",
+      "required": true,
+      "parameters": {
+        "job": "tray-baseline"
+      }
+    }
+  ]
+}

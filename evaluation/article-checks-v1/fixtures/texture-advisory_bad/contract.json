@@ -1,0 +1,50 @@
+{
+  "schema_version": "2.0",
+  "id": "followup-development-control",
+  "intended_use": "Constructed bounded control; see the frozen protocol",
+  "profile": {
+    "id": "harness-followups",
+    "version": "0.1.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [
+    "pixel.png"
+  ],
+  "evidence_sources": [],
+  "packs": {
+    "materials": {
+      "version": "1.0.0"
+    },
+    "textures.decode": {
+      "version": "0.1.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "appearance.delivery",
+      "pack": "materials",
+      "check": "delivery",
+      "parameters": {
+        "bindings": {
+          "/World/Panel": "/World/Looks/Coating"
+        },
+        "purpose": "",
+        "render_context": "",
+        "surface_shader_id": "UsdPreviewSurface"
+      },
+      "required": true,
+      "after": []
+    },
+    {
+      "id": "textures.decode.image",
+      "pack": "textures.decode",
+      "check": "image",
+      "required": false,
+      "parameters": {
+        "asset_attribute": "/World/Looks/Coating/Texture.inputs:file",
+        "max_pixels": 1024,
+        "max_bytes": 1048576
+      }
+    }
+  ]
+}

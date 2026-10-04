@@ -1,0 +1,691 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "brief": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "const": "1.0"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "intended_use": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "provenance": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "role": {
+                    "enum": [
+                      "text",
+                      "reference_image"
+                    ]
+                  },
+                  "caption": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  }
+                },
+                "required": [
+                  "path",
+                  "role",
+                  "caption"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 256
+            },
+            "checks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "pack": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "check": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "required": {
+                    "type": "boolean"
+                  },
+                  "parameters": {
+                    "type": "object"
+                  },
+                  "after": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_.-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "specification_source": {
+                    "type": "object",
+                    "properties": {
+                      "provided_by": {
+                        "enum": [
+                          "human",
+                          "application",
+                          "agent",
+                          "preset",
+                          "unrecorded"
+                        ]
+                      },
+                      "reference": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "provided_by",
+                      "reference"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "pack",
+                  "check",
+                  "required",
+                  "parameters"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0,
+              "maxItems": 256
+            },
+            "requirements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "layer": {
+                    "enum": [
+                      "explicit",
+                      "inferred",
+                      "decisions",
+                      "delivery",
+                      "use_evidence"
+                    ]
+                  },
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "basis": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "required": {
+                    "type": "boolean"
+                  },
+                  "check_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9_.-]*$"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256,
+                    "uniqueItems": true
+                  },
+                  "review_required": {
+                    "type": "boolean"
+                  },
+                  "decision_id": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_.-]*$"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "inference_authorization": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "enum": [
+                              "approved",
+                              "proposed"
+                            ]
+                          },
+                          "by": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "\\S"
+                          },
+                          "reason": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "\\S"
+                          }
+                        },
+                        "required": [
+                          "status",
+                          "by",
+                          "reason"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "specification_source": {
+                    "type": "object",
+                    "properties": {
+                      "provided_by": {
+                        "enum": [
+                          "human",
+                          "application",
+                          "agent",
+                          "preset",
+                          "unrecorded"
+                        ]
+                      },
+                      "reference": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "provided_by",
+                      "reference"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "areas": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "geometry",
+                        "materials",
+                        "textures",
+                        "uv",
+                        "motion",
+                        "physics",
+                        "simulation",
+                        "appearance",
+                        "delivery",
+                        "other"
+                      ]
+                    },
+                    "minItems": 1,
+                    "maxItems": 256,
+                    "uniqueItems": true
+                  },
+                  "coverage_declaration": {
+                    "type": "object",
+                    "properties": {
+                      "extent": {
+                        "enum": [
+                          "full",
+                          "partial",
+                          "unreviewed"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "extent",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "evaluation_route": {
+                    "enum": [
+                      "script",
+                      "visual",
+                      "both",
+                      "unresolved",
+                      "unsupported"
+                    ]
+                  },
+                  "review_evidence_kind": {
+                    "enum": [
+                      "scene_view",
+                      "textured_view",
+                      "motion_frames",
+                      "measurements",
+                      "physical_validation"
+                    ]
+                  },
+                  "review_statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "mapping_author": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      },
+                      "reference": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "reference"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "layer",
+                  "statement",
+                  "basis",
+                  "required",
+                  "check_ids",
+                  "review_required",
+                  "decision_id",
+                  "inference_authorization"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 256
+            }
+          },
+          "required": [
+            "schema_version",
+            "id",
+            "title",
+            "intended_use",
+            "provenance",
+            "files",
+            "checks",
+            "requirements"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "rubric": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "area": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "evidence_kind": {
+                "enum": [
+                  "scene_view",
+                  "textured_view",
+                  "motion_frames",
+                  "measurements",
+                  "physical_validation"
+                ]
+              },
+              "limitation": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "id",
+              "statement",
+              "area",
+              "evidence_kind",
+              "limitation"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "unassessed_areas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "area": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            },
+            "required": [
+              "area",
+              "reason"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 256
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "version",
+        "criteria"
+      ],
+      "additionalProperties": false
+    },
+    "capture_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256,
+            "uniqueItems": true
+          },
+          "times_seconds": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 1,
+            "maxItems": 12,
+            "uniqueItems": true
+          },
+          "camera_guidance": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "view_role": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          },
+          "sharing_group": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_.-]*$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "camera_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "projection": {
+            "anyOf": [
+              {
+                "enum": [
+                  "orthographic",
+                  "perspective"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "geometry",
+                "surface_materials"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 256,
+            "uniqueItems": true
+          },
+          "min_width": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 4096
+          },
+          "min_height": {
+            "type": "integer",
+            "minimum": 64,
+            "maximum": 4096
+          },
+          "limitations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "requirement_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "evidence_kind": {
+            "enum": [
+              "scene_view",
+              "textured_view",
+              "motion_frames"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "purpose",
+          "targets",
+          "times_seconds",
+          "camera_guidance",
+          "view_role",
+          "sharing_group",
+          "camera_id",
+          "projection",
+          "capabilities",
+          "min_width",
+          "min_height",
+          "limitations",
+          "requirement_ids",
+          "evidence_kind"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "source_files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    },
+    "evaluation_policy": {
+      "type": "object",
+      "properties": {
+        "baseline": {
+          "type": "object"
+        },
+        "packs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "implementation_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "version",
+              "implementation_sha256"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "runtime_dependencies": {
+          "type": "object",
+          "properties": {
+            "policy": {
+              "const": "caller-attested"
+            },
+            "environment_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "policy",
+            "environment_sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "baseline",
+        "packs"
+      ],
+      "additionalProperties": false
+    },
+    "scope_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "brief",
+    "rubric",
+    "capture_requirements",
+    "source_files",
+    "evaluation_policy",
+    "scope_sha256"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,273 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "mode": {
+      "enum": [
+        "checks",
+        "judge",
+        "both"
+      ]
+    },
+    "execution_status": {
+      "enum": [
+        "completed",
+        "partial",
+        "failed"
+      ]
+    },
+    "checker_version": {
+      "type": "string"
+    },
+    "checker_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scene": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "brief_supplied": {
+      "type": "boolean"
+    },
+    "script": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "not_requested",
+            "not_run",
+            "completed",
+            "error"
+          ]
+        },
+        "artifact_verdict": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "declared_scope_verdict": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "report": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "matrix": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "specifications": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "artifact_verdict",
+        "declared_scope_verdict",
+        "report",
+        "checks"
+      ],
+      "additionalProperties": false
+    },
+    "judge": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "not_requested",
+            "not_run",
+            "completed",
+            "error"
+          ]
+        },
+        "report": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "evidence_exposure": {
+          "enum": [
+            "withheld",
+            "script-aware"
+          ]
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "raw_result": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "model_requested": {
+          "type": "string"
+        },
+        "resolved_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usage": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "elapsed_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "evidence_coverage": {
+          "type": "object"
+        },
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model_invoked": {
+          "type": "boolean"
+        },
+        "review_method": {
+          "enum": [
+            "model",
+            "deterministic_missing_evidence"
+          ]
+        },
+        "unassessed_areas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "area": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "area",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "status",
+        "report",
+        "findings",
+        "evidence_exposure",
+        "counts"
+      ],
+      "additionalProperties": false
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_unchanged": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "decision": {
+      "enum": [
+        "ACCEPT_FOR_USE",
+        "ACCEPT_FOR_DECLARED_SCOPE",
+        "REJECT",
+        "NEEDS_REVIEW",
+        "EVALUATION_ERROR"
+      ]
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        2,
+        3,
+        4
+      ]
+    },
+    "limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "runtime_dependencies": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "mode",
+    "execution_status",
+    "checker_version",
+    "checker_sha256",
+    "scene",
+    "brief_supplied",
+    "script",
+    "judge",
+    "errors",
+    "source_unchanged",
+    "decision",
+    "exit_code",
+    "limits"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Unified scene evaluation result v1"
+}

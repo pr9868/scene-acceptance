@@ -1,0 +1,128 @@
+[
+  {
+    "id": "tray-noop",
+    "job": "tray-translated",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "tray-interior-change",
+    "job": "tray-translated",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "panel-wrong-binding",
+    "job": "panel-png",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "panel-missing-texture",
+    "job": "panel-png",
+    "expected": "NOT_ACCEPTED",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "panel-unreadable-texture",
+    "job": "panel-png",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "panel-wrong-readable-texture",
+    "job": "panel-png",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "motion-clock-only",
+    "job": "motion",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "motion-wrapped-angle",
+    "job": "motion",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "motion-rod-offset",
+    "job": "motion",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "physics-negative-mass",
+    "job": "physics-042",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "physics-extra-object",
+    "job": "physics-042",
+    "expected": "REJECT",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "panel-valid-offset",
+    "job": "panel-png",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "motion-valid-variable-speed",
+    "job": "motion",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Evaluator-created derivative of attempt-001; not an observed producer failure"
+  },
+  {
+    "id": "original-motion",
+    "job": "motion",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-panel-jpeg",
+    "job": "panel-jpeg",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-panel-png",
+    "job": "panel-png",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-physics-022",
+    "job": "physics-022",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-physics-042",
+    "job": "physics-042",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-physics-068",
+    "job": "physics-068",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-tray-baseline",
+    "job": "tray-baseline",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  },
+  {
+    "id": "original-tray-translated",
+    "job": "tray-translated",
+    "expected": "ACCEPT_FOR_USE",
+    "provenance": "Saved attempt-001 artifact; requirements frozen before evaluation"
+  }
+]

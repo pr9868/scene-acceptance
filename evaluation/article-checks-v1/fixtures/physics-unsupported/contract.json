@@ -1,0 +1,32 @@
+{
+  "schema_version": "2.0",
+  "id": "followup-development-control",
+  "intended_use": "Constructed bounded control; see the frozen protocol",
+  "profile": {
+    "id": "harness-followups",
+    "version": "0.1.0"
+  },
+  "artifact_format": "usd-local-v1",
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "packs": {
+    "physics.incline-worker": {
+      "version": "0.1.0"
+    }
+  },
+  "checks": [
+    {
+      "id": "physics.incline-worker.displacement",
+      "pack": "physics.incline-worker",
+      "check": "displacement",
+      "required": true,
+      "parameters": {
+        "dt_s": 0.001,
+        "duration_s": 1,
+        "timeout_s": 30,
+        "maximum_displacement_m": 0.01,
+        "require_measured_parameters": false
+      }
+    }
+  ]
+}

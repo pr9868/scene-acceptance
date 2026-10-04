@@ -20,6 +20,7 @@ class Context:
     artifact: UsdArtifact
     baseline: UsdArtifact | None
     sources: tuple[str, ...]
+    runtime_dependencies: object | None = None
     # Mutable USD objects are trusted in-process objects, not a security sandbox.
 
 
@@ -59,17 +60,32 @@ def evaluate_packs(
     pack_registry=None,
     approved_packs=(),
     legacy_inputs_present=False,
+    max_dependency_files=64,
+    contract_data=None,
+    runtime_dependency_policy="local-only",
+    runtime_environment_sha256=None,
+    runtime_dependency_evidence=None,
 ):
     from .engine import VERSION, implementation_digest
 
     tick = time.perf_counter()
     c, plan, bundle, ctx = None, [], None, None
     results, descriptions = [], {}
-    identity = {"checker_version": VERSION, "checker_sha256": implementation_digest()}
+    scene_inventory = None
+    runtime_dependencies = None
+    admission_limits = {}
+    identity = {"checker_version": VERSION, "checker_sha256": implementation_digest(),
+                'requested_candidate':str(candidate_path)}
     try:
-        preliminary = EvidenceBundle(bundle_root, [])
-        cp = preliminary.record(contract_path)
-        identity["contract_sha256"] = sha(cp)
+        preliminary = EvidenceBundle(
+            bundle_root, [], max_dependency_files=max_dependency_files
+        )
+        admission_limits = {"max_dependency_files": preliminary.max_dependency_files}
+        cp = preliminary.record(contract_path) if contract_data is None else None
+        identity["contract_sha256"] = sha(cp) if cp else model.digest_json(contract_data)
+        if cp is None:
+            identity["contract_encoding"] = "canonical-json-sha256"
+            identity["contract"] = deepcopy(contract_data)
         if (
             expected_contract_sha256
             and identity["contract_sha256"] != expected_contract_sha256
@@ -77,8 +93,9 @@ def evaluate_packs(
             raise ContractError(
                 "Contract hash does not match caller-pinned requirements"
             )
-        c = strict_json(cp)
+        c = strict_json(cp) if cp else deepcopy(contract_data)
         plan = plan_contract(c)
+        identity['report_context'] = deepcopy(c.get('report_context', {}))
         if legacy_inputs_present:
             raise ContractError(
                 "v2 uses declared evidence_sources and pack_registry; legacy overrides are unsupported"
@@ -88,13 +105,22 @@ def evaluate_packs(
             if pack_registry is not None
             else default_registry(approved_packs)
         )
-        bundle = EvidenceBundle(bundle_root, c["allowed_dependencies"])
-        bundle.record(cp)
+        bundle = EvidenceBundle(
+            bundle_root, c["allowed_dependencies"],
+            max_dependency_files=max_dependency_files,
+        )
+        if cp: bundle.record(cp)
         for source in c["evidence_sources"]:
             bundle.record_optional(source)
         artifact = UsdArtifact(bundle, candidate_path)
         baseline = UsdArtifact(bundle, baseline_path) if baseline_path else None
-        ctx = Context(bundle, artifact, baseline, tuple(c["evidence_sources"]))
+        from .runtime_dependencies import RuntimeDependencies
+        runtime_dependencies = RuntimeDependencies(artifact, policy=runtime_dependency_policy,
+            environment_sha256=runtime_environment_sha256, evidence=runtime_dependency_evidence)
+        identity["runtime_dependencies"] = runtime_dependencies.report()
+        ctx = Context(bundle, artifact, baseline, tuple(c["evidence_sources"]), runtime_dependencies)
+        from .coverage import inventory
+        scene_inventory = inventory(artifact)
         identity.update(
             candidate=artifact.identity,
             baseline=baseline.identity if baseline else None,
@@ -102,12 +128,15 @@ def evaluate_packs(
         results.append(
             check(
                 "core.artifact",
-                "UNKNOWN" if bundle.missing else "PASS",
-                "Admitted local USD dependencies; missing files remain unresolved.",
-                {"missing_files": sorted(bundle.missing), "adapter": "usd-local-v1"},
+                "UNKNOWN" if bundle.missing - {str(p.relative_to(bundle.root)) for p in runtime_dependencies.accepted} else "PASS",
+                "Admitted local USD dependencies; any runtime availability is caller-attested under the selected policy.",
+                {"missing_files": sorted(bundle.missing), "adapter": "usd-local-v1",
+                 "runtime_dependencies": runtime_dependencies.report()},
             )
         )
         for item in plan:
+            from .execution import checkpoint
+            checkpoint('check.started',check_id=item['id'])
             start = time.perf_counter()
             name = item["id"]
             pack = None
@@ -193,9 +222,12 @@ def evaluate_packs(
                 raise ContractError(
                     "Pack implementation changed during execution: " + pack.id
                 )
+        runtime_dependencies.assert_unchanged()
         identity["packs"] = descriptions
     except MissingEvidence as exc:
-        results.append(check("core.coverage", "UNKNOWN", str(exc)))
+        results.append(
+            check("core.coverage", "UNKNOWN", str(exc), getattr(exc, "evidence", {}))
+        )
     except Exception as exc:
         results.append(
             check("core.input", "ERROR", type(exc).__name__ + ": " + str(exc))
@@ -218,6 +250,10 @@ def evaluate_packs(
             results.append(
                 check("core.integrity", "ERROR", "Inputs changed during evaluation")
             )
+    if runtime_dependencies:
+        try: runtime_dependencies.assert_unchanged()
+        except Exception as exc:
+            results.append(check("core.integrity", "ERROR", str(exc)))
     identity["packs"] = descriptions
     verdict, complete = model.reduce_results(results)
     if any(r["id"] in ("core.input", "core.integrity") for r in results):
@@ -254,10 +290,11 @@ def evaluate_packs(
                 "Any requirement absent from the supplied contract",
                 "Real-world material or physical accuracy without suitable reference evidence",
                 "Security isolation from installed pack code (trusted in-process execution)",
-                "Simulator execution, rendered appearance and general free-form claim grounding",
+                "Simulation, appearance and claims beyond the scope of explicitly selected packs",
             ],
         },
         "runtime": {
+            "admission_limits": admission_limits,
             "evaluated_at_utc": datetime.now(timezone.utc).isoformat(),
             "platform": platform.platform(),
             "python": platform.python_version(),
@@ -267,5 +304,7 @@ def evaluate_packs(
             "approved_entry_points": list(approved_packs),
         },
     }
+    from .coverage import enrich
+    enrich(report, scene_inventory)
     model.validate(report, "result")
     return report

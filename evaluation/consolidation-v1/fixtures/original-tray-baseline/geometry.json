@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "id": "tray-edit-geometry",
+  "intended_use": "layout_review",
+  "profile": "usd-static-geometry-v1",
+  "unit": "m",
+  "tolerance_m": 1e-06,
+  "stage": {
+    "meters_per_unit": 1,
+    "up_axis": "Z"
+  },
+  "layout": {
+    "root": "/World",
+    "required_children": [
+      "Tray",
+      "Fixture"
+    ],
+    "cell_min_m": [
+      -1,
+      -1,
+      -1
+    ],
+    "cell_max_m": [
+      2,
+      2,
+      2
+    ],
+    "aisle_min_y_m": -1
+  },
+  "target": {
+    "path": "/World/Tray",
+    "center_m": [
+      0,
+      0,
+      0.04
+    ]
+  },
+  "allowed_dependencies": [],
+  "evidence_sources": [],
+  "checks": {
+    "required": [
+      "usd",
+      "profile",
+      "metadata",
+      "mesh",
+      "layout",
+      "target"
+    ],
+    "advisory": []
+  },
+  "mesh_rules": {
+    "require_closed_edges": [
+      "/World/Tray"
+    ]
+  }
+}
