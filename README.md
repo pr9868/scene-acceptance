@@ -2,7 +2,7 @@
 
 Application integration: [versioned CLI/library protocol](docs/APPLICATION_PROTOCOL.md) covers preflight, prepare, scope approval, revised-scene binding, caller evidence, checks/judge/both, progress, cancellation and verified replay.
 
-An extensible acceptance workflow for applications that delegate 3D content production to an agent.
+Evaluate saved OpenUSD scenes with scripted checks and optional model review of caller-supplied renders. Applications use the findings to accept a delivery within its checked scope, request evidence or return it to the producer for revision.
 
 I want the application to own what a deliverable must satisfy while the producer chooses how to build it. This project evaluates a saved OpenUSD bundle against an explicit contract, runs the selected evaluation packs and returns findings tied to the submitted revision. The application can use those findings to accept the artifact, request evidence or send a new brief to its producer.
 
@@ -11,6 +11,18 @@ I built it for my own 3D jobs, working backward from the intended outcome to the
 Simulation support is currently a fixed ramp-and-block CPU example with bounded parameter variations. It exercises the handoff from a simulator's trace to a task decision; it does not cover arbitrary articulated mechanisms or establish physical calibration. A broader acceptance report does not imply comprehensive validation in every domain.
 
 **Status:** experimental, version [0.5.0](https://github.com/pr9868/scene-acceptance/releases/tag/v0.5.0). The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion, explicit timing requirements and selected OpenUSD/NVIDIA rules. This release also includes the texture-decoding, sampled-connection and bounded simulation article packs, plus coverage-aware reports and a reusable diagnostic baseline. The [v0.3.0 release](https://github.com/pr9868/scene-acceptance/releases/tag/v0.3.0) remains unchanged.
+
+## What it checks today
+
+| Capability | Required input | Result and boundary |
+|---|---|---|
+| General delivery checks | Saved OpenUSD bundle and installed baseline providers | 27 selected rules cover scene structure, dependencies, image decoding and authored-motion sanity. No task-specific contract is needed; intended appearance and process correctness remain outside this baseline. |
+| Brief-specific measurements | Explicit contract or reviewed requirement map, named scene subjects and targets | Supported dimensions, placement, timing and sampled connections produce measured findings. Missing mappings and unsupported requirements stay visible. |
+| Optional visual review | Configured model CLI, suitable caller-rendered views and a review rubric or mapped brief | Advisory opinions on visible layout, readability, material use and sampled motion. These are evidence-limited judgments, not measured passes or physical validation. |
+| Source-image comparison | Selected texture/reference images and an explicit comparison policy | Decoded pixel comparisons within supported regions and limits. This does not compare the fully rendered appearance of a scene. |
+| Bounded simulation evidence | The supported ramp-and-block fixture, parameters and worker dependencies | A task result for that fixed CPU model; no general USD physics import or physical calibration. |
+
+Use `--mode checks`, `--mode judge` or `--mode both` to select evaluation. Model review is opt-in; the caller provides rendering and owns the producer/revision loop. A baseline pass does not establish that a whole brief is satisfied. See the [test inventory](docs/TEST_INVENTORY.md) for individual checks and the [evaluation modes guide](docs/EVALUATION_MODES.md) for view requirements and result semantics.
 
 The [0.5 integration and release notes](docs/INTEGRATION_RELEASE_0_5.md) cover scope routing, judge coverage drift, caller-attested renderer libraries and versioned replay.
 
@@ -24,7 +36,7 @@ Blue is human responsibility, purple is the producer agent, gray is application 
 
 ## Prepare a brief and request caller evidence
 
-The [preparation and skills guide](docs/PREPARATION_AND_SKILLS.md) adds `check-3d-prepare` and `check-3d-run-plan`: a raw text/image brief becomes a pending, frozen check map and visual-evidence plan; the application renders requested views and returns a receipt. Scripts, model opinions and missing evidence remain separate. Two reusable adopter skills ship in the wheel and can be exported with `check-3d-skills --out NEW_DIRECTORY`. Rendering stays with the caller.
+For a saved scene and raw text/image brief, follow the [complete preparation example](docs/PREPARATION_AND_SKILLS.md#invocation): **prepare → review and approve the scope → capture views → validate evidence → evaluate → follow the reported next action**. The interpreter proposes a frozen requirement map and capture plan; it cannot guarantee complete interpretation. The caller reviews that map, renders the requested views and returns a receipt. Scripts, model opinions and missing evidence remain separate. Two reusable adopter skills ship in the wheel and can be exported with `check-3d-skills --out NEW_DIRECTORY`.
 
 ## See what a run checked
 
@@ -126,7 +138,9 @@ The caller owns the brief, approved providers, references, retry policy and rele
 |---|---|---|
 | `openusd` | Explicitly selected native validators | The selected rules' scope; a clean result does not establish every requirement in a brief. |
 | `geometry` | Cube and polygon geometry, placement, bounds and declared edit constraints | Bounded representations; shape-preserving translation uses corresponding points/connectivity. |
-| `materials` | Resolved bindings, expected surface shader IDs and declared dependencies | No texture decoding, UV or rendered appearance acceptance. |
+| `materials` | Resolved bindings, expected surface shader IDs and declared dependencies | Binding/file checks only; image decoding and source-pixel comparison are separate checks below. No rendered appearance acceptance. |
+| `scene.audit` / `textures.decode` | General file/image/motion diagnostics and explicit image decoding | Decoding establishes readable supported images, not correct UV mapping or visual quality. |
+| `brief.measurements` | Named bounds, child counts, axis gaps, metadata and source-image pixel comparisons | Bounded targets; no walkability, whole-scene rendered comparison or machine-function proof. |
 | `motion` | World-space transform origins at contract-specified time codes | No whole-interval collision, orientation or dynamics proof. |
 | `motion.timing` | Authored duration, optional exact clock rate, and sampled origins at elapsed seconds | Separate from the legacy time-code check; does not infer active motion duration or prove a continuous path. |
 | `nvidia.asset-validator` | Explicitly selected NVIDIA USD Validation rules | Optional dependency; no SimReady certification or automatic fixers. |
@@ -185,9 +199,9 @@ The first pack run matched 19 of 22 expected decisions. Three texture-dependency
 
 ## Inspect the evidence by question
 
-- [Astra mechanical assembly](examples/astra-mechanical-assembly/README.md): the recorded producer delivery, portable viewer, checks and evidence limits.
+- [Astra mechanical assembly](https://github.com/pr9868/scene-acceptance/blob/v0.5.0/examples/astra-mechanical-assembly/README.md): the recorded producer delivery, portable viewer, checks and evidence limits.
 - [Evidence guide](docs/EVIDENCE.md): where to find protocols, fixtures, first failures, corrected results and historical model outputs.
-- [Material delivery](article-evidence/content-probes): an unreadable PNG can pass the current delivery checks. [Workflow](docs/images/materials-flow.png).
+- [Historical material-delivery probe](article-evidence/content-probes): binding/file checks alone accept an unreadable PNG. Version 0.5.0 adds decoding in the general baseline and a selectable image-decoding check; the retained probe isolates the narrower check. [Workflow](docs/images/materials-flow.png).
 - [Motion sampling](article-evidence/content-probes): the same motion accepts at three requested times and rejects when a missed excursion is checked. [Workflow](docs/images/motion-flow.png).
 - [Motion timing](docs/MOTION_TIMING.md): require the declared duration and sample positions in elapsed seconds; preserve valid clock/keyframe rescaling.
 - [Physics experiment](article-evidence/physics-experiment): selected configuration rules pass while task behavior differs with assumed friction. [Workflow](docs/images/physics-flow.png).
@@ -199,7 +213,7 @@ My next application trial would use independently supplied edit briefs and a pro
 
 The [trial protocol](evaluation/producer-trial-v1/PROTOCOL.md) defines the inputs, comparison and record before execution. It is awaiting an independently supplied brief and external assessment; no workflow benefit is reported from that plan.
 
-Version 0.5.0 includes the bounded texture-decoding, sampled-connection and incline-worker follow-ups. The historical v0.3.0 release remains unchanged. General continuous-motion guarantees, arbitrary physics import, rendered appearance comparisons and physical calibration remain future work.
+Version 0.5.0 includes the bounded texture-decoding, sampled-connection and incline-worker follow-ups, source-image pixel comparisons and optional advisory review of supplied renders. The historical v0.3.0 release remains unchanged. General continuous-motion guarantees, arbitrary physics import, deterministic comparison of fully rendered scene appearance and physical calibration remain future work.
 
 ## Contribute
 

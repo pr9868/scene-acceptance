@@ -48,11 +48,12 @@ The current CLI writes a compact JSON summary to stdout when it finishes a repor
 |---|---|
 | 0 | Required selected checks or declared-scope obligations accepted |
 | 2 with a valid `REJECT` report | A required check/obligation failed |
-| 2 without a valid result | Command usage error, such as an invalid or empty argument |
 | 3 | Insufficient evidence or further review needed |
-| 4 | Evaluation or report-generation error; inspect the result if present and diagnostics otherwise |
+| 4 | Invalid invocation, including malformed or incompatible arguments, or an evaluation/report-generation error; inspect the result if present and diagnostics otherwise |
 
 Nonzero does not always mean the command failed to run. A rejection is a useful completed assessment. Read the JSON/report and check its relationship to the exit code. Missing, malformed or contradictory output is an invocation failure, never an acceptance. `complete` concerns the selected contract's results, not all possible scene properties.
+
+Exit 2 is reserved for a completed rejection. If it arrives without a valid matching report, treat the response as an invocation failure; do not start a scene-repair loop. Malformed `check-3d` arguments return 4. New integrations should use the versioned application envelope described in the [application protocol](APPLICATION_PROTOCOL.md).
 
 Use the artifact verdict for general scene diagnostics and the declared-scope verdict for a supplied brief. Keep general checks, mapped requirements and uncovered intent separate in the application UI. Use per-check subject units/counts from `overview.json` and the detailed result; do not add incompatible counts into one quality percentage. The HTML report exposes source text/images, observations and unknowns for the user.
 
