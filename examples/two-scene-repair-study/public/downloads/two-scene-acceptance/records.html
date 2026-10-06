@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Runtime, input limits and scale controls</title><style>*{box-sizing:border-box}html{scroll-behavior:auto}body{max-width:1100px;margin:32px auto;padding:0 24px;color:#253341;background:#fafafa;font:17px/1.65 system-ui,sans-serif}main{margin-top:28px}h1{font-size:34px;line-height:1.2;max-width:850px}h2{margin-top:36px;font-size:24px}a{color:#155c80;text-underline-offset:3px}a:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #155c80;outline-offset:4px}p,li{max-width:900px}code{overflow-wrap:anywhere;white-space:normal;font-size:.9em}pre{white-space:pre-wrap}table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #c3cfd7;overflow-wrap:anywhere}.table-scroll{overflow:auto}.table-scroll table{min-width:650px}.hint{font-size:14px;color:#536774}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}img,video{width:100%;height:auto;display:block}figure{margin:20px 0}figcaption{font-size:14px}details{margin:24px 0}summary{cursor:pointer;padding:12px 0}nav{font-size:15px}li+li{margin-top:8px}.skip{position:absolute;top:-100px}.skip:focus{top:8px;background:white;padding:8px}footer{margin-top:40px;padding-top:20px;border-top:1px solid #c3cfd7;font-size:14px}@media(max-width:640px){body{padding:0 18px}h1{font-size:28px}.pair{grid-template-columns:1fr}td,th{padding:10px}}</style></head><body><a class="skip" href="#content">Skip to content</a><nav aria-label="Evidence navigation"><a href="index.html">Evidence collection</a> · <a href="/projects/what-two-scene-builds-revealed-about-3d-acceptance/">Read the article</a></nav><main id="content"><h1 id="runtime-input-limits-and-scale-controls">Runtime, input limits and scale controls</h1>
+<p>The released harness used for the dairy case had a fixed 10,000-prim admission limit. The larger trial used a development build with caller-selected limits. It rejected an over-budget input as insufficient evidence rather than silently assessing a subset.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p class="hint" id="table-hint-1">Scroll sideways for more columns on a small screen.</p><div class="table-scroll" role="region" aria-label="Runtime, input limits and scale controls: table 1" aria-describedby="table-hint-1" tabindex="0"><table><thead><tr><th>Larger-trial setting</th><th>Value</th></tr></thead><tbody><tr><td>Runtime</td><td>Scene Acceptance 0.5.1.dev0, with a trial-owned consumer pack</td></tr><tr><td>Composed prim limit</td><td>250,000, using TraverseAll and excluding the pseudo-root</td></tr><tr><td>Per-source-file limit</td><td>256 MiB</td></tr><tr><td>Dependency-file limit</td><td>512</td></tr><tr><td>Worker deadline</td><td>900 seconds</td></tr><tr><td>Physical memory cap</td><td>None; reported peak process memory was observed</td></tr></tbody></table></div>
+<h2 id="recorded-synthetic-controls">Recorded synthetic controls</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p class="hint" id="table-hint-2">Scroll sideways for more columns on a small screen.</p><div class="table-scroll" role="region" aria-label="Runtime, input limits and scale controls: table 2" aria-describedby="table-hint-2" tabindex="0"><table><thead><tr><th>Input</th><th>Result in selected scope</th><th>Elapsed time</th><th>Peak process memory, decimal GB</th></tr></thead><tbody><tr><td>10,000 prims, valid</td><td>Accepted baseline</td><td>7.05 s</td><td>0.32</td></tr><tr><td>50,000 prims, unchanged default limit</td><td>Insufficient evidence</td><td>1.26 s</td><td>0.33</td></tr><tr><td>50,000 prims, raised limit</td><td>Accepted baseline</td><td>34.58 s</td><td>1.11</td></tr><tr><td>150,000 prims, valid</td><td>Accepted baseline</td><td>109.22 s</td><td>2.97</td></tr><tr><td>150,000 prims, final mesh has a dangling binding</td><td>Rejected</td><td>108.42 s</td><td>2.93</td></tr></tbody></table></div>
+<p>These controls tested the development build. The final-mesh fault helps check that a large input is not being truncated. Selected controls do not establish a general scalability guarantee. Detailed packs retain their own image, geometry and sample limits. Native instanceable content and other unsupported composition features remain outside the reader’s supported subset.</p>
+<p>The repaired distribution-centre evaluation took about 75 seconds and 1.71 GB peak process memory on the recorded host. That is one run against its selected scope, not a benchmark against another evaluator or a renderer-performance measurement.</p>
+<h2 id="what-can-be-reproduced-from-this-collection">What can be reproduced from this collection</h2>
+<p>The <a href="https://github.com/pr9868/scene-acceptance">public harness</a> contains the released implementation and its examples. The dairy used release 0.5.0. The larger trial’s development runtime, custom pack and complete deliveries are not included here. The original dairy rejection snapshot is unavailable.</p>
+<p>This collection provides the issued briefs, selected results and measurements, repair correspondence, display images and one explanation video. It lets readers inspect the reported findings and comparison, but cannot reproduce either complete original build. No replay command is offered for missing inputs.</p>
+<p>The images are display derivatives of retained RTX captures or report excerpts. The video is the producer’s original Blender Cycles explanation. Source-byte hashes in the <a href="manifest.json">distribution manifest</a> establish which retained media was used; they do not turn that media into a physical validation.</p></main><footer>Selected evidence for two fictional scene builds. <a href="records.html">Scope and reproduction limits</a> · <a href="manifest.json">Distribution manifest</a></footer><script>for(const r of document.querySelectorAll('.table-scroll')){const id=r.getAttribute('aria-describedby');const update=()=>{const over=r.scrollWidth>r.clientWidth+1;r.tabIndex=over?0:-1;if(over){r.setAttribute('aria-describedby',id)}else{r.removeAttribute('tabindex');r.removeAttribute('aria-describedby')}document.getElementById(id).hidden=!over};new ResizeObserver(update).observe(r);update()}</script></body></html>

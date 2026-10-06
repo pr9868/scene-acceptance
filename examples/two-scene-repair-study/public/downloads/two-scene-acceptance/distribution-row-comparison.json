@@ -1,0 +1,285 @@
+{
+  "comparison_scope": "All check parameters and pack identities, excluding only binding_review provenance; top-level candidate dependency lists are revision-specific.",
+  "before_verdict": "REJECT",
+  "after_verdict": "ACCEPT_FOR_USE",
+  "before_counts": {
+    "PASS": 51,
+    "FAIL": 1
+  },
+  "after_counts": {
+    "PASS": 52
+  },
+  "same_check_ids": true,
+  "same_requirement_checks_and_packs": true,
+  "previously_passing": 51,
+  "regressions": [],
+  "status_changes": [
+    {
+      "id": "nv.03",
+      "before": "FAIL",
+      "after": "PASS"
+    }
+  ],
+  "all_rows": [
+    {
+      "id": "audit.authored_motion",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "audit.files",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "audit.textures",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "core.artifact",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.00",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.02",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.03",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.04",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.05",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "nv.06",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.attachment",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.count",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.event.p01-d01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.event.p01-scan",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.event.p02-r01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.event.p02-scan",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.event.p03-d02",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.gate",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.image.d01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.image.scanner",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.lamps",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.material.rubber",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.material.steel",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.metadata.machines",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.metadata.p01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.metadata.p02",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.metadata.p03",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.p03-hold",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.panel.d01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.panel.scanner",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.payload-size",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.reject-only",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.shuttle-travel",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "trial.stage",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.00",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.01",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.02",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.03",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.04",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.05",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.06",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.07",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.08",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.09",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.10",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.11",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.12",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.13",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.14",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.15",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "usd.16",
+      "before": "PASS",
+      "after": "PASS"
+    }
+  ]
+}

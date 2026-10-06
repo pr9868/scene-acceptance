@@ -1,0 +1,21 @@
+{
+  "source": "acceptance/runs/04_detailed_v0_baseline_REJECT_dangling_binding/result.json",
+  "source_sha256": "1076af6371dd468b4d98b8b587e5fcb9a962045e949ad32fd69113a08723f039",
+  "verdict": "REJECT",
+  "check_id": "nv.06",
+  "rule": "UsdDanglingMaterialBinding",
+  "findings": [
+    {
+      "object": "/World/Equipment/REC_101/FlowMeter_Display",
+      "message": "Prim 'FlowMeter_Display' has a material binding to '/World/Looks/Label_display_flow' but that location does not exist"
+    },
+    {
+      "object": "/World/Equipment/CP_601/HMI_Screen",
+      "message": "Prim 'HMI_Screen' has a material binding to '/World/Looks/Label_hmi_screen' but that location does not exist"
+    },
+    {
+      "object": "/World/Equipment/OS_601/HMI_Screen",
+      "message": "Prim 'HMI_Screen' has a material binding to '/World/Looks/Label_hmi_screen' but that location does not exist"
+    }
+  ]
+}

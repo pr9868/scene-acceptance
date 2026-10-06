@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Findings, producer repairs and rechecks</title><style>*{box-sizing:border-box}html{scroll-behavior:auto}body{max-width:1100px;margin:32px auto;padding:0 24px;color:#253341;background:#fafafa;font:17px/1.65 system-ui,sans-serif}main{margin-top:28px}h1{font-size:34px;line-height:1.2;max-width:850px}h2{margin-top:36px;font-size:24px}a{color:#155c80;text-underline-offset:3px}a:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #155c80;outline-offset:4px}p,li{max-width:900px}code{overflow-wrap:anywhere;white-space:normal;font-size:.9em}pre{white-space:pre-wrap}table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #c3cfd7;overflow-wrap:anywhere}.table-scroll{overflow:auto}.table-scroll table{min-width:650px}.hint{font-size:14px;color:#536774}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}img,video{width:100%;height:auto;display:block}figure{margin:20px 0}figcaption{font-size:14px}details{margin:24px 0}summary{cursor:pointer;padding:12px 0}nav{font-size:15px}li+li{margin-top:8px}.skip{position:absolute;top:-100px}.skip:focus{top:8px;background:white;padding:8px}footer{margin-top:40px;padding-top:20px;border-top:1px solid #c3cfd7;font-size:14px}@media(max-width:640px){body{padding:0 18px}h1{font-size:28px}.pair{grid-template-columns:1fr}td,th{padding:10px}}</style></head><body><a class="skip" href="#content">Skip to content</a><nav aria-label="Evidence navigation"><a href="index.html">Evidence collection</a> · <a href="/projects/what-two-scene-builds-revealed-about-3d-acceptance/">Read the article</a></nav><main id="content"><h1 id="findings-producer-repairs-and-rechecks">Findings, producer repairs and rechecks</h1>
+<p>Eight feedback items combine one automated policy failure, separate review concerns and omissions the producer had disclosed. They are not eight newly discovered harness defects. The producer response alone does not establish that a repair worked.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p class="hint" id="table-hint-1">Scroll sideways for more columns on a small screen.</p><div class="table-scroll" role="region" aria-label="Findings, producer repairs and rechecks: table 1" aria-describedby="table-hint-1" tabindex="0"><table><thead><tr><th>Finding</th><th>Source</th><th>Requested repair and recorded outcome</th></tr></thead><tbody><tr><td>F0-01: All V0 polygon meshes lack authored normals; not an explicit B1 rule.</td><td>automated baseline delivery-policy incompatibility</td><td>Producer authored uniform unit normals from intended winding and updated the generator. <strong>Recheck:</strong> R1 existence, validity and winding rules assess all 121615 meshes without skips.</td></tr><tr><td>F0-02: DIV01 stays selected during P02 straight-through passage; non-contact role unclear.</td><td>independent geometry concern</td><td>Producer retimed DIV01 and DIVR, reshaped indicators as arrows and added a mounted role legend. <strong>Recheck:</strong> Six complete parcel/junction overlap intervals retain their required states; selected sampled clearances remain adequate.</td></tr><tr><td>F0-03: Overhead service distribution falls below the brief’s 14 m clear-height target.</td><td>independent geometry interpretation concern</td><td>Producer raised services and roof structure and extended walls/columns. <strong>Recheck:</strong> All 209 selected overhead meshes clear 14 m; minimum underside 14.060000420 m.</td></tr><tr><td>F0-04: An overhead tray obscures the saved diverter overview.</td><td>independent visual concern</td><td>Producer moved the camera below the raised services. <strong>Recheck:</strong> Revised overview exposes junctions/indicators under normal scene visibility.</td></tr><tr><td>F0-05: Gate sign appears unsupported.</td><td>independent visual concern</td><td>Producer added a floor post, base plate and fasteners. <strong>Recheck:</strong> Four gate poses show mounting; geometry review sampled sweep clearance at least 0.061712 m.</td></tr><tr><td>F0-06: Connecting hardware omitted from the status tower.</td><td>producer-disclosed omission confirmed by review</td><td>Producer added mast extension, collars and a foot plate. <strong>Recheck:</strong> Mounting is visible; original stepped lamp samples remain unchanged.</td></tr><tr><td>F0-07: Wide film cannot resolve IDs, states or scan crossings.</td><td>independent evidence-readability concern</td><td>Producer retained the wide film and added detailed stills and a synchronized explanation video. <strong>Recheck:</strong> Both films fully decode; sampled explanations are readable; all 721 supplied state rows match reopened USD.</td></tr><tr><td>F0-08: GUI hierarchy/timeline and interactive performance evidence missing.</td><td>producer-disclosed evidence omission confirmed by review</td><td>Producer recorded actual Blender GUI screenshots and completed-draw callback observations. <strong>Recheck:</strong> 4.53 callbacks/s orbit and 2.63 callbacks/s short playback sample; screenshots/source/logs consistent. Import timer label remains imprecise.</td></tr></tbody></table></div>
+<p>DIVR/P03 retiming is the producer’s extension of the general route-state feedback, subsequently verified independently. It was not a specific initial harness or reviewer discovery.</p>
+<p>The GUI review also retained a minor import-timer labeling issue. No import-time claim is made in the article. The recorded orbit and short playback observations were checked against source/logs, not independently rerun.</p>
+<p><a href="findings.json">Machine-readable ledger</a> · <a href="measurements.json">Selected measurements</a> · <a href="distribution-feedback.html">Feedback</a> · <a href="distribution-response.html">Producer response</a></p></main><footer>Selected evidence for two fictional scene builds. <a href="records.html">Scope and reproduction limits</a> · <a href="manifest.json">Distribution manifest</a></footer><script>for(const r of document.querySelectorAll('.table-scroll')){const id=r.getAttribute('aria-describedby');const update=()=>{const over=r.scrollWidth>r.clientWidth+1;r.tabIndex=over?0:-1;if(over){r.setAttribute('aria-describedby',id)}else{r.removeAttribute('tabindex');r.removeAttribute('aria-describedby')}document.getElementById(id).hidden=!over};new ResizeObserver(update).observe(r);update()}</script></body></html>

@@ -1,0 +1,2519 @@
+{
+  "scope": "Selected retained measurements, not the complete raw reports or an executable replay. Local source roots are replaced with logical study/delivery prefixes.",
+  "v0_brief_checks": [
+    {
+      "id": "trial.count",
+      "status": "PASS",
+      "reason": "Actual active/defined composed prim count, excluding pseudo-root; usefulness and duplicate inflation require separate review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "count",
+        "observations": {
+          "actual_composed_prims": 125206,
+          "exclusive_minimum": 100000,
+          "geometry_prims": 121602,
+          "by_type": {
+            "Xform": 3412,
+            "untyped": 1,
+            "Material": 47,
+            "Shader": 97,
+            "Mesh": 121602,
+            "Camera": 20,
+            "RectLight": 25,
+            "DistantLight": 1,
+            "DomeLight": 1
+          },
+          "inactive": 0,
+          "undefined": 0,
+          "instance_prims": 0,
+          "instance_proxies": 0,
+          "prototype_roots": 0,
+          "prototype_contents": 0,
+          "point_instancer_prims": 0,
+          "point_instancer_instances_at_time_0": 0,
+          "count_semantics": "Usd.Stage.Traverse; no proxies, prototypes or point-instancer instances added"
+        }
+      },
+      "required": true,
+      "duration_ms": 629.259
+    },
+    {
+      "id": "trial.stage",
+      "status": "PASS",
+      "reason": "Explicit stage units, axis, clock, range and default prim.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "stage",
+        "observations": {
+          "expected": {
+            "metersPerUnit": 1.0,
+            "upAxis": "Z",
+            "startTimeCode": 0,
+            "endTimeCode": 720,
+            "timeCodesPerSecond": 24,
+            "framesPerSecond": 24
+          },
+          "observed": {
+            "metersPerUnit": 1.0,
+            "upAxis": "Z",
+            "startTimeCode": 0.0,
+            "endTimeCode": 720.0,
+            "timeCodesPerSecond": 24.0,
+            "framesPerSecond": 24.0
+          },
+          "authored": {
+            "metersPerUnit": true,
+            "upAxis": true,
+            "startTimeCode": true,
+            "endTimeCode": true,
+            "timeCodesPerSecond": true,
+            "framesPerSecond": true
+          },
+          "default_prim": "/World"
+        }
+      },
+      "required": true,
+      "duration_ms": 2.527
+    },
+    {
+      "id": "trial.event.p01-scan",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P01",
+          "expected": {
+            "object": "P01",
+            "plane": "scan",
+            "seconds": 4.0,
+            "tolerance_seconds": 0.25
+          },
+          "measured_crossings_seconds": [
+            4.0
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -10.0,
+          "max_distance_m": 16.0
+        }
+      },
+      "required": true,
+      "duration_ms": 68.933
+    },
+    {
+      "id": "trial.event.p01-d01",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P01",
+          "expected": {
+            "object": "P01",
+            "plane": "D01",
+            "seconds": 18.0,
+            "tolerance_seconds": 0.5
+          },
+          "measured_crossings_seconds": [
+            18.000888890690273
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -3.0010000020265597,
+          "max_distance_m": 4.498999997973442
+        }
+      },
+      "required": true,
+      "duration_ms": 66.031
+    },
+    {
+      "id": "trial.event.p02-scan",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P02",
+          "expected": {
+            "object": "P02",
+            "plane": "scan",
+            "seconds": 8.0,
+            "tolerance_seconds": 0.25
+          },
+          "measured_crossings_seconds": [
+            8.0
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -15.0,
+          "max_distance_m": 22.000000000000014
+        }
+      },
+      "required": true,
+      "duration_ms": 65.702
+    },
+    {
+      "id": "trial.event.p02-r01",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P02",
+          "expected": {
+            "object": "P02",
+            "plane": "R01",
+            "seconds": 20.0,
+            "tolerance_seconds": 0.5
+          },
+          "measured_crossings_seconds": [
+            19.999333331982296
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -2.998999997973444,
+          "max_distance_m": 4.501000002026559
+        }
+      },
+      "required": true,
+      "duration_ms": 67.199
+    },
+    {
+      "id": "trial.event.p03-d02",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P03",
+          "expected": {
+            "object": "P03",
+            "plane": "D02",
+            "seconds": 27.0,
+            "tolerance_seconds": 0.5
+          },
+          "measured_crossings_seconds": [
+            27.000666668017704
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -9.001000002026558,
+          "max_distance_m": 4.498999997973442
+        }
+      },
+      "required": true,
+      "duration_ms": 72.447
+    },
+    {
+      "id": "trial.reject-only",
+      "status": "PASS",
+      "reason": "P02 positive crossing through the explicitly mapped finite outbound lane mouths.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "reject-only",
+        "observations": {
+          "outbound_entry_seconds": {
+            "D01": [],
+            "D02": [],
+            "D03": [],
+            "D04": []
+          },
+          "sampled_frames": 721
+        }
+      },
+      "required": true,
+      "duration_ms": 97.541
+    },
+    {
+      "id": "trial.p03-hold",
+      "status": "PASS",
+      "reason": "P03 centroid stop and projected onward displacement by 16 s.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "p03-hold",
+        "observations": {
+          "maximum_hold_drift_m": 1.7763568394002505e-15,
+          "onward_displacement_at_16_s_m": 1.0,
+          "expected": {
+            "hold_start": 12,
+            "hold_end": 15,
+            "hold_tolerance_m": 0.002,
+            "release_seconds": 16,
+            "release_distance_m": 0.2
+          },
+          "sampled_hold_frames": 73
+        }
+      },
+      "required": true,
+      "duration_ms": 64.729
+    },
+    {
+      "id": "trial.shuttle-travel",
+      "status": "PASS",
+      "reason": "Shuttle sampled path length from 2–12 s and stationarity at 0–2/12–14 s; route geometry is reviewed separately.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "shuttle-travel",
+        "observations": {
+          "travel_m": 12.0,
+          "initial_stop_drift_m": 7.105427357601002e-15,
+          "destination_stop_drift_m": 7.944109290391274e-15,
+          "numerical_stationary_epsilon_m": 1e-06,
+          "sampled_frames": 721
+        }
+      },
+      "required": true,
+      "duration_ms": 455.171
+    },
+    {
+      "id": "trial.attachment",
+      "status": "PASS",
+      "reason": "Pallet attachment-point offset and rigid orientation relative to its platform at every saved frame.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "attachment",
+        "observations": {
+          "maximum_relative_translation_m": 0.0,
+          "maximum_relative_rotation_degrees": 0.0,
+          "translation_limit_m": 0.005,
+          "rotation_limit_degrees": 0.5,
+          "sampled_frames": 721,
+          "initial_attachment_offset_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "required": true,
+      "duration_ms": 28.599
+    },
+    {
+      "id": "trial.payload-size",
+      "status": "PASS",
+      "reason": "Mapped pallet-only local bound projected onto its declared length/width/height axes at frame zero; payload mapping must exclude carried cartons.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "payload-size",
+        "observations": {
+          "observed_dimensions_m": [
+            1.2000000476837158,
+            1.0,
+            0.14399999380111694
+          ],
+          "expected_dimensions_m": [
+            1.2,
+            1.0,
+            0.144
+          ],
+          "tolerance_m": 0.005
+        }
+      },
+      "required": true,
+      "duration_ms": 3.317
+    },
+    {
+      "id": "trial.gate",
+      "status": "PASS",
+      "reason": "Gate sampled closed/open holds and rotation about the evaluator-mapped physical hinge. Smooth visual motion is separate review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "gate",
+        "observations": {
+          "maximum_closed_angle_degrees": 0.0,
+          "maximum_open_error_degrees": 1.4210854715202004e-14,
+          "maximum_hinge_drift_m": 0.0,
+          "maximum_axis_drift": 0.0,
+          "opening_and_closing_monotonic": true,
+          "angles_at_5_8_10_13_seconds": [
+            0.0,
+            89.99999999999999,
+            89.99999999999999,
+            0.0
+          ],
+          "numerical_stationary_epsilon": 1e-06,
+          "sampled_frames": 721
+        }
+      },
+      "required": true,
+      "duration_ms": 21.26
+    },
+    {
+      "id": "trial.lamps",
+      "status": "PASS",
+      "reason": "Exactly one effective lamp state at full-frame, half-frame and pre-boundary probes. Rendered legibility/brightness is separate.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "lamps",
+        "observations": {
+          "tested_time_codes": 1443,
+          "failed_time_codes": 0,
+          "examples": []
+        }
+      },
+      "required": true,
+      "duration_ms": 28.943
+    },
+    {
+      "id": "trial.material.steel",
+      "status": "PASS",
+      "reason": "Resolved bound universal UsdPreviewSurface metallic/roughness scalar requirements; no claim about rendered finish.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "material",
+        "observations": {
+          "prim": "/World/Conveyors/SCAN01/Frame0",
+          "material": "/World/Materials/Stainless",
+          "shader": "/World/Materials/Stainless/Surface",
+          "scalar_values": {
+            "metallic": {
+              "target": 1.0,
+              "tolerance": 0.01,
+              "observed": [
+                1.0,
+                1.0
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            },
+            "roughness": {
+              "target": 0.32,
+              "tolerance": 0.03,
+              "observed": [
+                0.3199999928474426,
+                0.3199999928474426
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            }
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 2.938
+    },
+    {
+      "id": "trial.material.rubber",
+      "status": "PASS",
+      "reason": "Resolved bound universal UsdPreviewSurface metallic/roughness scalar requirements; no claim about rendered finish.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "material",
+        "observations": {
+          "prim": "/World/Conveyors/MAIN_A/Guide0",
+          "material": "/World/Materials/Rubber",
+          "shader": "/World/Materials/Rubber/Surface",
+          "scalar_values": {
+            "metallic": {
+              "target": 0.0,
+              "tolerance": 0.01,
+              "observed": [
+                0.0,
+                0.0
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            },
+            "roughness": {
+              "target": 0.7,
+              "tolerance": 0.05,
+              "observed": [
+                0.699999988079071,
+                0.699999988079071
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            }
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 2.067
+    },
+    {
+      "id": "trial.image.scanner",
+      "status": "PASS",
+      "reason": "Stored RGB pixel equality against the original supplied artwork, through the actual resolved material/texture connection.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "image",
+        "observations": {
+          "differing_pixels": 0,
+          "compared_pixels": 131072,
+          "texture_file": "textures/scanner-display.png",
+          "reference_sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e",
+          "observed_file_sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e",
+          "material": "/World/Materials/ScannerArtwork",
+          "image_shader": "/World/Materials/ScannerArtwork/Texture",
+          "asset_resolution": {
+            "input_chain": [
+              "/World/Materials/ScannerArtwork/Texture.inputs:file"
+            ],
+            "value_attribute": "/World/Materials/ScannerArtwork/Texture.inputs:file"
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 5.881
+    },
+    {
+      "id": "trial.image.d01",
+      "status": "PASS",
+      "reason": "Stored RGB pixel equality against the original supplied artwork, through the actual resolved material/texture connection.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "image",
+        "observations": {
+          "differing_pixels": 0,
+          "compared_pixels": 131072,
+          "texture_file": "textures/lane-d01.png",
+          "reference_sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3",
+          "observed_file_sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3",
+          "material": "/World/Materials/D01Artwork",
+          "image_shader": "/World/Materials/D01Artwork/Texture",
+          "asset_resolution": {
+            "input_chain": [
+              "/World/Materials/D01Artwork/Texture.inputs:file"
+            ],
+            "value_attribute": "/World/Materials/D01Artwork/Texture.inputs:file"
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 4.208
+    },
+    {
+      "id": "trial.panel.scanner",
+      "status": "PASS",
+      "reason": "Front-face dimensions, upright single UV mapping, direct st reader and normative sRGB interpretation; color scale/bias is recorded, not a brief numeric requirement. Rendered corner colors remain manual review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "panel",
+        "observations": {
+          "width_m": 0.6000022888183594,
+          "height_m": 0.30000007152557373,
+          "expected_width_m": 0.6,
+          "expected_height_m": 0.3,
+          "maximum_uv_error": 0.0,
+          "local_area_coverage_error": 0.0,
+          "local_plane_error": 0.0,
+          "world_axes_sheared": false,
+          "front_faces": [
+            0
+          ],
+          "uv_interpolation": "faceVarying",
+          "color_space": "sRGB",
+          "color_space_evidence": {
+            "declared": "sRGB",
+            "effective_control": "sRGB",
+            "semantic_source": "https://openusd.org/25.11/spec_usdpreviewsurface.html",
+            "resolution": "explicit control"
+          },
+          "color_controls": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "bias": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "nonidentity_color_controls": false,
+          "rendered_color_assessment": "Unverified; separately review required corner colors and readability",
+          "shader": "/World/Materials/ScannerArtwork/Texture",
+          "reader": "/World/Materials/ScannerArtwork/Coordinates"
+        }
+      },
+      "required": true,
+      "duration_ms": 3.285
+    },
+    {
+      "id": "trial.panel.d01",
+      "status": "PASS",
+      "reason": "Front-face dimensions, upright single UV mapping, direct st reader and normative sRGB interpretation; color scale/bias is recorded, not a brief numeric requirement. Rendered corner colors remain manual review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "panel",
+        "observations": {
+          "width_m": 1.0,
+          "height_m": 0.5,
+          "expected_width_m": 1.0,
+          "expected_height_m": 0.5,
+          "maximum_uv_error": 0.0,
+          "local_area_coverage_error": 0.0,
+          "local_plane_error": 0.0,
+          "world_axes_sheared": false,
+          "front_faces": [
+            0
+          ],
+          "uv_interpolation": "faceVarying",
+          "color_space": "sRGB",
+          "color_space_evidence": {
+            "declared": "sRGB",
+            "effective_control": "sRGB",
+            "semantic_source": "https://openusd.org/25.11/spec_usdpreviewsurface.html",
+            "resolution": "explicit control"
+          },
+          "color_controls": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "bias": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "nonidentity_color_controls": false,
+          "rendered_color_assessment": "Unverified; separately review required corner colors and readability",
+          "shader": "/World/Materials/D01Artwork/Texture",
+          "reader": "/World/Materials/D01Artwork/Coordinates"
+        }
+      },
+      "required": true,
+      "duration_ms": 2.072
+    },
+    {
+      "id": "trial.metadata.p01",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "prim": "/World/Motion/P01",
+          "observed": "D01",
+          "expected": "D01"
+        }
+      },
+      "required": true,
+      "duration_ms": 1.881
+    },
+    {
+      "id": "trial.metadata.p02",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "prim": "/World/Motion/P02",
+          "observed": "R01",
+          "expected": "R01"
+        }
+      },
+      "required": true,
+      "duration_ms": 1.731
+    },
+    {
+      "id": "trial.metadata.p03",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "prim": "/World/Motion/P03",
+          "observed": "D02",
+          "expected": "D02"
+        }
+      },
+      "required": true,
+      "duration_ms": 2.24
+    },
+    {
+      "id": "trial.metadata.machines",
+      "status": "PASS",
+      "reason": "String metadata agrees with the evaluator-bound machine inventory; completeness of that inventory is a separate review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "findings": [
+            {
+              "prim": "/World/Storage/Row01",
+              "status": "PASS",
+              "tag": "RACK-01",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row02",
+              "status": "PASS",
+              "tag": "RACK-02",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row03",
+              "status": "PASS",
+              "tag": "RACK-03",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row04",
+              "status": "PASS",
+              "tag": "RACK-04",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row05",
+              "status": "PASS",
+              "tag": "RACK-05",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row06",
+              "status": "PASS",
+              "tag": "RACK-06",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row07",
+              "status": "PASS",
+              "tag": "RACK-07",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row08",
+              "status": "PASS",
+              "tag": "RACK-08",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row09",
+              "status": "PASS",
+              "tag": "RACK-09",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row10",
+              "status": "PASS",
+              "tag": "RACK-10",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row11",
+              "status": "PASS",
+              "tag": "RACK-11",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row12",
+              "status": "PASS",
+              "tag": "RACK-12",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row13",
+              "status": "PASS",
+              "tag": "RACK-13",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row14",
+              "status": "PASS",
+              "tag": "RACK-14",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row15",
+              "status": "PASS",
+              "tag": "RACK-15",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row16",
+              "status": "PASS",
+              "tag": "RACK-16",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Receiving/Dock01",
+              "status": "PASS",
+              "tag": "DOCK-01",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock02",
+              "status": "PASS",
+              "tag": "DOCK-02",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock03",
+              "status": "PASS",
+              "tag": "DOCK-03",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock04",
+              "status": "PASS",
+              "tag": "DOCK-04",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock05",
+              "status": "PASS",
+              "tag": "DOCK-05",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock06",
+              "status": "PASS",
+              "tag": "DOCK-06",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Conveyors/IN01",
+              "status": "PASS",
+              "tag": "IN01",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/IN02",
+              "status": "PASS",
+              "tag": "IN02",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MERGE02",
+              "status": "PASS",
+              "tag": "MERGE02",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_A",
+              "status": "PASS",
+              "tag": "MAIN_A",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_B",
+              "status": "PASS",
+              "tag": "MAIN_B",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_C",
+              "status": "PASS",
+              "tag": "MAIN_C",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_D",
+              "status": "PASS",
+              "tag": "MAIN_D",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_E",
+              "status": "PASS",
+              "tag": "MAIN_E",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_F",
+              "status": "PASS",
+              "tag": "MAIN_F",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_END",
+              "status": "PASS",
+              "tag": "MAIN_END",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D01",
+              "status": "PASS",
+              "tag": "D01",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/R01",
+              "status": "PASS",
+              "tag": "R01",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D02",
+              "status": "PASS",
+              "tag": "D02",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D03",
+              "status": "PASS",
+              "tag": "D03",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D04",
+              "status": "PASS",
+              "tag": "D04",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/JCT01",
+              "status": "PASS",
+              "tag": "JCT-01",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT02",
+              "status": "PASS",
+              "tag": "JCT-02",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT03",
+              "status": "PASS",
+              "tag": "JCT-03",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT04",
+              "status": "PASS",
+              "tag": "JCT-04",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT05",
+              "status": "PASS",
+              "tag": "JCT-05",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT06",
+              "status": "PASS",
+              "tag": "JCT-06",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT07",
+              "status": "PASS",
+              "tag": "JCT-07",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/SCAN01",
+              "status": "PASS",
+              "tag": "SCAN-01",
+              "family": "scanner"
+            },
+            {
+              "prim": "/World/Conveyors/WEIGH01",
+              "status": "PASS",
+              "tag": "WEIGH-01",
+              "family": "weigh_scale"
+            },
+            {
+              "prim": "/World/Packing/Station01",
+              "status": "PASS",
+              "tag": "PACK-01",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station01/Applicator",
+              "status": "PASS",
+              "tag": "APP-01",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/Station02",
+              "status": "PASS",
+              "tag": "PACK-02",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station02/Applicator",
+              "status": "PASS",
+              "tag": "APP-02",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/Station03",
+              "status": "PASS",
+              "tag": "PACK-03",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station03/Applicator",
+              "status": "PASS",
+              "tag": "APP-03",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/Station04",
+              "status": "PASS",
+              "tag": "PACK-04",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station04/Applicator",
+              "status": "PASS",
+              "tag": "APP-04",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/OutboundBuffer",
+              "status": "PASS",
+              "tag": "BUFFER-01",
+              "family": "outbound_staging"
+            },
+            {
+              "prim": "/World/Transport/PalletTruck0",
+              "status": "PASS",
+              "tag": "PT-01",
+              "family": "pallet_truck"
+            },
+            {
+              "prim": "/World/Transport/PalletTruck1",
+              "status": "PASS",
+              "tag": "PT-02",
+              "family": "pallet_truck"
+            },
+            {
+              "prim": "/World/Motion/P01",
+              "status": "PASS",
+              "tag": "P01",
+              "family": "parcel"
+            },
+            {
+              "prim": "/World/Motion/P02",
+              "status": "PASS",
+              "tag": "P02",
+              "family": "parcel"
+            },
+            {
+              "prim": "/World/Motion/P03",
+              "status": "PASS",
+              "tag": "P03",
+              "family": "parcel"
+            },
+            {
+              "prim": "/World/Motion/S01",
+              "status": "PASS",
+              "tag": "S01",
+              "family": "pallet_shuttle"
+            },
+            {
+              "prim": "/World/Motion/G01",
+              "status": "PASS",
+              "tag": "G01",
+              "family": "maintenance_gate"
+            },
+            {
+              "prim": "/World/Motion/StatusTower",
+              "status": "PASS",
+              "tag": "STATUS-01",
+              "family": "status_tower"
+            },
+            {
+              "prim": "/World/Motion/DIV01",
+              "status": "PASS",
+              "tag": "DIV01",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIVR",
+              "status": "PASS",
+              "tag": "DIVR",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIV02",
+              "status": "PASS",
+              "tag": "DIV02",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIV03",
+              "status": "PASS",
+              "tag": "DIV03",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIV04",
+              "status": "PASS",
+              "tag": "DIV04",
+              "family": "diverter"
+            }
+          ],
+          "mapped_machines": 68
+        }
+      },
+      "required": true,
+      "duration_ms": 3.107
+    }
+  ],
+  "v1_brief_checks": [
+    {
+      "id": "trial.count",
+      "status": "PASS",
+      "reason": "Actual active/defined composed prim count, excluding pseudo-root; usefulness and duplicate inflation require separate review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "count",
+        "observations": {
+          "actual_composed_prims": 125224,
+          "exclusive_minimum": 100000,
+          "geometry_prims": 121615,
+          "by_type": {
+            "Xform": 3412,
+            "untyped": 1,
+            "Material": 48,
+            "Shader": 100,
+            "Mesh": 121615,
+            "Camera": 21,
+            "RectLight": 25,
+            "DistantLight": 1,
+            "DomeLight": 1
+          },
+          "inactive": 0,
+          "undefined": 0,
+          "instance_prims": 0,
+          "instance_proxies": 0,
+          "prototype_roots": 0,
+          "prototype_contents": 0,
+          "point_instancer_prims": 0,
+          "point_instancer_instances_at_time_0": 0,
+          "count_semantics": "Usd.Stage.Traverse; no proxies, prototypes or point-instancer instances added"
+        }
+      },
+      "required": true,
+      "duration_ms": 638.678
+    },
+    {
+      "id": "trial.stage",
+      "status": "PASS",
+      "reason": "Explicit stage units, axis, clock, range and default prim.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "stage",
+        "observations": {
+          "expected": {
+            "metersPerUnit": 1.0,
+            "upAxis": "Z",
+            "startTimeCode": 0,
+            "endTimeCode": 720,
+            "timeCodesPerSecond": 24,
+            "framesPerSecond": 24
+          },
+          "observed": {
+            "metersPerUnit": 1.0,
+            "upAxis": "Z",
+            "startTimeCode": 0.0,
+            "endTimeCode": 720.0,
+            "timeCodesPerSecond": 24.0,
+            "framesPerSecond": 24.0
+          },
+          "authored": {
+            "metersPerUnit": true,
+            "upAxis": true,
+            "startTimeCode": true,
+            "endTimeCode": true,
+            "timeCodesPerSecond": true,
+            "framesPerSecond": true
+          },
+          "default_prim": "/World"
+        }
+      },
+      "required": true,
+      "duration_ms": 2.093
+    },
+    {
+      "id": "trial.event.p01-scan",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P01",
+          "expected": {
+            "object": "P01",
+            "plane": "scan",
+            "seconds": 4.0,
+            "tolerance_seconds": 0.25
+          },
+          "measured_crossings_seconds": [
+            4.0
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -10.0,
+          "max_distance_m": 16.0
+        }
+      },
+      "required": true,
+      "duration_ms": 72.4
+    },
+    {
+      "id": "trial.event.p01-d01",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P01",
+          "expected": {
+            "object": "P01",
+            "plane": "D01",
+            "seconds": 18.0,
+            "tolerance_seconds": 0.5
+          },
+          "measured_crossings_seconds": [
+            18.000888890690273
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -3.0010000020265597,
+          "max_distance_m": 4.498999997973442
+        }
+      },
+      "required": true,
+      "duration_ms": 70.45
+    },
+    {
+      "id": "trial.event.p02-scan",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P02",
+          "expected": {
+            "object": "P02",
+            "plane": "scan",
+            "seconds": 8.0,
+            "tolerance_seconds": 0.25
+          },
+          "measured_crossings_seconds": [
+            8.0
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -15.0,
+          "max_distance_m": 22.000000000000014
+        }
+      },
+      "required": true,
+      "duration_ms": 69.286
+    },
+    {
+      "id": "trial.event.p02-r01",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P02",
+          "expected": {
+            "object": "P02",
+            "plane": "R01",
+            "seconds": 20.0,
+            "tolerance_seconds": 0.5
+          },
+          "measured_crossings_seconds": [
+            19.999333331982296
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -2.998999997973444,
+          "max_distance_m": 4.501000002026559
+        }
+      },
+      "required": true,
+      "duration_ms": 68.858
+    },
+    {
+      "id": "trial.event.p03-d02",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "event",
+        "observations": {
+          "prim": "/World/Motion/P03",
+          "expected": {
+            "object": "P03",
+            "plane": "D02",
+            "seconds": 27.0,
+            "tolerance_seconds": 0.5
+          },
+          "measured_crossings_seconds": [
+            27.000666668017704
+          ],
+          "sampled_frames": 721,
+          "min_distance_m": -9.001000002026558,
+          "max_distance_m": 4.498999997973442
+        }
+      },
+      "required": true,
+      "duration_ms": 67.145
+    },
+    {
+      "id": "trial.reject-only",
+      "status": "PASS",
+      "reason": "P02 positive crossing through the explicitly mapped finite outbound lane mouths.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "reject-only",
+        "observations": {
+          "outbound_entry_seconds": {
+            "D01": [],
+            "D02": [],
+            "D03": [],
+            "D04": []
+          },
+          "sampled_frames": 721
+        }
+      },
+      "required": true,
+      "duration_ms": 95.633
+    },
+    {
+      "id": "trial.p03-hold",
+      "status": "PASS",
+      "reason": "P03 centroid stop and projected onward displacement by 16 s.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "p03-hold",
+        "observations": {
+          "maximum_hold_drift_m": 1.7763568394002505e-15,
+          "onward_displacement_at_16_s_m": 1.0,
+          "expected": {
+            "hold_start": 12,
+            "hold_end": 15,
+            "hold_tolerance_m": 0.002,
+            "release_seconds": 16,
+            "release_distance_m": 0.2
+          },
+          "sampled_hold_frames": 73
+        }
+      },
+      "required": true,
+      "duration_ms": 61.94
+    },
+    {
+      "id": "trial.shuttle-travel",
+      "status": "PASS",
+      "reason": "Shuttle sampled path length from 2–12 s and stationarity at 0–2/12–14 s; route geometry is reviewed separately.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "shuttle-travel",
+        "observations": {
+          "travel_m": 12.0,
+          "initial_stop_drift_m": 7.105427357601002e-15,
+          "destination_stop_drift_m": 7.944109290391274e-15,
+          "numerical_stationary_epsilon_m": 1e-06,
+          "sampled_frames": 721
+        }
+      },
+      "required": true,
+      "duration_ms": 447.959
+    },
+    {
+      "id": "trial.attachment",
+      "status": "PASS",
+      "reason": "Pallet attachment-point offset and rigid orientation relative to its platform at every saved frame.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "attachment",
+        "observations": {
+          "maximum_relative_translation_m": 0.0,
+          "maximum_relative_rotation_degrees": 0.0,
+          "translation_limit_m": 0.005,
+          "rotation_limit_degrees": 0.5,
+          "sampled_frames": 721,
+          "initial_attachment_offset_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "required": true,
+      "duration_ms": 30.617
+    },
+    {
+      "id": "trial.payload-size",
+      "status": "PASS",
+      "reason": "Mapped pallet-only local bound projected onto its declared length/width/height axes at frame zero; payload mapping must exclude carried cartons.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "payload-size",
+        "observations": {
+          "observed_dimensions_m": [
+            1.2000000476837158,
+            1.0,
+            0.14399999380111694
+          ],
+          "expected_dimensions_m": [
+            1.2,
+            1.0,
+            0.144
+          ],
+          "tolerance_m": 0.005
+        }
+      },
+      "required": true,
+      "duration_ms": 3.005
+    },
+    {
+      "id": "trial.gate",
+      "status": "PASS",
+      "reason": "Gate sampled closed/open holds and rotation about the evaluator-mapped physical hinge. Smooth visual motion is separate review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "gate",
+        "observations": {
+          "maximum_closed_angle_degrees": 0.0,
+          "maximum_open_error_degrees": 1.4210854715202004e-14,
+          "maximum_hinge_drift_m": 0.0,
+          "maximum_axis_drift": 0.0,
+          "opening_and_closing_monotonic": true,
+          "angles_at_5_8_10_13_seconds": [
+            0.0,
+            89.99999999999999,
+            89.99999999999999,
+            0.0
+          ],
+          "numerical_stationary_epsilon": 1e-06,
+          "sampled_frames": 721
+        }
+      },
+      "required": true,
+      "duration_ms": 17.337
+    },
+    {
+      "id": "trial.lamps",
+      "status": "PASS",
+      "reason": "Exactly one effective lamp state at full-frame, half-frame and pre-boundary probes. Rendered legibility/brightness is separate.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "lamps",
+        "observations": {
+          "tested_time_codes": 1443,
+          "failed_time_codes": 0,
+          "examples": []
+        }
+      },
+      "required": true,
+      "duration_ms": 24.648
+    },
+    {
+      "id": "trial.material.steel",
+      "status": "PASS",
+      "reason": "Resolved bound universal UsdPreviewSurface metallic/roughness scalar requirements; no claim about rendered finish.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "material",
+        "observations": {
+          "prim": "/World/Conveyors/SCAN01/Frame0",
+          "material": "/World/Materials/Stainless",
+          "shader": "/World/Materials/Stainless/Surface",
+          "scalar_values": {
+            "metallic": {
+              "target": 1.0,
+              "tolerance": 0.01,
+              "observed": [
+                1.0,
+                1.0
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            },
+            "roughness": {
+              "target": 0.32,
+              "tolerance": 0.03,
+              "observed": [
+                0.3199999928474426,
+                0.3199999928474426
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            }
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 2.591
+    },
+    {
+      "id": "trial.material.rubber",
+      "status": "PASS",
+      "reason": "Resolved bound universal UsdPreviewSurface metallic/roughness scalar requirements; no claim about rendered finish.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "material",
+        "observations": {
+          "prim": "/World/Conveyors/MAIN_A/Guide0",
+          "material": "/World/Materials/Rubber",
+          "shader": "/World/Materials/Rubber/Surface",
+          "scalar_values": {
+            "metallic": {
+              "target": 0.0,
+              "tolerance": 0.01,
+              "observed": [
+                0.0,
+                0.0
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            },
+            "roughness": {
+              "target": 0.7,
+              "tolerance": 0.05,
+              "observed": [
+                0.699999988079071,
+                0.699999988079071
+              ],
+              "time_codes": [
+                0,
+                720
+              ],
+              "value_sources": [
+                "composed authored value",
+                "composed authored value"
+              ]
+            }
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 1.812
+    },
+    {
+      "id": "trial.image.scanner",
+      "status": "PASS",
+      "reason": "Stored RGB pixel equality against the original supplied artwork, through the actual resolved material/texture connection.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "image",
+        "observations": {
+          "differing_pixels": 0,
+          "compared_pixels": 131072,
+          "texture_file": "textures/scanner-display.png",
+          "reference_sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e",
+          "observed_file_sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e",
+          "material": "/World/Materials/ScannerArtwork",
+          "image_shader": "/World/Materials/ScannerArtwork/Texture",
+          "asset_resolution": {
+            "input_chain": [
+              "/World/Materials/ScannerArtwork/Texture.inputs:file"
+            ],
+            "value_attribute": "/World/Materials/ScannerArtwork/Texture.inputs:file"
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 4.056
+    },
+    {
+      "id": "trial.image.d01",
+      "status": "PASS",
+      "reason": "Stored RGB pixel equality against the original supplied artwork, through the actual resolved material/texture connection.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "image",
+        "observations": {
+          "differing_pixels": 0,
+          "compared_pixels": 131072,
+          "texture_file": "textures/lane-d01.png",
+          "reference_sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3",
+          "observed_file_sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3",
+          "material": "/World/Materials/D01Artwork",
+          "image_shader": "/World/Materials/D01Artwork/Texture",
+          "asset_resolution": {
+            "input_chain": [
+              "/World/Materials/D01Artwork/Texture.inputs:file"
+            ],
+            "value_attribute": "/World/Materials/D01Artwork/Texture.inputs:file"
+          }
+        }
+      },
+      "required": true,
+      "duration_ms": 3.709
+    },
+    {
+      "id": "trial.panel.scanner",
+      "status": "PASS",
+      "reason": "Front-face dimensions, upright single UV mapping, direct st reader and normative sRGB interpretation; color scale/bias is recorded, not a brief numeric requirement. Rendered corner colors remain manual review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "panel",
+        "observations": {
+          "width_m": 0.6000022888183594,
+          "height_m": 0.30000007152557373,
+          "expected_width_m": 0.6,
+          "expected_height_m": 0.3,
+          "maximum_uv_error": 0.0,
+          "local_area_coverage_error": 0.0,
+          "local_plane_error": 0.0,
+          "world_axes_sheared": false,
+          "front_faces": [
+            0
+          ],
+          "uv_interpolation": "faceVarying",
+          "color_space": "sRGB",
+          "color_space_evidence": {
+            "declared": "sRGB",
+            "effective_control": "sRGB",
+            "semantic_source": "https://openusd.org/25.11/spec_usdpreviewsurface.html",
+            "resolution": "explicit control"
+          },
+          "color_controls": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "bias": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "nonidentity_color_controls": false,
+          "rendered_color_assessment": "Unverified; separately review required corner colors and readability",
+          "shader": "/World/Materials/ScannerArtwork/Texture",
+          "reader": "/World/Materials/ScannerArtwork/Coordinates"
+        }
+      },
+      "required": true,
+      "duration_ms": 2.131
+    },
+    {
+      "id": "trial.panel.d01",
+      "status": "PASS",
+      "reason": "Front-face dimensions, upright single UV mapping, direct st reader and normative sRGB interpretation; color scale/bias is recorded, not a brief numeric requirement. Rendered corner colors remain manual review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "panel",
+        "observations": {
+          "width_m": 1.0,
+          "height_m": 0.5,
+          "expected_width_m": 1.0,
+          "expected_height_m": 0.5,
+          "maximum_uv_error": 0.0,
+          "local_area_coverage_error": 0.0,
+          "local_plane_error": 0.0,
+          "world_axes_sheared": false,
+          "front_faces": [
+            0
+          ],
+          "uv_interpolation": "faceVarying",
+          "color_space": "sRGB",
+          "color_space_evidence": {
+            "declared": "sRGB",
+            "effective_control": "sRGB",
+            "semantic_source": "https://openusd.org/25.11/spec_usdpreviewsurface.html",
+            "resolution": "explicit control"
+          },
+          "color_controls": {
+            "scale": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "bias": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "nonidentity_color_controls": false,
+          "rendered_color_assessment": "Unverified; separately review required corner colors and readability",
+          "shader": "/World/Materials/D01Artwork/Texture",
+          "reader": "/World/Materials/D01Artwork/Coordinates"
+        }
+      },
+      "required": true,
+      "duration_ms": 1.837
+    },
+    {
+      "id": "trial.metadata.p01",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "prim": "/World/Motion/P01",
+          "observed": "D01",
+          "expected": "D01"
+        }
+      },
+      "required": true,
+      "duration_ms": 1.654
+    },
+    {
+      "id": "trial.metadata.p02",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "prim": "/World/Motion/P02",
+          "observed": "R01",
+          "expected": "R01"
+        }
+      },
+      "required": true,
+      "duration_ms": 1.526
+    },
+    {
+      "id": "trial.metadata.p03",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "prim": "/World/Motion/P03",
+          "observed": "D02",
+          "expected": "D02"
+        }
+      },
+      "required": true,
+      "duration_ms": 1.516
+    },
+    {
+      "id": "trial.metadata.machines",
+      "status": "PASS",
+      "reason": "String metadata agrees with the evaluator-bound machine inventory; completeness of that inventory is a separate review.",
+      "evidence": {
+        "pack": "trial.distribution",
+        "check": "metadata",
+        "observations": {
+          "findings": [
+            {
+              "prim": "/World/Storage/Row01",
+              "status": "PASS",
+              "tag": "RACK-01",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row02",
+              "status": "PASS",
+              "tag": "RACK-02",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row03",
+              "status": "PASS",
+              "tag": "RACK-03",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row04",
+              "status": "PASS",
+              "tag": "RACK-04",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row05",
+              "status": "PASS",
+              "tag": "RACK-05",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row06",
+              "status": "PASS",
+              "tag": "RACK-06",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row07",
+              "status": "PASS",
+              "tag": "RACK-07",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row08",
+              "status": "PASS",
+              "tag": "RACK-08",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row09",
+              "status": "PASS",
+              "tag": "RACK-09",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row10",
+              "status": "PASS",
+              "tag": "RACK-10",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row11",
+              "status": "PASS",
+              "tag": "RACK-11",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row12",
+              "status": "PASS",
+              "tag": "RACK-12",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row13",
+              "status": "PASS",
+              "tag": "RACK-13",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row14",
+              "status": "PASS",
+              "tag": "RACK-14",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row15",
+              "status": "PASS",
+              "tag": "RACK-15",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Storage/Row16",
+              "status": "PASS",
+              "tag": "RACK-16",
+              "family": "rack_row"
+            },
+            {
+              "prim": "/World/Receiving/Dock01",
+              "status": "PASS",
+              "tag": "DOCK-01",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock02",
+              "status": "PASS",
+              "tag": "DOCK-02",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock03",
+              "status": "PASS",
+              "tag": "DOCK-03",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock04",
+              "status": "PASS",
+              "tag": "DOCK-04",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock05",
+              "status": "PASS",
+              "tag": "DOCK-05",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Receiving/Dock06",
+              "status": "PASS",
+              "tag": "DOCK-06",
+              "family": "dock"
+            },
+            {
+              "prim": "/World/Conveyors/IN01",
+              "status": "PASS",
+              "tag": "IN01",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/IN02",
+              "status": "PASS",
+              "tag": "IN02",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MERGE02",
+              "status": "PASS",
+              "tag": "MERGE02",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_A",
+              "status": "PASS",
+              "tag": "MAIN_A",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_B",
+              "status": "PASS",
+              "tag": "MAIN_B",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_C",
+              "status": "PASS",
+              "tag": "MAIN_C",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_D",
+              "status": "PASS",
+              "tag": "MAIN_D",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_E",
+              "status": "PASS",
+              "tag": "MAIN_E",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_F",
+              "status": "PASS",
+              "tag": "MAIN_F",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/MAIN_END",
+              "status": "PASS",
+              "tag": "MAIN_END",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D01",
+              "status": "PASS",
+              "tag": "D01",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/R01",
+              "status": "PASS",
+              "tag": "R01",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D02",
+              "status": "PASS",
+              "tag": "D02",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D03",
+              "status": "PASS",
+              "tag": "D03",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/D04",
+              "status": "PASS",
+              "tag": "D04",
+              "family": "roller_conveyor"
+            },
+            {
+              "prim": "/World/Conveyors/JCT01",
+              "status": "PASS",
+              "tag": "JCT-01",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT02",
+              "status": "PASS",
+              "tag": "JCT-02",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT03",
+              "status": "PASS",
+              "tag": "JCT-03",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT04",
+              "status": "PASS",
+              "tag": "JCT-04",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT05",
+              "status": "PASS",
+              "tag": "JCT-05",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT06",
+              "status": "PASS",
+              "tag": "JCT-06",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/JCT07",
+              "status": "PASS",
+              "tag": "JCT-07",
+              "family": "transfer_deck"
+            },
+            {
+              "prim": "/World/Conveyors/SCAN01",
+              "status": "PASS",
+              "tag": "SCAN-01",
+              "family": "scanner"
+            },
+            {
+              "prim": "/World/Conveyors/WEIGH01",
+              "status": "PASS",
+              "tag": "WEIGH-01",
+              "family": "weigh_scale"
+            },
+            {
+              "prim": "/World/Packing/Station01",
+              "status": "PASS",
+              "tag": "PACK-01",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station01/Applicator",
+              "status": "PASS",
+              "tag": "APP-01",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/Station02",
+              "status": "PASS",
+              "tag": "PACK-02",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station02/Applicator",
+              "status": "PASS",
+              "tag": "APP-02",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/Station03",
+              "status": "PASS",
+              "tag": "PACK-03",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station03/Applicator",
+              "status": "PASS",
+              "tag": "APP-03",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/Station04",
+              "status": "PASS",
+              "tag": "PACK-04",
+              "family": "packing_station"
+            },
+            {
+              "prim": "/World/Packing/Station04/Applicator",
+              "status": "PASS",
+              "tag": "APP-04",
+              "family": "label_applicator"
+            },
+            {
+              "prim": "/World/Packing/OutboundBuffer",
+              "status": "PASS",
+              "tag": "BUFFER-01",
+              "family": "outbound_staging"
+            },
+            {
+              "prim": "/World/Transport/PalletTruck0",
+              "status": "PASS",
+              "tag": "PT-01",
+              "family": "pallet_truck"
+            },
+            {
+              "prim": "/World/Transport/PalletTruck1",
+              "status": "PASS",
+              "tag": "PT-02",
+              "family": "pallet_truck"
+            },
+            {
+              "prim": "/World/Motion/P01",
+              "status": "PASS",
+              "tag": "P01",
+              "family": "parcel"
+            },
+            {
+              "prim": "/World/Motion/P02",
+              "status": "PASS",
+              "tag": "P02",
+              "family": "parcel"
+            },
+            {
+              "prim": "/World/Motion/P03",
+              "status": "PASS",
+              "tag": "P03",
+              "family": "parcel"
+            },
+            {
+              "prim": "/World/Motion/S01",
+              "status": "PASS",
+              "tag": "S01",
+              "family": "pallet_shuttle"
+            },
+            {
+              "prim": "/World/Motion/G01",
+              "status": "PASS",
+              "tag": "G01",
+              "family": "maintenance_gate"
+            },
+            {
+              "prim": "/World/Motion/StatusTower",
+              "status": "PASS",
+              "tag": "STATUS-01",
+              "family": "status_tower"
+            },
+            {
+              "prim": "/World/Motion/DIV01",
+              "status": "PASS",
+              "tag": "DIV01",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIVR",
+              "status": "PASS",
+              "tag": "DIVR",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIV02",
+              "status": "PASS",
+              "tag": "DIV02",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIV03",
+              "status": "PASS",
+              "tag": "DIV03",
+              "family": "diverter"
+            },
+            {
+              "prim": "/World/Motion/DIV04",
+              "status": "PASS",
+              "tag": "DIV04",
+              "family": "diverter"
+            }
+          ],
+          "mapped_machines": 68
+        }
+      },
+      "required": true,
+      "duration_ms": 2.885
+    }
+  ],
+  "v1_geometry_review": {
+    "method": "Independent reopened mesh points. Exact linear AABB/junction overlap intervals plus 1441 half-frame samples. No producer QA or harness executable imported.",
+    "junction_traversals": [
+      {
+        "parcel": "P01",
+        "diverter": "DIV01",
+        "deck": "JCT03",
+        "destination": "D01",
+        "expected_deg": 35,
+        "exact_overlap_interval_s": [
+          11.430001825094223,
+          14.124000310897827
+        ],
+        "interval_extrema_samples_tc_deg": [
+          [
+            274.32004380226135,
+            35.0
+          ],
+          [
+            338.97600746154785,
+            35.0
+          ]
+        ],
+        "sampled_half_frame_overlap_s": [
+          11.4375,
+          14.104166666666666
+        ],
+        "half_frame_samples": 129,
+        "angle_min_deg": 35.0,
+        "angle_max_deg": 35.0,
+        "half_frame_angle_min_deg": 35.0,
+        "half_frame_angle_max_deg": 35.0,
+        "correct_throughout_linear_interval": true
+      },
+      {
+        "parcel": "P02",
+        "diverter": "DIV01",
+        "deck": "JCT03",
+        "destination": "R01",
+        "expected_deg": 0,
+        "exact_overlap_interval_s": [
+          14.75454711372202,
+          15.790907431732526
+        ],
+        "interval_extrema_samples_tc_deg": [
+          [
+            354.1091307293285,
+            0.0
+          ],
+          [
+            378.9817783615806,
+            0.0
+          ]
+        ],
+        "sampled_half_frame_overlap_s": [
+          14.770833333333334,
+          15.770833333333334
+        ],
+        "half_frame_samples": 49,
+        "angle_min_deg": 0.0,
+        "angle_max_deg": 0.0,
+        "half_frame_angle_min_deg": 0.0,
+        "half_frame_angle_max_deg": 0.0,
+        "correct_throughout_linear_interval": true
+      },
+      {
+        "parcel": "P02",
+        "diverter": "DIVR",
+        "deck": "JCT04",
+        "destination": "R01",
+        "expected_deg": -35,
+        "exact_overlap_interval_s": [
+          17.48181984099475,
+          18.7066667675972
+        ],
+        "interval_extrema_samples_tc_deg": [
+          [
+            419.56367618387395,
+            -35.0
+          ],
+          [
+            448.96000242233276,
+            -35.0
+          ]
+        ],
+        "sampled_half_frame_overlap_s": [
+          17.5,
+          18.6875
+        ],
+        "half_frame_samples": 58,
+        "angle_min_deg": -35.0,
+        "angle_max_deg": -35.0,
+        "half_frame_angle_min_deg": -35.0,
+        "half_frame_angle_max_deg": -35.0,
+        "correct_throughout_linear_interval": true
+      },
+      {
+        "parcel": "P03",
+        "diverter": "DIV01",
+        "deck": "JCT03",
+        "destination": "D02",
+        "expected_deg": 0,
+        "exact_overlap_interval_s": [
+          19.0870016425848,
+          20.112998357415197
+        ],
+        "interval_extrema_samples_tc_deg": [
+          [
+            458.0880394220352,
+            0.0
+          ],
+          [
+            482.71196057796476,
+            0.0
+          ]
+        ],
+        "sampled_half_frame_overlap_s": [
+          19.104166666666668,
+          20.104166666666668
+        ],
+        "half_frame_samples": 49,
+        "angle_min_deg": 0.0,
+        "angle_max_deg": 0.0,
+        "half_frame_angle_min_deg": 0.0,
+        "half_frame_angle_max_deg": 0.0,
+        "correct_throughout_linear_interval": true
+      },
+      {
+        "parcel": "P03",
+        "diverter": "DIVR",
+        "deck": "JCT04",
+        "destination": "D02",
+        "expected_deg": 0,
+        "exact_overlap_interval_s": [
+          21.7870016425848,
+          22.8129983574152
+        ],
+        "interval_extrema_samples_tc_deg": [
+          [
+            522.8880394220353,
+            0.0
+          ],
+          [
+            547.5119605779648,
+            0.0
+          ]
+        ],
+        "sampled_half_frame_overlap_s": [
+          21.791666666666668,
+          22.8125
+        ],
+        "half_frame_samples": 50,
+        "angle_min_deg": 0.0,
+        "angle_max_deg": 0.0,
+        "half_frame_angle_min_deg": 0.0,
+        "half_frame_angle_max_deg": 0.0,
+        "correct_throughout_linear_interval": true
+      },
+      {
+        "parcel": "P03",
+        "diverter": "DIV02",
+        "deck": "JCT05",
+        "destination": "D02",
+        "expected_deg": 35,
+        "exact_overlap_interval_s": [
+          24.4870016425848,
+          25.70800010363261
+        ],
+        "interval_extrema_samples_tc_deg": [
+          [
+            587.6880394220352,
+            35.0
+          ],
+          [
+            616.9920024871826,
+            35.0
+          ]
+        ],
+        "sampled_half_frame_overlap_s": [
+          24.5,
+          25.6875
+        ],
+        "half_frame_samples": 58,
+        "angle_min_deg": 35.0,
+        "angle_max_deg": 35.0,
+        "half_frame_angle_min_deg": 35.0,
+        "half_frame_angle_max_deg": 35.0,
+        "correct_throughout_linear_interval": true
+      }
+    ],
+    "all_traversals_correct": true,
+    "overhead_service_count": 209,
+    "overhead_lowest_m": 14.0600004196167,
+    "overhead_below_14_m": [],
+    "additional_assembly_scope": [
+      "/World/Conveyors/IndicatorLegendBacking",
+      "/World/Conveyors/IndicatorLegendFace",
+      "/World/Conveyors/IndicatorLegendFoot",
+      "/World/Conveyors/IndicatorLegendPost",
+      "/World/Motion/StatusTower/Collar0",
+      "/World/Motion/StatusTower/Collar1",
+      "/World/Motion/StatusTower/Collar2",
+      "/World/Motion/StatusTower/Collar3",
+      "/World/Motion/StatusTower/Foot",
+      "/World/Motion/StatusTower/Post",
+      "/World/Services/GateSignBacking",
+      "/World/Services/GateSignBolt145",
+      "/World/Services/GateSignBolt185",
+      "/World/Services/GateSignFace",
+      "/World/Services/GateSignFoot",
+      "/World/Services/GateSignPost"
+    ],
+    "additional_assembly_clearance": {
+      "parcel_min_m": 1.1419768163145305,
+      "gate_min_m": 0.06171233952045441,
+      "parcel": "P03",
+      "parcel_other": "/World/Motion/StatusTower/Collar0",
+      "parcel_min_time_s": 12.0625,
+      "gate_other": "/World/Services/GateSignPost",
+      "gate_min_time_s": 0.0
+    },
+    "limits": [
+      "Exact route-state proof is limited to continuous linear translation against static deck XY bounds and the authored linear rotation attribute; it is not continuous collision proof.",
+      "Only listed overhead service families count toward the 14 m distribution envelope; local equipment, racks, columns and vertical equipment drops remain present.",
+      "Added assembly checks use conservative AABBs and 1441 finite times; no all-pairs scene proof."
+    ]
+  },
+  "v1_producer_gui_observations": {
+    "application": "4.5.0",
+    "method": "Foreground Blender USD import; viewport draw handler records completed POST_PIXEL draws. Controlled orbit via view quaternion timer; native screen.animation_play with sync_mode NONE (play every frame).",
+    "controlled_navigation": {
+      "wall_seconds": 12.140076000010595,
+      "completed_viewport_draws": 55,
+      "draws_per_wall_second": 4.530449397512174,
+      "unique_displayed_frames": 1,
+      "first_displayed_frame": 0,
+      "last_displayed_frame": 0,
+      "completed_draw_intervals_s": [
+        0.4343679159646854,
+        0.22629337501712143,
+        0.21992950001731515,
+        0.22162287501851097,
+        0.21274466696195304,
+        0.2267976250150241,
+        0.21583729196572676,
+        0.21907770802499726,
+        0.21934216702356935,
+        0.21434041595784947,
+        0.21734158403705806,
+        0.20746962499106303,
+        0.2115278749843128,
+        0.21797083300771192,
+        0.21853600000031292,
+        0.2189237080165185,
+        0.22368091699900106,
+        0.2328925000037998,
+        0.23756912496173754,
+        0.23348995804553851,
+        0.23089991696178913,
+        0.22289412503596395,
+        0.22352695796871558,
+        0.2153339590295218,
+        0.21868641598848626,
+        0.20940120896557346,
+        0.20931479102000594,
+        0.20872920902911574,
+        0.21171237499220297,
+        0.21051162498770282,
+        0.20839587500086054,
+        0.21043104102136567,
+        0.2090872919652611,
+        0.22204479202628136,
+        0.21949329099152237,
+        0.22389816696522757,
+        0.21227229200303555,
+        0.2086280410294421,
+        0.20934245898388326,
+        0.21513600001344457,
+        0.21114362496882677,
+        0.2135392080526799,
+        0.21442729199770838,
+        0.2086922079906799,
+        0.20759399997768924,
+        0.21478408301481977,
+        0.21140224998816848,
+        0.21115041698794812,
+        0.21308837499236688,
+        0.2097743750200607,
+        0.21094908303348348,
+        0.22401137498673052,
+        0.22076429199660197,
+        0.23230108298594132
+      ],
+      "orbit_steps": 54
+    },
+    "native_timeline_playback": {
+      "wall_seconds": 18.23376095900312,
+      "completed_viewport_draws": 48,
+      "draws_per_wall_second": 2.632479394016596,
+      "unique_displayed_frames": 48,
+      "first_displayed_frame": 0,
+      "last_displayed_frame": 47,
+      "completed_draw_intervals_s": [
+        0.38041704101487994,
+        0.37253891699947417,
+        0.3863732499885373,
+        0.38240004202816635,
+        0.3745416249730624,
+        0.37814787501702085,
+        0.37566779099870473,
+        0.3676151249674149,
+        0.3791062500094995,
+        0.3674126249970868,
+        0.3695949999964796,
+        0.3714941249927506,
+        0.36899520904989913,
+        0.37329241598490626,
+        0.3674483340000734,
+        0.3681007910054177,
+        0.370193708979059,
+        0.3759119579917751,
+        0.3903387919999659,
+        0.3933922500000335,
+        0.377122915990185,
+        0.3746235000435263,
+        0.3688268749974668,
+        0.3805678749922663,
+        0.3718027920112945,
+        0.36785066698212177,
+        0.38082837499678135,
+        0.3777436660020612,
+        0.3773981250124052,
+        0.3853229169617407,
+        0.3761759580229409,
+        0.38067654200131074,
+        0.36758341698441654,
+        0.3658246659906581,
+        0.3684362090425566,
+        0.37344241596292704,
+        0.3672375000314787,
+        0.39593737496761605,
+        0.3705244589946233,
+        0.36198258301010355,
+        0.36191425001015887,
+        0.3675923750270158,
+        0.38116166699910536,
+        0.3670870409696363,
+        0.3679049169877544,
+        0.3724090830073692,
+        0.3604680420248769
+      ],
+      "orbit_steps": 0
+    },
+    "visibility": "Solid material-color view of imported scene; lights/cameras hidden as viewport helpers; roof/front facade/explanation hidden for inspection.",
+    "limits": "Automated orbit and native timeline observations in Blender import. No claim of Hydra performance, photoreal playback, or perfect USD importer parity. No keyframe evaluation timings substituted for completed viewport draws."
+  }
+}

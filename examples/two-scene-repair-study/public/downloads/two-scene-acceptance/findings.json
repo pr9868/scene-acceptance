@@ -1,0 +1,88 @@
+{
+  "scope": "Selected finding/repair record; separate reviewers are agents, and the trial was not blinded.",
+  "findings": [
+    {
+      "id": "F0-01",
+      "classification": "automated baseline delivery-policy incompatibility",
+      "source": "nv.03 NormalsExistChecker",
+      "initial_observation": "All V0 polygon meshes lack authored normals; not an explicit B1 rule.",
+      "producer_action": "Producer authored uniform unit normals from intended winding and updated the generator.",
+      "independent_recheck": "R1 existence, validity and winding rules assess all 121615 meshes without skips.",
+      "outcome": "resolved within selected policy"
+    },
+    {
+      "id": "F0-02",
+      "classification": "independent geometry concern",
+      "source": "V0 G-C01",
+      "initial_observation": "DIV01 stays selected during P02 straight-through passage; non-contact role unclear.",
+      "producer_action": "Producer retimed DIV01 and DIVR, reshaped indicators as arrows and added a mounted role legend.",
+      "independent_recheck": "Six complete parcel/junction overlap intervals retain their required states; selected sampled clearances remain adequate.",
+      "outcome": "resolved within authored kinematic scope"
+    },
+    {
+      "id": "F0-03",
+      "classification": "independent geometry interpretation concern",
+      "source": "V0 G-C02",
+      "initial_observation": "Overhead service distribution falls below the brief’s 14 m clear-height target.",
+      "producer_action": "Producer raised services and roof structure and extended walls/columns.",
+      "independent_recheck": "All 209 selected overhead meshes clear 14 m; minimum underside 14.060000420 m.",
+      "outcome": "resolved within checked scope"
+    },
+    {
+      "id": "F0-04",
+      "classification": "independent visual concern",
+      "source": "V0 VD01",
+      "initial_observation": "An overhead tray obscures the saved diverter overview.",
+      "producer_action": "Producer moved the camera below the raised services.",
+      "independent_recheck": "Revised overview exposes junctions/indicators under normal scene visibility.",
+      "outcome": "supported by independent visual review"
+    },
+    {
+      "id": "F0-05",
+      "classification": "independent visual concern",
+      "source": "V0 VD02",
+      "initial_observation": "Gate sign appears unsupported.",
+      "producer_action": "Producer added a floor post, base plate and fasteners.",
+      "independent_recheck": "Four gate poses show mounting; geometry review sampled sweep clearance at least 0.061712 m.",
+      "outcome": "supported within visual and selected clearance scope"
+    },
+    {
+      "id": "F0-06",
+      "classification": "producer-disclosed omission confirmed by review",
+      "source": "V0 VD03",
+      "initial_observation": "Connecting hardware omitted from the status tower.",
+      "producer_action": "Producer added mast extension, collars and a foot plate.",
+      "independent_recheck": "Mounting is visible; original stepped lamp samples remain unchanged.",
+      "outcome": "supported by independent visual/source review"
+    },
+    {
+      "id": "F0-07",
+      "classification": "independent evidence-readability concern",
+      "source": "V0 VD04",
+      "initial_observation": "Wide film cannot resolve IDs, states or scan crossings.",
+      "producer_action": "Producer retained the wide film and added detailed stills and a synchronized explanation video.",
+      "independent_recheck": "Both films fully decode; sampled explanations are readable; all 721 supplied state rows match reopened USD.",
+      "outcome": "supported with sampled-view limitations"
+    },
+    {
+      "id": "F0-08",
+      "classification": "producer-disclosed evidence omission confirmed by review",
+      "source": "V0 VE01/VE02",
+      "initial_observation": "GUI hierarchy/timeline and interactive performance evidence missing.",
+      "producer_action": "Producer recorded actual Blender GUI screenshots and completed-draw callback observations.",
+      "independent_recheck": "4.53 callbacks/s orbit and 2.63 callbacks/s short playback sample; screenshots/source/logs consistent. Import timer label remains imprecise.",
+      "outcome": "evidence gap filled; minor documentation concern retained"
+    }
+  ],
+  "attribution_note": "DIVR/P03 retiming is the producer’s extension of the general route-state feedback, subsequently verified independently. It was not a specific initial harness or reviewer discovery.",
+  "limits": [
+    "All 24 scripted brief checks passed in V0 as well as V1.",
+    "Eight feedback items are not eight newly discovered defects.",
+    "No contact physics, exhaustive collision certificate, calibrated appearance or owner acceptance.",
+    "GUI playback observation spans only frames 0–47 and was not independently rerun."
+  ],
+  "native_appearance_limits": [
+    "Native amber appears yellow and green turquoise/cyan-green, as already visible in V0.",
+    "Small IDs and scanner crossings still need the delivered synchronized explanation."
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "verdict": "ACCEPT_FOR_USE",
+  "complete": true,
+  "checks": [
+    {
+      "id": "core.artifact",
+      "status": "PASS",
+      "reason": "Admitted local USD dependencies; any runtime availability is caller-attested under the selected policy.",
+      "required": true,
+      "duration_ms": 0
+    },
+    {
+      "id": "usd.00",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 7.449
+    },
+    {
+      "id": "usd.01",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.449
+    },
+    {
+      "id": "usd.02",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.389
+    },
+    {
+      "id": "usd.03",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.375
+    },
+    {
+      "id": "usd.04",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.388
+    },
+    {
+      "id": "usd.05",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.369
+    },
+    {
+      "id": "usd.06",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.371
+    },
+    {
+      "id": "usd.07",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.365
+    },
+    {
+      "id": "usd.08",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.365
+    },
+    {
+      "id": "usd.09",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.357
+    },
+    {
+      "id": "usd.10",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.361
+    },
+    {
+      "id": "usd.11",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.366
+    },
+    {
+      "id": "usd.12",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 432.585
+    },
+    {
+      "id": "usd.13",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.448
+    },
+    {
+      "id": "usd.14",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.408
+    },
+    {
+      "id": "usd.15",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.374
+    },
+    {
+      "id": "usd.16",
+      "status": "PASS",
+      "reason": "Selected native OpenUSD validators executed.",
+      "required": true,
+      "duration_ms": 0.37
+    },
+    {
+      "id": "nv.00",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 3965.012
+    },
+    {
+      "id": "nv.01",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 5464.173
+    },
+    {
+      "id": "nv.02",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 22335.666
+    },
+    {
+      "id": "nv.03",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 2446.329
+    },
+    {
+      "id": "nv.04",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 11933.752
+    },
+    {
+      "id": "nv.05",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 8054.025
+    },
+    {
+      "id": "nv.06",
+      "status": "PASS",
+      "reason": "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
+      "required": true,
+      "duration_ms": 2065.895
+    },
+    {
+      "id": "audit.files",
+      "status": "PASS",
+      "reason": "Checked external file availability.",
+      "required": true,
+      "duration_ms": 6.465
+    },
+    {
+      "id": "audit.textures",
+      "status": "PASS",
+      "reason": "Checked discovered image dependencies.",
+      "required": true,
+      "duration_ms": 38.581
+    },
+    {
+      "id": "audit.authored_motion",
+      "status": "PASS",
+      "reason": "Checked authored motion data and sample coverage.",
+      "required": true,
+      "duration_ms": 504.29
+    },
+    {
+      "id": "trial.count",
+      "status": "PASS",
+      "reason": "Actual active/defined composed prim count, excluding pseudo-root; usefulness and duplicate inflation require separate review.",
+      "required": true,
+      "duration_ms": 638.678
+    },
+    {
+      "id": "trial.stage",
+      "status": "PASS",
+      "reason": "Explicit stage units, axis, clock, range and default prim.",
+      "required": true,
+      "duration_ms": 2.093
+    },
+    {
+      "id": "trial.event.p01-scan",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "required": true,
+      "duration_ms": 72.4
+    },
+    {
+      "id": "trial.event.p01-d01",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "required": true,
+      "duration_ms": 70.45
+    },
+    {
+      "id": "trial.event.p02-scan",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "required": true,
+      "duration_ms": 69.286
+    },
+    {
+      "id": "trial.event.p02-r01",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "required": true,
+      "duration_ms": 68.858
+    },
+    {
+      "id": "trial.event.p03-d02",
+      "status": "PASS",
+      "reason": "Positive centroid-plane crossing bracketed at every authored frame; crossing estimate is linear within its frame bracket.",
+      "required": true,
+      "duration_ms": 67.145
+    },
+    {
+      "id": "trial.reject-only",
+      "status": "PASS",
+      "reason": "P02 positive crossing through the explicitly mapped finite outbound lane mouths.",
+      "required": true,
+      "duration_ms": 95.633
+    },
+    {
+      "id": "trial.p03-hold",
+      "status": "PASS",
+      "reason": "P03 centroid stop and projected onward displacement by 16 s.",
+      "required": true,
+      "duration_ms": 61.94
+    },
+    {
+      "id": "trial.shuttle-travel",
+      "status": "PASS",
+      "reason": "Shuttle sampled path length from 2–12 s and stationarity at 0–2/12–14 s; route geometry is reviewed separately.",
+      "required": true,
+      "duration_ms": 447.959
+    },
+    {
+      "id": "trial.attachment",
+      "status": "PASS",
+      "reason": "Pallet attachment-point offset and rigid orientation relative to its platform at every saved frame.",
+      "required": true,
+      "duration_ms": 30.617
+    },
+    {
+      "id": "trial.payload-size",
+      "status": "PASS",
+      "reason": "Mapped pallet-only local bound projected onto its declared length/width/height axes at frame zero; payload mapping must exclude carried cartons.",
+      "required": true,
+      "duration_ms": 3.005
+    },
+    {
+      "id": "trial.gate",
+      "status": "PASS",
+      "reason": "Gate sampled closed/open holds and rotation about the evaluator-mapped physical hinge. Smooth visual motion is separate review.",
+      "required": true,
+      "duration_ms": 17.337
+    },
+    {
+      "id": "trial.lamps",
+      "status": "PASS",
+      "reason": "Exactly one effective lamp state at full-frame, half-frame and pre-boundary probes. Rendered legibility/brightness is separate.",
+      "required": true,
+      "duration_ms": 24.648
+    },
+    {
+      "id": "trial.material.steel",
+      "status": "PASS",
+      "reason": "Resolved bound universal UsdPreviewSurface metallic/roughness scalar requirements; no claim about rendered finish.",
+      "required": true,
+      "duration_ms": 2.591
+    },
+    {
+      "id": "trial.material.rubber",
+      "status": "PASS",
+      "reason": "Resolved bound universal UsdPreviewSurface metallic/roughness scalar requirements; no claim about rendered finish.",
+      "required": true,
+      "duration_ms": 1.812
+    },
+    {
+      "id": "trial.image.scanner",
+      "status": "PASS",
+      "reason": "Stored RGB pixel equality against the original supplied artwork, through the actual resolved material/texture connection.",
+      "required": true,
+      "duration_ms": 4.056
+    },
+    {
+      "id": "trial.image.d01",
+      "status": "PASS",
+      "reason": "Stored RGB pixel equality against the original supplied artwork, through the actual resolved material/texture connection.",
+      "required": true,
+      "duration_ms": 3.709
+    },
+    {
+      "id": "trial.panel.scanner",
+      "status": "PASS",
+      "reason": "Front-face dimensions, upright single UV mapping, direct st reader and normative sRGB interpretation; color scale/bias is recorded, not a brief numeric requirement. Rendered corner colors remain manual review.",
+      "required": true,
+      "duration_ms": 2.131
+    },
+    {
+      "id": "trial.panel.d01",
+      "status": "PASS",
+      "reason": "Front-face dimensions, upright single UV mapping, direct st reader and normative sRGB interpretation; color scale/bias is recorded, not a brief numeric requirement. Rendered corner colors remain manual review.",
+      "required": true,
+      "duration_ms": 1.837
+    },
+    {
+      "id": "trial.metadata.p01",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "required": true,
+      "duration_ms": 1.654
+    },
+    {
+      "id": "trial.metadata.p02",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "required": true,
+      "duration_ms": 1.526
+    },
+    {
+      "id": "trial.metadata.p03",
+      "status": "PASS",
+      "reason": "Required parcel destination string.",
+      "required": true,
+      "duration_ms": 1.516
+    },
+    {
+      "id": "trial.metadata.machines",
+      "status": "PASS",
+      "reason": "String metadata agrees with the evaluator-bound machine inventory; completeness of that inventory is a separate review.",
+      "required": true,
+      "duration_ms": 2.885
+    }
+  ],
+  "counts": {
+    "PASS": 52
+  }
+}

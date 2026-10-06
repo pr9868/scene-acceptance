@@ -1,0 +1,16 @@
+{
+  "candidate": "dairy_plant.usda",
+  "mapping_review": "pending",
+  "routes": {
+    "script": 3,
+    "visual": 24,
+    "unsupported": 8,
+    "both": 2
+  },
+  "decision": "NEEDS_REVIEW",
+  "mode": "both",
+  "scene_sha256": "97a7015558a58710d5707bdfbbc0c60bb98a67d54e01c994c65ddd3fc2559f98",
+  "capture_counts": {
+    "supplied": 51
+  }
+}

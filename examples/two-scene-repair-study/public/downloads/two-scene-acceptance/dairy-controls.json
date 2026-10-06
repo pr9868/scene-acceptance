@@ -1,0 +1,242 @@
+{
+  "scope": "Fourteen deliberately seeded faults plus one unchanged control; these are not fourteen naturally observed delivery failures.",
+  "authorship": "The dairy producer planted the faults and supplied the interpretation and replayed review opinions. No independent grading was performed.",
+  "baseline_rejections": 2,
+  "with_mapped_checks_rejections": 7,
+  "observations": [
+    {
+      "id": "M00",
+      "mutation": "No mutation (control)",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M01",
+      "mutation": "Tank TK-301 moved 0.5 m after piping was generated",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "spec.conn.l-207.end",
+          "FAIL"
+        ],
+        [
+          "spec.conn.l-208.start",
+          "FAIL"
+        ],
+        [
+          "spec.conn.l-415.end",
+          "FAIL"
+        ]
+      ],
+      "n_failed_or_unknown": 3
+    },
+    {
+      "id": "M02",
+      "mutation": "Separator SEP-101 floating 0.3 m above the floor",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "spec.conn.l-107.end",
+          "FAIL"
+        ],
+        [
+          "spec.conn.l-201.start",
+          "FAIL"
+        ],
+        [
+          "spec.conn.l-301.start",
+          "FAIL"
+        ]
+      ],
+      "n_failed_or_unknown": 3
+    },
+    {
+      "id": "M03",
+      "mutation": "Control cabinet CP-601 floating 0.4 m above the floor (no pipes attached)",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M04",
+      "mutation": "Operator station OS-601 moved into the process aisle",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M05",
+      "mutation": "Raw-milk pipe over the service aisle lowered 0.8 m (head clearance < 2.2 m)",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "spec.headroom.l-101.s1.a2_service",
+          "FAIL"
+        ]
+      ],
+      "n_failed_or_unknown": 1
+    },
+    {
+      "id": "M06",
+      "mutation": "Label texture file missing from the package",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "core.artifact",
+          "UNKNOWN"
+        ],
+        [
+          "usd.12",
+          "FAIL"
+        ],
+        [
+          "audit.files",
+          "FAIL"
+        ],
+        [
+          "audit.textures",
+          "FAIL"
+        ],
+        [
+          "spec.materials",
+          "FAIL"
+        ],
+        [
+          "spec.tex.sep-101",
+          "UNKNOWN"
+        ]
+      ],
+      "n_failed_or_unknown": 6
+    },
+    {
+      "id": "M07",
+      "mutation": "Separator hood bound to a non-existent material",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "nv.06",
+          "FAIL"
+        ]
+      ],
+      "n_failed_or_unknown": 1
+    },
+    {
+      "id": "M08",
+      "mutation": "Milk diversion return route (DV-101 -> BT-101) deleted",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "spec.conn.l-205.start",
+          "FAIL"
+        ],
+        [
+          "spec.conn.l-205.end",
+          "FAIL"
+        ]
+      ],
+      "n_failed_or_unknown": 2
+    },
+    {
+      "id": "M09",
+      "mutation": "CIP branch lowered 0.6 m so it passes through the top of TK-102 (clash)",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M10",
+      "mutation": "Stainless materials made mirror-polished (roughness 0)",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M11",
+      "mutation": "Separator tag replaced with a wrong tag/name (SEP-102 Homogenizer)",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M12",
+      "mutation": "Stage units changed to centimetres",
+      "exit_code": 2,
+      "core_verdict": "REJECT",
+      "assessment_verdict": "REJECT",
+      "failed_or_unknown": [
+        [
+          "spec.units",
+          "FAIL"
+        ],
+        [
+          "spec.env.x",
+          "FAIL"
+        ],
+        [
+          "spec.env.y",
+          "FAIL"
+        ],
+        [
+          "spec.env.z",
+          "FAIL"
+        ],
+        [
+          "spec.reserve.hx101",
+          "FAIL"
+        ],
+        [
+          "spec.reserve.hx201",
+          "FAIL"
+        ],
+        [
+          "spec.reserve.cip401",
+          "FAIL"
+        ]
+      ],
+      "n_failed_or_unknown": 7
+    },
+    {
+      "id": "M13",
+      "mutation": "Separator hood normals zeroed (broken shading)",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    },
+    {
+      "id": "M14",
+      "mutation": "Stray, unconnected raw-milk pipe segment added in open floor space",
+      "exit_code": 3,
+      "core_verdict": "ACCEPT_FOR_USE",
+      "assessment_verdict": "NEEDS_REVIEW",
+      "failed_or_unknown": [],
+      "n_failed_or_unknown": 0
+    }
+  ]
+}

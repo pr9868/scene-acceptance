@@ -40,6 +40,8 @@ For a saved scene and raw text/image brief, follow the [complete preparation exa
 
 ## See what a run checked
 
+The [two-scene repair case study](examples/two-scene-repair-study/README.md) follows a dairy binding defect and a 125,000-prim distribution-centre delivery through feedback and repair. Its selected evidence distinguishes a scene defect, an unstated delivery policy and a route-state problem found by separate review. The larger trial used an unreleased development build and custom pack; the evidence collection does not extend the capabilities of the 0.5.0 release or provide a full replay of those builds.
+
 The [test inventory](docs/TEST_INVENTORY.md) explains each baseline rule, configurable check and advisory review item. `check-3d --list-tests` returns the catalog; `--capabilities` returns the invocation/evidence schemas. The [unified CLI guide](docs/EVALUATION_MODES.md) covers `--mode checks`, `--mode judge` and `--mode both`, with an optional mapped brief and caller-configured model CLI. Measured results and evidence-bounded opinions stay separate. Omitting `--mode` preserves the existing scripted invocation below.
 
 The [reporting guide](docs/REPORTING.md) covers the reusable 27-check baseline, per-object outcomes, coverage gaps, CSV exports and batch reports. Install optional providers and run:

@@ -1,0 +1,20 @@
+{
+  "origin": "Original programmatically drawn artwork for this fictional assignment; no external asset source",
+  "licence": "CC0-1.0 for the generated PNG artwork",
+  "images": [
+    {
+      "file": "scanner-display.png",
+      "width": 512,
+      "height": 256,
+      "mode": "RGB",
+      "sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e"
+    },
+    {
+      "file": "lane-d01.png",
+      "width": 512,
+      "height": 256,
+      "mode": "RGB",
+      "sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3"
+    }
+  ]
+}

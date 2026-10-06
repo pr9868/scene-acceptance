@@ -1,0 +1,584 @@
+{
+  "scope": "Selected evidence and display derivatives; complete scenes, raw per-subject reports and executable development trial are not included.",
+  "files": [
+    {
+      "file": "downloads/two-scene-acceptance/briefs/dairy-requirements.md",
+      "bytes": 15779,
+      "sha256": "f35d10397c1a9d76bf116d608498e22321a1721cf4d21cdbd8ba881a463f1992"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/briefs/distribution/01-requirements-brief.md",
+      "bytes": 14618,
+      "sha256": "5394bd35546d143b9f55a502b59e5e873219c0b61d3737a1f3c09bb8dad61107"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/briefs/distribution/references/lane-d01.png",
+      "bytes": 7644,
+      "sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/briefs/distribution/references/reference-manifest.json",
+      "bytes": 569,
+      "sha256": "9cb654f305a81368bc53abe0bea9b33a2d4402b8b1e97eb504669d8d2495b1f6"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/briefs/distribution/references/scanner-display.png",
+      "bytes": 13222,
+      "sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/coverage.html",
+      "bytes": 7899,
+      "sha256": "814948e17e4d3226496326a8a8bc2289c90a8e5a76f9cee4d40205a355d9d387"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/dairy-binding-excerpt.json",
+      "bytes": 889,
+      "sha256": "8baaac66301a496c0b84070e8b5f2dbecdc36873fb7cceb4334400022d96c483"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/dairy-controls.json",
+      "bytes": 6032,
+      "sha256": "9c9d2d329f645583fea2853d1b901e4d0548de2f75937a3e1560ffa9e4ffbb0b"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/dairy-prepared-summary.json",
+      "bytes": 339,
+      "sha256": "1ba3687e332c39d5828a492eebf44a3b6fff6fd120cb532951f08a10aaa21e50"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/distribution-feedback.html",
+      "bytes": 7099,
+      "sha256": "cfb598197313fb51b982f6d916a08550ec5e7db2310e01e59825f113d2ade414"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/distribution-response.html",
+      "bytes": 7936,
+      "sha256": "d753d07806c93c8904f4a64afec6654e9e2ea8c35efd8276076cb3f3fce80818"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/distribution-row-comparison.json",
+      "bytes": 5088,
+      "sha256": "088a0f114765eadb282a5fd3c0293c33e29e37d23bc22f765c0db362220d9f41"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/distribution-v0-checks.json",
+      "bytes": 11324,
+      "sha256": "20c95ea87f5f7ea090228dc7640b8caac6858ffb468bfbbc7258080e95bf1dd4"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/distribution-v1-checks.json",
+      "bytes": 11317,
+      "sha256": "cdfce8d3c2e2f6fb71772f6b9add326949dc4b50727669fce2cb62b0a0e5a069"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/distribution-v1-explained.mp4",
+      "bytes": 1554695,
+      "sha256": "3b4a77265ab3d25eed8b424b98e9938717d8d33d50827c99239153882810c712"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/findings.html",
+      "bytes": 6588,
+      "sha256": "28dfedcbf24a6f19593f9c88d65d0748ae31bd5f1e9525522febb6e06657d395"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/findings.json",
+      "bytes": 5057,
+      "sha256": "9021697de9fa881704889d08838aba932137c04859b108abdbf3fe21c10bc8cb"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/index.html",
+      "bytes": 5886,
+      "sha256": "31556f239bc947b4c54c5774c9ccf72a455062b675f2f90f3656ca2d69c5a7a6"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/measurements.json",
+      "bytes": 77198,
+      "sha256": "a94e062bcf738ffb22ee87f827e74a85f15cd63a5c71a642553ebe3360339038"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/records.html",
+      "bytes": 6350,
+      "sha256": "5190f198e58d07fcbcb43dccf81e2c90b7231529a6c02d4b19c009249d0d9273"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/results.html",
+      "bytes": 5087,
+      "sha256": "a38df957de15b3307f9879ee11a3520eebd74117e2e4a3784035ca48b19d32d0"
+    },
+    {
+      "file": "downloads/two-scene-acceptance/sequence-description.html",
+      "bytes": 6260,
+      "sha256": "c064cfd988c83c08c3ac7374a7c8be7b70b782c36dc2820d30bb6f304092553c"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-binding-failure-mobile.webp",
+      "bytes": 22326,
+      "sha256": "687c3a9c75f2066e55dbb49150c39adf4699e6a60d8e25b388f915f7cd9b032e"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-binding-failure.webp",
+      "bytes": 24946,
+      "sha256": "bf51ce64b93b67b916321af50f09ac72b2ddfd696ca35b40a03de0ad19937aff"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-hero-interior-rtx-1280.webp",
+      "bytes": 101182,
+      "sha256": "4341b0a3d52cbed4264f7ba156c5c611df1139926ab36099d3c177c3def9b19b"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-hero-interior-rtx-640.webp",
+      "bytes": 36808,
+      "sha256": "655b02348f1b70d065a34ed4261b265bec72d7a9a73ee0359d82c575c0f0173c"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-hero-interior-rtx.webp",
+      "bytes": 177754,
+      "sha256": "59fe6c20b187612fcebf1a620e3077b1fc0bdf20a36b2ec82ef61c40b28f4dc5"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-results-mobile.webp",
+      "bytes": 25346,
+      "sha256": "29375a707dc77346024cea44db2f4904e43c9a4bde017e9dfc31bef5340f9d64"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-results.webp",
+      "bytes": 26372,
+      "sha256": "36c1d75b16df8e3b0d64226446a85b8c3b188a11a706b9ccfbf311211c11a8c6"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v0-diverter_p02_passage-1280.webp",
+      "bytes": 95716,
+      "sha256": "11253add936cee1d9a2cf2ae25a1b3838cabd45237bbd1e4bd9cf3fbc8d4d881"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v0-diverter_p02_passage-640.webp",
+      "bytes": 38992,
+      "sha256": "ff1f8c758dba4b2bf224c9b8a88ca0330d672e14b845c4ee592dbf55ad23ab29"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v0-diverter_p02_passage.webp",
+      "bytes": 160576,
+      "sha256": "60f7e4331d1462d0f7ac84459b74730871718e02d5e755c0ee91b8e7a6c135b2"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-diverter_p02_passage-1280.webp",
+      "bytes": 95836,
+      "sha256": "7fa016ff8fbf9eb548ef2a4f31def908194b6f575bd47719af3fdc93f2ddc3da"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-diverter_p02_passage-640.webp",
+      "bytes": 38798,
+      "sha256": "a4adb692ebfc9e56e2f4a2267d07d65e7c09365f680247fe68a8dec9e72d2174"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-diverter_p02_passage.webp",
+      "bytes": 160590,
+      "sha256": "1053ac666782c0f156c2ef1f999095feee8048193faad7c7545878b2f691958a"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-facility-1280.webp",
+      "bytes": 97828,
+      "sha256": "18c37918b7fb80c8642cb86da35504c5c97cffe594014ca952636c43453c4f74"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-facility-640.webp",
+      "bytes": 33454,
+      "sha256": "66b5f64b834a12022b7b4b9012cf301290a460459374b10a1689137c5ecbe9ca"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-facility.webp",
+      "bytes": 175740,
+      "sha256": "74e0c83059f7c909c7604d281a8693e6c76dd0aa0f4f714e6ca2bd30bad17a12"
+    },
+    {
+      "file": "images/two-scene-acceptance/sequence-poster.webp",
+      "bytes": 87620,
+      "sha256": "d81cde8e1d66d79ba11857c47a91482df02393909eb7188e8085dac653eb6c8c"
+    },
+    {
+      "file": "images/two-scene-acceptance/workflow-mobile.svg",
+      "bytes": 3074,
+      "sha256": "10e6c40e85572951db980bdfd8a45381f012ec94a8ce3df48bb69496abba9eb0"
+    },
+    {
+      "file": "images/two-scene-acceptance/workflow.svg",
+      "bytes": 3270,
+      "sha256": "3899f7c9e54f139331be91329828c6893520f8394288425c8a272e1c3713dad3"
+    }
+  ],
+  "media_derivatives": [
+    {
+      "file": "images/two-scene-acceptance/dairy-hero-interior-rtx-640.webp",
+      "source_file": "dairy-hero-interior-rtx.png",
+      "source_sha256": "5765080727ff247ae0c33fe418e5b9abf56d020b1373ef4060a42c0ef477b0fe",
+      "source_bytes": 5155443,
+      "source_dimensions": [
+        3840,
+        2160
+      ],
+      "sha256": "655b02348f1b70d065a34ed4261b265bec72d7a9a73ee0359d82c575c0f0173c",
+      "bytes": 36808,
+      "dimensions": [
+        640,
+        360
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-hero-interior-rtx-1280.webp",
+      "source_file": "dairy-hero-interior-rtx.png",
+      "source_sha256": "5765080727ff247ae0c33fe418e5b9abf56d020b1373ef4060a42c0ef477b0fe",
+      "source_bytes": 5155443,
+      "source_dimensions": [
+        3840,
+        2160
+      ],
+      "sha256": "4341b0a3d52cbed4264f7ba156c5c611df1139926ab36099d3c177c3def9b19b",
+      "bytes": 101182,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-hero-interior-rtx.webp",
+      "source_file": "dairy-hero-interior-rtx.png",
+      "source_sha256": "5765080727ff247ae0c33fe418e5b9abf56d020b1373ef4060a42c0ef477b0fe",
+      "source_bytes": 5155443,
+      "source_dimensions": [
+        3840,
+        2160
+      ],
+      "sha256": "59fe6c20b187612fcebf1a620e3077b1fc0bdf20a36b2ec82ef61c40b28f4dc5",
+      "bytes": 177754,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-facility-640.webp",
+      "source_file": "distribution-v1-facility.png",
+      "source_sha256": "482b8e5874d37646310b3269bc16c435453f6e1c6422e4b89d27cd2dfbd52322",
+      "source_bytes": 1155478,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "66b5f64b834a12022b7b4b9012cf301290a460459374b10a1689137c5ecbe9ca",
+      "bytes": 33454,
+      "dimensions": [
+        640,
+        360
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-facility-1280.webp",
+      "source_file": "distribution-v1-facility.png",
+      "source_sha256": "482b8e5874d37646310b3269bc16c435453f6e1c6422e4b89d27cd2dfbd52322",
+      "source_bytes": 1155478,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "18c37918b7fb80c8642cb86da35504c5c97cffe594014ca952636c43453c4f74",
+      "bytes": 97828,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-facility.webp",
+      "source_file": "distribution-v1-facility.png",
+      "source_sha256": "482b8e5874d37646310b3269bc16c435453f6e1c6422e4b89d27cd2dfbd52322",
+      "source_bytes": 1155478,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "74e0c83059f7c909c7604d281a8693e6c76dd0aa0f4f714e6ca2bd30bad17a12",
+      "bytes": 175740,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v0-diverter_p02_passage-640.webp",
+      "source_file": "distribution-v0-diverter_p02_passage.png",
+      "source_sha256": "d9fef0b98cd14ad355033870b0499d98f8a674fb371503efbcb6ac0df2d154cd",
+      "source_bytes": 1452531,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "ff1f8c758dba4b2bf224c9b8a88ca0330d672e14b845c4ee592dbf55ad23ab29",
+      "bytes": 38992,
+      "dimensions": [
+        640,
+        360
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v0-diverter_p02_passage-1280.webp",
+      "source_file": "distribution-v0-diverter_p02_passage.png",
+      "source_sha256": "d9fef0b98cd14ad355033870b0499d98f8a674fb371503efbcb6ac0df2d154cd",
+      "source_bytes": 1452531,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "11253add936cee1d9a2cf2ae25a1b3838cabd45237bbd1e4bd9cf3fbc8d4d881",
+      "bytes": 95716,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v0-diverter_p02_passage.webp",
+      "source_file": "distribution-v0-diverter_p02_passage.png",
+      "source_sha256": "d9fef0b98cd14ad355033870b0499d98f8a674fb371503efbcb6ac0df2d154cd",
+      "source_bytes": 1452531,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "60f7e4331d1462d0f7ac84459b74730871718e02d5e755c0ee91b8e7a6c135b2",
+      "bytes": 160576,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-diverter_p02_passage-640.webp",
+      "source_file": "distribution-v1-diverter_p02_passage.png",
+      "source_sha256": "6e3ff38502534390b9457c12256b4e66469e1f868f70e964dcd9a022cf48c441",
+      "source_bytes": 1446804,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "a4adb692ebfc9e56e2f4a2267d07d65e7c09365f680247fe68a8dec9e72d2174",
+      "bytes": 38798,
+      "dimensions": [
+        640,
+        360
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-diverter_p02_passage-1280.webp",
+      "source_file": "distribution-v1-diverter_p02_passage.png",
+      "source_sha256": "6e3ff38502534390b9457c12256b4e66469e1f868f70e964dcd9a022cf48c441",
+      "source_bytes": 1446804,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "7fa016ff8fbf9eb548ef2a4f31def908194b6f575bd47719af3fdc93f2ddc3da",
+      "bytes": 95836,
+      "dimensions": [
+        1280,
+        720
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-v1-diverter_p02_passage.webp",
+      "source_file": "distribution-v1-diverter_p02_passage.png",
+      "source_sha256": "6e3ff38502534390b9457c12256b4e66469e1f868f70e964dcd9a022cf48c441",
+      "source_bytes": 1446804,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "1053ac666782c0f156c2ef1f999095feee8048193faad7c7545878b2f691958a",
+      "bytes": 160590,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/sequence-poster.webp",
+      "source_file": "sequence-poster.png",
+      "source_sha256": "e8bcc03853f9b34ec4dadd2c178d77de0a05af0cd6c7668fcdd18e72ed6a8f66",
+      "source_bytes": 806282,
+      "source_dimensions": [
+        1920,
+        1080
+      ],
+      "sha256": "d81cde8e1d66d79ba11857c47a91482df02393909eb7188e8085dac653eb6c8c",
+      "bytes": 87620,
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "transformation": "resize if needed; WebP quality 88; no scene/content edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-binding-failure.webp",
+      "source_file": "dairy-binding-failure.png",
+      "source_sha256": "5be0a96c619b713bd485f1fa6d92c2affffab65b84bf06f2a9e7a7899a79e6a3",
+      "source_bytes": 81180,
+      "source_dimensions": [
+        1040,
+        548
+      ],
+      "sha256": "bf51ce64b93b67b916321af50f09ac72b2ddfd696ca35b40a03de0ad19937aff",
+      "bytes": 24946,
+      "dimensions": [
+        1040,
+        548
+      ],
+      "transformation": "lossless PNG-to-WebP; no pixel edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/dairy-binding-failure-mobile.webp",
+      "source_file": "dairy-binding-failure-mobile.png",
+      "source_sha256": "4c6fe2ba2620e024054ce055af9bd018518aa9068eca462979bdd7c05f9666c1",
+      "source_bytes": 76289,
+      "source_dimensions": [
+        480,
+        751
+      ],
+      "sha256": "687c3a9c75f2066e55dbb49150c39adf4699e6a60d8e25b388f915f7cd9b032e",
+      "bytes": 22326,
+      "dimensions": [
+        480,
+        751
+      ],
+      "transformation": "lossless PNG-to-WebP; no pixel edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-results.webp",
+      "source_file": "distribution-results.png",
+      "source_sha256": "d40b26230c77aa37f9775a0bd6e915a971cbe78069183a2f5a1df6f4fe6500dc",
+      "source_bytes": 68594,
+      "source_dimensions": [
+        1120,
+        507
+      ],
+      "sha256": "36c1d75b16df8e3b0d64226446a85b8c3b188a11a706b9ccfbf311211c11a8c6",
+      "bytes": 26372,
+      "dimensions": [
+        1120,
+        507
+      ],
+      "transformation": "lossless PNG-to-WebP; no pixel edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/distribution-results-mobile.webp",
+      "source_file": "distribution-results-mobile.png",
+      "source_sha256": "d482c5ea4cba0704bed6726e88f0c813acadd40058b22b8c73eecf26047f6471",
+      "source_bytes": 68932,
+      "source_dimensions": [
+        420,
+        844
+      ],
+      "sha256": "29375a707dc77346024cea44db2f4904e43c9a4bde017e9dfc31bef5340f9d64",
+      "bytes": 25346,
+      "dimensions": [
+        420,
+        844
+      ],
+      "transformation": "lossless PNG-to-WebP; no pixel edits"
+    },
+    {
+      "file": "images/two-scene-acceptance/workflow.svg",
+      "source_file": "workflow.svg",
+      "source_sha256": "3899f7c9e54f139331be91329828c6893520f8394288425c8a272e1c3713dad3",
+      "sha256": "3899f7c9e54f139331be91329828c6893520f8394288425c8a272e1c3713dad3",
+      "bytes": 3270,
+      "transformation": "unchanged bytes"
+    },
+    {
+      "file": "images/two-scene-acceptance/workflow-mobile.svg",
+      "source_file": "workflow-mobile.svg",
+      "source_sha256": "10e6c40e85572951db980bdfd8a45381f012ec94a8ce3df48bb69496abba9eb0",
+      "sha256": "10e6c40e85572951db980bdfd8a45381f012ec94a8ce3df48bb69496abba9eb0",
+      "bytes": 3074,
+      "transformation": "unchanged bytes"
+    }
+  ],
+  "selected_record_transformations": [
+    {
+      "file": "briefs/dairy-requirements.md",
+      "mode": "unchanged bytes",
+      "source_sha256": "f35d10397c1a9d76bf116d608498e22321a1721cf4d21cdbd8ba881a463f1992"
+    },
+    {
+      "file": "briefs/distribution/01-requirements-brief.md",
+      "mode": "unchanged bytes",
+      "source_sha256": "5394bd35546d143b9f55a502b59e5e873219c0b61d3737a1f3c09bb8dad61107"
+    },
+    {
+      "file": "briefs/distribution/references/scanner-display.png",
+      "mode": "unchanged bytes",
+      "source_sha256": "653c99b1b9fa5c704f2005444fcdefcd2ce30decfa5df83690f0689087b5fd0e"
+    },
+    {
+      "file": "briefs/distribution/references/lane-d01.png",
+      "mode": "unchanged bytes",
+      "source_sha256": "d2440be15edadc0fc0c111215df378d5559e942f9e3d7733c16138c40eecc7b3"
+    },
+    {
+      "file": "briefs/distribution/references/reference-manifest.json",
+      "mode": "unchanged bytes",
+      "source_sha256": "9cb654f305a81368bc53abe0bea9b33a2d4402b8b1e97eb504669d8d2495b1f6"
+    },
+    {
+      "file": "distribution-v1-explained.mp4",
+      "mode": "unchanged bytes",
+      "source_sha256": "3b4a77265ab3d25eed8b424b98e9938717d8d33d50827c99239153882810c712"
+    },
+    {
+      "file": "distribution-v0-checks.json",
+      "mode": "selected original report excerpt, JSON formatting normalized",
+      "source_sha256": "05122dd861ee680c8aa7e4802e48a5f217a947919c5757a71dcc815da29b5092"
+    },
+    {
+      "file": "distribution-v1-checks.json",
+      "mode": "selected original report excerpt, JSON formatting normalized",
+      "source_sha256": "4b4491e0259afc8a1e8a6d1a7ac79d34d4ffe95d41d87eaf0ff1e7766401bc57"
+    },
+    {
+      "file": "distribution-row-comparison.json",
+      "mode": "selected original report excerpt, JSON formatting normalized",
+      "source_sha256": "088a0f114765eadb282a5fd3c0293c33e29e37d23bc22f765c0db362220d9f41"
+    },
+    {
+      "file": "dairy-binding-excerpt.json",
+      "mode": "selected original report excerpt, JSON formatting normalized",
+      "source_sha256": "8baaac66301a496c0b84070e8b5f2dbecdc36873fb7cceb4334400022d96c483"
+    },
+    {
+      "file": "dairy-prepared-summary.json",
+      "mode": "selected original report excerpt, JSON formatting normalized",
+      "source_sha256": "1ba3687e332c39d5828a492eebf44a3b6fff6fd120cb532951f08a10aaa21e50"
+    },
+    {
+      "file": "distribution-feedback.html",
+      "mode": "redacted execution setup/local locations; eight finding bodies preserved",
+      "source_sha256": "8dc5a57a3e597af04c3309d440f52ef514e7f5d66d99a76f8f104c000b29ac60"
+    },
+    {
+      "file": "distribution-response.html",
+      "mode": "introductory scope note added; unavailable source links converted to text",
+      "source_sha256": "8d9e2598e54b479784d80d8758c179e094747a42f1514d68d7b1e308547f8c89"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>What changed in the scripted results</title><style>*{box-sizing:border-box}html{scroll-behavior:auto}body{max-width:1100px;margin:32px auto;padding:0 24px;color:#253341;background:#fafafa;font:17px/1.65 system-ui,sans-serif}main{margin-top:28px}h1{font-size:34px;line-height:1.2;max-width:850px}h2{margin-top:36px;font-size:24px}a{color:#155c80;text-underline-offset:3px}a:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid #155c80;outline-offset:4px}p,li{max-width:900px}code{overflow-wrap:anywhere;white-space:normal;font-size:.9em}pre{white-space:pre-wrap}table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #c3cfd7;overflow-wrap:anywhere}.table-scroll{overflow:auto}.table-scroll table{min-width:650px}.hint{font-size:14px;color:#536774}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}img,video{width:100%;height:auto;display:block}figure{margin:20px 0}figcaption{font-size:14px}details{margin:24px 0}summary{cursor:pointer;padding:12px 0}nav{font-size:15px}li+li{margin-top:8px}.skip{position:absolute;top:-100px}.skip:focus{top:8px;background:white;padding:8px}footer{margin-top:40px;padding-top:20px;border-top:1px solid #c3cfd7;font-size:14px}@media(max-width:640px){body{padding:0 18px}h1{font-size:28px}.pair{grid-template-columns:1fr}td,th{padding:10px}}</style></head><body><a class="skip" href="#content">Skip to content</a><nav aria-label="Evidence navigation"><a href="index.html">Evidence collection</a> · <a href="/projects/what-two-scene-builds-revealed-about-3d-acceptance/">Read the article</a></nav><main id="content"><h1 id="what-changed-in-the-scripted-results">What changed in the scripted results</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p class="hint" id="table-hint-1">Scroll sideways for more columns on a small screen.</p><div class="table-scroll" role="region" aria-label="What changed in the scripted results: table 1" aria-describedby="table-hint-1" tabindex="0"><table><thead><tr><th>Selected scope</th><th>First delivery</th><th>Repaired delivery</th></tr></thead><tbody><tr><td>All report rows</td><td>51 PASS, 1 FAIL</td><td>52 PASS</td></tr><tr><td>Brief-derived trial rows</td><td>24 PASS</td><td>24 PASS</td></tr><tr><td>Authored normals: subjects</td><td>121,602 assessed; all fail existence</td><td>121,615 assessed; all pass existence, validity and winding, with no skips</td></tr><tr><td>Regressions in previously passing rows</td><td>Baseline for comparison</td><td>None among the previous 51 passing rows</td></tr></tbody></table></div>
+<p>The single changed row is <code>nv.03</code>, NVIDIA’s <code>NormalsExistChecker</code>. It applied the selected authored-normals policy, which the issued brief had not explicitly stated. The first delivery’s missing normals did not by themselves establish invalid USD or visible failure. Downstream validity checks skipped those subjects in the first delivery; their aggregate PASS supplied no normal-validity evidence.</p>
+<p>The row summaries report the recorded verdict, status, reason, required flag and duration. They omit the large per-subject raw reports. A row PASS still needs its subject coverage interpreted correctly.</p>
+<ul>
+<li><a href="distribution-v0-checks.json">First-delivery row summary</a></li>
+<li><a href="distribution-v1-checks.json">Repaired-delivery row summary</a></li>
+<li><a href="distribution-row-comparison.json">Comparison of the unchanged check scope</a></li>
+<li><a href="measurements.json">Selected motion, texture, geometry and GUI measurements</a></li>
+<li><a href="findings.html">Separate review findings and repairs</a></li>
+</ul>
+<h2 id="dairy-result">Dairy result</h2>
+<p>One authoring bug left nonexistent material targets on a flow-meter display and two HMI screens. The producer registered the display textures in its generator, rebuilt and reran the selected baseline successfully. The original rejected USD is unavailable. The saved report and repair log support the sequence; a new seeded failure would not reproduce that original revision.</p>
+<p><a href="dairy-binding-excerpt.json">Three saved binding diagnostics</a> · <a href="dairy-prepared-summary.json">Prepared scope summary</a> · <a href="coverage.html#dairy">Dairy controls and limits</a></p></main><footer>Selected evidence for two fictional scene builds. <a href="records.html">Scope and reproduction limits</a> · <a href="manifest.json">Distribution manifest</a></footer><script>for(const r of document.querySelectorAll('.table-scroll')){const id=r.getAttribute('aria-describedby');const update=()=>{const over=r.scrollWidth>r.clientWidth+1;r.tabIndex=over?0:-1;if(over){r.setAttribute('aria-describedby',id)}else{r.removeAttribute('tabindex');r.removeAttribute('aria-describedby')}document.getElementById(id).hidden=!over};new ResizeObserver(update).observe(r);update()}</script></body></html>
