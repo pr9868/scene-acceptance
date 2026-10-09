@@ -141,9 +141,9 @@ def load_context(*, assessment, expected_assessment_sha256, policy, expected_pol
         if key.startswith(('obligation:', 'check:')):
             raise ContractError('Custom evidence ID uses a reserved prefix')
         path = _inside(owner, row['path'])
-        observed = sha(path) if path.is_file() else None
         if path.exists() and (not path.is_file() or path.stat().st_size > 262144):
             raise ContractError('Triage text evidence exceeds 256 KiB or is not regular')
+        observed = sha(path) if path.is_file() else None
         if observed is not None and observed != row['sha256']:
             raise ContractError('Triage source evidence does not match its declared hash')
         if str(path) in inputs and inputs[str(path)] != observed:
@@ -317,7 +317,7 @@ def _report(result, out):
                     f'<td><strong>{E(row["policy_outcome"])}</strong><p>{E(" ".join(row["policy_reasons"]))}</p>'
                     f'<p>Owner policy: {E(row["policy_rule"]["reason"])}</p>'
                     f'<p>Original result: {E(row["original_status"])} · Required: {row["required"]}</p>'
-                    f'<p>Missing evidence: {E(", ".join(row["missing_evidence_ids"]) or "None")}</p></td></tr>')
+                    f'<p>Missing declared source files: {E(", ".join(row["missing_evidence_ids"]) or "None")}</p></td></tr>')
     (out / 'report.html').write_text(f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">'
         f'<title>Assumptions needing review</title><style>{STYLE}</style><main><h1>Assumptions needing review</h1>'
         f'<p><strong>{E(result["decision"])}</strong> · Next action: {E(result["next_action"])}</p>'

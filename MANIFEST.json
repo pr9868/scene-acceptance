@@ -1,5 +1,5 @@
 {
-  "checker_sha256": "68fd316f55ce18b44d0217c422c93388a4e84dffb2f5d7129fbaa5fee8ac2b60",
+  "checker_sha256": "0b72fa540d0635e29334383bd330f667cf696f62200be4dffdfbfc7589edbd79",
   "original_files_sha256": {
     "src/scene_acceptance/__init__.py": "3de785f2831bbadcfcd714b5099db177bbddebbf9c2a4f04b545fc1b52f96d73",
     "src/scene_acceptance/artifact.py": "e3400a45497eae93462e0a5fa46a93231eb6ee39368105466b3b16c13c5d7cd2",
@@ -2112,7 +2112,7 @@
     "src/scene_acceptance/supplemental/__init__.py": "cf12b34a1e04f54abbb55e66fa0c18b01a7ce4782a2a830174a4f8087296a22c",
     "src/scene_acceptance/supplemental/readbacks.py": "ce3363e86ade4b8ffee027ed1299e4c7c1f5566241e80768bf218e2748357572",
     "src/scene_acceptance/test_catalog.py": "fd4f46d882a7da84e844ad4b6b115f5cbcceed3ae7c30adb5d5185bf1f50b095",
-    "src/scene_acceptance/triage.py": "263d4260bb315aa96b052c0f2163eddc37a15392037d7eb8a3afdfe5339da6e5",
+    "src/scene_acceptance/triage.py": "85c12914c9cbf662af0583144c74581c6c20b2d37b72cd4031891d870347f380",
     "src/scene_acceptance/usd_reader.py": "e63329bb290e4a7499225324e00741397444ec65ad34f6cf9bc4358721b0a66b",
     "tests/test_acceptance.py": "77527c3b812655c14955739a2b525586b0ff16ccfb78341f17b96f3c0df367bd",
     "tests/test_admission_budget.py": "a176eb686973b39350fc07158d1ad6a76044bf26bd4445cfc730620e97c7ef69",
@@ -2138,7 +2138,7 @@
     "tests/test_scope_policy.py": "ed79c275c0e5aa4886dcecb25570931c8b8cabaf3127097de2d2e8f4b4237d2c",
     "tests/test_scope_routing.py": "9b7701db3d310c6b9dcf44b764ef41ad3fc0fa1cf244aaefc81185cf2bcdd911",
     "tests/test_texture_reference_policy.py": "dd2192fb4d29f603785c58be64d1574471d971991476a7b0a04c37c4697a17cf",
-    "tests/test_triage.py": "822dd65cb696372564ad40a66d7c180874e344d4117847d641a120750ee07278",
+    "tests/test_triage.py": "e87fef0f100246791ae54020cc2a023182ff0bef48cf4701d63f7fd7757b5f9f",
     "tests/test_worker_identity.py": "19d4b5c514f3c8a97f7a2e25d65e252afe11ab7dfd00933dfd93537c5994ac79"
   },
   "distribution_origin": {

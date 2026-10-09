@@ -265,3 +265,20 @@ def test_advisory_failure_can_remain_a_valid_variation(case,tmp_path):
     response={'items':[dict(item_id=row['id'],recommendation='routine_handling',reason='This requested variant is allowed by policy.',possible_consequence='An advisory comparison differs.',missing_context=[],evidence_ids=['obligation:'+row['id']],policy_reason=case[5]['items'][0]['reason'])]}
     result=apply_policy(original,case[5],response,set())
     assert result[0]['original_status']=='FAIL' and result[0]['policy_outcome']=='routine_handling'
+
+
+def test_oversized_source_is_rejected_before_hashing(case,tmp_path,monkeypatch):
+    source=case[1]/'oversized.txt'
+    source.write_bytes(b'x'*262145)
+    case[5]['evidence']=[dict(id='oversized',path=source.name,sha256='a'*64,kind='text',description='Oversized source control')]
+    case[5]['items'][0]['evidence_ids']=['oversized']
+    args=kwargs(case,tmp_path)
+    from scene_acceptance import triage
+    original=triage.sha
+    def bounded_hash(path):
+        assert Path(path)!=source, 'Oversized source must not be loaded for hashing'
+        return original(path)
+    monkeypatch.setattr(triage,'sha',bounded_hash)
+    with pytest.raises(ContractError,match='exceeds 256 KiB'):
+        run_triage(**args)
+    assert not args['out'].exists()
