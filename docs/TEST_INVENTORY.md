@@ -126,7 +126,8 @@ The automatic interpreter selects the bounded types exposed by `check-3d --capab
 
 | Check | Evaluator | Caller input | Reports | Boundary |
 |---|---|---|---|---|
-| `behavior.state.agreement` | Script | Observed/reference held-state attributes, optional activation attribute, interval | Every active authored interval and final endpoint; values and comparison counts | No numeric interpolation, occupancy inference, rendered sign inspection or external controller verification |
+| `behavior.state.agreement` | Script | Two scene-authored held-state attributes, optional activation attribute, interval | Internal consistency over every active authored interval and final endpoint | Matching scene values do not prove owner intent |
+| `behavior.state.timeline` | Script | Observed scene attribute and owner-reviewed expected timeline in the contract | Every expected/observed transition and final endpoint; contract-controlled activation | No rendered sign inspection, occupancy inference or external controller verification |
 | `process.connections.match` | Script | Equipment tags, port names/directions, directed edges and extra-edge policy | Equipment/port/edge totals plus each comparison | Structured graph only; no drawing extraction, physical pipe connection or process-engineering certification |
 
 Both are contract-selected, outside the general baseline. See [parameters and controls](SEMANTIC_CHECKS.md). Model interpretation does not automatically create these checks from a P&ID. Review the explicit reference and its mapping to saved scene metadata.

@@ -124,7 +124,7 @@ def supervise(
             stderr=read("stderr"),
             peak_observed_rss_bytes=peak,
             elapsed_seconds=time.monotonic() - started,
-            limitation="POSIX process group plus sampled process-tree RSS/CPU; brief spikes or escaped processes may evade sampling. Linux also applies per-process address-space and CPU limits. This is resource containment, not filesystem/network isolation.",
+            limitation="POSIX process group plus sampled process-tree RSS/CPU; brief spikes or escaped processes may evade sampling. Arbitrary engine commands do not receive hard allocator or CPU limits from this supervisor. This is resource containment, not filesystem/network isolation.",
         )
 
 
@@ -200,6 +200,10 @@ def invoke_isolated(
             ],
         )
     response["isolation"] = {k: v for k, v in output.items() if k != "stdout"}
+    if sys.platform.startswith("linux"):
+        response["isolation"][
+            "worker_limits"
+        ] = "The harness worker additionally installs per-process RLIMIT_AS and RLIMIT_CPU before opening inputs."
     return response
 
 

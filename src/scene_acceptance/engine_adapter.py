@@ -8,7 +8,13 @@ from jsonschema import Draft202012Validator
 
 from .model import ContractError, MissingEvidence, sha, strict_json
 from .review.schemas import obj, array, TEXT, HASH
-from .external_evidence import ENGINE, ENGINE_RECEIPT
+from .external_evidence import (
+    ENGINE,
+    ENGINE_RECEIPT,
+    STATUS_MAPPING,
+    native_status,
+    pointer,
+)
 from .review_context import save
 
 CONFIG = obj(
@@ -22,47 +28,12 @@ CONFIG = obj(
         "profile_sha256": HASH,
         "native_report": TEXT,
         "successful_exit_codes": {**array({"enum": [0, 1, 2]}, 1), "uniqueItems": True},
-        "tests": array(
-            obj(
-                {
-                    "id": TEXT,
-                    "phase": {"enum": ["profile", "runtime"]},
-                    "status_pointer": TEXT,
-                    "status_mapping": {
-                        "type": "object",
-                        "minProperties": 1,
-                        "additionalProperties": {
-                            "enum": ["PASS", "FAIL", "UNKNOWN", "ERROR", "SKIPPED"]
-                        },
-                    },
-                }
-            ),
-            1,
-        ),
+        "tests": array(STATUS_MAPPING, 1),
         "wall_seconds": {"type": "number", "exclusiveMinimum": 0, "maximum": 3600},
         "memory_mib": {"type": "integer", "minimum": 128, "maximum": 65536},
         "cpu_seconds": {"type": "number", "exclusiveMinimum": 0, "maximum": 3600},
     }
 )
-
-
-def pointer(document, path):
-    if not path.startswith("/"):
-        raise ContractError("Native result selectors must be JSON pointers")
-    value = document
-    for token in path[1:].split("/"):
-        key = token.replace("~1", "/").replace("~0", "~")
-        if isinstance(value, list):
-            if not key.isdigit():
-                raise ContractError("Invalid array index in native result pointer")
-            value = value[int(key)]
-        elif isinstance(value, dict):
-            value = value[key]
-        else:
-            raise ContractError("Native result pointer does not select a value")
-    if type(value) not in (str, bool, int):
-        raise ContractError("Native test status must be a string, bool or integer")
-    return str(value).lower() if type(value) is bool else str(value)
 
 
 def collect_engine(
@@ -158,12 +129,7 @@ def collect_engine(
     report = strict_json(native)
     rows = []
     for item in config["tests"]:
-        try:
-            status = item["status_mapping"].get(
-                pointer(report, item["status_pointer"]), "UNKNOWN"
-            )
-        except (KeyError, IndexError, TypeError):
-            status = "UNKNOWN"
+        status = native_status(report, item)
         rows.append(
             dict(
                 id=item["id"],
@@ -219,6 +185,12 @@ def collect_engine(
             else 2 if "FAIL" in statuses else 3 if statuses - {"PASS"} else 0
         ),
         receipt="engine-receipt.json",
+        verification=dict(
+            receipt_sha256=sha(out / "engine-receipt.json"),
+            basis="Collected by the caller-configured engine adapter; execution and native report retained.",
+            native_report=str(native.relative_to(out)),
+            tests=config["tests"],
+        ),
         scene_sha256=artifact.artifact_set_sha256,
         adapter_sha256=config_hash,
         tests=rows,

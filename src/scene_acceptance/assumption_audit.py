@@ -86,6 +86,10 @@ def run_audit(
     out = Path(out).resolve()
     if out.exists() or out.is_relative_to(root) or root.is_relative_to(out):
         raise ContractError("Audit output must be new and outside the scene bundle")
+    if Path(audit_config).resolve().is_relative_to(root):
+        raise ContractError(
+            "Executable audit configuration must be outside the producer folder"
+        )
     for source in (audit_config, producer_decisions, script_report, views):
         if source and Path(source).resolve().is_relative_to(out):
             raise ContractError("Audit output overlaps an input")

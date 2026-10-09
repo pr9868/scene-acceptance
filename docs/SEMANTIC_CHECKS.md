@@ -1,10 +1,10 @@
 # Explicit state and process checks
 
-These two packs run only when selected by a contract. Both produce measured observations and subject counts. Neither is added to the general 27-rule baseline, because each needs job-specific reference information.
+The state and process packs run only when selected by a contract. Both produce measured observations and subject counts. Neither is added to the general 27-rule baseline, because each needs job-specific reference information.
 
 ## State between events
 
-`behavior.state.agreement` compares two authored USD token, string or boolean attributes over a declared interval in elapsed seconds. It unions every transition in the observed, reference and optional activation attributes, compares each held interval and checks the final endpoint. This catches a brief wrong-state interval even when the start and end look correct.
+`behavior.state.agreement` checks internal consistency. It compares two authored USD token, string or boolean attributes over a declared interval in elapsed seconds. It unions every transition in the observed, reference and optional activation attributes, compares each held interval and checks the final endpoint. This catches a brief wrong-state interval even when the start and end look correct.
 
 ```json
 {
@@ -19,6 +19,25 @@ These two packs run only when selected by a contract. Both produce measured obse
 The stage must author its time range and clock rate, including a supported `framesPerSecond` fallback. Values are held discrete states; interpolated numeric values are outside this check. Missing state, unsupported types or no active interval returns unknown. At most 10,000 combined transition boundaries are evaluated.
 
 For a diverter, the caller must map the indicator's saved state and a justified route/occupancy reference into these attributes. This check does not infer parcel occupancy from meshes, inspect pixels on a rendered sign, or prove that an external controller implements the saved state. A producer-authored reference can agree with a wrong indicator; the owner must review its provenance and scope. The contract names the reference attributes, and scene hashes bind their values along with the delivery.
+
+Use `behavior.state.timeline` when the owner has an expected schedule. Its reference values and optional activation flags live in the contract, independently of the scene:
+
+```json
+{
+  "observed_attribute": "/World/Junction.indicator",
+  "start_s": 0,
+  "end_s": 10,
+  "expected_timeline": [
+    {"time_s": 0, "value": "A"},
+    {"time_s": 4, "value": "B"},
+    {"time_s": 8, "value": "A"}
+  ]
+}
+```
+
+Each entry applies from its time until the next entry; the last value also applies at the final endpoint. The first entry must start at `start_s`, times must increase strictly within the interval, and every value must match the observed token/string/bool type. An entry can set `active: false` to exclude its interval; omitted `active` means true for that entry. No scene-authored occupancy flag can disable this check. If no interval or endpoint is active, the outcome is unknown.
+
+The check combines expected transitions with every observed transition, so an unexpected change between the scheduled events is still tested. Two scene attributes with the same wrong value may pass `agreement` and fail `timeline`. Protect the reviewed contract with the caller's expected hash or prepared-scope workflow; letting the producer rewrite the expectation would remove that independence. The report names the reference source and records each compared interval. It still cannot infer the displayed state from meshes or pixels.
 
 The constructed control changes the indicator for 0.001 seconds between two otherwise correct events. The check identifies that interval. This demonstrates the algorithm on saved USD; it is not a new replay of the original distribution-centre scene.
 
@@ -59,4 +78,4 @@ check-3d --bundle-root /tmp/semantic-controls/state-gap \
   --candidate scene.usda --contract contract.json --out /tmp/state-gap-report
 ```
 
-The generator creates passing and failing state/topology bundles. Each contract pins the installed pack implementation. Use new output directories. These are explicitly synthetic examples; change their names and policy to match a real delivery only after reviewing the mapping.
+The generator creates passing and failing state/topology bundles, including a wrong scene reference that the contract timeline rejects. Each contract pins the installed pack implementation. Use new output directories. These are explicitly synthetic examples; change their names and policy to match a real delivery only after reviewing the mapping.

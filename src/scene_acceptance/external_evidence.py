@@ -7,12 +7,35 @@ import statistics
 from jsonschema import Draft202012Validator
 
 from .builtin_packs import obj, TEXT
-from .review.schemas import HASH, array
+from .review.schemas import HASH, array, TEXT as NONBLANK_TEXT
 from .model import ContractError, MissingEvidence, sha, strict_json
 from .packs import CheckSpec, Outcome, Pack
 
 ENGINE = obj({"name": TEXT, "version": TEXT, "environment_sha256": HASH})
 ATTACHMENT = obj({"path": TEXT, "sha256": HASH, "description": TEXT})
+STATUS_MAPPING = obj(
+    {
+        "id": NONBLANK_TEXT,
+        "phase": {"enum": ["profile", "runtime"]},
+        "status_pointer": NONBLANK_TEXT,
+        "status_mapping": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+                "enum": ["PASS", "FAIL", "UNKNOWN", "ERROR", "SKIPPED"]
+            },
+        },
+    }
+)
+VIEWER_VERIFICATION = obj({"receipt_sha256": HASH, "basis": NONBLANK_TEXT})
+ENGINE_VERIFICATION = obj(
+    {
+        "receipt_sha256": HASH,
+        "basis": NONBLANK_TEXT,
+        "native_report": TEXT,
+        "tests": array(STATUS_MAPPING, 1),
+    }
+)
 PERFORMANCE = obj(
     {
         "schema_version": {"const": "1.0"},
@@ -91,6 +114,50 @@ def attachment(ctx, row):
         raise MissingEvidence("External evidence attachment changed: " + row["path"])
 
 
+def caller_verified(ctx, params):
+    """The trusted contract, never a receipt field, can attest collected bytes.
+
+    A hash is not an execution signature. The caller owns this declaration and
+    must create it from a trusted collection, not by hashing a producer claim.
+    """
+    verification = params.get("verification")
+    if verification is None:
+        return False
+    if sha(evidence(ctx, params["receipt"])) != verification["receipt_sha256"]:
+        raise MissingEvidence(
+            "External receipt differs from the caller-verified collection"
+        )
+    return True
+
+
+def pointer(document, path):
+    if not path.startswith("/"):
+        raise ContractError("Native result selectors must be JSON pointers")
+    value = document
+    for token in path[1:].split("/"):
+        key = token.replace("~1", "/").replace("~0", "~")
+        if isinstance(value, list):
+            if not key.isdigit():
+                raise ContractError("Invalid array index in native result pointer")
+            value = value[int(key)]
+        elif isinstance(value, dict):
+            value = value[key]
+        else:
+            raise ContractError("Native result pointer does not select a value")
+    if type(value) not in (str, bool, int):
+        raise ContractError("Native test status must be a string, bool or integer")
+    return str(value).lower() if type(value) is bool else str(value)
+
+
+def native_status(document, item):
+    try:
+        return item["status_mapping"].get(
+            pointer(document, item["status_pointer"]), "UNKNOWN"
+        )
+    except (KeyError, IndexError, TypeError):
+        return "UNKNOWN"
+
+
 def performance(ctx, params):
     receipt = read_receipt(ctx, params, PERFORMANCE)
     attachment(ctx, receipt["camera_path"])
@@ -135,11 +202,20 @@ def performance(ctx, params):
             status="PASS" if p95 <= params["maximum_p95_frame_seconds"] else "FAIL",
         ),
     ]
+    verified = caller_verified(ctx, params)
+    measured_status = "FAIL" if any(r["status"] == "FAIL" for r in rows) else "PASS"
     return Outcome(
-        "FAIL" if any(r["status"] == "FAIL" for r in rows) else "PASS",
-        "Compared caller-recorded rendered frame times with the named viewer workload.",
+        measured_status if verified else "UNKNOWN",
+        (
+            "Compared caller-verified frame times with the named viewer workload."
+            if verified
+            else "Frame-time arithmetic is available, but execution provenance is unverified."
+        ),
         dict(
             findings=rows,
+            reported_status=measured_status,
+            execution_provenance="caller-verified" if verified else "unverified",
+            verification=params.get("verification"),
             frame_count=len(frames),
             viewer=receipt["viewer"],
             resolution=receipt["resolution"],
@@ -169,6 +245,34 @@ def engine_tests(ctx, params):
         attachment(ctx, item)
     if any(set(row["evidence_paths"]) - files.keys() for row in tests.values()):
         raise ContractError("External test cites an undeclared attachment")
+    verified = caller_verified(ctx, params)
+    if verified:
+        verification = params["verification"]
+        native_name = verification["native_report"]
+        if native_name not in files:
+            raise ContractError(
+                "Verified native report must be a hashed receipt attachment"
+            )
+        native_path = evidence(ctx, native_name)
+        if native_path.stat().st_size > 8388608:
+            raise ContractError("Native engine report exceeds 8 MiB")
+        native = strict_json(native_path)
+        mappings = {(r["phase"], r["id"]): r for r in verification["tests"]}
+        if len(mappings) != len(verification["tests"]):
+            raise ContractError("Duplicate caller-verified native test mapping")
+        for expected in params["required_tests"]:
+            key = (expected["phase"], expected["id"])
+            if key not in mappings:
+                raise MissingEvidence(
+                    "Required test has no caller-verified native mapping"
+                )
+            if key in tests and (
+                native_name not in tests[key]["evidence_paths"]
+                or tests[key]["status"] != native_status(native, mappings[key])
+            ):
+                raise ContractError(
+                    "Normalized engine result contradicts the native report: " + key[1]
+                )
     rows = []
     for expected in params["required_tests"]:
         row = tests.get((expected["phase"], expected["id"]))
@@ -196,15 +300,22 @@ def engine_tests(ctx, params):
         )
     )
     return Outcome(
-        status,
-        "Imported explicitly selected profile and runtime tests from the caller's engine.",
+        status if verified else "UNKNOWN",
+        (
+            "Compared selected engine tests with native results from the caller-verified collection."
+            if verified
+            else "Engine results were supplied, but execution provenance is unverified."
+        ),
         dict(
             findings=rows,
+            reported_status=status,
+            execution_provenance="caller-verified" if verified else "unverified",
+            verification=params.get("verification"),
             provider=receipt["provider"],
             engine=receipt["engine"],
             profile_id=receipt["profile_id"],
             attachments=receipt["attachments"],
-            coverage="Normalized external test evidence, not a harness simulation or certification of the complete profile. Native report interpretation and execution remain the adapter's responsibility.",
+            coverage="Selected native status values under the caller's mapping. Execution provenance relies on the caller-verified collection; hashes alone do not authenticate an engine run. No complete-profile certification.",
         ),
     )
 
@@ -212,7 +323,7 @@ def engine_tests(ctx, params):
 def external_pack():
     return Pack(
         "external.evidence",
-        "1.0.0",
+        "1.1.0",
         "Viewer measurements and engine profile/runtime evidence",
         {
             "viewer_performance": CheckSpec(
@@ -234,11 +345,24 @@ def external_pack():
                             "type": "number",
                             "exclusiveMinimum": 0,
                         },
-                    }
+                        "verification": VIEWER_VERIFICATION,
+                    },
+                    required=[
+                        "receipt",
+                        "viewer",
+                        "resolution",
+                        "camera_path_sha256",
+                        "min_frames",
+                        "min_warmup_seconds",
+                        "minimum_median_fps",
+                        "maximum_p95_frame_seconds",
+                    ],
                 ),
                 "Check a named viewer workload",
                 "Caller-provided frame times",
-                ("Draw callbacks stay unknown; the harness does not render.",),
+                (
+                    "Draw callbacks and receipts without caller-verified execution stay unknown; the harness does not render.",
+                ),
             ),
             "engine_tests": CheckSpec(
                 engine_tests,
@@ -261,12 +385,21 @@ def external_pack():
                             ),
                             "uniqueItems": True,
                         },
-                    }
+                        "verification": ENGINE_VERIFICATION,
+                    },
+                    required=[
+                        "receipt",
+                        "engine",
+                        "provider",
+                        "profile_id",
+                        "profile_sha256",
+                        "required_tests",
+                    ],
                 ),
                 "Import SimReady/PhysX or other engine tests",
                 "Named tests, engine and profile with hashed native evidence",
                 (
-                    "A normalized receipt is caller evidence; it does not authenticate execution or replace a tested engine adapter.",
+                    "Receipt-only results stay unknown. The trusted contract must pin a caller-verified collection and native mapping; a producer cannot attest its own receipt.",
                 ),
             ),
         },

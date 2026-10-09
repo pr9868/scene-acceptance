@@ -1,6 +1,7 @@
 """A real subprocess exercises the bridge; the engine itself is a test double."""
 
 import sys
+import shutil
 import pytest
 
 from scene_acceptance.application import invoke
@@ -80,6 +81,27 @@ Path(report).write_text(json.dumps({} if mode=='missing' else {'tests':{'contact
         receipt = strict_json(out / "engine-receipt.json")
         assert receipt["attachments"][0]["sha256"] == sha(out / "native.json")
         assert result["data"]["acceptance_decision"] is None
+        # Verify the collected bytes through the same pack callers will use.
+        from scene_acceptance.external_evidence import engine_tests
+        from test_extensions_geometry import context
+
+        for name in ("engine-receipt.json", "native.json"):
+            shutil.copyfile(out / name, root / name)
+        ctx = context(stage, root)
+        ctx.sources = ["engine-receipt.json", "native.json"]
+        params = dict(
+            receipt="engine-receipt.json",
+            engine=receipt["engine"],
+            provider=receipt["provider"],
+            profile_id=receipt["profile_id"],
+            profile_sha256=receipt["profile_sha256"],
+            required_tests=[dict(id="contact", phase="runtime")],
+            verification=result["data"]["verification"],
+        )
+        assert (
+            engine_tests(ctx, params).status
+            == {0: "PASS", 2: "FAIL", 3: "UNKNOWN"}[expected]
+        )
 
 
 def test_producer_cannot_supply_executable_policy(tmp_path):

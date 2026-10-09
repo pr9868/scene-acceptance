@@ -1,6 +1,7 @@
 """Triangle-surface distance and conservative sweeps of translating closed solids."""
 
 from collections import Counter
+from fractions import Fraction
 from pathlib import Path
 import math
 
@@ -42,6 +43,17 @@ def read_triangles(stage, path, seconds, solid):
     prim = stage.GetPrimAtPath(path)
     if not prim:
         raise MissingEvidence("Missing clearance subject: " + path)
+    # Rest points are not evaluated skinning/blend-shape geometry. Bindings can
+    # be inherited, so inspect the composed ancestor chain as well as the mesh.
+    current = prim
+    while current and not current.IsPseudoRoot():
+        for prop in current.GetAuthoredProperties():
+            if prop.GetName().startswith(("skel:", "primvars:skel:")):
+                raise MissingEvidence(
+                    "Clearance does not evaluate skinning or blend-shape bindings; "
+                    "supply baked geometry: " + str(prop.GetPath())
+                )
+        current = current.GetParent()
     clock = read_clock(stage)
     matrix = matrix_at(stage, path, clock, seconds)
     units = UsdGeom.GetStageMetersPerUnit(stage)
@@ -56,6 +68,7 @@ def read_triangles(stage, path, seconds, solid):
         size = attr.Get()
         if (
             attr.GetNumTimeSamples()
+            or attr.HasSpline()
             or size is None
             or not math.isfinite(size)
             or size <= 0
@@ -70,7 +83,14 @@ def read_triangles(stage, path, seconds, solid):
             mesh.GetFaceVertexIndicesAttr(),
         ]
         if (
-            any(a.GetNumTimeSamples() for a in attrs)
+            any(
+                a.GetNumTimeSamples() or a.HasSpline()
+                for a in [
+                    *attrs,
+                    mesh.GetSubdivisionSchemeAttr(),
+                    mesh.GetHoleIndicesAttr(),
+                ]
+            )
             or mesh.GetSubdivisionSchemeAttr().Get() != "none"
             or mesh.GetHoleIndicesAttr().Get()
         ):
@@ -174,18 +194,52 @@ def crosses(p, q, triangle):
     edge1, edge2 = b - a, c - a
     h = Gf.Cross(direction, edge2)
     determinant = Gf.Dot(edge1, h)
-    if determinant == 0:
-        # Coplanar/parallel pairs are handled by edge and point distances.
-        return False
     scale = edge1.GetLength() * edge2.GetLength() * direction.GetLength()
     if abs(determinant) <= 1e-14 * scale:
-        raise MissingEvidence(
-            "Near-parallel triangle intersection is numerically unresolved"
-        )
+        return _exact_crosses(p, q, triangle)
     s = p - a
     u = Gf.Dot(s, h) / determinant
     v = Gf.Dot(direction, Gf.Cross(s, edge1)) / determinant
     t = Gf.Dot(edge2, Gf.Cross(s, edge1)) / determinant
+    return 0 <= u <= 1 and 0 <= v and u + v <= 1 and 0 <= t <= 1
+
+
+def _exact_crosses(p, q, triangle):
+    """Resolve near-parallel intersections exactly for the saved float points.
+
+    A small determinant alone is not evidence of either a crossing or a gap.
+    Rational arithmetic avoids division by a cancellation-rounded determinant.
+    This predicate does not make the remaining distance arithmetic exact.
+    """
+
+    def vector(point):
+        return tuple(Fraction(x) for x in point)
+
+    def sub(a, b):
+        return tuple(x - y for x, y in zip(a, b))
+
+    def dot(a, b):
+        return sum(x * y for x, y in zip(a, b))
+
+    def cross(a, b):
+        return (
+            a[1] * b[2] - a[2] * b[1],
+            a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0],
+        )
+
+    p, q = vector(p), vector(q)
+    a, b, c = map(vector, triangle)
+    direction, edge1, edge2 = sub(q, p), sub(b, a), sub(c, a)
+    h = cross(direction, edge2)
+    determinant = dot(edge1, h)
+    if not determinant:
+        # Exactly coplanar/parallel: edge and point distances handle contact.
+        return False
+    s = sub(p, a)
+    u = dot(s, h) / determinant
+    v = dot(direction, cross(s, edge1)) / determinant
+    t = dot(edge2, cross(s, edge1)) / determinant
     return 0 <= u <= 1 and 0 <= v and u + v <= 1 and 0 <= t <= 1
 
 
@@ -372,7 +426,7 @@ def clearance_pack():
     )
     return Pack(
         "geometry.clearance",
-        "1.0.0",
+        "1.0.1",
         "Triangle clearance, clear volumes and bounded translating sweeps",
         {
             "distance": CheckSpec(

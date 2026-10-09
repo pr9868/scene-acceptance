@@ -35,6 +35,13 @@ def affine_times(stage, paths, interval):
             if prim.IsA(UsdGeom.Xformable):
                 xf = UsdGeom.Xformable(prim)
                 for op in xf.GetOrderedXformOps():
+                    # Splines can vary between endpoints while GetTimeSamples()
+                    # is empty. The knot proof below covers USD samples only.
+                    if op.GetAttr().HasSpline():
+                        raise MissingEvidence(
+                            "Continuous proof does not support spline animation: "
+                            + str(op.GetAttr().GetPath())
+                        )
                     samples = op.GetAttr().GetTimeSamples()
                     if samples and op.GetOpType() not in (
                         UsdGeom.XformOp.TypeTranslate,
@@ -127,7 +134,7 @@ def connection(ctx, params):
 def continuous_pack():
     return Pack(
         "motion.continuous",
-        "1.0.0",
+        "1.0.1",
         "Continuous connection bound for saved affine translation paths",
         {
             "connection": CheckSpec(

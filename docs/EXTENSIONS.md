@@ -8,12 +8,12 @@ These features are in the 0.7 development candidate. They broaden what a caller 
 | Composed USD | Local layers and assets | Selected variants, loaded payloads, inherited/specialized prims and instance proxies available to checks | All authored branches are admitted; no URLs, packages, value clips or dynamic formats |
 | Layer policy | Required units and up axis | Mismatches by layer | Metadata checks do not convert geometry |
 | UDIM dependencies | Local `<UDIM>` filenames and explicit dependency budget | Hashed tiles and a cross-check against OpenUSD discovery | Tiles 1001–1999; available tiles do not establish which tiles the brief intended |
-| Mesh clearance | Two Cube/triangle-Mesh paths, time, representation and minimum distance | Triangle distance and pass/fail/unknown | Static topology; closed-solid containment requires valid consistently oriented solids |
+| Mesh clearance | Two Cube/triangle-Mesh paths, time, representation and minimum distance | Triangle distance and pass/fail/unknown | Static, undeformed topology; skinning and blend shapes stay unknown. Closed-solid containment requires valid consistently oriented solids |
 | Clear-height zone | A world-space box and explicit obstacle list | Obstructions for each named obstacle | Does not infer a complete obstacle list or navigability |
-| Swept clearance | Interval, translation paths, clearance and calculation budget | Conservative lower bounds over each certified interval | Animated rotation/deformation or an exhausted budget stays unknown |
-| Continuous connection | Two local points, interval, allowed gap and numerical margin | A maximum-gap bound across every piecewise-linear segment | Saved translations with static other transforms; no arbitrary rotation or runtime-controller proof |
-| Viewer performance | Named viewer/machine, resolution, camera path and rendered frame times | Median FPS, p95 frame time and threshold results | Draw callbacks are not rendered FPS; the caller runs the viewer |
-| Engine evidence | Caller-controlled CLI adapter, engine/profile identity and native status mapping | Original engine report, normalized named profile/runtime tests and gaps | Tested transport is not validation of a specific SimReady/PhysX installation |
+| Swept clearance | Interval, translation paths, clearance and calculation budget | Conservative lower bounds over each certified interval | Animated rotation, splines, deformation or an exhausted budget stays unknown |
+| Continuous connection | Two local points, interval, allowed gap and numerical margin | A maximum-gap bound across every piecewise-linear segment | Saved sampled translations with static other transforms; spline animation stays unknown. No runtime-controller proof |
+| Viewer performance | Named viewer/machine, resolution, camera path and rendered frame times | Median FPS, p95 frame time and threshold results | Unverified receipts and draw callbacks stay unknown; the caller runs and verifies the viewer |
+| Engine evidence | Caller-controlled CLI adapter, engine/profile identity and native status mapping | Original engine report, normalized named profile/runtime tests and gaps | Unverified receipts stay unknown; selected native results are re-read under caller-owned mappings |
 | Color/orientation comparison | Explicit sRGB, linear RGB8 or ICC policy and stored/EXIF orientation | Source-pixel errors in linear sRGB | RGB8 only; no HDR, alpha compositing or rendered-image equivalence |
 | Assumption audit | Scene, brief, optional declared decisions, script report and views | Cited questions for a person | Experimental model opinion; no finding, approval or acceptance decision |
 | Native isolation | POSIX worker memory/CPU/time budgets | Bounded worker result or explicit execution error | Resource containment, not a hostile-code security sandbox |
@@ -41,7 +41,7 @@ check-3d-app audit --bundle-root ./delivery --candidate scene.usda \
   --raw-brief brief.json --audit-config ./caller/audit.json --out ./audit-run
 ```
 
-The model configuration uses the same optional CLI protocol as the judge. Add `--views views.json` for scene images; no renderer runs inside the harness. `--producer-decisions decisions.json` accepts the packaged `audit-declarations-v1` schema. A supplied `--script-report report.json` also needs `--expected-script-sha256 HASH` and must describe the same scene revision.
+The model configuration uses the same optional CLI protocol as the judge and must be outside the producer bundle. The same ownership boundary applies to triage configuration. Add `--views views.json` for scene images; no renderer runs inside the harness. `--producer-decisions decisions.json` accepts the packaged `audit-declarations-v1` schema. A supplied `--script-report report.json` also needs `--expected-script-sha256 HASH` and must describe the same scene revision.
 
 An audit asks questions such as whether an indicator's state has been specified during parcel occupancy. It must cite supplied evidence and valid scene paths. Exit 3 means questions were proposed; exit 0 means this invocation proposed none. **Neither means delivery acceptance.** Questions can lead the owner to clarify the brief, request views, add a check or decide that an intentional variant is acceptable. Triage remains the separate operation for evaluating declared items against the owner's consequence policy.
 
@@ -58,6 +58,14 @@ The caller owns the executable configuration outside the producer bundle. The br
 
 The versioned `engine-adapter-v1` schema documents the configuration. Arguments may contain whole-argument placeholders `{scene}`, `{report}` and `{out}`. No shell is used. The `external.evidence.engine_tests` pack compares the resulting receipt with the caller's required tests and verifies its native-report attachments. Place the receipt and named attachments among the explicit `evidence_sources`; attachment paths are relative to the evaluation bundle. Preserve the original receipt when organizing a copy for evaluation.
 
+A receipt and matching attachment hashes establish consistency, not execution. With no `verification` parameter in the trusted contract, both external-evidence checks return `UNKNOWN`; their reported measurements and test statuses remain visible for review. A producer-supplied `PASS` cannot grant acceptance.
+
+For engine checks, the completed `collect-engine` response includes `data.verification`. After running the caller-owned adapter, copy that object into the check's `parameters.verification`. It pins the exact receipt and the native JSON selectors/status mappings. The check re-reads those selected native values; a normalized `PASS` that contradicts the native result is an evaluator error. Missing required mappings, missing tests, unfamiliar native statuses and incomplete runs cannot pass.
+
+For viewer performance, `verification` contains `receipt_sha256` and `basis`. Supply these only after the calling application has verified the measurement run against its retained execution records. The harness itself does not run a viewer.
+
+**Verification is caller policy.** Keep the contract under caller control and use its expected hash or reviewed prepared scope when evaluating. Do not obtain verification from the producer, an interpreter's guess, or by blindly hashing an incoming receipt. This is a caller attestation, not a cryptographic execution signature. Pinning an invented run would still be a false attestation. Preserve the native run alongside the report; changing the scene, receipt or required mapping requires a new verified collection or scope review.
+
 For SimReady, select the relevant profile through its own validator. The [Foundation validation guide](https://nvidia.github.io/simready-foundation/2026.08.0/guides/validate_workflow.html) documents `simready-validate` and native JSON output. [Runtime benchmarking](https://nvidia.github.io/simready-foundation/2026.08.0/guides/benchmark/benchmark.html) runs in the target engine and has separate results. Keep those phases distinct in the adapter. This repository tests the bridge with controlled subprocesses; it does not claim a completed SimReady/PhysX runtime test on this host.
 
 ## Supervised native execution
@@ -67,7 +75,7 @@ check-3d-isolated --wall-seconds 120 --memory-mib 2048 --cpu-seconds 120 \
   check --bundle-root ./delivery --candidate scene.usda --out ./new-run
 ```
 
-Install the `isolation` extra. Python callers use `scene_acceptance.isolation.invoke_isolated`. The worker opens USD and PDF in a separate process. The POSIX supervisor monitors the process tree, bounds output and kills its owned processes on time, memory or CPU limits. Linux also applies per-process address-space and CPU limits. Deadline and cancellation controls remain active in the supervisor. Progress from the isolated worker is retained and emitted after completion. macOS uses sampled resident memory; brief spikes are not a hard allocator limit. If process inspection is unavailable, execution fails explicitly. Filesystem/network access still needs an operating-system container or sandbox when the input or extensions are hostile.
+Install the `isolation` extra. Python callers use `scene_acceptance.isolation.invoke_isolated`. The worker opens USD and PDF in a separate process. The POSIX supervisor monitors the process tree, bounds output and kills its owned processes on time, memory or CPU limits. The harness worker also installs per-process address-space and CPU limits on Linux. Arbitrary engine commands use sampled supervision only; the generic supervisor does not install those hard limits. Deadline and cancellation controls remain active in the supervisor. Progress from the isolated worker is retained and emitted after completion. macOS uses sampled resident memory; brief spikes are not a hard allocator limit. If process inspection is unavailable, execution fails explicitly. Filesystem/network access still needs an operating-system container or sandbox when the input or extensions are hostile.
 
 ## Adoption and evaluation
 

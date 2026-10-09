@@ -586,6 +586,13 @@ def run_triage(
         out.is_relative_to(x) or x.is_relative_to(out) for x in roots
     ):
         raise ContractError("Triage output must be new and outside input roots")
+    config_path = Path(triage_config).resolve()
+    if config_path.is_relative_to(
+        Path(bundle_root).resolve()
+    ) or config_path.is_relative_to(out):
+        raise ContractError(
+            "Executable triage configuration must be outside the producer and output folders"
+        )
     args = dict(
         assessment=assessment,
         expected_assessment_sha256=expected_assessment_sha256,

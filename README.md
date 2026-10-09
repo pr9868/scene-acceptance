@@ -59,13 +59,13 @@ A brief can include a P&ID, equipment list, dimensions, photos or intended behav
 |---|---|
 | General structure and delivery | Selected OpenUSD/NVIDIA rules, dependencies, bindings, texture readability and authored-motion sanity. |
 | Brief-specific measurements | Named geometry, placement, timing, sampled connections and explicit source-image comparisons. |
-| State between events | [Held token/string/bool agreement](docs/SEMANTIC_CHECKS.md) across every authored transition in a declared interval, using caller-supplied reference and activation state. |
+| State between events | [Held token/string/bool state](docs/SEMANTIC_CHECKS.md) against an owner-reviewed contract timeline, or internal consistency between two scene attributes. Every saved transition and the final endpoint are checked. |
 | Process connectivity | [Equipment tags, ports, directions and directed relationships](docs/SEMANTIC_CHECKS.md) against a structured connection list. No P&ID extraction or process-engineering approval. |
 | Visual review | Optional model opinions on suitable caller-rendered views; no built-in renderer or GPU requirement. |
 | Assumption triage | Optional model recommendations on selected declared decisions. Human-review items use default low, medium and high definitions that owners can override, with owner minimums enforced. Low still requires review; items without a supported grade stay unrated. A matching human record can close a triage request; it cannot clear measured failures or missing required evidence. |
 | Assumption audit | A separate experimental operation proposes cited questions about undeclared choices. Questions are never automatic findings or approvals. |
 | Extended checks | Triangle clearance, bounded translation sweeps, continuous connections, layer policy, UDIM dependencies and explicit color/orientation comparisons. [Scope and limits](docs/EXTENSIONS.md). |
-| External measurements | Named viewer-performance traces and caller-owned engine profile/runtime tests with retained native evidence. |
+| External measurements | Caller-verified viewer traces and engine profile/runtime tests with retained native evidence. Unverified receipts remain unknown. |
 | Simulation | A fixed CPU ramp-and-block example remains available as an explicitly selected example pack; general simulation stays with the calling engine. |
 
 Where a [SimReady profile](https://docs.omniverse.nvidia.com/simready/latest/simready-faq.html) fits the job, I would use its validation and runtime tests within this workflow. The [external-engine bridge](docs/EXTENSIONS.md#engine-bridge-and-caller-evidence) can invoke a caller-configured CLI and import selected native results. Its transport controls are tested; a specific SimReady/PhysX installation still needs its own passing/failing runtime validation. The NVIDIA baseline pack continues to select USD Validation rules.
@@ -82,3 +82,5 @@ Where a [SimReady profile](https://docs.omniverse.nvidia.com/simready/latest/sim
 - [Detailed reference and retained experiments](docs/REFERENCE_GUIDE.md)
 
 Checks and providers run as trusted local code. The optional supervised worker bounds native execution resources; it is not a filesystem/network security sandbox. The application enforces release policy. Reports can contain caller paths and evidence. Review them before publishing outside the receiving application.
+
+Recent [correctness controls and reproduction instructions](evaluation/correctness-v1/README.md) cover external receipts, unsupported geometry/motion and owner-controlled state expectations.

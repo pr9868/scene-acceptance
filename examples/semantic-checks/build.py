@@ -9,7 +9,7 @@ from scene_acceptance.packs import default_registry
 def build(root):
     root = Path(root).resolve()
     root.mkdir(parents=True, exist_ok=False)
-    for name in ('state-correct', 'state-gap', 'connections-correct', 'connections-missing'):
+    for name in ('state-correct', 'state-gap', 'state-owner-correct', 'state-owner-wrong', 'connections-correct', 'connections-missing'):
         folder = root / name; folder.mkdir()
         stage = Usd.Stage.CreateNew(str(folder / 'scene.usda'))
         stage.SetDefaultPrim(UsdGeom.Xform.Define(stage, '/World').GetPrim())
@@ -27,6 +27,14 @@ def build(root):
                 prim.GetAttribute('indicator').Set('B', 5.002)
             parameters = dict(observed_attribute='/World/Junction.indicator', expected_attribute='/World/Junction.route',
                               active_attribute='/World/Junction.occupied', start_s=0, end_s=10)
+            if name.startswith('state-owner'):
+                check = 'timeline'
+                parameters = dict(observed_attribute='/World/Junction.indicator', start_s=0, end_s=10,
+                    expected_timeline=[dict(time_s=t, value=v) for t, v in [(0, 'A'), (4, 'B'), (8, 'A')]])
+                if name.endswith('wrong'):
+                    for key in ('indicator', 'route'):
+                        prim.GetAttribute(key).Clear()
+                        prim.GetAttribute(key).Set('WRONG')
         else:
             pack, check = 'process.connections', 'match'
             for path, tag, port, port_name, direction in (

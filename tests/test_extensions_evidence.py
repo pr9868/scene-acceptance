@@ -206,7 +206,10 @@ def receipts(tmp_path):
 @pytest.mark.parametrize(
     "mode,expected", [("fast", "PASS"), ("slow", "FAIL"), ("callbacks", "UNKNOWN")]
 )
-def test_viewer_performance_requires_the_named_workload(tmp_path, mode, expected):
+@pytest.mark.parametrize("verified", [False, True])
+def test_viewer_performance_requires_the_named_workload(
+    tmp_path, mode, expected, verified
+):
     ctx, viewer, camera = receipts(tmp_path)
     receipt = dict(
         schema_version="1.0",
@@ -236,7 +239,12 @@ def test_viewer_performance_requires_the_named_workload(tmp_path, mode, expected
         minimum_median_fps=30,
         maximum_p95_frame_seconds=0.05,
     )
-    assert performance(ctx, params).status == expected
+    if verified:
+        params["verification"] = dict(
+            receipt_sha256=sha(tmp_path / "receipt.json"),
+            basis="Synthetic caller-verified timing fixture",
+        )
+    assert performance(ctx, params).status == (expected if verified else "UNKNOWN")
     receipt["scene_sha256"] = "0" * 64
     save(tmp_path / "receipt.json", receipt)
     # A new invocation re-admits the new receipt; mutating an existing context
@@ -251,8 +259,12 @@ def test_viewer_performance_requires_the_named_workload(tmp_path, mode, expected
 @pytest.mark.parametrize(
     "state,expected", [("PASS", "PASS"), ("FAIL", "FAIL"), ("SKIPPED", "UNKNOWN")]
 )
-def test_external_engine_cannot_hide_skipped_runtime_test(tmp_path, state, expected):
+@pytest.mark.parametrize("verified", [False, True])
+def test_external_engine_cannot_hide_skipped_runtime_test(
+    tmp_path, state, expected, verified
+):
     ctx, engine, _ = receipts(tmp_path)
+    save(tmp_path / "native.json", dict(status=state))
     receipt = dict(
         schema_version="1.0",
         scene_sha256=ctx.artifact.artifact_set_sha256,
@@ -289,7 +301,25 @@ def test_external_engine_cannot_hide_skipped_runtime_test(tmp_path, state, expec
         profile_sha256="b" * 64,
         required_tests=[dict(id="runtime-control", phase="runtime")],
     )
-    assert engine_tests(ctx, params).status == expected
+    if verified:
+        params["verification"] = dict(
+            receipt_sha256=sha(tmp_path / "receipt.json"),
+            basis="Synthetic caller-verified engine fixture",
+            native_report="native.json",
+            tests=[
+                dict(
+                    id="runtime-control",
+                    phase="runtime",
+                    status_pointer="/status",
+                    status_mapping={
+                        "PASS": "PASS",
+                        "FAIL": "FAIL",
+                        "SKIPPED": "SKIPPED",
+                    },
+                )
+            ],
+        )
+    assert engine_tests(ctx, params).status == (expected if verified else "UNKNOWN")
 
 
 def test_native_worker_runs_and_kills_timeout(tmp_path):
