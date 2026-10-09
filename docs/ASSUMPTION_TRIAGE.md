@@ -153,6 +153,8 @@ A routine recommendation accompanied by missing context cannot proceed routinely
 
 `report.html` shows the original verdicts, selected/unassessed counts, each declared decision, the AI's reason and possible consequence, cited evidence IDs, and the actual policy outcome. `triage-result.json` contains the same results. Copies of the original assessment and policy, the exact model request, validated response, native logs and a file manifest remain in the output folder.
 
+Omit `--out` to keep each triage attempt in a dated folder under `./scene-acceptance-runs/`, or choose a project history with `--run-root PATH`. Open the returned `storage.summary_report` for the review-level counts and links to the full report. Failed attempts remain beside later runs. [Saved-run layout and replay limits](APPLICATION_PROTOCOL.md#saved-runs).
+
 The operation verifies the caller-pinned assessment against its current producer/review input hashes, including previously missing files. It does not rerun the scene checks. Reassess a changed scene before triage. The report is intended for the calling application and may contain local evidence paths; review and sanitize it before publishing it outside that environment.
 
 The separate experimental [audit operation](EXTENSIONS.md#assumption-audit) now proposes cited questions about undeclared choices. It produces no acceptance finding or approval. Source-linked individual assumption records, document semantics, specialist risk adapters and independent discovery-quality evaluation remain in the [enhancement plan](ASSUMPTION_REVIEW_PLAN.md). Unit tests exercise enforcement and transport; they do not establish that a model reliably recognizes consequential manufacturing assumptions.

@@ -49,6 +49,40 @@ check-3d-app evaluate --preparation ./rebound --approval ./approval.json \
 
 The convenience commands `check-3d-prepare`, `check-3d-approve`, `check-3d-bind`, `check-3d-evidence`, `check-3d-run-plan`, `check-3d-triage` and `check-3d-doctor` use this envelope too. This replaces the earlier development-only prepare/run summaries; application callers must read `data`. Existing direct `check-3d` output is unchanged.
 
+## Saved runs
+
+Directory-output operations create a unique dated folder under `./scene-acceptance-runs/` when `--out` is omitted. This covers preparation, checks, evaluation, evidence validation, repair binding, triage, human triage resolution, audit and engine collection. Pass `--run-root PATH` (or `run_root=` to `invoke`) to choose a project history folder outside the input bundle. Do not combine it with `--out`.
+
+```text
+scene-acceptance-runs/
+  README.md
+  <UTC timestamp>-triage-<unique suffix>/
+    index.html          # summary and links to the component reports
+    run.json            # arguments, timestamps and complete response envelope
+    output/             # unchanged evaluator output layout
+      report.html
+      triage-result.json
+      assessment.json
+      policy.json
+      review-requests.json
+      invocation.json
+      model/            # available request, response and native logs
+```
+
+The response's optional `storage` object provides absolute paths to the run directory, output directory, summary and record. The library behaves the same way:
+
+```python
+from scene_acceptance.application import invoke
+
+result = invoke("check", bundle_root="./delivery", candidate="scene.usda",
+                run_root="./project-reviews")
+print(result["storage"]["summary_report"])
+```
+
+Ordinary failures and cancellation keep a summary even when no component report could be produced. Abrupt process termination can leave a `running` record; that is an interrupted attempt, never proof of completion. The harness does not automatically delete runs. Native reports remain under `output/`; the summary and invocation record do not alter their evidence manifests. A history folder contains private project information when the inputs do; its generated `.gitignore` reduces accidental Git publication. Review before sharing. This is retained evidence, not a self-contained backup: replay and human closure can still require original source files at their recorded locations.
+
+An explicit `--out` retains the existing layout and refusal to overwrite old outputs. Verified replay requires `--out` pointing at the original output directory and `--reuse-completed`; automatic history requests a new attempt. `doctor` remains read-only, and `approve` still requires the caller to choose its approval-record file. Legacy `check-3d` and low-level Python functions retain their explicit output arguments.
+
 ## Response and control contract
 
 Every application-command invocation, including argument and missing-file errors, returns one JSON object on stdout:

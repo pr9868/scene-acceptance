@@ -217,6 +217,9 @@ from .accounting import METRICS_SCHEMA
 
 ENVELOPE_SCHEMA["properties"]["metrics"] = METRICS_SCHEMA
 ENVELOPE_SCHEMA["properties"]["isolation"] = {"type": "object"}
+ENVELOPE_SCHEMA["properties"]["storage"] = obj(
+    {key: TEXT for key in ("run_directory", "output_directory", "summary_report", "record")}
+)
 # Progress and result counts can exceed the review item limit; they are not model prompts.
 for schema, key in ((ENVELOPE_SCHEMA, "events"), (PREPARED_RESULT_SCHEMA, "findings")):
     schema["properties"][key].pop("maxItems", None)

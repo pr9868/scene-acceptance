@@ -29,6 +29,14 @@ check-3d --bundle-root ./delivery --candidate scene.usda \
 
 Omit `--contract` to run the general 27-rule delivery baseline. A baseline pass says nothing about requirements it never tested. `check-3d --list-tests` lists available checks; the report lists what actually ran, its subjects, passes, failures and missing evidence.
 
+To keep a history automatically, use the application command without `--out`:
+
+```sh
+check-3d-app check --bundle-root ./delivery --candidate scene.usda
+```
+
+Each attempt gets a dated folder under `./scene-acceptance-runs/`. Open its `index.html` for the outcome and links to reports. The folder keeps the invocation record and available evidence, model responses and logs, including failed attempts. Use `--run-root PATH` to choose another history folder. An explicit `--out` keeps the existing output layout. [Run storage details](docs/APPLICATION_PROTOCOL.md#saved-runs).
+
 ![The brief becomes reviewed requirements. Packs and optional review evaluate the saved delivery. The owner receives evidence, gaps and next actions.](docs/images/acceptance-workflow.svg)
 
 ## Responsibilities

@@ -203,6 +203,7 @@ def invoke(
     control: RunControl | None = None,
     reuse_completed: bool = False,
     cost_context: str | Path | None = None,
+    run_root: str | Path | None = None,
     **parameters,
 ) -> dict:
     """Return one envelope. A failed component remains in data; no automatic model retry."""
@@ -223,10 +224,22 @@ def invoke(
     fingerprint = None
     owned = False
     reused = False
+    retained = None
     try:
-        costs = read_cost_context(cost_context)
         if operation not in OPERATIONS:
             raise ContractError("Unknown operation: " + operation)
+        if run_root is not None and (out or operation in ("approve", "doctor")):
+            raise ContractError("--run-root requires a directory operation without --out")
+        if not out and operation not in ("approve", "doctor"):
+            if reuse_completed:
+                raise ContractError("Verified replay requires the original explicit --out")
+            from .run_storage import start_run
+
+            retained = start_run(operation, params, run_root, control.run_id)
+            out = retained[0] / "output"
+            params["out"] = str(out)
+            receipt = out / "invocation.json"
+        costs = read_cost_context(cost_context)
         with controlled(control):
             control.checkpoint(operation + ".started")
             if reuse_completed:
@@ -350,6 +363,10 @@ def invoke(
             time.monotonic() - started, out if owned else None, costs, operation
         ),
     )
+    if retained:
+        from .run_storage import storage_paths
+
+        result["storage"] = storage_paths(retained[0])
     if owned and receipt and out.is_dir():
         files = {
             str(p.relative_to(out)): sha(p)
@@ -357,6 +374,10 @@ def invoke(
             if p.is_file() and p != receipt
         }
         save(receipt, dict(input_sha256=fingerprint, envelope=result, files=files))
+    if retained:
+        from .run_storage import finish_run
+
+        finish_run(*retained, result)
     return result
 
 
@@ -387,7 +408,10 @@ def parser():
             help="Reuse only identical inputs and verified completed outputs",
         )
         if operation != "doctor":
-            q.add_argument("--out", required=True)
+            q.add_argument("--out", required=operation == "approve",
+                           help="Explicit output; otherwise retain a unique dated run")
+        if operation not in ("approve", "doctor"):
+            q.add_argument("--run-root", help="History folder (default: ./scene-acceptance-runs)")
         if operation in (
             "prepare",
             "check",

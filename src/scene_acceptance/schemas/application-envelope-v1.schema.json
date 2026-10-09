@@ -242,6 +242,38 @@
     },
     "isolation": {
       "type": "object"
+    },
+    "storage": {
+      "type": "object",
+      "properties": {
+        "run_directory": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "output_directory": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "summary_report": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "record": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "run_directory",
+        "output_directory",
+        "summary_report",
+        "record"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
