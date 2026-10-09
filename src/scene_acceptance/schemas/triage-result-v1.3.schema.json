@@ -1,0 +1,737 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.3"
+    },
+    "kind": {
+      "const": "assumption-triage"
+    },
+    "decision": {
+      "enum": [
+        "NO_ADDITIONAL_REVIEW",
+        "NEEDS_REVIEW",
+        "REJECT",
+        "EVALUATION_ERROR"
+      ]
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        2,
+        3,
+        4
+      ]
+    },
+    "next_action": {
+      "enum": [
+        "none",
+        "review_specification",
+        "review_finding",
+        "provide_evidence",
+        "repair_scene",
+        "fix_environment"
+      ]
+    },
+    "execution_status": {
+      "enum": [
+        "completed",
+        "failed"
+      ]
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "assessment_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "original_core_verdict": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "original_scope_verdict": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "producer_decision": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "choice": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "alternatives": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256
+                  },
+                  "assumptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256
+                  },
+                  "affected_paths": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256
+                  }
+                },
+                "required": [
+                  "id",
+                  "choice",
+                  "reason",
+                  "alternatives",
+                  "assumptions",
+                  "affected_paths",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNKNOWN",
+              "ERROR"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "model_recommendation": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "item_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "recommendation": {
+                    "enum": [
+                      "routine_handling",
+                      "human_review_needed",
+                      "insufficient_context"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "possible_consequence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "missing_context": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256
+                  },
+                  "evidence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "minItems": 0,
+                    "maxItems": 256,
+                    "uniqueItems": true
+                  },
+                  "model_policy_paraphrase": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "review_risk": {
+                    "anyOf": [
+                      {
+                        "enum": [
+                          "low",
+                          "medium",
+                          "high"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "risk_reason": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "item_id",
+                  "recommendation",
+                  "reason",
+                  "possible_consequence",
+                  "missing_context",
+                  "evidence_ids",
+                  "model_policy_paraphrase",
+                  "review_risk",
+                  "risk_reason"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "policy_outcome": {
+            "enum": [
+              "routine_handling",
+              "human_review_needed",
+              "insufficient_context"
+            ]
+          },
+          "policy_reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "policy_rule": {
+            "type": "object",
+            "properties": {
+              "item_id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "allow_routine_handling": {
+                "type": "boolean"
+              },
+              "mandatory_human_review": {
+                "type": "boolean"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "review_guidance": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "minItems": 0,
+                "maxItems": 256,
+                "uniqueItems": true
+              },
+              "minimum_review_risk": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            },
+            "required": [
+              "item_id",
+              "allow_routine_handling",
+              "mandatory_human_review",
+              "reason",
+              "review_guidance",
+              "evidence_ids"
+            ],
+            "additionalProperties": false
+          },
+          "missing_evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "original_review": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "item_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "status": {
+                    "enum": [
+                      "approved",
+                      "rejected",
+                      "needs_review"
+                    ]
+                  },
+                  "reviewer": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "\\S"
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "sha256"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 256
+                  }
+                },
+                "required": [
+                  "item_id",
+                  "status",
+                  "reviewer",
+                  "reason",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "human_review": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "item_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_.-]*$"
+                  },
+                  "status": {
+                    "enum": [
+                      "approved",
+                      "rejected",
+                      "needs_review"
+                    ]
+                  },
+                  "reviewer": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "evidence": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "\\S"
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "sha256"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 256
+                  }
+                },
+                "required": [
+                  "item_id",
+                  "status",
+                  "reviewer",
+                  "reason",
+                  "evidence"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "review_risk": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "review_risk_basis": {
+            "enum": [
+              "model",
+              "owner_minimum",
+              "unrated",
+              "not_applicable"
+            ]
+          },
+          "review_risk_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "item_id",
+          "statement",
+          "producer_decision",
+          "original_status",
+          "required",
+          "model_recommendation",
+          "policy_outcome",
+          "policy_reasons",
+          "policy_rule",
+          "missing_evidence_ids",
+          "original_review",
+          "human_review",
+          "review_risk",
+          "review_risk_basis",
+          "review_risk_reason"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "selected_items": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "unassessed_item_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "input_hashes": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "runtime_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "model_status": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "model_requested": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "policy": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "bundle_root": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "review_root": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "assessment",
+        "policy",
+        "bundle_root",
+        "review_root"
+      ],
+      "additionalProperties": false
+    },
+    "review_context_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "parent_triage_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "human_review_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "review_risk_rubric": {
+      "type": "object",
+      "properties": {
+        "low": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "medium": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "high": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "additionalProperties": false
+    },
+    "human_review_risk_counts": {
+      "type": "object",
+      "properties": {
+        "low": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "medium": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "high": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unrated": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "low",
+        "medium",
+        "high",
+        "unrated"
+      ],
+      "additionalProperties": false
+    },
+    "review_risk_rubric_source": {
+      "enum": [
+        "built_in",
+        "owner"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "kind",
+    "decision",
+    "exit_code",
+    "next_action",
+    "execution_status",
+    "errors",
+    "assessment_sha256",
+    "snapshot_sha256",
+    "policy_sha256",
+    "original_core_verdict",
+    "original_scope_verdict",
+    "items",
+    "counts",
+    "selected_items",
+    "unassessed_item_ids",
+    "input_hashes",
+    "runtime_sha256",
+    "model_status",
+    "model_requested",
+    "request_sha256",
+    "limitations",
+    "review_risk_rubric",
+    "human_review_risk_counts",
+    "review_risk_rubric_source"
+  ],
+  "additionalProperties": false
+}

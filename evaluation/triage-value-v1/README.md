@@ -23,7 +23,7 @@ Three records have different jobs:
 
 **Normal harness use does not require this label sheet.** Labels are evaluation data, not model training, runtime policy or approval of a scene. If an owner requires human review, that gate still applies even when the model recommends routine handling.
 
-The runtime can now subdivide human review into low, medium and high under an owner-defined rubric. This pilot's `matters`/`routine` labels still measure routing only. Risk-level accuracy needs a separate, predeclared labelling rubric and human grades; the scorer does not infer those from these binary labels or claim that an enforced owner minimum demonstrates model accuracy.
+The runtime can now subdivide human review into low, medium and high using default definitions or an owner-defined rubric. This pilot's `matters`/`routine` labels still measure routing only. Risk-level accuracy needs a separate, predeclared labelling rubric and human grades; the scorer does not infer those from these binary labels or claim that an enforced owner minimum demonstrates model accuracy.
 
 To start the pilot, copy `labels.template.json`, identify the reviewer and record each label and reason using `cases.json`. Do not use a model's suggested labels as the human reference. The steps below explain how to freeze the inputs and run the comparison. No quality claim follows until the human review and actual model runs are complete.
 

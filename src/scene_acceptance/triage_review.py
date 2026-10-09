@@ -25,14 +25,16 @@ def review_requests(result):
                 "reason": " ".join(row["policy_reasons"]),
             }
         )
-        if result["schema_version"] == "1.2":
+        if result["schema_version"] in ("1.2", "1.3"):
             items[-1].update(
                 review_risk=row["review_risk"],
                 review_risk_basis=row["review_risk_basis"],
                 review_risk_reason=row["review_risk_reason"],
             )
     request = {
-        "schema_version": "1.1" if result["schema_version"] == "1.2" else "1.0",
+        "schema_version": (
+            "1.1" if result["schema_version"] in ("1.2", "1.3") else "1.0"
+        ),
         "kind": "triage-review-requests",
         "assessment_sha256": result["assessment_sha256"],
         "policy_sha256": result["policy_sha256"],

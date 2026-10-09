@@ -51,11 +51,7 @@ def prepare(out):
     result = assess('plan.json', review_root=owner, bundle_root=bundle,
                     expected_plan_sha256=sha(owner/'plan.json'), decision_record='decisions.json')
     write_report(result, root / 'assessment')
-    policy = dict(schema_version='1.1', id='synthetic-triage-policy', version='1.1',
-        review_risk_rubric={
-            'low': 'Limited and reversible impact; a brief owner check can settle the choice.',
-            'medium': 'Could invalidate the intended use or require substantial rework; review the basis.',
-            'high': 'Could have serious consequences for physical operation or a consequential decision; require qualified domain review.'},
+    policy = dict(schema_version='1.1', id='synthetic-triage-policy', version='1.2',
         items=[
         dict(item_id='visual-material', allow_routine_handling=True, mandatory_human_review=False,
              reason='Styling is discretionary when the delivered material binding passes.',

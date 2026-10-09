@@ -1,8 +1,20 @@
-"""Qualitative review-risk routing under an explicit owner rubric."""
+"""Qualitative review-risk routing with overridable default definitions."""
 
 from typing import Any
 
 RISK_LEVELS = ["low", "medium", "high"]
+DEFAULT_REVIEW_RISK_RUBRIC = {
+    "low": "Limited, reversible impact; a brief owner check can settle the choice.",
+    "medium": "Could invalidate the intended use or require substantial rework; review the basis before relying on it.",
+    "high": "Could have serious consequences for physical operation or a consequential decision; require qualified domain review.",
+}
+
+
+def risk_rubric(policy: dict[str, Any]) -> tuple[dict[str, str], str]:
+    """Return the active definitions and source without modifying caller policy."""
+    if "review_risk_rubric" in policy:
+        return dict(policy["review_risk_rubric"]), "owner"
+    return dict(DEFAULT_REVIEW_RISK_RUBRIC), "built_in"
 
 
 def review_risk(
@@ -16,11 +28,7 @@ def review_risk(
         return None, "not_applicable", None
     floor = rule.get("minimum_review_risk")
     suggested = None
-    if (
-        policy.get("review_risk_rubric")
-        and opinion
-        and opinion["recommendation"] == "human_review_needed"
-    ):
+    if opinion and opinion["recommendation"] == "human_review_needed":
         suggested = opinion.get("review_risk")
     if floor and (
         suggested is None or RISK_LEVELS.index(floor) >= RISK_LEVELS.index(suggested)
