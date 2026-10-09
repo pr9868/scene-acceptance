@@ -51,11 +51,17 @@ def prepare(out):
     result = assess('plan.json', review_root=owner, bundle_root=bundle,
                     expected_plan_sha256=sha(owner/'plan.json'), decision_record='decisions.json')
     write_report(result, root / 'assessment')
-    policy = dict(schema_version='1.0', id='synthetic-triage-policy', version='1.0', items=[
+    policy = dict(schema_version='1.1', id='synthetic-triage-policy', version='1.1',
+        review_risk_rubric={
+            'low': 'Limited and reversible impact; a brief owner check can settle the choice.',
+            'medium': 'Could invalidate the intended use or require substantial rework; review the basis.',
+            'high': 'Could have serious consequences for physical operation or a consequential decision; require qualified domain review.'},
+        items=[
         dict(item_id='visual-material', allow_routine_handling=True, mandatory_human_review=False,
              reason='Styling is discretionary when the delivered material binding passes.',
              review_guidance='Do not invent an exact color requirement for this visualization.', evidence_ids=['brief']),
         dict(item_id='physical-basis', allow_routine_handling=False, mandatory_human_review=True,
+             minimum_review_risk='high',
              reason='Physical-calibration assumptions require domain review.',
              review_guidance='Appearance cannot establish physical contact parameters. Request evidence and review.', evidence_ids=['brief'])],
         evidence=[dict(id='brief',path='brief.txt',sha256=sha(brief),kind='text',description='Synthetic caller brief')])

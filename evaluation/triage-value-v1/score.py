@@ -9,7 +9,7 @@ from pathlib import Path
 from jsonschema import Draft202012Validator
 from scene_acceptance.accounting import read_invocation
 from scene_acceptance.model import ContractError, digest_json, sha, strict_json
-from scene_acceptance.triage import RESULT_SCHEMA
+from scene_acceptance.triage import result_schema
 
 ROOT = Path(__file__).resolve().parent
 
@@ -78,7 +78,9 @@ def score(labels_path, observations_path):
                 )
             seen.add(path)
             result = strict_json(path)
-            Draft202012Validator(RESULT_SCHEMA).validate(result)
+            Draft202012Validator(result_schema(result.get("schema_version"))).validate(
+                result
+            )
             receipt_name = run.get("invocation")
             if not isinstance(receipt_name, str) or not receipt_name:
                 raise ContractError("Each repeat needs its original invocation receipt")

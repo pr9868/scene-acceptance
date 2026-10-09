@@ -1,0 +1,125 @@
+{
+  "type": "object",
+  "properties": {
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "recommendation": {
+            "enum": [
+              "routine_handling",
+              "human_review_needed",
+              "insufficient_context"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "possible_consequence": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "missing_context": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 0,
+            "maxItems": 256,
+            "uniqueItems": true
+          },
+          "model_policy_paraphrase": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "review_risk": {
+            "anyOf": [
+              {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "risk_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "item_id",
+          "recommendation",
+          "reason",
+          "possible_consequence",
+          "missing_context",
+          "evidence_ids",
+          "model_policy_paraphrase",
+          "review_risk",
+          "risk_reason"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "schema_version": {
+      "const": "1.2"
+    }
+  },
+  "required": [
+    "request_sha256",
+    "items",
+    "limitations",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

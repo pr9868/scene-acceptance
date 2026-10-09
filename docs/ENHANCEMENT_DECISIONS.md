@@ -39,3 +39,8 @@ This development candidate prioritizes closing real review gates, turning two ob
 | 33 | Fixture-only registry packs | Moved the incline worker and four-job preset out of the normal registry/catalog. Explicitly selected contracts still load them for frozen replay; `--include-examples` exposes their catalog. Third-party imports still require approval. |
 
 The state and process controls are constructed regression cases. They do not rerun or independently assess the original large distribution-centre scene. The public two-scene evidence collection lacks the complete scenes and custom evaluator needed for that replay.
+
+
+## Qualitative review risk
+
+The owner requested low, medium and high beneath human review. Implemented in the development candidate with an owner-supplied rubric, optional per-item minimum, model reason/citations, separate applied level and pending-item counts. Low still needs review. Missing context or a legacy response supplies no grade; mandatory owner minimums remain enforceable. Human approval uses the same evidence-bound closure records. Published older schemas remain available. Deterministic tests check routing and integrity; no model risk-classification accuracy is established, and the binary pilot cannot supply that result.

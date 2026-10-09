@@ -124,19 +124,22 @@ def test_resolve_application_replay_is_verified(case, tmp_path):
     assert invoke('resolve-triage', reuse_completed=True, **args)['exit_code'] == 4
 
 
-@pytest.mark.parametrize('version', [None, '1.0', '1.1'])
+@pytest.mark.parametrize('version', [None, '1.0', '1.1', '1.2'])
 def test_response_version_compatibility(case, tmp_path, version):
     result = run_triage(**kwargs(case, tmp_path))
     request = json.loads((tmp_path / 'triage/model/request.json').read_text())
     row = deepcopy(result['items'][0]['model_recommendation'])
     response = dict(request_sha256=result['request_sha256'], items=[row], limitations=['Synthetic control'])
-    if version != '1.1':
+    if version != '1.2':
+        row.pop('review_risk')
+        row.pop('risk_reason')
+    if version in (None, '1.0'):
         row['policy_reason'] = row.pop('model_policy_paraphrase')
     if version:
         response['schema_version'] = version
     validate_response(response, request)
     normalized = normalize_response(response)
-    assert normalized['schema_version'] == '1.1'
+    assert normalized['schema_version'] == '1.2'
     assert 'policy_reason' not in normalized['items'][0]
     response['schema_version'] = '9.9'
     with pytest.raises(ValidationError):

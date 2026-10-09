@@ -4,6 +4,8 @@ The triage operation asks a caller-configured model whether a declared decision 
 
 This feature is additional to the visual judge. Its first implementation is text-based and operates on caller-selected obligations, inferred requirements and producer decision records. It does not discover every hidden assumption or compute an engineering risk score.
 
+Human-review items can also carry **low, medium or high review risk**, using definitions supplied by the owner. The report keeps the model's suggestion, the applied level and the human decision separate. All three levels still require review.
+
 ## Where it fits
 
 1. Evaluate the saved scene and declared scope using the existing review workflow. Retain the resulting `assessment.json` and its original producer/review input roots.
@@ -82,6 +84,57 @@ Optional `evidence` entries have `id`, `path`, `sha256`, `kind: "text"` and `des
 
 The reducer preserves required review from the original assessment and mandatory review in the triage policy. A routine model recommendation cannot close either. The caller can close a triage request with the existing human-review record format through `resolve-triage`, described below. Resolve original declared-scope obligations through their existing workflow, then reassess changed inputs.
 
+## Low, medium and high within human review
+
+The hierarchy is:
+
+```text
+Routine handling
+Human review needed
+  High
+  Medium
+  Low
+  Unrated — no supported grade available
+Insufficient context
+```
+
+Unrated is a coverage state, not a fourth risk level. Missing information must not become low risk. Risk grades are qualitative judgments about the consequence of accepting the selected choice for its intended use; they are not probabilities, model-confidence scores or a manufacturing safety standard.
+
+The owner supplies reusable definitions in `review_risk_rubric` on a version `1.1` policy. A starting point to adapt is:
+
+| Level | Example definition to review for your job |
+|---|---|
+| Low | Limited, reversible impact; a brief owner check can settle the choice. |
+| Medium | Could invalidate the intended use or require substantial rework; review the basis before relying on it. |
+| High | Could have serious consequences for physical operation or a consequential decision; require qualified domain review. |
+
+These are illustrative definitions. The harness does not insert them into an existing policy. Define what the levels mean for your use, keep the policy ID/version with the run and reuse that rubric across deliveries when appropriate. The model sees the definitions and must explain its grade using the supplied evidence. A missing physical parameter can warrant high-risk review when the possible consequence is clear. If the context cannot support any grade, the model leaves it null and explains the gap. Scripts validate the response, citations and policy gates; they do not verify the semantic accuracy of a risk grade.
+
+To add grading to an existing policy, set its `schema_version` to `1.1` and add this top-level field (a fragment, not a complete policy):
+
+```json
+"review_risk_rubric": {
+  "low": "Limited, reversible impact; a brief owner check can settle the choice.",
+  "medium": "Could invalidate the intended use or require substantial rework.",
+  "high": "Could have serious consequences for physical operation or a consequential decision."
+}
+```
+
+A selected item can also set `minimum_review_risk: "high"`. This requires `mandatory_human_review: true` and an owner rubric. If the model suggests low, the applied level stays high. If it suggests routine handling, the item still goes to high-risk human review. A model can recommend a higher level than the owner's minimum. The report retains both values and the reason for the applied level.
+
+| Situation | Reported result |
+|---|---|
+| Model recommends human review with a supported low/medium/high grade | Human-review queue at that level; no automatic approval |
+| Owner minimum exceeds the model's suggestion | Human-review queue at the owner minimum, with both values visible |
+| No rubric, an older response without risk fields, or insufficient basis for grading | Unrated when human review is required; no invented default grade |
+| Potential consequence is supported, but a measurement or source is missing | The model may propose a grade with its basis; the original evidence gap and gate remain. A high-risk concern does not fill in the missing measurement. |
+| Model recommends routine handling or insufficient context | Its risk fields must be null; owner-required review and minimums still apply |
+| Human approves the current triage request | Removed from the pending review-risk counts; model grade and owner policy remain in the record. Original failures and gaps still apply. |
+
+`triage-result.json` exposes per-item `review_risk`, `review_risk_basis` and `review_risk_reason`, plus `human_review_risk_counts` for low, medium, high and unrated. The model opinion separately contains `review_risk` and `risk_reason`. Counts refer to selected obligations/decisions, not assets or newly discovered assumptions. The HTML report shows the nested queue and owner rubric. Changing the rubric or an item minimum invalidates an earlier human approval just like any other policy change.
+
+The [worked example](../examples/assumption-triage/README.md) supplies an illustrative rubric and a high owner minimum for its physical-use decision. These are software controls; accuracy of model-assigned risk levels still needs human-labelled evaluation.
+
 A routine recommendation accompanied by missing context cannot proceed routinely. Neither model output nor triage policy can clear an existing required artifact failure. A known advisory failure remains visible and can be treated as an allowed variation when the selected policy and evidence support that judgment.
 
 | Combined result | Exit | Next step |
@@ -137,8 +190,8 @@ These labels are only for the evaluation. They are kept out of model requests an
 
 ## Model response compatibility
 
-New model responses use schema `1.1` and `model_policy_paraphrase`, labelled **Model’s reading of the policy**. The actual owner policy remains a separate field. The adapter still accepts explicit `1.0` or old unversioned responses using `policy_reason`, then normalizes them. Unknown versions fail validation.
+New model responses use schema `1.2`, retaining `model_policy_paraphrase` and adding required `review_risk` and `risk_reason` fields. Both risk fields are null outside a supported human-review grade; an ungraded human-review response under a rubric must explain its missing context. **Model’s reading of the policy** remains separate from the actual owner policy. Version `1.1`, explicit `1.0` and old unversioned responses remain accepted; missing risk fields normalize to null. Unknown versions fail validation.
 
 The Codex driver can optionally carry `ignored_codex_notices`, an exact-match list of known informational error-item messages. The default is empty. A new message, a changed suffix, a failed turn or a tool event still fails; no prefix match is used. This configuration is rejected for other drivers. Configure each model role deliberately; triage does not silently change interpreter or judge behavior.
 
-New triage result records use schema `1.1`, with normalized policy paraphrases and review fields. The published `triage-result-v1` schema remains available for old reports; current runs use `triage-result-v1.1`. Human closure requires a fresh current-version run and matching runtime/evidence. It does not migrate an old result into an approval.
+Current policies use `triage-policy-v1.1`; unchanged version `1.0` policies remain valid without grading. New results use `triage-result-v1.2` and review requests use version `1.1`. The existing human-review record format stays unchanged. All older published policy, response and result schemas remain available through capabilities. The pilot scorer accepts retained result versions but still scores review routing only, not risk-level accuracy. Human closure requires a fresh current-version run and matching runtime/evidence; it does not migrate an old result into an approval.

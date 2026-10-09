@@ -1,6 +1,6 @@
 # Plan: inspectable assumptions and review gates
 
-**Status: triage and human closure are implemented. Experimental audit can propose cited questions; native PDF provenance, process connectivity and external-engine transport are also implemented. Richer individual assumption records, domain-specific risk semantics and independent model-quality evaluation remain proposed.** The [triage guide](ASSUMPTION_TRIAGE.md) documents the supported operation. The [adopter guide](ACCEPTANCE_WORKFLOW.md) describes the current workflow and its limits.
+**Status: triage, owner-defined low/medium/high review-risk buckets and human closure are implemented. Experimental audit can propose cited questions; native PDF provenance, process connectivity and external-engine transport are also implemented. Richer individual assumption records, domain-specific risk semantics and independent model-quality evaluation remain proposed.** The [triage guide](ASSUMPTION_TRIAGE.md) documents the supported operation. The [adopter guide](ACCEPTANCE_WORKFLOW.md) describes the current workflow and its limits.
 
 The goal is to let a receiving user inspect what a delivery depends on: which requirements were checked, which producer choices were grounded in the brief, and which unresolved assumptions need a decision before release. The calling application enforces the owner's release policy.
 
@@ -8,7 +8,7 @@ The goal is to let a receiving user inspect what a delivery depends on: which re
 
 The declared-scope layer already has explicit requirements, inferred necessities, producer decisions, delivery integration and intended-use evidence. Producer decision records include a choice, reason, alternatives, an array of assumption strings, affected paths and evidence files. Mapped decisions require separate review; missing required evidence or review prevents declared-scope acceptance. Unmapped declared decisions already create a scope gap. Reviews are tied to an assessment snapshot and become stale when relevant inputs change.
 
-Those mechanisms do not discover decisions the producer omitted, establish whether the requirement map is relevant, or assess the engineering consequence of an assumption. Optional triage now recommends review for selected assessed items under explicit caller policy. It does not assign an engineering risk score. Extend these records and gates instead of building a parallel approval system.
+Those mechanisms do not discover decisions the producer omitted, establish whether the requirement map is relevant, or assess the engineering consequence of an assumption. Optional triage now recommends review for selected assessed items under explicit caller policy. It can apply qualitative low/medium/high review-risk buckets under an explicit owner rubric and minimum, while keeping unsupported grades unrated. It does not assign a calibrated engineering risk score. Extend these records and gates instead of building a parallel approval system.
 
 ## Proposed increments
 

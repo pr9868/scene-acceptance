@@ -8,6 +8,7 @@ from jsonschema import Draft202012Validator
 from .model import ContractError, digest_json, sha, strict_json
 from .review.schemas import REVIEW
 from .review_context import save
+from .triage_risk import review_risk_counts
 
 
 def review_requests(result):
@@ -24,8 +25,14 @@ def review_requests(result):
                 "reason": " ".join(row["policy_reasons"]),
             }
         )
+        if result["schema_version"] == "1.2":
+            items[-1].update(
+                review_risk=row["review_risk"],
+                review_risk_basis=row["review_risk_basis"],
+                review_risk_reason=row["review_risk_reason"],
+            )
     request = {
-        "schema_version": "1.0",
+        "schema_version": "1.1" if result["schema_version"] == "1.2" else "1.0",
         "kind": "triage-review-requests",
         "assessment_sha256": result["assessment_sha256"],
         "policy_sha256": result["policy_sha256"],
@@ -143,6 +150,7 @@ def resolve_triage(*, triage_run, expected_triage_sha256, review_record, out):
     result.update(
         items=rows,
         counts=dict(Counter(row["policy_outcome"] for row in rows)),
+        human_review_risk_counts=review_risk_counts(rows),
         decision=decision,
         exit_code=code,
         next_action=action,
