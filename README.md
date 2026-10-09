@@ -68,7 +68,7 @@ Where a [SimReady profile](https://docs.omniverse.nvidia.com/simready/latest/sim
 - [Consumer CI example](examples/ci/README.md)
 - [Extended capabilities, evidence formats and native worker](docs/EXTENSIONS.md), [experimental Blender client](examples/blender_scene_acceptance/README.md)
 - [Two-scene findings and repairs](examples/two-scene-repair-study/README.md), including the route-indicator finding from separate review
-- [Triage evaluation protocol](evaluation/triage-value-v1/README.md): human labels and independent baseline still pending
+- [Human labels and triage evaluation](evaluation/triage-value-v1/README.md): how to measure the model's review recommendations; labels are not required for ordinary harness runs. Human labels and independent baseline are still pending.
 - [Detailed reference and retained experiments](docs/REFERENCE_GUIDE.md)
 
 Checks and providers run as trusted local code. The optional supervised worker bounds native execution resources; it is not a filesystem/network security sandbox. The application enforces release policy. Reports can contain caller paths and evidence. Review them before publishing outside the receiving application.

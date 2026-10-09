@@ -129,6 +129,12 @@ No model is called. A current approval closes that triage request only. Original
 
 Limited acceptance needs an explicit revised scope and a fresh assessment; it is not an informal `approved_with_limits` status. The report shows model recommendation, owner policy and human decision side by side. Hashes establish correspondence to evidence, not the identity or authority of a reviewer. The receiving application must protect review records against producer self-approval.
 
+## Evaluate whether triage is useful
+
+The [human-label guide and pilot protocol](../evaluation/triage-value-v1/README.md) explain how to test the model's recommendations. A domain reviewer first marks each case `matters` or `routine` for its intended use, with a reason, without seeing model output. Three fresh model runs per item then let the study count missed important items, unnecessary escalation, missing context and variation. Reviewer-time savings need a measured human baseline.
+
+These labels are only for the evaluation. They are kept out of model requests and do not replace the caller's policy or the human decisions above. Ordinary harness runs need no label sheet. The pilot still has no completed human labels or model-quality result.
+
 ## Model response compatibility
 
 New model responses use schema `1.1` and `model_policy_paraphrase`, labelled **Model’s reading of the policy**. The actual owner policy remains a separate field. The adapter still accepts explicit `1.0` or old unversioned responses using `policy_reason`, then normalizes them. Unknown versions fail validation.

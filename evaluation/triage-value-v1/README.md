@@ -2,6 +2,29 @@
 
 **Status: protocol and scoring controls prepared; no human labels or model-quality result yet.** The ten case cards include three questions anchored to published observations and seven constructed variations. They are a labeling pilot, not a representative manufacturing benchmark. The published delivery subset lacks complete original scenes and all producer decision records; do not call these cards a full replay of those deliveries.
 
+## What the human labels are for
+
+Labels give us a reference for asking whether the model sends the right items to a person. A domain reviewer reads each case, its intended use and the available evidence, then records a judgment **before seeing the model's recommendation**:
+
+| Label | Reviewer's judgment for that intended use |
+|---|---|
+| `matters` | This item needs deliberate review or more evidence before routine handling is appropriate. Record the consequence or uncertainty that makes it matter. |
+| `routine` | Routine handling is appropriate within the stated policy and context. Record why further escalation would add little value. |
+
+If the case does not give enough information to choose a label, clarify it or exclude it before freezing the study. Do not guess a label to complete the sheet. A choice can matter for one intended use and be routine for another; the reason and context belong with the label.
+
+Three records have different jobs:
+
+| Record | Who supplies it | What it does |
+|---|---|---|
+| Evaluation label | Domain reviewer, before model output | Lets the study count missed important items and unnecessary escalations. Kept out of model requests. |
+| Caller policy | Responsible owner | Defines what the application may handle routinely and what must receive human review. Supplied to triage. |
+| Human review decision | Authorized reviewer | Approves or rejects a specific current review request. Consumed by `resolve-triage`; cannot clear a measured failure. |
+
+**Normal harness use does not require this label sheet.** Labels are evaluation data, not model training, runtime policy or approval of a scene. If an owner requires human review, that gate still applies even when the model recommends routine handling.
+
+To start the pilot, copy `labels.template.json`, identify the reviewer and record each label and reason using `cases.json`. Do not use a model's suggested labels as the human reference. The steps below explain how to freeze the inputs and run the comparison. No quality claim follows until the human review and actual model runs are complete.
+
 ## Freeze before running
 
 1. Have a domain reviewer label each card `matters` or `routine`, with the intended use and reason, before seeing any model output. Use `cases.json` and fill `labels.template.json`. Ambiguous cards should be clarified or excluded before freezing the case list, not after seeing results. Keep at least one item in each class; more independent real cases are needed for a reliable estimate.
@@ -31,6 +54,8 @@ The scorer validates results and receipts, verifies that each receipt contains a
 
 Hashes and invocation IDs detect inconsistent records and copied runs; they do not authenticate execution, prove when a person labeled a case or establish assessor independence. The reviewer must also verify that the selected assessment item represents its case card. Retain that evidence in the evaluation record. Every report states its pilot size. Passing this bar on ten selected cases does not establish zero risk in production.
 
-## Future audit holdout
+## Separate audit holdout
 
-Only after reviewing triage's value, consider an experimental audit that proposes cited questions about undeclared choices. Before testing the diverter, remove its decision record and every answer-revealing feedback file, caption and filename. Include the repaired scene and a legitimately different route policy. Score the specific question and its evidence, not generic suspicion. A question is never promoted automatically to a measured failure.
+The experimental [audit operation](../../docs/EXTENSIONS.md#assumption-audit) is implemented, but its ability to discover useful questions remains unmeasured. This triage pilot evaluates recommendations on declared items; it cannot establish discovery quality.
+
+Before testing the diverter, remove its decision record and every answer-revealing feedback file, caption and filename. Include the repaired scene and a legitimately different route policy. Score the specific question and its evidence, not generic suspicion. A question is never promoted automatically to a measured failure. The original distribution-centre scene exceeds the current 10,000-prim admission limit; a smaller control would need to be identified as a constructed test, not a full replay of that delivery.
