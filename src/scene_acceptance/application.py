@@ -7,7 +7,7 @@ from .model import ContractError, digest_json, sha, strict_json
 from .execution import RunControl, controlled, Cancelled, DeadlineExceeded
 from .review_context import save
 
-OPERATIONS=('prepare','approve','bind','validate-evidence','evaluate','check','doctor')
+OPERATIONS=('prepare','approve','bind','validate-evidence','evaluate','check','doctor','triage')
 
 
 def _operation(name):
@@ -16,7 +16,8 @@ def _operation(name):
     from .prepared_run import evaluate_prepared,validate_prepared_evidence
     from .evaluation import evaluate_scene
     from .environment import doctor
-    return dict(zip(OPERATIONS,(prepare_scene,approve_scope,bind_preparation,validate_prepared_evidence,evaluate_prepared,evaluate_scene,doctor)))[name]
+    from .triage import run_triage
+    return dict(zip(OPERATIONS,(prepare_scene,approve_scope,bind_preparation,validate_prepared_evidence,evaluate_prepared,evaluate_scene,doctor,run_triage)))[name]
 
 
 def _fingerprint(operation, params):
@@ -32,6 +33,10 @@ def _fingerprint(operation, params):
         if p.exists() and (not p.is_file() or p.stat().st_size>limit):
             raise ContractError('Replay input is not a bounded regular file: '+str(p))
         hashes[str(p)]=sha(p) if p.is_file() else None
+    if operation == 'triage':
+        from .triage import load_context
+        context = load_context(**{key: params[key] for key in ('assessment', 'expected_assessment_sha256', 'policy', 'expected_policy_sha256', 'bundle_root', 'review_root')})
+        hashes.update(context[4])
     if params.get('preparation'):
         folder,plan=load_preparation(params['preparation'],allow_runtime_migration=params.get('migrate_runtime',False))
         record(folder/'plan.json')
@@ -46,7 +51,7 @@ def _fingerprint(operation, params):
         if params.get('brief'):
             _,files,_=load_brief(root,params['brief'])
             for name in files:record(root/name)
-    for key in ('interpreter_config','judge_config','capture_capabilities','rubric','capture_overrides','approval','receipt','views','previous_run','review_record','runtime_dependency_evidence'):
+    for key in ('interpreter_config','judge_config','triage_config','capture_capabilities','rubric','capture_overrides','approval','receipt','views','previous_run','review_record','runtime_dependency_evidence'):
         value=params.get(key)
         if not value:continue
         path=Path(value).resolve()
@@ -171,6 +176,9 @@ def parser():
         if operation in ('check','evaluate','validate-evidence'):q.add_argument('--views')
         if operation=='evaluate':
             q.add_argument('--approval');q.add_argument('--previous-run')
+        if operation=='triage':
+            for key in ('assessment','expected-assessment-sha256','policy','expected-policy-sha256','bundle-root','review-root','triage-config'):
+                q.add_argument('--'+key,required=True)
         if operation=='check':
             q.add_argument('--brief');q.add_argument('--expected-brief-sha256');q.add_argument('--rubric')
             q.add_argument('--approve-pack',dest='approved_packs',action='append',default=[])
@@ -196,5 +204,6 @@ def approve_main():return main(['approve',*sys.argv[1:]])
 def bind_main():return main(['bind',*sys.argv[1:]])
 def evidence_main():return main(['validate-evidence',*sys.argv[1:]])
 def doctor_main():return main(['doctor',*sys.argv[1:]])
+def triage_main():return main(['triage',*sys.argv[1:]])
 
 if __name__=='__main__':raise SystemExit(main())

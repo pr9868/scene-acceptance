@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="838" viewBox="0 0 1040 838" role="img" aria-labelledby="title desc">
+<title id="title">A brief, reusable checks and a delivery decision</title>
+<desc id="desc">The owner supplies the brief and reviews requirements. The application supplies the saved scene and evidence. The harness runs selected reusable evaluation packs and optional model review. Its report retains results, gaps and next actions. The application applies the owner’s release policy or routes further work.</desc>
+<rect width="1040" height="838" rx="12" fill="#101722"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#9caec1"/></marker></defs>
+<text x="30" y="43" fill="#f1f5f9" font-size="28" font-weight="600" font-family="Arial, sans-serif">A brief, reusable checks and a delivery decision</text>
+<rect x="30" y="75" width="470" height="154" rx="8" fill="#1b2535" stroke="#607286"/>
+<text x="50" y="105" fill="#afcdef" font-size="19" font-weight="600" font-family="Arial, sans-serif">OWNER · define the job</text>
+<text x="50" y="141" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Brief: purpose, constraints and references</text>
+<text x="50" y="169" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Review the requirements and tolerances</text>
+<text x="50" y="197" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Decide required vs advisory policy</text>
+<rect x="540" y="75" width="470" height="154" rx="8" fill="#1b2535" stroke="#607286"/>
+<text x="560" y="105" fill="#afcdef" font-size="19" font-weight="600" font-family="Arial, sans-serif">CALLER · supply the delivery</text>
+<text x="560" y="141" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Saved USD scene and dependencies</text>
+<text x="560" y="169" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Requested renders or measurements</text>
+<text x="560" y="197" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Evidence tied to the delivered revision</text>
+<path d="M265 229 V254 H520 V276" fill="none" stroke="#9caec1" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M775 229 V254 H520" fill="none" stroke="#9caec1" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="282" width="980" height="270" rx="8" fill="#172b31" stroke="#74a399"/>
+<text x="50" y="314" fill="#a5e0cd" font-size="22" font-weight="600" font-family="Arial, sans-serif">HARNESS · evaluate the reviewed scope</text>
+<rect x="50" y="335" width="460" height="151" rx="8" fill="#203a3e" stroke="#74a399"/>
+<text x="68" y="366" fill="#a5e0cd" font-size="18" font-weight="600" font-family="Arial, sans-serif">SELECTED EVALUATION PACKS</text>
+<text x="68" y="400" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Reusable code + declared coverage</text>
+<text x="68" y="428" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Job-specific subjects, targets and policy</text>
+<text x="68" y="456" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Existing rules or a custom evaluator</text>
+<rect x="530" y="335" width="460" height="151" rx="8" fill="#292b42" stroke="#a6a0c6"/>
+<text x="548" y="366" fill="#d3c7f3" font-size="18" font-weight="600" font-family="Arial, sans-serif">OPTIONAL MODEL REVIEW</text>
+<text x="548" y="400" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Reviewed questions + suitable views</text>
+<text x="548" y="428" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Separate advisory opinions</text>
+<text x="548" y="456" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">Missing evidence remains unknown</text>
+<text x="50" y="527" fill="#d3dce6" font-size="20" font-weight="400" font-family="Arial, sans-serif">New targets: configure a check. New measurement: add a tested pack.</text>
+<path d="M520 552 V580" fill="none" stroke="#9caec1" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="587" width="980" height="95" rx="8" fill="#1b2535" stroke="#607286"/>
+<text x="50" y="618" fill="#f1f5f9" font-size="20" font-weight="600" font-family="Arial, sans-serif">REPORT · inspectable evidence</text>
+<text x="50" y="652" fill="#d3dce6" font-size="21" font-weight="400" font-family="Arial, sans-serif">Measured results  ·  Review opinions  ·  Coverage gaps  ·  Next actions</text>
+<path d="M520 682 V711" fill="none" stroke="#9caec1" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="718" width="980" height="93" rx="8" fill="#1b2535" stroke="#607286"/>
+<text x="50" y="749" fill="#afcdef" font-size="20" font-weight="600" font-family="Arial, sans-serif">CALLER · act under the owner’s policy</text>
+<text x="50" y="783" fill="#d3dce6" font-size="21" font-weight="400" font-family="Arial, sans-serif">Accept within scope, request repair, supply evidence or resolve the scope.</text>
+</svg>

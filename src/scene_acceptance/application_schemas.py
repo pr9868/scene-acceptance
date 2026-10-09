@@ -53,7 +53,7 @@ PREPARED_RESULT_SCHEMA['properties']['judge_coverage_drift'] = JUDGE_COVERAGE_DR
 EVIDENCE_RESULT_SCHEMA=obj({'schema_version':{'const':'1.0'},'plan_sha256':HASH,'scene_sha256':HASH,
     'capture_requests':array(CAPTURE_ROW),'evidence_policy':{'type':'object'},'model_calls':{'const':0},
     'errors':array(TEXT),'execution_status':{'enum':['completed','failed']},'exit_code':{'enum':[0,3,4]}})
-ENVELOPE_SCHEMA=obj({'schema_version':{'const':'1.0'},'operation':{'enum':['prepare','approve','bind','validate-evidence','evaluate','check','doctor','parse']},
+ENVELOPE_SCHEMA=obj({'schema_version':{'const':'1.0'},'operation':{'enum':['prepare','approve','bind','validate-evidence','evaluate','check','doctor','triage','parse']},
     'run_id':TEXT,'status':{'enum':['completed','partial','failed','cancelled','timed_out']},'exit_code':{'enum':[0,2,3,4]},
     'reused':{'type':'boolean'},'data':{'type':['object','null']},
     'errors':array(obj({'code':TEXT,'phase':TEXT,'message':TEXT,'retryable':{'type':'boolean'}})),
@@ -69,3 +69,8 @@ SCHEMAS={'application-envelope-v1':ENVELOPE_SCHEMA,'preparation-plan-v1':PLAN_SC
 
 from .runtime_dependencies import RUNTIME_DEPENDENCY_RECEIPT_SCHEMA
 SCHEMAS["runtime-dependency-receipt-v1"] = RUNTIME_DEPENDENCY_RECEIPT_SCHEMA
+
+from .triage import POLICY_SCHEMA as TRIAGE_POLICY_SCHEMA, RESPONSE_SCHEMA as TRIAGE_RESPONSE_SCHEMA, RESULT_SCHEMA as TRIAGE_RESULT_SCHEMA
+SCHEMAS["triage-policy-v1"] = TRIAGE_POLICY_SCHEMA
+SCHEMAS["triage-response-v1"] = TRIAGE_RESPONSE_SCHEMA
+SCHEMAS["triage-result-v1"] = TRIAGE_RESULT_SCHEMA

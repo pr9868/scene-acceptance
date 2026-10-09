@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scene-acceptance"
-version = "0.5.0"
-description = "Contract-based acceptance of bounded OpenUSD layouts and declared claims"
+version = "0.6.0"
+description = "Inspectable evidence and review for saved OpenUSD deliveries"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [{name = "Pradeep Kaushik"}]
@@ -28,6 +28,7 @@ check-3d = "scene_acceptance.cli:main"
 assess-3d = "scene_acceptance.review.__main__:main"
 check-3d-packs = "scene_acceptance.catalog_cli:main"
 check-3d-judge = "scene_acceptance.judge:main"
+check-3d-triage = "scene_acceptance.application:triage_main"
 check-3d-prepare = "scene_acceptance.preparation:main"
 check-3d-run-plan = "scene_acceptance.prepared_run:main"
 check-3d-app = "scene_acceptance.application:main"

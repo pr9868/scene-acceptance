@@ -11,8 +11,11 @@ Use `check-3d-app` or `scene_acceptance.application.invoke` for a versioned appl
 | `validate-evidence` | Frozen plan and paired view manifest/receipt | Supplied/missing/invalid capture matrix and eligible evidence IDs; no model call |
 | `evaluate` | Frozen plan, optional scope approval, mode, evidence and judge configuration | Script outcomes, subject counts, advisory findings, missing evidence and next actions |
 | `check` | Saved scene, optional already mapped brief, mode | Direct evaluation without preparation; the same application envelope |
+| `triage` | Pinned declared-scope assessment, original input roots, selected items, caller policy, text evidence and model configuration | AI review recommendations beside applied policy, original verdicts and next actions; no new approval |
 
 `checks` is the default. `judge` selects advisory review only. `both` retains separate component results, withholding script findings from the judge by default. A malformed image manifest or failing model does not discard completed script results. The overall operation returns code 4 for that partial execution; inspect `data.script` or the prepared report to retain measured failures.
+
+The separate, opt-in [assumption-triage operation](ASSUMPTION_TRIAGE.md) runs after declared-scope assessment. It uses text evidence and caller-selected items, preserves existing required reviews and failures, and does not change the `checks`/`judge`/`both` modes.
 
 ## Minimal calls
 
@@ -43,7 +46,7 @@ check-3d-app evaluate --preparation ./rebound --approval ./approval.json \
   --previous-run ./run --out ./repair-check
 ```
 
-The convenience commands `check-3d-prepare`, `check-3d-approve`, `check-3d-bind`, `check-3d-evidence`, `check-3d-run-plan` and `check-3d-doctor` use this envelope too. This replaces the earlier development-only prepare/run summaries; application callers must read `data`. Existing direct `check-3d` output is unchanged.
+The convenience commands `check-3d-prepare`, `check-3d-approve`, `check-3d-bind`, `check-3d-evidence`, `check-3d-run-plan`, `check-3d-triage` and `check-3d-doctor` use this envelope too. This replaces the earlier development-only prepare/run summaries; application callers must read `data`. Existing direct `check-3d` output is unchanged.
 
 ## Response and control contract
 

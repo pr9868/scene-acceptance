@@ -106,10 +106,10 @@ def provider_schema(schema):
 
 def run_request(request,inputs,images,config,out, *, response_schema=None, response_validator=None, role='judge'):
     """Bounded transport shared by review and preparation; no model-selected code."""
-    if role not in ('judge', 'interpreter'): raise ContractError('Unknown model role')
+    if role not in ('judge', 'interpreter', 'triage'): raise ContractError('Unknown model role')
     response_schema = RESPONSE_SCHEMA if response_schema is None else response_schema
     response_validator = validate_response if response_validator is None else response_validator
-    complete_status = 'ADVISORY_REVIEW_COMPLETE' if role=='judge' else 'INTERPRETATION_COMPLETE'
+    complete_status = {'judge': 'ADVISORY_REVIEW_COMPLETE', 'interpreter': 'INTERPRETATION_COMPLETE', 'triage': 'TRIAGE_COMPLETE'}[role]
     Draft202012Validator(CONFIG_SCHEMA).validate(config)
     if config['driver']=='codex' and config['args']: raise ContractError('Codex driver uses fixed isolation flags; extra args are not accepted')
     out=Path(out).resolve()
@@ -131,7 +131,7 @@ def run_request(request,inputs,images,config,out, *, response_schema=None, respo
         for path in images: argv+=['-i',path]
         argv+=['-']
     else: argv=[config['executable'],*config['args']]
-    started=time.monotonic();status='ERROR';error=None;response=None;usage=None;code=None
+    started=time.monotonic();status='ERROR';error=None;response=None;usage=None;code=None;provider_notices=[]
     # An executable is trusted caller configuration. It never comes from the brief or model output.
     # Codex flags limit tool use; a generic adapter owns its own model/image transport and isolation.
     with controlled(), tempfile.TemporaryDirectory(prefix='scene-judge-') as work:
@@ -160,7 +160,16 @@ def run_request(request,inputs,images,config,out, *, response_schema=None, respo
                         event=json.loads(line)
                     except (ValueError,TypeError): continue
                     if event.get('type')=='item.completed' and event.get('item',{}).get('type') not in ('agent_message','reasoning'):
-                        raise ContractError('Judge emitted an unexpected non-message item; native events retained')
+                        item=event.get('item',{})
+                        # This performance-only notice is emitted as an error item by some CLI builds.
+                        # Preserve it; all other error items and tool/action items remain blocking.
+                        if item.get('type')=='error' and item.get('message','').startswith(
+                                'Ignoring unknown `features` requirement `ultrafast_mode` from requirements layers:'):
+                            provider_notices.append(item['message'])
+                        else:
+                            raise ContractError('Judge emitted an unexpected non-message item; native events retained')
+                    if event.get('type') in ('error','turn.failed'):
+                        raise ContractError('Model provider reported a failed turn; native events retained')
                     if event.get('type')=='turn.completed': usage=event.get('usage')
             response_validator(response,request)
             if any(not Path(p).is_file() or sha(p)!=h for p,h in inputs.items()): raise ContractError('Evidence changed during judge run')
@@ -174,12 +183,12 @@ def run_request(request,inputs,images,config,out, *, response_schema=None, respo
                 model_requested=config['model'],resolved_model=None,model_identity_note='Requested model only; resolved snapshot not independently verified',
                 driver=config['driver'],elapsed_seconds=round(time.monotonic()-started,3),exit_code=code,usage=usage,
                 created_at_utc=datetime.now(timezone.utc).isoformat(),input_hashes=inputs,judge_implementation_sha256=sha(Path(__file__)),
-                role=role, response=response if status==complete_status else None,
+                role=role, provider_notices=provider_notices, response=response if status==complete_status else None,
                 limitations=['Model opinions are not measured passes, human approvals or independent engineering validation.',
                              'Known IDs and hashes establish traceability, not that the model explanation is true.',
                              'The caller-selected CLI may send these explicit inputs to its configured model provider. No model call occurs in normal check-3d runs.'])
-    save(out/('judge-result.json' if role=='judge' else 'interpreter-result.json'),result)
-    if role=='interpreter':
+    save(out/{'judge': 'judge-result.json', 'interpreter': 'interpreter-result.json', 'triage': 'triage-model-result.json'}[role],result)
+    if role!='judge':
         save(out/'manifest.json',{'files':{p.name:sha(p) for p in sorted(out.iterdir()) if p.is_file()}})
         return result
     rows=''.join(f'<tr><td>{E(x["requirement_id"])}</td><td>{E(x["assessment"])}</td><td>{E(x["explanation"])}<small>{E(", ".join(x["evidence_ids"]))}</small></td></tr>' for x in (result['response'] or {}).get('items',[]))

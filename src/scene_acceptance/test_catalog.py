@@ -31,5 +31,6 @@ def capabilities():
                     'raw_brief_schema':RAW_BRIEF_SCHEMA,'capture_capabilities_schema':CAPABILITIES_SCHEMA,
                     'capture_overrides_schema':CAPTURE_OVERRIDES_SCHEMA,'capture_receipt_schema':RECEIPT_SCHEMA,
                     'automatic_mapping_packs':['brief.measurements','motion.timing','motion.connection','materials','textures.decode'],'rendering':'caller-owned'},
+                assumption_triage={'schema_version':'1.0','operation':'triage','cli':'check-3d-triage','opt_in':True,'input':'caller-pinned declared-scope assessment','automatic_assumption_discovery':False},
                 bundled_skills=list(NAMES),skill_export_cli='check-3d-skills --out NEW_DIRECTORY',
                 discovery=['--list-tests','--capabilities'])

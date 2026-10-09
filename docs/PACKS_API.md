@@ -1,5 +1,7 @@
 # Evaluation packs: extension API 1.0 / harness 0.5.0
 
+For the responsibilities and extension choices behind this API, start with the [adopter guide](ACCEPTANCE_WORKFLOW.md). It explains how your specification selects reusable checks, when a new pack is needed and what the owner or calling application still supplies.
+
 One application-owned contract selects checks from installed packs. A pack supplies measurements and findings. The core records coverage, prerequisites, versions and input identity, then reduces the required results. It never repairs a scene. The calling application routes feedback and decides whether to ask its producer for another candidate.
 
 The same distribution includes the explicitly selected [four-job supplemental preset](SUPPLEMENTAL_CHECKS.md) and [declared-scope review](DECLARED_SCOPE_REVIEW.md). Add a measurement as a `Pack`/`CheckSpec`; add its intended-use obligation and evidence mapping to the caller's review plan. These are separate extension points. A passing measurement does not automatically approve the mapping or fill an absent requirement.

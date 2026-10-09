@@ -17,3 +17,7 @@ Read [the extension guide](references/extensions.md) and [the example rubric](re
 Scope approval also binds the general policy and selected pack identities; an upgrade that changes those requires approval of the new scope hash. Report measured results and advisory opinions separately.
 
 For new code adapters, validate schemas, bounded inputs, source hashes, eligibility rules, unknown/error behavior and regression tests before making new evidence kinds selectable. Never let a model response select an executable, install a pack, use a GPU, change approval status or treat an image hash as proof of rendered truth.
+
+## Optional assumption triage
+
+When the caller requests AI help deciding which declared decisions need human review, read [the triage handoff](references/triage.md). This is a separate text-based operation after declared-scope assessment. It does not add a visual question, discover hidden assumptions or supply approval. Use caller-owned policy and preserve the distinction between the AI recommendation and the applied gate.

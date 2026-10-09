@@ -1,5 +1,7 @@
 # Prepare, capture and evaluate
 
+Start with the [adopter guide](ACCEPTANCE_WORKFLOW.md#bring-your-own-brief) to choose between an existing structured specification and raw text/image preparation, and to see who owns each decision.
+
 Release 0.5.0 includes a harness-owned raw-brief interpreter and a caller-owned capture handoff. It remains a CLI/library, with no hosted service or renderer. The existing direct `check-3d` interface is unchanged.
 
 | Stage | Caller/application provides | Harness does | Saved result |

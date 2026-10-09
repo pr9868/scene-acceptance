@@ -2,6 +2,8 @@
 
 The catalog describes available capabilities. A run report separately records what actually ran, subjects assessed, outcomes and missing evidence. `check-3d --list-tests` returns the same rule IDs and provider descriptions as JSON; `check-3d --capabilities` describes the invocation and evidence schemas.
 
+The optional [assumption-triage operation](ASSUMPTION_TRIAGE.md) is a separate model-assisted review step. It classifies selected assessed obligations or declared decisions under caller policy; it adds no rule to the 27-check baseline and is not a new scene measurement.
+
 ## General baseline: 27 selected rules
 
 These do not need task-specific dimensions or a user brief. Current baseline policy is `usd-delivery-baseline@1.2.0`; earlier saved reports retain their original policies. Physics declarations are schema checks, not simulation. Native provider scope and per-subject counts remain in the report. Prepared scope approval pins this baseline and the resolved pack identities.

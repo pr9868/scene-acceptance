@@ -1,16 +1,54 @@
 # Scene Acceptance
 
-Application integration: [versioned CLI/library protocol](docs/APPLICATION_PROTOCOL.md) covers preflight, prepare, scope approval, revised-scene binding, caller evidence, checks/judge/both, progress, cancellation and verified replay.
+I built this harness to manage acceptance of a particular delivery: **which requirements apply, what evidence supports them, and what needs to happen next.** It evaluates saved OpenUSD scenes with selected checks and optional model review of caller-supplied renders. The report helps the receiving application accept within the checked scope, request evidence or send specific findings back to the producer.
 
-Evaluate saved OpenUSD scenes with scripted checks and optional model review of caller-supplied renders. Applications use the findings to accept a delivery within its checked scope, request evidence or return it to the producer for revision.
+A completed scene can still miss part of the brief or depend on an unsupported assumption. The useful output is **inspectable evidence**: requirements, observations, supporting records and unresolved decisions.
 
-I want the application to own what a deliverable must satisfy while the producer chooses how to build it. This project evaluates a saved OpenUSD bundle against an explicit contract, runs the selected evaluation packs and returns findings tied to the submitted revision. The application can use those findings to accept the artifact, request evidence or send a new brief to its producer.
+The intended use determines the checks. A brief can supply dimensions, timing, appearance or other requirements; general delivery policy applies alongside it. Each evaluation pack has its own depth and limits. Where a [SimReady profile](https://docs.omniverse.nvidia.com/simready/latest/simready-faq.html) fits the job, I would use its validation and runtime tests within this workflow. That integration would need an adapter; the current NVIDIA pack runs selected USD Validation rules. I would use specialist evaluators to deepen the areas a job needs.
 
-I built it for my own 3D jobs, working backward from the intended outcome to the geometry, materials, motion, views or physical behavior that needed evidence. The brief supplies task-specific targets; general delivery checks remain necessary alongside them. The common workflow keeps selected checks and unanswered requirements together, while each pack has its own depth and limits. Specialized validators or simulators can supply that depth through a suitable adapter. I intend to extend the packs as my work needs them.
+Start with the [adopter guide](docs/ACCEPTANCE_WORKFLOW.md) for responsibilities, your own brief and reusable evaluation packs. The [application protocol](docs/APPLICATION_PROTOCOL.md) documents the CLI/library calls.
 
 Simulation support is currently a fixed ramp-and-block CPU example with bounded parameter variations. It exercises the handoff from a simulator's trace to a task decision; it does not cover arbitrary articulated mechanisms or establish physical calibration. A broader acceptance report does not imply comprehensive validation in every domain.
 
-**Status:** experimental, version [0.5.0](https://github.com/pr9868/scene-acceptance/releases/tag/v0.5.0). The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion, explicit timing requirements and selected OpenUSD/NVIDIA rules. This release also includes the texture-decoding, sampled-connection and bounded simulation article packs, plus coverage-aware reports and a reusable diagnostic baseline. The [v0.3.0 release](https://github.com/pr9868/scene-acceptance/releases/tag/v0.3.0) remains unchanged.
+**Status:** experimental, version [0.6.0](https://github.com/pr9868/scene-acceptance/releases/tag/v0.6.0). The harness evaluates content; the producer owns revisions. Its current packs cover bounded geometry, material delivery, sampled motion, explicit timing requirements and selected OpenUSD/NVIDIA rules. This release also includes the texture-decoding, sampled-connection and bounded simulation article packs, plus coverage-aware reports and a reusable diagnostic baseline. The [v0.3.0 release](https://github.com/pr9868/scene-acceptance/releases/tag/v0.3.0) remains unchanged.
+
+## Why use it if the agent already has the brief?
+
+The brief tells the agent what to build. The harness checks the saved result, retains the evidence and repeats the same checks after a repair. A producer can use it for prechecks too. A capable agent could build an equivalent process; this package makes the checks, scope and reports reusable across deliveries and applications. Its value depends on the selected checks and the quality of the approved scope.
+
+![A brief becomes reviewed requirements; reusable packs and optional review evaluate the delivery; the report gives evidence, gaps and next actions.](docs/images/acceptance-workflow.svg)
+
+The caller supplies captures and applies the owner's release policy. The producer handles revisions. The [adopter guide](docs/ACCEPTANCE_WORKFLOW.md) explains each handoff and how to extend a check or review question.
+
+## Who does what
+
+| Role | Responsibility |
+|---|---|
+| Human or domain owner | Defines intended use, requirements, tolerances and acceptable tradeoffs; reviews scope and owns release policy. Routine decisions may follow that approved policy. |
+| Calling application or agent | Supplies saved scenes, briefs and requested captures; invokes the harness, records approvals and routes findings to the right next action. Owns rendering and the repair loop. |
+| Harness | Validates supported inputs, runs selected packs and optional review, and reports measured results, advisory opinions, coverage gaps and the scoped outcome. |
+| Producer | Creates or repairs the scene against agreed requirements, returning a saved revision and fresh evidence where needed. |
+| Pack maintainer | Implements or adapts measurements, states their coverage and limits, and tests passing, failing and missing-evidence cases. |
+
+## Bring your own brief
+
+A brief describes the job, intended use and supporting references. In a manufacturing scene it might include a P&ID, layout, equipment list, datasheet excerpts, photos and instructions. A specification states the explicit requirements within that material; the reviewed contract or map turns supported requirements into checks. See [what a brief means](docs/ACCEPTANCE_WORKFLOW.md#what-a-brief-means) for supported inputs and engineering interpretation limits.
+
+- **Already structured:** provide a contract selecting checks and parameters, or a mapped brief retaining source requirements and their check/review coverage. Scripts can run without an LLM.
+- **Text and images:** use optional preparation to propose a requirement map and capture plan, review it, then evaluate against that frozen scope. Raw prose is not a direct `check-3d --brief` input.
+- **A check does not exist yet:** add a tested pack or specialist adapter. For a visual question, customize the judge rubric and required views. Unmapped or unsupported requirements stay unresolved.
+
+[Follow a brief through the workflow](docs/ACCEPTANCE_WORKFLOW.md#bring-your-own-brief), including how a reusable check differs from a job's acceptance policy.
+
+The harness becomes a **release gate** when the calling application requires its scoped result and any required reviews before accepting the delivery. The application retains the brief, evidence, decisions and rechecks across revisions. [This repeatable review process](docs/ACCEPTANCE_WORKFLOW.md#make-review-a-release-gate) makes the basis for trust visible; a standalone report cannot enforce a workflow that the application bypasses.
+
+## Assumptions and human review
+
+Today, [declared-scope review](docs/DECLARED_SCOPE_REVIEW.md) can retain caller-listed inferences and producer decisions, including assumptions, and require separate review. The harness does not automatically discover every hidden assumption or rank engineering risk. Required/advisory policy is supplied by the owner.
+
+Optional [AI assumption triage](docs/ASSUMPTION_TRIAGE.md) reviews caller-selected obligations and declared decisions after assessment. It recommends routine handling, human review or more context, citing the supplied evidence and explaining the possible consequence. The report shows that recommendation beside the applied caller policy. Mandatory reviews, required failures and missing context cannot be cleared by a reassuring model response. Try the [synthetic handoff example](examples/assumption-triage/README.md).
+
+Source-linked individual assumption records, discovery of undeclared choices and specialist evidence adapters remain in the [enhancement plan](docs/ASSUMPTION_REVIEW_PLAN.md). The [current support and planned extensions](docs/ACCEPTANCE_WORKFLOW.md#assumptions-and-risk-supported-today-and-planned) table separates those from the implemented triage operation. This is a review aid; its ability to recognize consequential engineering assumptions still needs independent assessment.
 
 ## What it checks today
 
@@ -19,6 +57,7 @@ Simulation support is currently a fixed ramp-and-block CPU example with bounded 
 | General delivery checks | Saved OpenUSD bundle and installed baseline providers | 27 selected rules cover scene structure, dependencies, image decoding and authored-motion sanity. No task-specific contract is needed; intended appearance and process correctness remain outside this baseline. |
 | Brief-specific measurements | Explicit contract or reviewed requirement map, named scene subjects and targets | Supported dimensions, placement, timing and sampled connections produce measured findings. Missing mappings and unsupported requirements stay visible. |
 | Optional visual review | Configured model CLI, suitable caller-rendered views and a review rubric or mapped brief | Advisory opinions on visible layout, readability, material use and sampled motion. These are evidence-limited judgments, not measured passes or physical validation. |
+| Optional assumption triage | Existing declared-scope assessment, selected items, text evidence, caller policy and configured model CLI | Evidence-linked AI recommendation plus deterministic review gates. No hidden-assumption discovery, calibrated risk score or new approval. |
 | Source-image comparison | Selected texture/reference images and an explicit comparison policy | Decoded pixel comparisons within supported regions and limits. This does not compare the fully rendered appearance of a scene. |
 | Bounded simulation evidence | The supported ramp-and-block fixture, parameters and worker dependencies | A task result for that fixed CPU model; no general USD physics import or physical calibration. |
 
@@ -30,17 +69,13 @@ The [October 3 compatibility and review fixes](docs/COMPATIBILITY_AND_REVIEW_FIX
 
 The [timing walkthrough](docs/MOTION_TIMING.md) reproduces a gap in a time-code-only contract, then rejects a changed playback rate while accepting a correctly rescaled animation. Producer prechecks may use the same harness; the consuming application still owns the approved requirements and acceptance of the delivered revision. Shared validators can share bugs, so reference cases and coverage review remain necessary.
 
-![Application ownership and the producer-to-acceptance workflow](docs/images/architecture.png)
-
-Blue is human responsibility, purple is the producer agent, gray is application code and green is acceptance. The feedback loop is an application integration design; this release does not run a producer automatically.
-
 ## Prepare a brief and request caller evidence
 
 For a saved scene and raw text/image brief, follow the [complete preparation example](docs/PREPARATION_AND_SKILLS.md#invocation): **prepare → review and approve the scope → capture views → validate evidence → evaluate → follow the reported next action**. The interpreter proposes a frozen requirement map and capture plan; it cannot guarantee complete interpretation. The caller reviews that map, renders the requested views and returns a receipt. Scripts, model opinions and missing evidence remain separate. Two reusable adopter skills ship in the wheel and can be exported with `check-3d-skills --out NEW_DIRECTORY`.
 
 ## See what a run checked
 
-The [two-scene repair case study](examples/two-scene-repair-study/README.md) follows a dairy binding defect and a 125,000-prim distribution-centre delivery through feedback and repair. Its selected evidence distinguishes a scene defect, an unstated delivery policy and a route-state problem found by separate review. The larger trial used an unreleased development build and custom pack; the evidence collection does not extend the capabilities of the 0.5.0 release or provide a full replay of those builds.
+The [two-scene repair case study](examples/two-scene-repair-study/README.md) follows a dairy binding defect and a 125,000-prim distribution-centre delivery through feedback and repair. Its selected evidence distinguishes a scene defect, an unstated delivery policy and a route-state problem found by separate review. The larger trial used an unreleased development build and custom pack; the evidence collection does not extend the capabilities of the current release or provide a full replay of those builds.
 
 The [test inventory](docs/TEST_INVENTORY.md) explains each baseline rule, configurable check and advisory review item. `check-3d --list-tests` returns the catalog; `--capabilities` returns the invocation/evidence schemas. The [unified CLI guide](docs/EVALUATION_MODES.md) covers `--mode checks`, `--mode judge` and `--mode both`, with an optional mapped brief and caller-configured model CLI. Measured results and evidence-bounded opinions stay separate. Omitting `--mode` preserves the existing scripted invocation below.
 
@@ -76,7 +111,7 @@ The example deliberately leaves continuous-motion evidence and mapping approval 
 Use Python 3.12. These commands install the core and its pinned test dependencies; NVIDIA and the experiment tools are optional for this first example.
 
 ```bash
-git clone --branch v0.5.0 https://github.com/pr9868/scene-acceptance.git
+git clone --branch v0.6.0 https://github.com/pr9868/scene-acceptance.git
 cd scene-acceptance
 python3.12 -m venv .venv
 source .venv/bin/activate

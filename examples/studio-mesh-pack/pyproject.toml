@@ -7,7 +7,7 @@ name = "scene-acceptance-example-studio-pack"
 version = "0.1.0"
 description = "Example independently installed scene acceptance pack"
 requires-python = ">=3.12"
-dependencies = ["scene-acceptance>=0.3,<0.5"]
+dependencies = ["scene-acceptance>=0.3,<0.7"]
 
 [project.entry-points."scene_acceptance.packs"]
 "studio.mesh-budget" = "studio_mesh_pack:get_pack"
