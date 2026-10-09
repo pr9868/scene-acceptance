@@ -20,7 +20,7 @@ python evaluation/packs-v1/run.py --out /tmp/pack-review
 
 The output path must be new. Without optional NVIDIA/example dependencies, their dedicated tests skip explicitly; the full release evidence uses both installed. Do not cite skipped checks as evaluated coverage.
 
-Keep the evaluator/producer boundary intact. Expensive simulation, renderer or model-based checks should run in an explicitly managed environment with their own input identity, versions, timeout and reference protocol. The current core supports trusted local function packs; a worker protocol is future work. A package import is execution of trusted code, not a security boundary.
+Keep the evaluator/producer boundary intact. Expensive simulation, renderer or model-based checks should run in an explicitly managed environment with their own input identity, versions, timeout and reference protocol. The core supports trusted local function packs and an optional [supervised native worker](docs/EXTENSIONS.md#supervised-native-execution). That worker bounds execution resources; it does not isolate filesystem or network access. A package import executes trusted code.
 
 This project uses the MIT license. Include appropriate licenses and attribution for dependencies and separately distributed packs. Keep changes focused on a consuming requirement, with reproducible passing and failing examples.
 

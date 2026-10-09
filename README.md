@@ -14,7 +14,7 @@ Install from this checkout with Python 3.12:
 python -m pip install '.[nvidia,article_checks]'
 ```
 
-For published code, download a tagged release or clone the repository and select its tag first. Installation is through GitHub; this package is not published on PyPI. Add the `pdf` and `isolation` extras for PDF sources and supervised native execution.
+Use the repository's `main` branch for the development features described here, including the default review-risk levels. For the earlier tagged release, check out `v0.6.0` and follow its README; it does not include those newer features. Installation is through GitHub; this package is not published on PyPI. Add the `pdf` and `isolation` extras for PDF sources and supervised native execution.
 
 | Path | Use it when | Start with |
 |---|---|---|
@@ -52,7 +52,7 @@ A brief can include a P&ID, equipment list, dimensions, photos or intended behav
 | State between events | [Held token/string/bool agreement](docs/SEMANTIC_CHECKS.md) across every authored transition in a declared interval, using caller-supplied reference and activation state. |
 | Process connectivity | [Equipment tags, ports, directions and directed relationships](docs/SEMANTIC_CHECKS.md) against a structured connection list. No P&ID extraction or process-engineering approval. |
 | Visual review | Optional model opinions on suitable caller-rendered views; no built-in renderer or GPU requirement. |
-| Assumption triage | Optional model recommendations on selected declared decisions. Human-review items use default low, medium and high definitions that owners can override, with owner minimums enforced and ungraded items visible. A matching human record can close a triage request; it cannot clear measured failures or missing required evidence. |
+| Assumption triage | Optional model recommendations on selected declared decisions. Human-review items use default low, medium and high definitions that owners can override, with owner minimums enforced. Low still requires review; items without a supported grade stay unrated. A matching human record can close a triage request; it cannot clear measured failures or missing required evidence. |
 | Assumption audit | A separate experimental operation proposes cited questions about undeclared choices. Questions are never automatic findings or approvals. |
 | Extended checks | Triangle clearance, bounded translation sweeps, continuous connections, layer policy, UDIM dependencies and explicit color/orientation comparisons. [Scope and limits](docs/EXTENSIONS.md). |
 | External measurements | Named viewer-performance traces and caller-owned engine profile/runtime tests with retained native evidence. |

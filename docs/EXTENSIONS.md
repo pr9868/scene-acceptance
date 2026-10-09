@@ -24,7 +24,7 @@ Discover exact parameters through `check-3d-packs` and `check-3d --list-tests`. 
 
 ## PDF sources
 
-Install `scene-acceptance[pdf]`. A raw brief source can be:
+From the repository checkout, install the PDF extra with `python -m pip install '.[pdf]'`. A raw brief source can be:
 
 ```json
 {"path":"drawings/layout.pdf","role":"pdf","caption":"Service access drawing","selections":[{"page":2,"region_pdf_points":[0,0,600,420]}]}
