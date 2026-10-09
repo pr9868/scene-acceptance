@@ -202,6 +202,9 @@ def write_report(report, directory):
         md += [artifact_md]
     (directory / "summary.md").write_text("\n".join(md) + "\n")
     (directory / "report.html").write_text(document)
+    from scene_acceptance.delivery_report import write_delivery_report
+
+    write_delivery_report(directory, assessment=report)
     (directory / "manifest.json").write_text(
         json.dumps(
             {
@@ -270,6 +273,7 @@ def main(argv=None):
                 "core_verdict": report["core_verdict"],
                 "assessment_verdict": report["assessment_verdict"],
                 "snapshot_sha256": report["snapshot_sha256"],
+                "report": str(Path(args.out) / "delivery-report/index.html"),
             }
         )
     )

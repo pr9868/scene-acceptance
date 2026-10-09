@@ -314,6 +314,14 @@ def write_evaluation(result, context, out):
     from .test_catalog import test_catalog
 
     save(out / "test-catalog.json", test_catalog())
+    from .delivery_report import write_delivery_report
+    from .model import strict_json
+
+    assessment_path = out / 'script/report/assessment.json'
+    write_delivery_report(out, evaluation=result,
+                          assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
+                          core=strict_json(out / 'script/result.json') if (out / 'script/result.json').is_file() else None,
+                          review_context=context)
     save(
         out / "manifest.json",
         {

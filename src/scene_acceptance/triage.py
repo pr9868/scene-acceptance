@@ -762,3 +762,11 @@ def _report(result, out):
         '<p><a href="triage-result.json">Full result</a> · <a href="assessment.json">Original assessment</a> · <a href="policy.json">Owner policy</a> · <a href="review-requests.json">Human review requests</a> · <a href="model/request.json">Evidence sent to the model</a></p>'
         f'<p>{E(" ".join(result["limitations"]))}</p></main></html>'
     )
+    from .delivery_report import matching_evaluation, write_delivery_report
+
+    assessment = strict_json(out / 'assessment.json')
+    linked = matching_evaluation(result['context']['assessment'], result['assessment_sha256']) if result.get('context') else None
+    write_delivery_report(out, triage=result, assessment=assessment,
+                          evaluation=linked[0] if linked else None,
+                          prepared=linked[2] if linked else None,
+                          **(linked[3] if linked else {}))

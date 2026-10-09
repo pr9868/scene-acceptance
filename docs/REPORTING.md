@@ -6,6 +6,33 @@ Start with the new [scene and specification overview](SCENE_AND_SPECIFICATION_RE
 
 For a combined artifact and requirement review, use [`check-3d --review-plan`](DECLARED_SCOPE_REVIEW.md). The same distribution now includes [21 supplemental four-job comparisons](SUPPLEMENTAL_CHECKS.md) and the five-layer review. Explicit targets remain separate from generic baseline diagnostics; unresolved review obligations stay visible beside passing measurements.
 
+## One summary with separate details
+
+Every artifact report, declared-scope assessment, unified evaluation, prepared evaluation and triage result generates `delivery-report/index.html` beside its existing detailed report. For legacy brief calls this is inside `report/`. The application envelope's optional `report` field and the `check-3d` stdout `report` field select this summary. The saved-run index links to it. If execution stops before a result exists, the saved-run index explains the error instead of presenting empty checks as a pass.
+
+| Page | What the reader gets |
+|---|---|
+| Summary | Scene and inventory; brief supplied or absent; brief authorship and interpretation review; considered sources/stages; next action; check matrix and review queue |
+| Scripted checks | General versus requirement-driven checks; pass, warning, fail, unknown, error and no-subject outcomes; per-check subject counts, targets and measurements |
+| Brief & coverage | Supplied text/reference-image files, PDF source anchors when recorded, source provenance, each mapped requirement and its coverage limits |
+| Judge / visuals | Judge execution state, supplied rendered views, evidence eligibility, opinions and excluded areas |
+| AI risk triage | Selected items, model recommendations, applied owner policy, low/medium/high review priorities, missing context and unselected items |
+| Human decisions | Brief interpretation review, scope approval and item decisions, separate from model opinions |
+| Evidence | Declared producer decisions, selected triage text sources, structured snapshots and links to native reports |
+
+A reference image describes what was wanted; it is not proof of what was delivered. A supplied view may still be ineligible for a particular question. The report labels missing provenance as unrecorded and an unavailable review as not attached. No-applicable-subjects is not a successful test. Check rows, requirements and AI review items overlap; their counts cannot be added into a defect or unique-asset total.
+
+Triage automatically includes a matching saved evaluation when its exact pinned assessment resides in that evaluation's known output layout. It does not scan other project folders. For separately retained runs, assemble the same report explicitly:
+
+```sh
+check-3d-app report --evaluation-run ./saved-evaluation \
+  --triage-run ./saved-triage --run-root ./scene-acceptance-runs
+```
+
+Omit `--triage-run` for an evaluation-only view. A prepared evaluation folder is also accepted, preserving its outer scope gate. Input records must match their manifests; triage must belong to the exact assessment and snapshot. This operation makes no model call, reruns no scene checks and leaves the source runs untouched. It presents historical evidence; it does not refresh stale approval. Standalone audit questions are not joined in this version, and their absence is stated.
+
+`combined.json` and structured source snapshots sit beside the pages. Original run links require those folders to remain available. Reports can contain the caller's private brief and evidence paths; keep project history private unless deliberately sanitized for sharing.
+
 ## Run the reusable baseline
 
 From this development checkout with Python 3.12:
@@ -27,7 +54,8 @@ Authored-motion diagnostics inspect prims with time-sampled local transform oper
 
 | Output | Purpose |
 |---|---|
-| `report.html` | Self-contained interactive report: coverage by area, per-check counts, filters, example findings and input inventory |
+| `delivery-report/index.html` | Default summary and navigation to separate detail pages |
+| `report.html` | Original interactive component report: coverage by area, per-check counts, filters, example findings and input inventory |
 | `summary.md` | Portable readable table |
 | `checks.csv` | One row per selected check, including required/advisory status and count unit |
 | `subjects.csv` | Passing, failing, warning, unknown and skipped subjects with pointers into `result.json` |

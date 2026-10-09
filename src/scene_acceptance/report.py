@@ -296,9 +296,13 @@ def write_report(report, out, *, include_overview=True):
 <script>const rows=[...document.querySelectorAll('#checks tbody tr')];function filter(){{const q=document.querySelector('#search').value.toLowerCase(),s=document.querySelector('#filter').value;for(const r of rows){{r.hidden=!(r.textContent.toLowerCase().includes(q)&&(s==='all'||(s==='attention'?r.dataset.status!=='PASS':r.dataset.status===s)));}}}}document.querySelector('#search').addEventListener('input',filter);document.querySelector('#filter').addEventListener('change',filter);</script></body></html>"""
     document = document.replace("</style>", READER_STYLE + "</style>", 1)
     (out / "report.html").write_text(document)
+    from .delivery_report import write_delivery_report
+
+    write_delivery_report(out, core=report)
     (out / "manifest.json").write_text(
         json.dumps(
-            {"files": {p.name: sha(p) for p in sorted(out.iterdir()) if p.is_file()}},
+            {"files": {str(p.relative_to(out)): sha(p) for p in sorted(out.rglob('*'))
+                       if p.is_file() and p != out / 'manifest.json'}},
             indent=2,
         )
         + "\n"

@@ -56,8 +56,8 @@ def write_index(out, records):
         record["authored_motion"] = motion
         label = E(record.get("label", id))
         link = (
-            f'<a href="{id}/report.html">{label}</a>'
-            if (out / id / "report.html").is_file()
+            f'<a href="{id}/delivery-report/index.html">{label}</a>'
+            if (out / id / "delivery-report/index.html").is_file()
             else label
             + "<small>"
             + E(record.get("error", "No complete report; inspect the process log"))

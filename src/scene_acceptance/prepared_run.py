@@ -454,6 +454,15 @@ def evaluate_prepared(
     report["comparison"] = compare_runs(previous_run, report) if previous_run else None
     save(out / "prepared-result.json", report)
     _report(out, report)
+    from .delivery_report import write_delivery_report
+
+    evaluation_path = out / 'evaluation/evaluation.json'
+    assessment_path = out / 'evaluation/script/report/assessment.json'
+    write_delivery_report(out, prepared=report,
+                          evaluation=strict_json(evaluation_path) if evaluation_path.is_file() else None,
+                          assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
+                          core=strict_json(out / 'evaluation/script/result.json') if (out / 'evaluation/script/result.json').is_file() else None,
+                          review_context=strict_json(out / 'evaluation/evidence/context.json') if (out / 'evaluation/evidence/context.json').is_file() else None)
     save(
         out / "manifest.json",
         {

@@ -190,6 +190,7 @@ ENVELOPE_SCHEMA = obj(
                 "resolve-triage",
                 "audit",
                 "collect-engine",
+                "report",
                 "parse",
             ]
         },
@@ -217,6 +218,7 @@ from .accounting import METRICS_SCHEMA
 
 ENVELOPE_SCHEMA["properties"]["metrics"] = METRICS_SCHEMA
 ENVELOPE_SCHEMA["properties"]["isolation"] = {"type": "object"}
+ENVELOPE_SCHEMA["properties"]["report"] = TEXT
 ENVELOPE_SCHEMA["properties"]["storage"] = obj(
     {key: TEXT for key in ("run_directory", "output_directory", "summary_report", "record")}
 )

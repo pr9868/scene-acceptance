@@ -21,6 +21,7 @@ OPERATIONS = (
     "resolve-triage",
     "audit",
     "collect-engine",
+    "report",
 )
 
 
@@ -34,6 +35,7 @@ def _operation(name):
     from .triage_review import resolve_triage
     from .assumption_audit import run_audit
     from .engine_adapter import collect_engine
+    from .delivery_report import assemble_report
 
     return dict(
         zip(
@@ -50,6 +52,7 @@ def _operation(name):
                 resolve_triage,
                 run_audit,
                 collect_engine,
+                assemble_report,
             ),
         )
     )[name]
@@ -88,6 +91,15 @@ def _fingerprint(operation, params):
             }
         )
         hashes.update(context[4])
+    if operation == 'report':
+        for key in ('evaluation_run', 'triage_run'):
+            if params.get(key):
+                root = Path(params[key]).resolve()
+                # Reporting is local and model-free; verified replay binds the
+                # complete retained input packet, including optional review.
+                for path in root.rglob('*'):
+                    if path.is_file():
+                        record(path, limit=536870912)
     if operation == "resolve-triage":
         folder = Path(params["triage_run"]).resolve()
         record(folder / "triage-result.json")
@@ -363,6 +375,9 @@ def invoke(
             time.monotonic() - started, out if owned else None, costs, operation
         ),
     )
+    primary_report = out / 'delivery-report/index.html' if out else None
+    if owned and primary_report and primary_report.is_file():
+        result['report'] = str(primary_report)
     if retained:
         from .run_storage import storage_paths
 
@@ -489,6 +504,9 @@ def parser():
         if operation == "resolve-triage":
             for key in ("triage-run", "expected-triage-sha256", "review-record"):
                 q.add_argument("--" + key, required=True)
+        if operation == 'report':
+            q.add_argument('--evaluation-run', required=True)
+            q.add_argument('--triage-run')
         if operation == "triage":
             for key in (
                 "assessment",

@@ -26,7 +26,7 @@ def start_run(operation, parameters, run_root, run_id):
     root = Path(run_root or DEFAULT_RUN_ROOT).resolve()
     protected = [
         Path(parameters[key]).resolve()
-        for key in ("bundle_root", "review_root", "preparation", "triage_run")
+        for key in ("bundle_root", "review_root", "preparation", "triage_run", "evaluation_run")
         if parameters.get(key)
     ]
     if parameters.get("assessment"):
@@ -123,6 +123,9 @@ def _store(folder, record):
         'text-align:left;vertical-align:top;padding:.6rem;overflow-wrap:anywhere}'
         'th{width:25%}a{overflow-wrap:anywhere}</style><main>'
         '<h1>Saved Scene Acceptance run</h1>'
+        + ('<p><strong><a href="output/delivery-report/index.html">Open the combined delivery report</a></strong> — summary, checks, brief coverage, visual review and AI triage.</p>'
+           if (output / 'delivery-report/index.html').is_file() else '')
+        +
         '<p>Execution status and acceptance are separate. A completed check or model opinion '
         'does not grant human approval.</p>'
         f'<table>{cells}</table>{risk_table}<h2>Reports</h2><ul>{"".join(reports)}</ul>'

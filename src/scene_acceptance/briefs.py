@@ -152,6 +152,12 @@ def add_brief_to_report(report_dir, context, input_root):
         )
         + "\n"
     )
+    from .delivery_report import write_delivery_report
+    assessment_path = report_dir / 'assessment.json'
+    write_delivery_report(report_dir,
+                          assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
+                          core=strict_json(report_dir / 'result.json') if not assessment_path.is_file() else None,
+                          brief_context=context)
     save(
         report_dir / "manifest.json",
         {

@@ -195,7 +195,7 @@ def main(argv=None):
                     "execution_status": result["execution_status"],
                     "decision": result["decision"],
                     "result": str(Path(args.out) / "evaluation.json"),
-                    "report": str(Path(args.out) / "report.html"),
+                    "report": str(Path(args.out) / "delivery-report/index.html"),
                 }
             )
         )
@@ -245,7 +245,7 @@ def main(argv=None):
                 {
                     "core_verdict": report["core_verdict"],
                     "assessment_verdict": report["assessment_verdict"],
-                    "report": str(Path(args.out) / "report/report.html"),
+                    "report": str(Path(args.out) / "report/delivery-report/index.html"),
                 }
             )
         )
@@ -355,7 +355,7 @@ def main(argv=None):
             {
                 "verdict": report["verdict"],
                 "complete": report["complete"],
-                "report": str(out / "report.html"),
+                "report": str(out / "delivery-report/index.html"),
             }
         )
     )

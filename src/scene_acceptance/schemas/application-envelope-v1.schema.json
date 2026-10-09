@@ -17,6 +17,7 @@
         "resolve-triage",
         "audit",
         "collect-engine",
+        "report",
         "parse"
       ]
     },
@@ -242,6 +243,11 @@
     },
     "isolation": {
       "type": "object"
+    },
+    "report": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
     },
     "storage": {
       "type": "object",

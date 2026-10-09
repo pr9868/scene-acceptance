@@ -151,7 +151,9 @@ A routine recommendation accompanied by missing context cannot proceed routinely
 
 ## Inspect the evidence
 
-`report.html` shows the original verdicts, selected/unassessed counts, each declared decision, the AI's reason and possible consequence, cited evidence IDs, and the actual policy outcome. `triage-result.json` contains the same results. Copies of the original assessment and policy, the exact model request, validated response, native logs and a file manifest remain in the output folder.
+The default `delivery-report/index.html` groups the available scripted findings, brief context and triage in one view, with separate detail pages. A matching saved evaluation is included automatically from the known assessment layout; otherwise absent judge records are labelled not attached. [Joining separately saved results](REPORTING.md#one-summary-with-separate-details) is model-free.
+
+The original `report.html` shows the original verdicts, selected/unassessed counts, each declared decision, the AI's reason and possible consequence, cited evidence IDs, and the actual policy outcome. `triage-result.json` contains the same results. Copies of the original assessment and policy, the exact model request, validated response, native logs and a file manifest remain in the output folder.
 
 Omit `--out` to keep each triage attempt in a dated folder under `./scene-acceptance-runs/`, or choose a project history with `--run-root PATH`. Open the returned `storage.summary_report` for the review-level counts and links to the full report. Failed attempts remain beside later runs. [Saved-run layout and replay limits](APPLICATION_PROTOCOL.md#saved-runs).
 

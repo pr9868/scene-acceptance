@@ -37,6 +37,8 @@ check-3d-app check --bundle-root ./delivery --candidate scene.usda
 
 Each attempt gets a dated folder under `./scene-acceptance-runs/`. Open its `index.html` for the outcome and links to reports. The folder keeps the invocation record and available evidence, model responses and logs, including failed attempts. Use `--run-root PATH` to choose another history folder. An explicit `--out` keeps the existing output layout. [Run storage details](docs/APPLICATION_PROTOCOL.md#saved-runs).
 
+Every evaluation now also generates **one delivery report**. Its summary says which scene was checked, whether a brief was supplied, what sources and stages were considered, and what needs attention. Separate pages hold scripted checks, brief coverage, judge evidence, AI risk triage and human decisions. The returned `report` points to `delivery-report/index.html`; original results and reports remain alongside it. [Report layout and combining saved runs](docs/REPORTING.md#one-summary-with-separate-details).
+
 ![The brief becomes reviewed requirements. Packs and optional review evaluate the saved delivery. The owner receives evidence, gaps and next actions.](docs/images/acceptance-workflow.svg)
 
 ## Responsibilities

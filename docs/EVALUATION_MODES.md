@@ -8,7 +8,7 @@ The CLI supports `--mode checks`, `--mode judge`, and `--mode both`. Each accept
 | `judge` | Input admission/inventory and optional-brief advisory review | Script checks unassessed; opinions cannot establish acceptance |
 | `both` | Scripted evaluation and model review over the same admitted scene revision | Separate component results, coverage and follow-up decision |
 
-Omitting `--mode` preserves the existing stdout fields, report layout and exit meanings. Explicit modes write a versioned `evaluation.json` and a combined `report.html`; component reports remain accessible. Advanced `--contract` and `--review-plan` calls keep their existing interface without `--mode`.
+Omitting `--mode` preserves the existing stdout fields and exit meanings; its `report` link now opens the default summary, while the original report remains saved. Explicit modes write a versioned `evaluation.json` and a combined `report.html`; component reports remain accessible. Advanced `--contract` and `--review-plan` calls keep their existing interface without `--mode`.
 
 ## Call it from a CLI or application
 
