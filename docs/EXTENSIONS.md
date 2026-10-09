@@ -18,6 +18,8 @@ These features are in the 0.7 development candidate. They broaden what a caller 
 | Assumption audit | Scene, brief, optional declared decisions, script report and views | Cited questions for a person | Experimental model opinion; no finding, approval or acceptance decision |
 | Native isolation | POSIX worker memory/CPU/time budgets | Bounded worker result or explicit execution error | Resource containment, not a hostile-code security sandbox |
 
+The admission boundary still limits a stage to 10,000 composed prims, including instance proxies, and 32 MiB per file. These extensions do not by themselves replay the complete 125,000-prim distribution-centre delivery. A larger admission and context strategy remains necessary for that original-scene audit.
+
 Discover exact parameters through `check-3d-packs` and `check-3d --list-tests`. Fixture-specific incline and four-job packs live in the example catalog (`check-3d-packs --include-examples`). A contract explicitly naming one still loads it for replay. Third-party packs still require caller approval.
 
 ## PDF sources

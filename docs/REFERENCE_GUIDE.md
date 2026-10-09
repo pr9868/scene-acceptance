@@ -39,7 +39,7 @@ The caller supplies captures and applies the owner's release policy. The produce
 A brief describes the job, intended use and supporting references. In a manufacturing scene it might include a P&ID, layout, equipment list, datasheet excerpts, photos and instructions. A specification states the explicit requirements within that material; the reviewed contract or map turns supported requirements into checks. See [what a brief means](ACCEPTANCE_WORKFLOW.md#what-a-brief-means) for supported inputs and engineering interpretation limits.
 
 - **Already structured:** provide a contract selecting checks and parameters, or a mapped brief retaining source requirements and their check/review coverage. Scripts can run without an LLM.
-- **Text and images:** use optional preparation to propose a requirement map and capture plan, review it, then evaluate against that frozen scope. Raw prose is not a direct `check-3d --brief` input.
+- **Text, images and PDF pages:** use optional preparation to propose a requirement map and capture plan, review it, then evaluate against that frozen scope. Raw prose is not a direct `check-3d --brief` input.
 - **A check does not exist yet:** add a tested pack or specialist adapter. For a visual question, customize the judge rubric and required views. Unmapped or unsupported requirements stay unresolved.
 
 [Follow a brief through the workflow](ACCEPTANCE_WORKFLOW.md#bring-your-own-brief), including how a reusable check differs from a job's acceptance policy.
@@ -52,7 +52,7 @@ Today, [declared-scope review](DECLARED_SCOPE_REVIEW.md) can retain caller-liste
 
 Optional [AI assumption triage](ASSUMPTION_TRIAGE.md) reviews caller-selected obligations and declared decisions after assessment. It recommends routine handling, human review or more context, citing the supplied evidence and explaining the possible consequence. The report shows that recommendation beside the applied caller policy. Mandatory reviews, required failures and missing context cannot be cleared by a reassuring model response. Try the [synthetic handoff example](../examples/assumption-triage/README.md).
 
-Source-linked individual assumption records, discovery of undeclared choices and specialist evidence adapters remain in the [enhancement plan](ASSUMPTION_REVIEW_PLAN.md). The [current support and planned extensions](ACCEPTANCE_WORKFLOW.md#assumptions-and-risk-supported-today-and-planned) table separates those from the implemented triage operation. This is a review aid; its ability to recognize consequential engineering assumptions still needs independent assessment.
+Experimental [audit](EXTENSIONS.md#assumption-audit) proposes questions about undeclared choices; [external engine evidence](EXTENSIONS.md#engine-bridge-and-caller-evidence) imports caller-selected native tests. Richer assumption records, domain-specific adapters and independent discovery-quality evaluation remain in the [enhancement plan](ASSUMPTION_REVIEW_PLAN.md). The [current support and planned extensions](ACCEPTANCE_WORKFLOW.md#assumptions-and-risk-supported-today-and-planned) table separates those from the implemented triage operation. This is a review aid; its ability to recognize consequential engineering assumptions still needs independent assessment.
 
 ## What it checks today
 

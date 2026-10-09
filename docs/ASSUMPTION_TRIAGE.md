@@ -97,7 +97,7 @@ A routine recommendation accompanied by missing context cannot proceed routinely
 
 The operation verifies the caller-pinned assessment against its current producer/review input hashes, including previously missing files. It does not rerun the scene checks. Reassess a changed scene before triage. The report is intended for the calling application and may contain local evidence paths; review and sanitize it before publishing it outside that environment.
 
-Source-linked individual assumption records, automatic discovery of undeclared choices, document semantics and specialist risk adapters remain in the [enhancement plan](ASSUMPTION_REVIEW_PLAN.md). Unit tests exercise enforcement and transport; they do not establish that a model reliably recognizes consequential manufacturing assumptions.
+The separate experimental [audit operation](EXTENSIONS.md#assumption-audit) now proposes cited questions about undeclared choices. It produces no acceptance finding or approval. Source-linked individual assumption records, document semantics, specialist risk adapters and independent discovery-quality evaluation remain in the [enhancement plan](ASSUMPTION_REVIEW_PLAN.md). Unit tests exercise enforcement and transport; they do not establish that a model reliably recognizes consequential manufacturing assumptions.
 
 ## Close a mandatory triage item
 

@@ -1,4 +1,4 @@
-# Tested on Python 3.12, macOS arm64; runtime plus test/build dependencies.
+# Tested on Python 3.12, macOS arm64 and Ubuntu 24.04; runtime plus test/build dependencies.
 # Re-resolve and revalidate deliberately for another platform.
 setuptools==80.9.0
 attrs==26.1.0
