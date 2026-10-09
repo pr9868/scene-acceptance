@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "cases_sha256": "0f2f7283259f425fa1bd275a0f68cfa6812c5a138a29131e67f9daa3552fb729",
+  "reviewer": null,
+  "labeled_before_model_outputs": null,
+  "labels": [
+    {
+      "id": "dairy-binding",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "normals-policy",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "indicator-state",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "visual-color",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "physical-friction",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "requested-slip",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "missing-view",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "visual-triangulation",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "rigid-arm",
+      "label": null,
+      "reason": null
+    },
+    {
+      "id": "viewer-fit",
+      "label": null,
+      "reason": null
+    }
+  ]
+}

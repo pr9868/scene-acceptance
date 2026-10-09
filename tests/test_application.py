@@ -284,3 +284,32 @@ def test_interpreter_schema_exposes_required_spec_prefix():
     good=dict(id='spec.panel-size',type_id='brief.measurements.bounds',parameters_json='{}')
     assert not list(Draft202012Validator(check).iter_errors(good))
     assert list(Draft202012Validator(check).iter_errors(dict(good,id='panel-size')))
+
+
+def test_distinct_view_ids_with_identical_bytes_do_not_cover_two_views(tmp_path, bundle):
+    kw = setup(tmp_path, bundle)
+    plan = prepare_scene(**kw)
+    ev = evidence(tmp_path, plan)
+    captures = json.loads((kw['out'] / 'capture-plan.json').read_text())
+    rear = deepcopy(captures['requests'][0]); rear.update(id='rear-view', view_role='rear')
+    captures['requests'].append(rear)
+    manifest = json.loads(ev['views'].read_text())
+    view = deepcopy(manifest['views'][0]); view.update(id='rear', path='rear.png', view_roles=['rear'], camera_id='rear')
+    (ev['views'].parent / 'rear.png').write_bytes((ev['views'].parent / manifest['views'][0]['path']).read_bytes())
+    manifest['views'].append(view)
+    receipt = json.loads(ev['receipt'].read_text())
+    receipt['requests'].append(dict(request_id='rear-view', status='supplied', view_ids=['rear'], reason='Aliased image control'))
+    rows, policy = validate_receipt(plan, captures, manifest, receipt, ev['views'].parent)
+    assert not policy['brief.label']['ready']
+    assert all(r['status'] == 'missing' for r in rows)
+
+
+def test_report_diff_distinguishes_regression_unknown_and_scope_change(tmp_path):
+    from scene_acceptance.findings import compare_runs
+    previous = dict(scope_sha256='a'*64, findings=[dict(id='binding', status='PASS'), dict(id='view', status='supplied')])
+    path = tmp_path / 'previous.json'; save(path, previous)
+    current = dict(scope_sha256='a'*64, findings=[dict(id='binding', status='FAIL'), dict(id='view', status='missing')])
+    changes = compare_runs(path, current)['changes']
+    assert [r['change'] for r in changes] == ['regressed_in_stated_scope', 'newly_unresolved_in_stated_scope']
+    current['scope_sha256'] = 'b'*64
+    assert all(r['change'] == 'changed' for r in compare_runs(path, current)['changes'])

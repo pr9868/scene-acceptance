@@ -11,6 +11,7 @@ Use `check-3d-app` or `scene_acceptance.application.invoke` for a versioned appl
 | `validate-evidence` | Frozen plan and paired view manifest/receipt | Supplied/missing/invalid capture matrix and eligible evidence IDs; no model call |
 | `evaluate` | Frozen plan, optional scope approval, mode, evidence and judge configuration | Script outcomes, subject counts, advisory findings, missing evidence and next actions |
 | `check` | Saved scene, optional already mapped brief, mode | Direct evaluation without preparation; the same application envelope |
+| `resolve-triage` | Pinned original triage run and caller-owned human review record | Current human decisions applied to triage requests, with original checks preserved; no model call |
 | `triage` | Pinned declared-scope assessment, original input roots, selected items, caller policy, text evidence and model configuration | AI review recommendations beside applied policy, original verdicts and next actions; no new approval |
 
 `checks` is the default. `judge` selects advisory review only. `both` retains separate component results, withholding script findings from the judge by default. A malformed image manifest or failing model does not discard completed script results. The overall operation returns code 4 for that partial execution; inspect `data.script` or the prepared report to retain measured failures.
@@ -110,7 +111,7 @@ Metadata eligibility is not proof of camera truth, visibility or renderer fideli
 
 The default `general` review uses preset version `2.0.0`: layout/readability, material use when materials or shaders are authored, and motion when time-sampled attributes are authored. Unsupported physical validation and other excluded preset areas are reported in `judge.unassessed_areas` and the HTML as unassessed, not passes. Selection uses inventory, not favourable findings. `static-visual` explicitly selects layout/readability/materials; `animated-visual` also selects motion. A custom rubric is kept as supplied. Explicit brief/custom requirements remain required even when evidence is unavailable: asking for physical validation still yields unknown and requires review.
 
-The automatic mapping adapter now admits ten bounded types: five brief measurements, stage clock, sampled positions, sampled connection distance, material delivery and image decoding. All 39 configurable scripted check types remain available through explicit contracts/briefs; the automatic interpreter cannot select arbitrary code or simulation jobs. Source origin (human/application/agent/preset/unrecorded) is recorded separately from the interpreter's identity. Schema-valid, quote-supported mappings still need semantic review.
+The automatic mapping adapter now admits ten bounded types: five brief measurements, stage clock, sampled positions, sampled connection distance, material delivery and image decoding. All 41 configurable scripted check types remain available through explicit contracts/briefs; the automatic interpreter cannot select arbitrary code or simulation jobs. Source origin (human/application/agent/preset/unrecorded) is recorded separately from the interpreter's identity. Schema-valid, quote-supported mappings still need semantic review.
 
 The default dependency budget is 64 files; `--max-dependency-files` allows 1–1024 through preparation, binding and evaluation. Visual reference images accept single-frame RGB/RGBA PNG/JPEG, up to 8 MiB and 16 million pixels each, with 32 MiB total reference bytes. Views have the same per-image limits and a separate 32 MiB view total; the combined reference/view count is at most twelve. Exact source-pixel comparisons retain a separate 1 MiB/262,144-pixel RGB decoder limit. See [brief image policy](BRIEFS_AND_MODEL_REVIEW.md#comparison-regions-and-image-policy). Install `scene-acceptance[visual,nvidia]` for image evidence plus baseline providers, without requiring the physics extras.
 
@@ -127,3 +128,20 @@ Prepared results include a primary `next_action`. A rejected or still-pending sc
 Repair binding preserves the approved rubric but reports `binding.judge_coverage_drift` against the original preparation inventory. Newly applicable material or motion areas missing from that rubric block judge/both acceptance and request fresh preparation. Approving the old scope cannot add the missing questions. Checks-only runs expose the omitted visual scope without changing the numerical verdict.
 
 For a renderer-supplied library, use the explicit [runtime dependency evidence protocol](RUNTIME_DEPENDENCIES.md). Its policy and target environment are scope-bound; the per-scene receipt is separate from view-capture receipts.
+
+
+## Invocation costs and repair comparison
+
+Every `invoke` / `check-3d-app` result after argument parsing includes `metrics`: wall time for the operation, available provider usage with links to native model records, and optional caller costs. Direct legacy commands retain their existing timing fields and do not produce this application ledger. Failed attempts count as work too.
+
+Pass `--cost-context cost.json` (or `cost_context=` to `invoke`) with:
+
+```json
+{"schema_version":"1.0","delivery_id":"conveyor-demo","revision_id":"v1","human_minutes":null,"compute_cost":null,"currency":null,"source":"Caller record; human time and billing not yet measured"}
+```
+
+Record each human/compute cost once, as an increment for that invocation. Use a three-letter currency when compute cost is known. Null means unmeasured, never zero. A reused completed receipt retains its original metrics and incurs no new model call; do not count it twice. Parsing failures have no completed invocation metrics.
+
+`scene_acceptance.accounting.summarize(receipt_paths)` groups original `invocation.json` receipts by delivery, rejects duplicate run IDs and mixed currencies, and keeps totals unknown when a component is missing. Include unsuccessful attempts when assessing cost per accepted delivery. Retain the owner's final scoped acceptance separately: a successful preparation is not acceptance, and summed overlapping call durations are not end-to-end latency.
+
+`evaluate --previous-run PATH` already compares repaired deliveries. Under the same scope it now distinguishes `improved_in_stated_scope`, `regressed_in_stated_scope` and `newly_unresolved_in_stated_scope`. A disappeared check remains unassessed. A changed scope is reported separately rather than claimed as a repair.

@@ -228,7 +228,7 @@ def test_report_escapes_untrusted_source_text(case,tmp_path):
 
 
 @pytest.mark.parametrize('notice, expected', [
-    ('performance', 0), ('unknown-feature', 4), ('provider-error', 4), ('tool-action', 4), ('turn-failed', 4),
+    ('performance', 0), ('performance-suffix', 4), ('unknown-feature', 4), ('provider-error', 4), ('tool-action', 4), ('turn-failed', 4),
 ])
 def test_codex_notices_are_narrowly_classified(case, tmp_path, notice, expected):
     args=kwargs(case,tmp_path)
@@ -241,6 +241,7 @@ if notice=='turn-failed':print(json.dumps(dict(type='turn.failed',error={'messag
 else:
  item={'id':'notice','type':'error','message':'Provider failed unexpectedly'}
  if notice=='performance':item['message']='Ignoring unknown `features` requirement `ultrafast_mode` from requirements layers: synthetic performance setting'
+ if notice=='performance-suffix':item['message']='Ignoring unknown `features` requirement `ultrafast_mode` from requirements layers: synthetic performance setting changed'
  if notice=='unknown-feature':item['message']='Ignoring unknown `features` requirement `safety_guard` from requirements layers: synthetic unknown setting'
  if notice=='tool-action':item={'id':'tool','type':'command_execution','command':'echo example'}
  print(json.dumps({'type':'item.completed','item':item}))
@@ -248,7 +249,8 @@ rows=[dict(item_id=x['id'],recommendation='routine_handling',reason='Synthetic r
 Path(sys.argv[sys.argv.index('-o')+1]).write_text(json.dumps(dict(request_sha256=request['request_sha256'],items=rows,limitations=['Synthetic CLI transport control'])))
 ''')
     script.chmod(0o755)
-    save(args['triage_config'],dict(driver='codex',executable=str(script),args=[],model='synthetic',effort='none',timeout_seconds=1))
+    save(args['triage_config'],dict(driver='codex',executable=str(script),args=[],model='synthetic',effort='none',timeout_seconds=1,
+        ignored_codex_notices=['Ignoring unknown `features` requirement `ultrafast_mode` from requirements layers: synthetic performance setting']))
     result=run_triage(**args)
     assert result['exit_code']==expected
     native=json.loads((args['out']/'model/triage-model-result.json').read_text())

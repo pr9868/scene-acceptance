@@ -120,3 +120,13 @@ Deterministic adapters test implementation and boundaries. Real model reviews an
 ## Raw-brief preparation and adopter skills
 
 [Preparation](PREPARATION_AND_SKILLS.md) can propose ten bounded mapping types: five brief measurements plus clock, sampled positions, sampled connection distance, material delivery and selected-image decoding. It also requests caller-rendered evidence. Other mapped checks remain explicit integrations; unsupported or ambiguous intent stays visible. The wheel includes caller-handoff and judge-authoring skills, with versioned rubric and capture-override customization. Software controls include `tests/test_preparation.py`, `tests/test_scope_policy.py`, `tests/test_worker_identity.py` and `tests/test_judge_applicability.py`. Passing these controls does not establish model accuracy or full production-scene coverage.
+
+
+## Explicit state and process topology (development candidate)
+
+| Check | Evaluator | Caller input | Reports | Boundary |
+|---|---|---|---|---|
+| `behavior.state.agreement` | Script | Observed/reference held-state attributes, optional activation attribute, interval | Every active authored interval and final endpoint; values and comparison counts | No numeric interpolation, occupancy inference, rendered sign inspection or external controller verification |
+| `process.connections.match` | Script | Equipment tags, port names/directions, directed edges and extra-edge policy | Equipment/port/edge totals plus each comparison | Structured graph only; no drawing extraction, physical pipe connection or process-engineering certification |
+
+Both are contract-selected, outside the general baseline. See [parameters and controls](SEMANTIC_CHECKS.md). Model interpretation does not automatically create these checks from a P&ID. Review the explicit reference and its mapping to saved scene metadata.

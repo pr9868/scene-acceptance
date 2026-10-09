@@ -10,7 +10,11 @@ permissions:
 
 jobs:
   replay:
-    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +32,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: replay-results
+          name: replay-results-${{ matrix.os }}
           path: ${{ runner.temp }}/scene-acceptance-replay
           if-no-files-found: ignore

@@ -1,0 +1,26 @@
+# Copy to the consumer repository's .github/workflows/scene-acceptance.yml.
+# Replace the release tag/path with the reviewed version and scene bundle you use.
+name: Check saved scene
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install reviewed harness release
+        run: python -m pip install 'scene-acceptance[nvidia,article_checks] @ git+https://github.com/pr9868/scene-acceptance.git@v0.6.0'
+      - name: Evaluate the saved delivery against its contract
+        run: check-3d --bundle-root ./delivery --candidate scene.usda --contract contract.json --out "$RUNNER_TEMP/acceptance"
+      - name: Retain findings even when checks reject or need evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scene-acceptance
+          path: ${{ runner.temp }}/acceptance
+          if-no-files-found: warn

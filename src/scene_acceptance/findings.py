@@ -56,6 +56,8 @@ def compare_runs(previous_path,current):
         if not a:state='newly_assessed'
         elif not b:state='not_assessed_in_current_run'
         elif a['status']==b['status']:state='unchanged'
+        elif same_scope and b['status'] in ('UNKNOWN','unknown','missing','invalid','PARTIAL','PARTIAL_COVERAGE'):state='newly_unresolved_in_stated_scope'
+        elif same_scope and a['status'] in ('PASS','consistent','supplied') and b['status'] in ('FAIL','concern','ERROR'):state='regressed_in_stated_scope'
         elif same_scope and b['status'] in ('PASS','consistent','supplied'):state='improved_in_stated_scope'
         else:state='changed'
         changes.append(dict(id=id,previous=a and a['status'],current=b and b['status'],change=state))

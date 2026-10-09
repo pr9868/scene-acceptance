@@ -3,11 +3,12 @@ import argparse
 import json
 from pathlib import Path
 import sys
+import time
 from .model import ContractError, digest_json, sha, strict_json
 from .execution import RunControl, controlled, Cancelled, DeadlineExceeded
 from .review_context import save
 
-OPERATIONS=('prepare','approve','bind','validate-evidence','evaluate','check','doctor','triage')
+OPERATIONS=('prepare','approve','bind','validate-evidence','evaluate','check','doctor','triage','resolve-triage')
 
 
 def _operation(name):
@@ -17,7 +18,8 @@ def _operation(name):
     from .evaluation import evaluate_scene
     from .environment import doctor
     from .triage import run_triage
-    return dict(zip(OPERATIONS,(prepare_scene,approve_scope,bind_preparation,validate_prepared_evidence,evaluate_prepared,evaluate_scene,doctor,run_triage)))[name]
+    from .triage_review import resolve_triage
+    return dict(zip(OPERATIONS,(prepare_scene,approve_scope,bind_preparation,validate_prepared_evidence,evaluate_prepared,evaluate_scene,doctor,run_triage,resolve_triage)))[name]
 
 
 def _fingerprint(operation, params):
@@ -37,6 +39,22 @@ def _fingerprint(operation, params):
         from .triage import load_context
         context = load_context(**{key: params[key] for key in ('assessment', 'expected_assessment_sha256', 'policy', 'expected_policy_sha256', 'bundle_root', 'review_root')})
         hashes.update(context[4])
+    if operation == 'resolve-triage':
+        folder = Path(params['triage_run']).resolve()
+        record(folder / 'triage-result.json')
+        if sha(folder / 'triage-result.json') != params['expected_triage_sha256']:
+            raise ContractError('Triage result does not match its caller-pinned hash')
+        previous = strict_json(folder / 'triage-result.json')
+        for name in previous['input_hashes']:
+            record(name)
+        owner = Path(previous['context']['review_root']).resolve()
+        from .triage import _inside
+        review_path = _inside(owner, params['review_record'])
+        record(review_path)
+        for row in strict_json(review_path)['reviews']:
+            for evidence in row['evidence']:
+                record(_inside(owner, evidence['path']))
+        record(folder / 'model/request.json')
     if params.get('preparation'):
         folder,plan=load_preparation(params['preparation'],allow_runtime_migration=params.get('migrate_runtime',False))
         record(folder/'plan.json')
@@ -51,7 +69,8 @@ def _fingerprint(operation, params):
         if params.get('brief'):
             _,files,_=load_brief(root,params['brief'])
             for name in files:record(root/name)
-    for key in ('interpreter_config','judge_config','triage_config','capture_capabilities','rubric','capture_overrides','approval','receipt','views','previous_run','review_record','runtime_dependency_evidence'):
+    for key in ('interpreter_config','judge_config','triage_config','capture_capabilities','rubric','capture_overrides','approval','receipt','views','previous_run','review_record','runtime_dependency_evidence','cost_context'):
+        if operation == 'resolve-triage' and key == 'review_record':continue
         value=params.get(key)
         if not value:continue
         path=Path(value).resolve()
@@ -83,20 +102,24 @@ def _fingerprint(operation, params):
                             runtime=implementation_digest(),environment=environment_identity()))
 
 
-def invoke(operation, *, control=None, reuse_completed=False, **parameters):
+def invoke(operation, *, control=None, reuse_completed=False, cost_context=None, **parameters):
     """Return one envelope. A failed component remains in data; no automatic model retry."""
+    started=time.monotonic()
+    from .accounting import read_cost_context, metrics
+    costs=None
     control=control or RunControl()
     params=json.loads(json.dumps(parameters,default=str))
     out=Path(params['out']).resolve() if params.get('out') else None
     receipt=out/'invocation.json' if out and operation not in ('approve','doctor') else None
     data=None;error=None;fingerprint=None;owned=False;reused=False
     try:
+        costs=read_cost_context(cost_context)
         if operation not in OPERATIONS:raise ContractError('Unknown operation: '+operation)
         with controlled(control):
             control.checkpoint(operation+'.started')
             if reuse_completed:
                 if receipt is None:raise ContractError('Verified replay requires a directory-output operation')
-                fingerprint=_fingerprint(operation,params)
+                fingerprint=_fingerprint(operation,dict(params,cost_context=str(cost_context) if cost_context else None))
                 if out.exists():
                     if not receipt.is_file():raise ContractError('Output exists without a completed invocation receipt; use a new output')
                     old=strict_json(receipt)
@@ -111,7 +134,7 @@ def invoke(operation, *, control=None, reuse_completed=False, **parameters):
             owned=bool(out and not existed)
             data=_operation(operation)(**params)
             control.checkpoint(operation+'.completed')
-            if fingerprint and _fingerprint(operation,params)!=fingerprint:raise ContractError('Inputs changed during invocation; cannot cache result')
+            if fingerprint and _fingerprint(operation,dict(params,cost_context=str(cost_context) if cost_context else None))!=fingerprint:raise ContractError('Inputs changed during invocation; cannot cache result')
     except Exception as exc:error=exc
     code=4 if error else data.get('exit_code',0)
     if not error and operation=='doctor' and (data['errors'] or not data['baseline_ready'] or (data['model'] and not data['model']['executable_found'])):code=4
@@ -128,7 +151,8 @@ def invoke(operation, *, control=None, reuse_completed=False, **parameters):
     elif code==4:
         errors=[dict(code='COMPONENT_ERROR',phase=operation,message=str(e),retryable=False) for e in data.get('errors',[])]
     result=dict(schema_version='1.0',operation=operation,run_id=control.run_id,status=status,exit_code=code,
-                reused=reused,data=data,errors=errors,events=control.events)
+                reused=reused,data=data,errors=errors,events=control.events,
+                metrics=metrics(time.monotonic()-started,out if owned else None,costs,operation))
     if owned and receipt and out.is_dir():
         files={str(p.relative_to(out)):sha(p) for p in out.rglob('*') if p.is_file() and p!=receipt}
         save(receipt,dict(input_sha256=fingerprint,envelope=result,files=files))
@@ -144,6 +168,7 @@ def parser():
     sub=p.add_subparsers(dest='operation',required=True,parser_class=Parser)
     for operation in OPERATIONS:
         q=sub.add_parser(operation)
+        q.add_argument('--cost-context',help='Caller cost record for this invocation; unknown values are null')
         q.add_argument('--deadline-seconds',type=float);q.add_argument('--cancel-file')
         q.add_argument('--progress',action='store_true',help='JSONL progress on stderr')
         q.add_argument('--reuse-completed',action='store_true',help='Reuse only identical inputs and verified completed outputs')
@@ -176,6 +201,9 @@ def parser():
         if operation in ('check','evaluate','validate-evidence'):q.add_argument('--views')
         if operation=='evaluate':
             q.add_argument('--approval');q.add_argument('--previous-run')
+        if operation=='resolve-triage':
+            for key in ('triage-run','expected-triage-sha256','review-record'):
+                q.add_argument('--'+key,required=True)
         if operation=='triage':
             for key in ('assessment','expected-assessment-sha256','policy','expected-policy-sha256','bundle-root','review-root','triage-config'):
                 q.add_argument('--'+key,required=True)

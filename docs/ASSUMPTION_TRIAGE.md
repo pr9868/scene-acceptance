@@ -80,7 +80,7 @@ Optional `evidence` entries have `id`, `path`, `sha256`, `kind: "text"` and `des
 | `human_review_needed` | The model proposes escalation, with its reason and possible consequence | Report as a review request, not a confirmed defect or calibrated risk level |
 | `insufficient_context` | The model cannot support a recommendation from the evidence | Request evidence or scope clarification; do not treat it as low risk |
 
-The reducer preserves required review from the original assessment and any mandatory review in the triage policy. A mandatory triage-policy item remains a human-review request even if the model says routine; the calling application records and acts on the human decision. This operation does not issue a new approval record. Resolve original declared-scope obligations through the existing review workflow, then reassess changed inputs.
+The reducer preserves required review from the original assessment and mandatory review in the triage policy. A routine model recommendation cannot close either. The caller can close a triage request with the existing human-review record format through `resolve-triage`, described below. Resolve original declared-scope obligations through their existing workflow, then reassess changed inputs.
 
 A routine recommendation accompanied by missing context cannot proceed routinely. Neither model output nor triage policy can clear an existing required artifact failure. A known advisory failure remains visible and can be treated as an allowed variation when the selected policy and evidence support that judgment.
 
@@ -98,3 +98,41 @@ A routine recommendation accompanied by missing context cannot proceed routinely
 The operation verifies the caller-pinned assessment against its current producer/review input hashes, including previously missing files. It does not rerun the scene checks. Reassess a changed scene before triage. The report is intended for the calling application and may contain local evidence paths; review and sanitize it before publishing it outside that environment.
 
 Source-linked individual assumption records, automatic discovery of undeclared choices, document semantics and specialist risk adapters remain in the [enhancement plan](ASSUMPTION_REVIEW_PLAN.md). Unit tests exercise enforcement and transport; they do not establish that a model reliably recognizes consequential manufacturing assumptions.
+
+## Close a mandatory triage item
+
+A completed triage run now writes `review-requests.json`. Its `snapshot_sha256` binds the assessment, policy, item contents, original triage request and evidence identity. The owner records a decision in the existing declared-scope review format:
+
+```json
+{
+  "schema_version": "1.0",
+  "snapshot_sha256": "COPY_THE_TRIAGE_REVIEW_REQUEST_SNAPSHOT_HASH",
+  "reviews": [{
+    "item_id": "material-binding",
+    "status": "approved",
+    "reviewer": "Responsible reviewer",
+    "reason": "Reason for accepting this specific item within the stated use",
+    "evidence": [{"path": "review-note.txt", "sha256": "HASH_OF_REVIEW_NOTE_BYTES"}]
+  }]
+}
+```
+
+The JSON above uses explanatory hash placeholders; replace them with the exact retained hashes. Save it in the caller's review root, with referenced evidence relative to that root. The application then consumes that decision:
+
+```sh
+check-3d-app resolve-triage --triage-run ./triage-result \
+  --expected-triage-sha256 HASH_OF_TRIAGE_RESULT_JSON \
+  --review-record triage-reviews.json --out ./resolved-triage
+```
+
+No model is called. A current approval closes that triage request only. Original required failures, UNKNOWN/ERROR evidence and outstanding original scope reviews remain in force. A rejection or pending review returns `review_finding`. Any change to the scene, assessment, policy or original evidence makes the approval stale. Resolve against the original triage run; a later decision creates a new resolved output from that same original request.
+
+Limited acceptance needs an explicit revised scope and a fresh assessment; it is not an informal `approved_with_limits` status. The report shows model recommendation, owner policy and human decision side by side. Hashes establish correspondence to evidence, not the identity or authority of a reviewer. The receiving application must protect review records against producer self-approval.
+
+## Model response compatibility
+
+New model responses use schema `1.1` and `model_policy_paraphrase`, labelled **Model’s reading of the policy**. The actual owner policy remains a separate field. The adapter still accepts explicit `1.0` or old unversioned responses using `policy_reason`, then normalizes them. Unknown versions fail validation.
+
+The Codex driver can optionally carry `ignored_codex_notices`, an exact-match list of known informational error-item messages. The default is empty. A new message, a changed suffix, a failed turn or a tool event still fails; no prefix match is used. This configuration is rejected for other drivers. Configure each model role deliberately; triage does not silently change interpreter or judge behavior.
+
+New triage result records use schema `1.1`, with normalized policy paraphrases and review fields. The published `triage-result-v1` schema remains available for old reports; current runs use `triage-result-v1.1`. Human closure requires a fresh current-version run and matching runtime/evidence. It does not migrate an old result into an approval.

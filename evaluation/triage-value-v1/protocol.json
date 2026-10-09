@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "repeats": 3,
+  "max_important_routine_recommendations": 0,
+  "routine_escalation_rate_strictly_below": 0.5,
+  "provider_errors_prevent_passing": true,
+  "insufficient_context_counts_as_escalation": true
+}

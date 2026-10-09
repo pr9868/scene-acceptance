@@ -53,7 +53,7 @@
             "maxItems": 256,
             "uniqueItems": true
           },
-          "policy_reason": {
+          "model_policy_paraphrase": {
             "type": "string",
             "minLength": 1,
             "pattern": "\\S"
@@ -66,7 +66,7 @@
           "possible_consequence",
           "missing_context",
           "evidence_ids",
-          "policy_reason"
+          "model_policy_paraphrase"
         ],
         "additionalProperties": false
       },
@@ -84,13 +84,14 @@
       "maxItems": 256
     },
     "schema_version": {
-      "const": "1.0"
+      "const": "1.1"
     }
   },
   "required": [
     "request_sha256",
     "items",
-    "limitations"
+    "limitations",
+    "schema_version"
   ],
   "additionalProperties": false
 }

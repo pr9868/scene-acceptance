@@ -135,6 +135,8 @@ class PackRegistry:
 def default_registry(approved=()):
     from .builtin_packs import builtin_packs
     from .motion_timing import timing_pack
+    from .state_intervals import state_pack
+    from .process_connections import process_pack
 
     from .followups.packs import texture_pack, connection_pack
     from .followups.simulation import simulation_pack
@@ -143,7 +145,7 @@ def default_registry(approved=()):
     from .brief_measurements import brief_measurement_pack
 
     return PackRegistry([*builtin_packs(), timing_pack(), texture_pack(),
-                         connection_pack(), simulation_pack(), audit_pack(), four_job_pack(), brief_measurement_pack()]).load_approved(approved)
+                         connection_pack(), simulation_pack(), audit_pack(), four_job_pack(), brief_measurement_pack(), state_pack(), process_pack()]).load_approved(approved)
 
 
 def installed_pack_names():

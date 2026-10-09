@@ -1724,6 +1724,170 @@
         ],
         "additionalProperties": false
       }
+    },
+    {
+      "id": "behavior.state.agreement",
+      "pack": "behavior.state",
+      "check": "agreement",
+      "description": "Require two held state attributes to agree, optionally while an occupancy attribute is true",
+      "coverage": "Named USD token/string/bool state over every authored transition and the final endpoint",
+      "limitations": [
+        "Not a continuous geometry or physics proof",
+        "Reference and activation state must be supplied and justified by the caller"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "observed_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "active_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end_s": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "observed_attribute",
+          "expected_attribute",
+          "start_s",
+          "end_s"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "process.connections.match",
+      "pack": "process.connections",
+      "check": "match",
+      "description": "Compare tagged equipment and directed port relationships",
+      "coverage": "Declared static equipment/port metadata and connection-list agreement",
+      "limitations": [
+        "A correct graph is not process fitness or physical connectivity proof"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tag": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "direction": {
+                        "enum": [
+                          "in",
+                          "out",
+                          "bidirectional"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "name",
+                      "direction"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "path",
+                "tag",
+                "ports"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "connections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "to": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 4096
+          },
+          "tag_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "port_name_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "connection_relationship": {
+            "type": "string",
+            "minLength": 1
+          },
+          "allow_extra_connections": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "assets",
+          "connections",
+          "tag_attribute",
+          "port_name_attribute",
+          "direction_attribute",
+          "connection_relationship",
+          "allow_extra_connections"
+        ],
+        "additionalProperties": false
+      }
     }
   ],
   "pack_versions": {
@@ -1738,7 +1902,9 @@
     "physics.incline-worker": "0.2.0",
     "scene.audit": "1.1.0",
     "brief.four-job": "1.0.0",
-    "brief.measurements": "1.2.0"
+    "brief.measurements": "1.2.0",
+    "behavior.state": "1.0.0",
+    "process.connections": "1.0.0"
   },
   "baseline_profile": {
     "id": "usd-delivery-baseline",

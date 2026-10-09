@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "status": "unlabeled pilot; not model evidence",
+  "cases": [
+    {
+      "id": "dairy-binding",
+      "kind": "Published observation",
+      "question": "A visual dairy delivery has bindings to three nonexistent materials. The producer says the overview image looks plausible. What needs review before accepting the saved asset?",
+      "source": "examples/two-scene-repair-study/README.md",
+      "source_sha256": "eaf9dabe4cd73405ea49e30246ba58176fdd547dba0a08f0b6efadebc0a673f2"
+    },
+    {
+      "id": "normals-policy",
+      "kind": "Published observation",
+      "question": "The distribution-centre brief did not require authored normals. A separately chosen general rule rejected 121,602 meshes for missing them. The brief-specific rows passed. Is producer repair the only decision needed?",
+      "source": "examples/two-scene-repair-study/README.md",
+      "source_sha256": "eaf9dabe4cd73405ea49e30246ba58176fdd547dba0a08f0b6efadebc0a673f2"
+    },
+    {
+      "id": "indicator-state",
+      "kind": "Published observation",
+      "question": "A parcel arrives on time, but separate review finds the indicator shows a different route between events. The intended demonstration must communicate the route accurately. Is passing endpoint timing enough?",
+      "source": "examples/two-scene-repair-study/README.md",
+      "source_sha256": "eaf9dabe4cd73405ea49e30246ba58176fdd547dba0a08f0b6efadebc0a673f2"
+    },
+    {
+      "id": "visual-color",
+      "kind": "Constructed variation",
+      "question": "The brief permits any legible neutral surface color for a visual layout. Delivered gray differs from the producer\u2019s initial blue sketch. Binding and readability evidence is present; no exact color is required.",
+      "source": null,
+      "source_sha256": null
+    },
+    {
+      "id": "physical-friction",
+      "kind": "Constructed variation",
+      "question": "The requested deliverable predicts whether a part will slip. The producer selected friction from how shiny the render looks. No measured contact data is supplied.",
+      "source": null,
+      "source_sha256": null
+    },
+    {
+      "id": "requested-slip",
+      "kind": "Constructed variation",
+      "question": "The brief explicitly requests a low-friction slipping variant for teaching. The observed displacement matches that approved variant, while an advisory comparison differs from a nominal high-friction reference.",
+      "source": null,
+      "source_sha256": null
+    },
+    {
+      "id": "missing-view",
+      "kind": "Constructed variation",
+      "question": "A required backside safety label must be legible. Only a front render is supplied. The producer says it used the same font on both sides.",
+      "source": null,
+      "source_sha256": null
+    },
+    {
+      "id": "visual-triangulation",
+      "kind": "Constructed variation",
+      "question": "The owner permits triangles for a static visualization. The delivered mesh is triangulated, the selected geometry checks pass, and no editability or quad-only policy applies.",
+      "source": null,
+      "source_sha256": null
+    },
+    {
+      "id": "rigid-arm",
+      "kind": "Constructed variation",
+      "question": "The brief requests a physically credible fixed-length transfer arm. The producer scales the arm during transfer to reach each position. A few endpoint views appear plausible; no intermediate length evidence is supplied.",
+      "source": null,
+      "source_sha256": null
+    },
+    {
+      "id": "viewer-fit",
+      "kind": "Constructed variation",
+      "question": "The owner needs interactive navigation. The producer reports around 4.5 draw callbacks per second while orbiting a large scene in Blender, but has not measured displayed FPS with a defined camera path. Structural rules pass.",
+      "source": null,
+      "source_sha256": null
+    }
+  ]
+}

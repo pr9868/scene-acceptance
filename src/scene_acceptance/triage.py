@@ -1,9 +1,10 @@
 """Opt-in assumption triage with caller-owned policy and non-overridable gates."""
 from pathlib import Path
 from collections import Counter
+from copy import deepcopy
 from jsonschema import Draft202012Validator
 from .model import ContractError, digest_json, sha, strict_json
-from .review.schemas import obj, array, TEXT, HASH, ITEM, PRODUCER, nullable
+from .review.schemas import obj, array, TEXT, HASH, ITEM, PRODUCER, REVIEW, nullable
 from .report import E, STYLE
 from .review_context import save
 from .execution import checkpoint
@@ -19,7 +20,7 @@ POLICY_SCHEMA = obj({
     'evidence': array(obj({'id': TEXT, 'path': TEXT, 'sha256': HASH,
                            'kind': {'const': 'text'}, 'description': TEXT})),
 })
-RESPONSE_SCHEMA = obj({
+LEGACY_RESPONSE_SCHEMA = obj({
     'request_sha256': HASH,
     'items': array(obj({
         'item_id': TEXT, 'recommendation': {'enum': RECOMMENDATIONS},
@@ -28,8 +29,19 @@ RESPONSE_SCHEMA = obj({
     }), 1),
     'limitations': array(TEXT, 1),
 })
+# The original response had no version field. Accept it unchanged on input.
+LEGACY_RESPONSE_SCHEMA['properties']['schema_version'] = {'const': '1.0'}
+RESPONSE_SCHEMA = deepcopy(LEGACY_RESPONSE_SCHEMA)
+RESPONSE_SCHEMA['properties']['schema_version'] = {'const': '1.1'}
+RESPONSE_SCHEMA['required'].append('schema_version')
+_response_item = RESPONSE_SCHEMA['properties']['items']['items']
+_response_item['properties']['model_policy_paraphrase'] = _response_item['properties'].pop('policy_reason')
+_response_item['required'].remove('policy_reason')
+_response_item['required'].append('model_policy_paraphrase')
+
+
 RESULT_SCHEMA = obj({
-    'schema_version': {'const': '1.0'}, 'kind': {'const': 'assumption-triage'},
+    'schema_version': {'const': '1.1'}, 'kind': {'const': 'assumption-triage'},
     'decision': {'enum': ['NO_ADDITIONAL_REVIEW', 'NEEDS_REVIEW', 'REJECT', 'EVALUATION_ERROR']},
     'exit_code': {'enum': [0, 2, 3, 4]},
     'next_action': {'enum': ['none', 'review_specification', 'review_finding', 'provide_evidence', 'repair_scene', 'fix_environment']},
@@ -44,12 +56,30 @@ RESULT_SCHEMA = obj({
         'model_recommendation': nullable(RESPONSE_SCHEMA['properties']['items']['items']),
         'policy_outcome': {'enum': RECOMMENDATIONS}, 'policy_reasons': array(TEXT, 1),
         'policy_rule': POLICY_SCHEMA['properties']['items']['items'], 'missing_evidence_ids': array(TEXT),
+        'original_review': nullable(REVIEW['properties']['reviews']['items']),
+        'human_review': nullable(REVIEW['properties']['reviews']['items']),
     }), 1),
     'counts': {'type': 'object', 'additionalProperties': {'type': 'integer', 'minimum': 0}},
     'selected_items': {'type': 'integer', 'minimum': 1}, 'unassessed_item_ids': array(TEXT),
     'input_hashes': {'type': 'object', 'additionalProperties': nullable(HASH)},
     'runtime_sha256': HASH, 'model_status': TEXT, 'model_requested': TEXT,
     'request_sha256': HASH, 'limitations': array(TEXT, 1),
+})
+
+# Keep the published result schema available for old retained reports.
+LEGACY_RESULT_SCHEMA = deepcopy(RESULT_SCHEMA)
+LEGACY_RESULT_SCHEMA['properties']['schema_version'] = {'const': '1.0'}
+_legacy_item = LEGACY_RESULT_SCHEMA['properties']['items']['items']
+for _field in ('original_review', 'human_review'):
+    _legacy_item['properties'].pop(_field)
+    _legacy_item['required'].remove(_field)
+_legacy_item['properties']['model_recommendation'] = nullable(LEGACY_RESPONSE_SCHEMA['properties']['items']['items'])
+
+RESULT_SCHEMA['properties'].update({
+    'context': obj({key: TEXT for key in ('assessment', 'policy', 'bundle_root', 'review_root')}),
+    'review_context_sha256': HASH,
+    'parent_triage_sha256': HASH,
+    'human_review_sha256': HASH,
 })
 
 LIMITATIONS = [
@@ -154,7 +184,10 @@ def load_context(*, assessment, expected_assessment_sha256, policy, expected_pol
         if observed is None:
             missing.add(key)
         else:
-            data['text'] = path.read_text(encoding='utf-8')
+            try:
+                data['text'] = path.read_text(encoding='utf-8')
+            except UnicodeDecodeError as exc:
+                raise ContractError(f'Triage evidence {key!r} must be UTF-8 text') from exc
         evidence.append(data)
     selected = []
     checks = _unique(result['core_report']['checks'], 'id')
@@ -178,7 +211,8 @@ def load_context(*, assessment, expected_assessment_sha256, policy, expected_pol
 
 
 def validate_response(response, request):
-    Draft202012Validator(RESPONSE_SCHEMA).validate(response)
+    schema = RESPONSE_SCHEMA if response.get('schema_version') == '1.1' else LEGACY_RESPONSE_SCHEMA
+    Draft202012Validator(schema).validate(response)
     if response['request_sha256'] != request['request_sha256']:
         raise ContractError('Triage response is for another request')
     rows = _unique(response['items'], 'item_id')
@@ -195,7 +229,18 @@ def validate_response(response, request):
     return response
 
 
-def apply_policy(assessment, policy, response, missing):
+def normalize_response(response):
+    if response is None:
+        return None
+    result = deepcopy(response)
+    if result.get('schema_version') != '1.1':
+        for item in result['items']:
+            item['model_policy_paraphrase'] = item.pop('policy_reason')
+    result['schema_version'] = '1.1'
+    return result
+
+
+def apply_policy(assessment, policy, response, missing, human_reviews=None):
     opinions = _unique(response['items'], 'item_id') if response else {}
     sources = {x['id']: x for x in assessment['items']}
     rows = []
@@ -204,10 +249,11 @@ def apply_policy(assessment, policy, response, missing):
         opinion = opinions.get(source['id'])
         reasons = []
         review = source.get('review') or {}
-        mandatory = rule['mandatory_human_review'] or (
-            source['review_required'] and (review.get('status') != 'approved' or source['status'] != 'PASS'))
+        original_review_pending = source['review_required'] and (
+            review.get('status') != 'approved' or source['status'] != 'PASS')
+        human = (human_reviews or {}).get(source['id'])
         absent = sorted(set(rule['evidence_ids']) & missing)
-        if mandatory:
+        if original_review_pending:
             outcome = 'human_review_needed'
             reasons.append('A caller-required review cannot be waived by the model.')
         elif absent or source['status'] in ('UNKNOWN', 'ERROR'):
@@ -216,6 +262,15 @@ def apply_policy(assessment, policy, response, missing):
         elif source['status'] == 'FAIL' and source['required']:
             outcome = 'human_review_needed'
             reasons.append('A known finding remains; a model opinion cannot clear it.')
+        elif human and human['status'] in ('rejected', 'needs_review'):
+            outcome = 'human_review_needed'
+            reasons.append('The recorded human decision requires further review or work.')
+        elif human and human['status'] == 'approved':
+            outcome = 'routine_handling'
+            reasons.append('A matching human decision satisfies this triage review request; original checks remain in force.')
+        elif rule['mandatory_human_review']:
+            outcome = 'human_review_needed'
+            reasons.append('The owner requires a matching human decision for this triage item.')
         elif not opinion:
             outcome = 'insufficient_context'
             reasons.append('No valid model recommendation is available.')
@@ -228,10 +283,26 @@ def apply_policy(assessment, policy, response, missing):
             reasons.append('Applied the recommendation under the caller\'s selected policy.')
         rows.append(dict(item_id=source['id'], statement=source['statement'],
                          producer_decision=source.get('producer_decision'),
+                         original_review=review or None, human_review=human,
                          original_status=source['status'], required=source['required'],
                          model_recommendation=opinion, policy_outcome=outcome,
                          policy_reasons=reasons, policy_rule=rule, missing_evidence_ids=absent))
     return rows
+
+
+def combined_outcome(base, rows, errors):
+    if errors:
+        return 'EVALUATION_ERROR', 4, 'fix_environment'
+    if base == 'REJECT':
+        return 'REJECT', 2, 'repair_scene'
+    outcomes = {row['policy_outcome'] for row in rows}
+    if 'human_review_needed' in outcomes:
+        return 'NEEDS_REVIEW', 3, 'review_finding'
+    if 'insufficient_context' in outcomes:
+        return 'NEEDS_REVIEW', 3, 'provide_evidence'
+    if base != 'ACCEPT_FOR_DECLARED_SCOPE':
+        return 'NEEDS_REVIEW', 3, 'review_specification'
+    return 'NO_ADDITIONAL_REVIEW', 0, 'none'
 
 
 def run_triage(*, assessment, expected_assessment_sha256, policy, expected_policy_sha256,
@@ -268,22 +339,12 @@ def run_triage(*, assessment, expected_assessment_sha256, policy, expected_polic
             raise ContractError('Triage implementation changed during evaluation')
     except Exception as exc:
         errors.append(str(exc))
-    response = model['response'] if not errors else None
+    response = normalize_response(model['response']) if not errors else None
     rows = apply_policy(original, rules, response, missing)
     counts = dict(Counter(row['policy_outcome'] for row in rows))
     base = original['assessment_verdict']
-    if errors:
-        decision, code, action = 'EVALUATION_ERROR', 4, 'fix_environment'
-    elif base == 'REJECT':
-        decision, code, action = 'REJECT', 2, 'repair_scene'
-    elif base != 'ACCEPT_FOR_DECLARED_SCOPE':
-        decision, code, action = 'NEEDS_REVIEW', 3, 'review_specification'
-    elif any(row['policy_outcome'] != 'routine_handling' for row in rows):
-        decision, code = 'NEEDS_REVIEW', 3
-        action = 'review_finding' if counts.get('human_review_needed') else 'provide_evidence'
-    else:
-        decision, code, action = 'NO_ADDITIONAL_REVIEW', 0, 'none'
-    result = dict(schema_version='1.0', kind='assumption-triage', decision=decision,
+    decision, code, action = combined_outcome(base, rows, errors)
+    result = dict(schema_version='1.1', kind='assumption-triage', decision=decision,
                   exit_code=code, next_action=action, execution_status='failed' if errors else 'completed',
                   errors=errors, assessment_sha256=expected_assessment_sha256,
                   snapshot_sha256=original['snapshot_sha256'], policy_sha256=expected_policy_sha256,
@@ -293,7 +354,13 @@ def run_triage(*, assessment, expected_assessment_sha256, policy, expected_polic
                   input_hashes=inputs, runtime_sha256=runtime,
                   model_status=model['status'], model_requested=config['model'],
                   request_sha256=request['request_sha256'], limitations=LIMITATIONS)
+    from .triage_review import review_requests
+    result['context'] = {key: str(Path(value).resolve()) for key, value in
+                         dict(assessment=assessment, policy=policy, bundle_root=bundle_root, review_root=review_root).items()}
+    requests = review_requests(result)
+    result['review_context_sha256'] = requests['snapshot_sha256']
     Draft202012Validator(RESULT_SCHEMA).validate(result)
+    save(out / 'review-requests.json', requests)
     save(out / 'triage-result.json', result)
     save(out / 'assessment.json', original)
     save(out / 'policy.json', rules)
@@ -313,17 +380,21 @@ def _report(result, out):
                     f'<p>Possible consequence: {E(opinion.get("possible_consequence", "unassessed"))}</p>'
                     f'<p>Missing context: {E("; ".join(opinion.get("missing_context", [])) or "None reported")}</p>'
                     f'<p>Evidence: {E(", ".join(opinion.get("evidence_ids", [])))}</p>'
-                    f'<p>AI policy reasoning: {E(opinion.get("policy_reason", "unavailable"))}</p></td>'
+                    f'<p>Model’s reading of the policy: {E(opinion.get("model_policy_paraphrase", "unavailable"))}</p></td>'
                     f'<td><strong>{E(row["policy_outcome"])}</strong><p>{E(" ".join(row["policy_reasons"]))}</p>'
                     f'<p>Owner policy: {E(row["policy_rule"]["reason"])}</p>'
                     f'<p>Original result: {E(row["original_status"])} · Required: {row["required"]}</p>'
-                    f'<p>Missing declared source files: {E(", ".join(row["missing_evidence_ids"]) or "None")}</p></td></tr>')
+                    f'<p>Missing declared source files: {E(", ".join(row["missing_evidence_ids"]) or "None")}</p></td>'
+                    f'<td>{E((row.get("human_review") or {}).get("status", "No triage decision recorded"))}'
+                    f'<p>{E((row.get("human_review") or {}).get("reason", ""))}</p>'
+                    f'<p>Reviewer: {E((row.get("human_review") or {}).get("reviewer", "—"))}</p>'
+                    f'<p>Original scope review: {E((row.get("original_review") or {}).get("status", "Not supplied"))}</p></td></tr>')
     (out / 'report.html').write_text(f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">'
         f'<title>Assumptions needing review</title><style>{STYLE}</style><main><h1>Assumptions needing review</h1>'
         f'<p><strong>{E(result["decision"])}</strong> · Next action: {E(result["next_action"])}</p>'
         f'<p>Original artifact: {E(result["original_core_verdict"])} · Original declared scope: {E(result["original_scope_verdict"])}</p>'
         f'<p>{result["selected_items"]} selected obligations/decisions; {len(result["unassessed_item_ids"])} other obligations not triaged. '
         'A routine recommendation is not scene approval or a measured risk level.</p>'
-        f'<p>{E("; ".join(result["errors"]))}</p><div class="scroll"><table><thead><tr><th>Decision or obligation</th><th>AI recommendation</th><th>Applied policy</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
-        '<p><a href="triage-result.json">Full result</a> · <a href="assessment.json">Original assessment</a> · <a href="policy.json">Owner policy</a> · <a href="model/request.json">Evidence sent to the model</a></p>'
+        f'<p>{E("; ".join(result["errors"]))}</p><div class="scroll"><table><thead><tr><th>Decision or obligation</th><th>AI recommendation</th><th>Applied policy</th><th>Human decision</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>'
+        '<p><a href="triage-result.json">Full result</a> · <a href="assessment.json">Original assessment</a> · <a href="policy.json">Owner policy</a> · <a href="review-requests.json">Human review requests</a> · <a href="model/request.json">Evidence sent to the model</a></p>'
         f'<p>{E(" ".join(result["limitations"]))}</p></main></html>')

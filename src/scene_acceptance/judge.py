@@ -25,6 +25,7 @@ CONFIG_SCHEMA['properties'].update({
     'max_model_calls':{'type':'integer','minimum':0,'maximum':1},
     'max_request_bytes':{'type':'integer','minimum':1,'maximum':8388608},
     'max_output_bytes':{'type':'integer','minimum':1,'maximum':8388608},
+    'ignored_codex_notices': {'type':'array','items':{'type':'string','minLength':1,'maxLength':2048},'maxItems':16,'uniqueItems':True},
     'modalities':{'type':'array','items':{'enum':['text','image']},'minItems':1,'uniqueItems':True},
 })
 
@@ -94,6 +95,7 @@ def run_judge(report_dir,config_path,out,*,views=()):
 def load_config(path):
     config=strict_json(path);Draft202012Validator(CONFIG_SCHEMA).validate(config)
     if config['driver']=='codex' and config['args']: raise ContractError('Codex driver uses fixed isolation flags; extra args are not accepted')
+    if config.get('ignored_codex_notices') and config['driver'] != 'codex': raise ContractError('Notice exceptions are only supported by the Codex driver')
     return config
 
 
@@ -112,6 +114,7 @@ def run_request(request,inputs,images,config,out, *, response_schema=None, respo
     complete_status = {'judge': 'ADVISORY_REVIEW_COMPLETE', 'interpreter': 'INTERPRETATION_COMPLETE', 'triage': 'TRIAGE_COMPLETE'}[role]
     Draft202012Validator(CONFIG_SCHEMA).validate(config)
     if config['driver']=='codex' and config['args']: raise ContractError('Codex driver uses fixed isolation flags; extra args are not accepted')
+    if config.get('ignored_codex_notices') and config['driver'] != 'codex': raise ContractError('Notice exceptions are only supported by the Codex driver')
     out=Path(out).resolve()
     if out.exists(): raise ContractError('Judge output must be a new directory')
     if any(not Path(p).is_file() or sha(p)!=h for p,h in inputs.items()): raise ContractError('Evidence changed before judge run')
@@ -161,10 +164,8 @@ def run_request(request,inputs,images,config,out, *, response_schema=None, respo
                     except (ValueError,TypeError): continue
                     if event.get('type')=='item.completed' and event.get('item',{}).get('type') not in ('agent_message','reasoning'):
                         item=event.get('item',{})
-                        # This performance-only notice is emitted as an error item by some CLI builds.
-                        # Preserve it; all other error items and tool/action items remain blocking.
-                        if item.get('type')=='error' and item.get('message','').startswith(
-                                'Ignoring unknown `features` requirement `ultrafast_mode` from requirements layers:'):
+                        # Only caller-configured exact notices are nonblocking.
+                        if item.get('type')=='error' and item.get('message') in config.get('ignored_codex_notices', []):
                             provider_notices.append(item['message'])
                         else:
                             raise ContractError('Judge emitted an unexpected non-message item; native events retained')

@@ -91,7 +91,7 @@ def summarize_observations(item, record):
             rows.append(dict(subject=name, status=status, finding_count=len(issues)))
         return assessment('stage-validator invocations',rows,
                           'Native provider stage invocations; per-object coverage is not exposed. A clean stage invocation is not a count of passing assets.')
-    if pack in ('materials','motion','motion.timing') and 'findings' in obs:
+    if pack in ('materials','motion','motion.timing','behavior.state','process.connections') and 'findings' in obs:
         rows=[dict(subject=x.get('object',x.get('property','measurement')),status=x['status'],
                    evidence_index=i) for i,x in enumerate(obs['findings']) if 'status' in x]
         return assessment('comparisons',rows,obs.get('coverage','Selected requirement comparisons'))
@@ -123,6 +123,8 @@ def domain_for(item):
         if name.startswith('motion.'): return 'motion_requirements'
         if name.startswith('physics.'): return 'physics_structure'
         return 'structure_geometry'
+    if pack=='behavior.state': return 'behavior_state'
+    if pack=='process.connections': return 'process_topology'
     if pack=='scene.audit': return {'files':'material_delivery','textures':'texture_readability','authored_motion':'authored_motion'}[item['check']]
     if pack.startswith('textures.'): return 'texture_readability'
     if pack in ('motion','motion.timing','motion.connection'): return 'motion_requirements'
@@ -135,6 +137,8 @@ def domain_for(item):
 
 
 DOMAIN_NOTES = {
+    'behavior_state': 'Named held-state attributes over all authored transitions in a declared interval; no rendered or external runtime state proof.',
+    'process_topology': 'Named equipment, ports and saved relationships against a structured reference; no diagram extraction or engineering fitness proof.',
     'structure_geometry': 'Selected USD/geometry rules only; no general dimensional or shape-intent acceptance.',
     'material_delivery': 'Bindings/dependencies only; availability can depend on the target renderer runtime.',
     'texture_readability': 'Selected image formats/limits; decoding does not establish the intended image, UVs or rendered appearance.',

@@ -116,3 +116,17 @@ def test_absent_or_nontransformable_target_rejects_instead_of_crashing(tmp_path,
     seconds = next(x for x in report["checks"] if x["id"] == "motion.seconds")
     assert seconds["status"] == "FAIL"
     assert "absent" in seconds["reason"].lower()
+
+
+def test_fps_only_stage_runs_end_to_end(tmp_path):
+    bundle = tmp_path / 'bundle'
+    shutil.copytree(FIXTURES / 'correct', bundle)
+    stage = Usd.Stage.Open(str(bundle / 'scene.usda'))
+    stage.ClearMetadata('timeCodesPerSecond')
+    stage.SetFramesPerSecond(1)
+    stage.GetRootLayer().Save()
+    report = run(bundle)
+    assert report['verdict'] == 'ACCEPT_FOR_USE', report
+    seconds = next(c for c in report['checks'] if c['id'] == 'motion.seconds')
+    observations = seconds['evidence']['observations']
+    assert observations['clock']['rate_metadata'] == 'framesPerSecond'

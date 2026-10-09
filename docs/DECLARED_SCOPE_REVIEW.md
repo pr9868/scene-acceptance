@@ -12,7 +12,7 @@ check-3d --review-plan plan.json --review-root /path/to/owner-review \
 
 Omit `--decisions`/`--reviews` when absent. Paths for the plan and reviewer records resolve within the review root; producer decisions, contract, candidate and optional baseline resolve within the delivery root. Roots must be separate and non-nested. Output must be new and outside both roots. `--max-dependency-files` retains the core's caller-controlled admission budget. `--allow-pack` explicitly enables trusted installed extensions. The pinned plan owns the contract/candidate/baseline: CLI overrides are rejected.
 
-`check-3d` keeps the same exit meanings in every mode: 0 accepted in the stated scope, 2 rejected, 3 insufficient evidence/needs review, 4 evaluation error. Argument errors use argparse's code 2. The compatibility command `assess-3d PLAN ... --approve-pack ...` keeps the earlier review command's exit codes 0/1/2/3. The former separately installed `harness_review` import is replaced by `scene_acceptance.review`; no second Python distribution is required.
+`check-3d` keeps the same exit meanings in every mode: 0 accepted in the stated scope, 2 rejected, 3 insufficient evidence/needs review, 4 evaluation error. Argument errors in `check-3d` return 4. The compatibility command `assess-3d PLAN ... --approve-pack ...` keeps the earlier review command's exit codes 0/1/2/3. The former separately installed `harness_review` import is replaced by `scene_acceptance.review`; no second Python distribution is required.
 
 Try the deliberately incomplete example:
 
