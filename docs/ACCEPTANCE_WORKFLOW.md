@@ -37,7 +37,7 @@ For a manufacturing scene, a brief might include:
 - Required equipment, dimensions, clearances, tags, motion sequences and delivery rules.
 - Which sources are authoritative, which images are illustrative, and what needs clarification.
 
-The current raw-brief path accepts supported text and PNG/JPEG references. Export relevant PDF/CAD drawing pages to supported images and supply needed text, units and source identifiers separately. There is no native PDF, CAD or semantic P&ID importer. A drawing may help interpretation and visual review; checking process connectivity, instrument meaning or engineering correctness requires explicit mappings and appropriate specialist checks. The interpreter cannot establish hidden dimensions or infer every engineering requirement from a picture.
+The raw-brief path accepts UTF-8 text, PNG/JPEG references and selected PDF pages or regions with original-document hashes and page/region provenance. There is no native CAD or semantic P&ID importer. A drawing can support interpretation and visual review; process connectivity still needs an explicit tag/port/connection mapping and appropriate domain review. Images do not establish hidden dimensions. See [PDF intake](EXTENSIONS.md#pdf-sources).
 
 ## Bring your own brief
 

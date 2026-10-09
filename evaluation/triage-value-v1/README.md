@@ -14,16 +14,22 @@ The existing [independent producer protocol](../producer-trial-v1/PROTOCOL.md) s
 
 ## Collect and score
 
-Create an observations JSON with `labels_sha256`, `protocol_sha256` and `cases`. Each case supplies its `id`, optional `baseline_human_minutes` and `harness_human_minutes` (null if unmeasured), plus three `runs` with `repeat` 1–3, `result` (path relative to that observations file), and `item_id`. Each result is an actual retained `triage-result.json` from that run, not a hand-entered policy outcome.
+Create an observations JSON with `labels_sha256`, `protocol_sha256` and `cases`. Each case supplies its `id`, optional `baseline_human_minutes` and `harness_human_minutes` (null if unmeasured), plus three `runs`. Each run contains an integer `repeat` 1–3, the same `item_id`, and two paths relative to the observations file:
+
+```json
+{"repeat":1,"item_id":"indicator-state","result":"indicator-1/triage-result.json","invocation":"indicator-1/invocation.json"}
+```
+
+Use `check-3d-app triage`, `check-3d-triage` or `invoke("triage", ...)` with a fresh output directory for each run. Retain its original `invocation.json` beside `triage-result.json`. Copied receipts, cache-replay responses and human-resolved results cannot stand in for fresh runs. Repeated calls may legitimately return identical recommendations; their original invocation IDs must still be distinct.
 
 ```sh
 python evaluation/triage-value-v1/score.py \
   --labels ./reviewed-labels.json --observations ./observations.json --out ./evaluation.json
 ```
 
-The scorer validates each result schema, counts raw model recommendations separately from enforced policy, checks complete three-repeat coverage and refuses duplicate request-output paths or mixed label/protocol identities. It reports missed important items, unnecessary escalation, insufficient context, provider errors, variation across repeats and paired reviewer-time differences when measured. A mandatory policy gate does not earn credit for a model that recommended routine handling on a labeled-important item.
+The scorer validates results and receipts, verifies that each receipt contains and hashes its result, and checks three distinct invocation IDs per item. All repeats must use the same assessment, item, policy, evidence snapshot, model request and runtime. It counts raw model recommendations separately from enforced policy and reports missed important items, unnecessary escalation, insufficient context, provider errors, variation across repeats and paired reviewer-time differences when measured. A mandatory policy gate does not earn credit for a model that recommended routine handling on a labeled-important item.
 
-Hashes bind the chosen files; they do not independently prove when a person labeled them or that the assessor was independent. Retain that evidence in the evaluation record. Every report states its pilot size. Passing this bar on ten selected cases does not establish zero risk in production.
+Hashes and invocation IDs detect inconsistent records and copied runs; they do not authenticate execution, prove when a person labeled a case or establish assessor independence. The reviewer must also verify that the selected assessment item represents its case card. Retain that evidence in the evaluation record. Every report states its pilot size. Passing this bar on ten selected cases does not establish zero risk in production.
 
 ## Future audit holdout
 

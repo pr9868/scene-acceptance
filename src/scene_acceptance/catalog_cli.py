@@ -10,6 +10,7 @@ def main(argv=None):
         description="Inspect pack schemas, coverage, versions and dependencies"
     )
     parser.add_argument("--allow-pack", action="append", default=[])
+    parser.add_argument("--include-examples", action="store_true")
     parser.add_argument("--upstream", choices=["openusd", "nvidia"])
     args = parser.parse_args(argv)
     if args.upstream == "openusd":
@@ -40,7 +41,9 @@ def main(argv=None):
     else:
         data = {
             "pack_api": "1.0",
-            "packs": default_registry(args.allow_pack).catalog(),
+            "packs": default_registry(
+                args.allow_pack, include_examples=args.include_examples
+            ).catalog(),
             "installed_entry_points_not_automatically_loaded": installed_pack_names(),
         }
     print(json.dumps(data, indent=2))

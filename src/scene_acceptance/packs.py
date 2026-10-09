@@ -59,7 +59,7 @@ class Pack:
             Draft202012Validator.check_schema(spec.parameters)
         object.__setattr__(self, "checks", MappingProxyType(dict(self.checks)))
 
-    def describe(self):
+    def describe(self) -> dict:
         deps = {}
         for name in self.dependencies:
             try:
@@ -109,12 +109,12 @@ class PackRegistry:
             )
         self._packs[pack.id] = pack
 
-    def get(self, name):
+    def get(self, name: str) -> Pack:
         if name not in self._packs:
             raise ContractError("Pack unavailable or not approved: " + name)
         return self._packs[name]
 
-    def catalog(self):
+    def catalog(self) -> list[dict]:
         return [p.describe() for p in self._packs.values()]
 
     def load_approved(self, names):
@@ -132,11 +132,19 @@ class PackRegistry:
         return self
 
 
-def default_registry(approved=()):
+EXAMPLE_PACKS = ("physics.incline-worker", "brief.four-job")
+
+
+def default_registry(approved=(), *, selected=(), include_examples=False):
     from .builtin_packs import builtin_packs
     from .motion_timing import timing_pack
     from .state_intervals import state_pack
     from .process_connections import process_pack
+    from .layer_policy import layer_pack
+    from .continuous_motion import continuous_pack
+    from .clearance import clearance_pack
+    from .external_evidence import external_pack
+    from .image_policy import appearance_pack
 
     from .followups.packs import texture_pack, connection_pack
     from .followups.simulation import simulation_pack
@@ -144,8 +152,28 @@ def default_registry(approved=()):
     from .supplemental import four_job_pack
     from .brief_measurements import brief_measurement_pack
 
-    return PackRegistry([*builtin_packs(), timing_pack(), texture_pack(),
-                         connection_pack(), simulation_pack(), audit_pack(), four_job_pack(), brief_measurement_pack(), state_pack(), process_pack()]).load_approved(approved)
+    registry = PackRegistry(
+        [
+            *builtin_packs(),
+            timing_pack(),
+            texture_pack(),
+            connection_pack(),
+            audit_pack(),
+            brief_measurement_pack(),
+            state_pack(),
+            process_pack(),
+            layer_pack(),
+            continuous_pack(),
+            clearance_pack(),
+            external_pack(),
+            appearance_pack(),
+        ]
+    )
+    requested = set(approved) | set(selected)
+    for name, factory in zip(EXAMPLE_PACKS, (simulation_pack, four_job_pack)):
+        if include_examples or name in requested:
+            registry.add(factory())
+    return registry.load_approved(approved)
 
 
 def installed_pack_names():

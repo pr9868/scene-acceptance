@@ -16,18 +16,30 @@ from .packs import CheckSpec, Outcome, Pack
 def rate_metadata(stage):
     """Record the source of USD's effective rate, including its FPS fallback."""
     layers = (("session", stage.GetSessionLayer()), ("root", stage.GetRootLayer()))
-    for key, method in (("timeCodesPerSecond", "HasTimeCodesPerSecond"),
-                        ("framesPerSecond", "HasFramesPerSecond")):
+    for key, method in (
+        ("timeCodesPerSecond", "HasTimeCodesPerSecond"),
+        ("framesPerSecond", "HasFramesPerSecond"),
+    ):
         for label, layer in layers:
             if layer and getattr(layer, method)():
-                return {"rate_metadata": key, "rate_layer": label, "rate_authored": True}
-    return {"rate_metadata": "schema_default", "rate_layer": None, "rate_authored": False}
+                return {
+                    "rate_metadata": key,
+                    "rate_layer": label,
+                    "rate_authored": True,
+                }
+    return {
+        "rate_metadata": "schema_default",
+        "rate_layer": None,
+        "rate_authored": False,
+    }
 
 
 def read_clock(stage):
     provenance = rate_metadata(stage)
     if not provenance["rate_authored"]:
-        raise MissingEvidence("An authored timeCodesPerSecond or framesPerSecond rate is required; the implicit default is not acceptance evidence")
+        raise MissingEvidence(
+            "An authored timeCodesPerSecond or framesPerSecond rate is required; the implicit default is not acceptance evidence"
+        )
     if not stage.HasAuthoredTimeCodeRange():
         raise MissingEvidence("An authored start and end time code are required")
     rate = stage.GetTimeCodesPerSecond()
@@ -38,7 +50,9 @@ def read_clock(stage):
         raise MissingEvidence("The authored time range must be finite and ordered")
     duration = (end - start) / rate
     if not math.isfinite(duration):
-        raise MissingEvidence("The authored duration cannot be represented as finite seconds")
+        raise MissingEvidence(
+            "The authored duration cannot be represented as finite seconds"
+        )
     return {
         **provenance,
         "time_codes_per_second": rate,
@@ -59,18 +73,28 @@ def elapsed_time_code(clock, elapsed):
         raise MissingEvidence("Elapsed seconds must be finite and nonnegative")
     if elapsed > duration:
         if elapsed - duration > 2 * math.ulp(duration):
-            raise MissingEvidence("Requested elapsed seconds extend beyond the authored stage duration")
+            raise MissingEvidence(
+                "Requested elapsed seconds extend beyond the authored stage duration"
+            )
         elapsed = duration
     start, end = clock["start_time_code"], clock["end_time_code"]
     product = elapsed * clock["time_codes_per_second"]
     time_code = start + product
     if not math.isfinite(time_code):
-        raise MissingEvidence("Elapsed seconds cannot be converted to a finite time code")
+        raise MissingEvidence(
+            "Elapsed seconds cannot be converted to a finite time code"
+        )
     for boundary in (start, end):
-        if (time_code < start and boundary == start) or (time_code > end and boundary == end):
-            rounding_bound = 2 * math.ulp(product) + math.ulp(start) + math.ulp(boundary)
+        if (time_code < start and boundary == start) or (
+            time_code > end and boundary == end
+        ):
+            rounding_bound = (
+                2 * math.ulp(product) + math.ulp(start) + math.ulp(boundary)
+            )
             if abs(time_code - boundary) > rounding_bound:
-                raise MissingEvidence("Converted sample is outside the authored stage interval")
+                raise MissingEvidence(
+                    "Converted sample is outside the authored stage interval"
+                )
             return boundary
     return time_code
 
@@ -78,27 +102,39 @@ def elapsed_time_code(clock, elapsed):
 def clock(ctx, params):
     observed = read_clock(ctx.artifact.stage)
     delta = abs(observed["duration_s"] - params["duration_s"])
-    findings = [{
-        "object": "/",
-        "property": "stage_duration_s",
-        "observed": observed["duration_s"],
-        "expected": params["duration_s"],
-        "tolerance_s": params["tolerance_s"],
-        "status": "PASS" if delta <= params["tolerance_s"] else "FAIL",
-    }]
-    if "time_codes_per_second" in params:
-        findings.append({
+    findings = [
+        {
             "object": "/",
-            "property": "timeCodesPerSecond",
-            "observed": observed["time_codes_per_second"],
-            "expected": params["time_codes_per_second"],
-            "status": "PASS" if observed["time_codes_per_second"] == params["time_codes_per_second"] else "FAIL",
-        })
+            "property": "stage_duration_s",
+            "observed": observed["duration_s"],
+            "expected": params["duration_s"],
+            "tolerance_s": params["tolerance_s"],
+            "status": "PASS" if delta <= params["tolerance_s"] else "FAIL",
+        }
+    ]
+    if "time_codes_per_second" in params:
+        findings.append(
+            {
+                "object": "/",
+                "property": "timeCodesPerSecond",
+                "observed": observed["time_codes_per_second"],
+                "expected": params["time_codes_per_second"],
+                "status": (
+                    "PASS"
+                    if observed["time_codes_per_second"]
+                    == params["time_codes_per_second"]
+                    else "FAIL"
+                ),
+            }
+        )
     return Outcome(
         "FAIL" if any(x["status"] == "FAIL" for x in findings) else "PASS",
         "Stage duration and optional exact effective time-code rate compared with the contract.",
-        {"clock": observed, "findings": findings,
-         "coverage": "Authored stage interval only; not the onset, completion or continuous path of object motion."},
+        {
+            "clock": observed,
+            "findings": findings,
+            "coverage": "Authored stage interval only; not the onset, completion or continuous path of object motion.",
+        },
     )
 
 
@@ -111,14 +147,21 @@ def positions(ctx, params):
     for sample in params["samples"]:
         t = elapsed_time_code(observed_clock, sample["elapsed_s"])
         converted.append({"time_code": t, "world_origin_m": sample["world_origin_m"]})
-    result = builtin_packs.motion(ctx, {
-        "path": params["path"],
-        "tolerance_m": params["tolerance_m"],
-        "samples": converted,
-    })
-    evidence = {**result.evidence, "clock": observed_clock,
-                "elapsed_seconds": elapsed, "seconds_origin": "authored stage startTimeCode",
-                "coverage": "Named world origins compared per coordinate in metres at requested elapsed seconds; no orientation, continuous-path, collision or physics proof."}
+    result = builtin_packs.motion(
+        ctx,
+        {
+            "path": params["path"],
+            "tolerance_m": params["tolerance_m"],
+            "samples": converted,
+        },
+    )
+    evidence = {
+        **result.evidence,
+        "clock": observed_clock,
+        "elapsed_seconds": elapsed,
+        "seconds_origin": "authored stage startTimeCode",
+        "coverage": "Named world origins compared per coordinate in metres at requested elapsed seconds; no orientation, continuous-path, collision or physics proof.",
+    }
     reason = result.reason
     if "findings" in result.evidence:
         evidence["findings"] = [
@@ -132,33 +175,55 @@ def positions(ctx, params):
 def timing_pack():
     nonnegative = {"type": "number", "minimum": 0}
     return Pack(
-        "motion.timing", "1.1.0",
+        "motion.timing",
+        "1.1.0",
         "Authored clock requirements and world-origin samples in elapsed seconds",
         {
             "clock": CheckSpec(
                 clock,
-                builtin_packs.obj({
-                    "duration_s": nonnegative,
-                    "tolerance_s": nonnegative,
-                    "time_codes_per_second": {"type": "number", "exclusiveMinimum": 0},
-                }, required=["duration_s", "tolerance_s"]),
+                builtin_packs.obj(
+                    {
+                        "duration_s": nonnegative,
+                        "tolerance_s": nonnegative,
+                        "time_codes_per_second": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                        },
+                    },
+                    required=["duration_s", "tolerance_s"],
+                ),
                 "Check authored stage duration and optionally require an exact clock rate",
                 "Authored stage time range converted to seconds",
-                ("Does not infer active motion duration; an authored positive timeCodesPerSecond or framesPerSecond rate and complete time range are required",),
+                (
+                    "Does not infer active motion duration; an authored positive timeCodesPerSecond or framesPerSecond rate and complete time range are required",
+                ),
             ),
             "positions": CheckSpec(
                 positions,
-                builtin_packs.obj({
-                    "path": builtin_packs.TEXT,
-                    "tolerance_m": nonnegative,
-                    "samples": {
-                        "type": "array", "minItems": 1, "maxItems": 1000,
-                        "items": builtin_packs.obj({"elapsed_s": nonnegative, "world_origin_m": builtin_packs.VEC3}),
-                    },
-                }),
+                builtin_packs.obj(
+                    {
+                        "path": builtin_packs.TEXT,
+                        "tolerance_m": nonnegative,
+                        "samples": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1000,
+                            "items": builtin_packs.obj(
+                                {
+                                    "elapsed_s": nonnegative,
+                                    "world_origin_m": builtin_packs.VEC3,
+                                }
+                            ),
+                        },
+                    }
+                ),
                 "Compare named world origins at elapsed seconds from the authored stage start",
                 "Named world origins at the requested elapsed seconds",
-                ("Tolerance is per coordinate in metres, not Euclidean distance", "No continuous-time, orientation, collision or physics proof", "Requires authored clock rate (including FPS fallback) and time range"),
+                (
+                    "Tolerance is per coordinate in metres, not Euclidean distance",
+                    "No continuous-time, orientation, collision or physics proof",
+                    "Requires authored clock rate (including FPS fallback) and time range",
+                ),
             ),
         },
         (str(Path(__file__)), str(Path(builtin_packs.__file__))),

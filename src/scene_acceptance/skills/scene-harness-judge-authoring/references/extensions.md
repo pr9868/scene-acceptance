@@ -5,7 +5,7 @@
 | Different judge questions or priorities | Versioned rubric JSON supplied to `--rubric` during preparation or direct evaluation | No. Order criteria by importance and state the concern plainly. Core reports do not implement weighted scores. |
 | Task-specific visual/measurement scope | Original brief and source images; interpreter emits a proposed map and capture requests | No for supported mappings; interpretation remains pending review. |
 | Stricter/different capture targets, camera guidance, times or resolution | Versioned capture overrides during preparation | No for supported still-image evidence; capabilities and receipt validation still apply. |
-| New numerical test | Implement/version a check pack; explicitly select it in a contract or mapped brief | Yes. Automatic brief mapping is presently limited to ten bounded registered types (five brief measurements plus clock, positions, connection distance, material delivery and image decoding). |
+| New numerical test | Implement/version a check pack; explicitly select it in a contract or mapped brief | Yes. Inspect `check-3d --capabilities` for the bounded automatic mapping types. The interpreter cannot invent executable checks or engine jobs. |
 | Different pixel comparison region/tolerance | Saved `brief.measurements.image_pixels` parameters, declared reference and optional mask source | No new adapter. The existing comparator supports region unions, exclusions, binary masks and maximum/optional mean channel-error limits. |
 | Video, depth, segmentation, simulator traces or another evidence kind | Decoder, limits, provenance, suitability policy, schema and tests | Yes. A rubric string alone cannot enable them. |
 

@@ -1,0 +1,17 @@
+include README.md LICENSE THIRD_PARTY_NOTICES.md CONTRIBUTING.md MANIFEST.json MANIFEST.in
+include pyproject.toml reproduce.py requirements-*.txt requirements-*.lock
+include .gitignore .gitattributes
+graft src
+graft docs
+graft tests
+graft examples
+graft evaluation
+graft article-evidence
+graft scripts
+graft .github
+global-exclude __pycache__ *.py[cod] .DS_Store
+prune src/scene_acceptance.egg-info
+graft experiments
+graft release-records
+prune examples/studio-mesh-pack/build
+prune examples/studio-mesh-pack/scene_acceptance_example_studio_pack.egg-info

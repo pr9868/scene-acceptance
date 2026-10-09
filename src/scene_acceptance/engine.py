@@ -19,7 +19,7 @@ from .model import (
 from .usd_reader import Bundle, Scene
 from .checks import REGISTRY
 
-VERSION = "0.7.0.dev0"
+VERSION = "0.7.0.dev1"
 
 
 def implementation_digest():
@@ -53,9 +53,7 @@ def _evaluate_v1(
     ctx = None
     admission_limits = {}
     try:
-        preliminary = Bundle(
-            bundle_root, [], max_dependency_files=max_dependency_files
-        )
+        preliminary = Bundle(bundle_root, [], max_dependency_files=max_dependency_files)
         admission_limits = {"max_dependency_files": preliminary.max_dependency_files}
         cp = preliminary.record(contract_path)
         contract_sha = sha(cp)
@@ -73,7 +71,8 @@ def _evaluate_v1(
             (n, False) for n in contract["checks"]["advisory"]
         ]
         bundle = Bundle(
-            bundle_root, contract["allowed_dependencies"],
+            bundle_root,
+            contract["allowed_dependencies"],
             max_dependency_files=max_dependency_files,
         )
         bundle.record(cp)
@@ -177,18 +176,26 @@ def _evaluate_v1(
         "checker_version": VERSION,
         "verdict": verdict,
         "complete": complete,
-        "intended_use": contract.get("intended_use")
-        if isinstance(contract, dict) and isinstance(contract.get("intended_use"), str)
-        else None,
-        "contract_id": contract.get("id")
-        if isinstance(contract, dict) and isinstance(contract.get("id"), str)
-        else None,
+        "intended_use": (
+            contract.get("intended_use")
+            if isinstance(contract, dict)
+            and isinstance(contract.get("intended_use"), str)
+            else None
+        ),
+        "contract_id": (
+            contract.get("id")
+            if isinstance(contract, dict) and isinstance(contract.get("id"), str)
+            else None
+        ),
         "identity": identity,
         "checks": results,
         "coverage": {
-            "profile": contract.get("profile")
-            if isinstance(contract, dict) and isinstance(contract.get("profile"), str)
-            else None,
+            "profile": (
+                contract.get("profile")
+                if isinstance(contract, dict)
+                and isinstance(contract.get("profile"), str)
+                else None
+            ),
             "checked": "Only the declared profile and checks listed in the results: static layout, requested edit, mesh structure, optional shape preservation, protected properties, input identity and typed claims.",
             "unchecked": [
                 "pairwise collision, self-intersection, face planarity, vertex manifoldness or watertightness",
@@ -257,13 +264,18 @@ def evaluate(
             pack_registry=pack_registry,
             approved_packs=approved_packs,
             max_dependency_files=max_dependency_files,
-            runtime_dependency_policy=runtime_dependency_policy, runtime_environment_sha256=runtime_environment_sha256,
+            runtime_dependency_policy=runtime_dependency_policy,
+            runtime_environment_sha256=runtime_environment_sha256,
             runtime_dependency_evidence=runtime_dependency_evidence,
             legacy_inputs_present=bool(
                 claims_path or receipt_path or registry is not None
             ),
         )
-    if runtime_dependency_evidence is not None or runtime_dependency_policy != "local-only" or runtime_environment_sha256 is not None:
+    if (
+        runtime_dependency_evidence is not None
+        or runtime_dependency_policy != "local-only"
+        or runtime_environment_sha256 is not None
+    ):
         raise model.ContractError("Runtime dependency evidence requires contract v2")
     return _evaluate_v1(
         contract_path,

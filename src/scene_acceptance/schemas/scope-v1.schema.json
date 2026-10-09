@@ -52,6 +52,50 @@
                     "type": "string",
                     "minLength": 1,
                     "pattern": "\\S"
+                  },
+                  "source_location": {
+                    "type": "object",
+                    "properties": {
+                      "document_path": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "\\S"
+                      },
+                      "document_sha256": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "page": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "region_pdf_points": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 4,
+                        "maxItems": 4
+                      },
+                      "coordinates": {
+                        "const": "PDF points; origin bottom left"
+                      },
+                      "extraction": {
+                        "enum": [
+                          "embedded_text",
+                          "rendered_page_region"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "document_path",
+                      "document_sha256",
+                      "page",
+                      "region_pdf_points",
+                      "coordinates",
+                      "extraction"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
@@ -329,6 +373,95 @@
                       "reference"
                     ],
                     "additionalProperties": false
+                  },
+                  "source_citations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "source_id": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "\\S"
+                        },
+                        "source_sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        },
+                        "quote": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1,
+                              "pattern": "\\S"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "source_location": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "document_path": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "pattern": "\\S"
+                                },
+                                "document_sha256": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                },
+                                "page": {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                "region_pdf_points": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "number"
+                                  },
+                                  "minItems": 4,
+                                  "maxItems": 4
+                                },
+                                "coordinates": {
+                                  "const": "PDF points; origin bottom left"
+                                },
+                                "extraction": {
+                                  "enum": [
+                                    "embedded_text",
+                                    "rendered_page_region"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "document_path",
+                                "document_sha256",
+                                "page",
+                                "region_pdf_points",
+                                "coordinates",
+                                "extraction"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "source_id",
+                        "source_sha256",
+                        "quote",
+                        "source_location"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 256
                   }
                 },
                 "required": [

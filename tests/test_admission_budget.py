@@ -111,7 +111,7 @@ def test_shared_dependency_counts_once(tmp_path):
     assert len(r['identity']['candidate']['files']) == 4
 
 
-@pytest.mark.parametrize('asset', ['../outside.bin', 'https://example.invalid/a.bin', 'tile.<UDIM>.png'])
+@pytest.mark.parametrize('asset', ['../outside.bin', 'https://example.invalid/a.bin', 'tile.<UVTILE>.png'])
 def test_larger_budget_does_not_relax_paths(tmp_path, asset):
     d = make_bundle(tmp_path)
     s = Usd.Stage.Open(str(d / 'scene.usda'))

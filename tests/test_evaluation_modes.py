@@ -171,7 +171,11 @@ def test_capabilities_and_catalog_do_not_call_a_model(capsys,monkeypatch):
     assert json.loads(capsys.readouterr().out)['modes']==['checks','judge','both']
     assert main(['--list-tests'])==0
     c=json.loads(capsys.readouterr().out)
-    assert len(c['baseline'])==27 and len(c['configurable_checks'])==41 and len(c['advisory_rubric']['criteria'])==5
+    assert len(c['baseline'])==27 and len(c['advisory_rubric']['criteria'])==5
+    checks={row['id'] for row in c['configurable_checks']}
+    assert {'geometry.clearance.sweep','behavior.state.agreement','motion.continuous.connection'} <= checks
+    assert not any(row['pack'] in ('brief.four-job','physics.incline-worker') for row in c['configurable_checks'])
+    assert {row['pack'] for row in c['example_checks']} == {'brief.four-job','physics.incline-worker'}
 
 
 def test_catalog_matches_current_pack_declarations():

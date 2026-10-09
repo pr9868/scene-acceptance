@@ -725,52 +725,6 @@
       }
     },
     {
-      "id": "physics.incline-worker.displacement",
-      "pack": "physics.incline-worker",
-      "check": "displacement",
-      "description": "Run the fixed incline model and compare displacement",
-      "coverage": "A one-body CPU experiment and its execution record",
-      "limitations": [
-        "Fixed fixture profile; no general USD physics importer or hostile-code sandbox",
-        "Assumed friction does not establish real-world task validity"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "dt_s": {
-            "type": "number",
-            "minimum": 0.0001,
-            "maximum": 0.01
-          },
-          "duration_s": {
-            "type": "number",
-            "minimum": 0.01,
-            "maximum": 2
-          },
-          "timeout_s": {
-            "type": "number",
-            "minimum": 0.001,
-            "maximum": 60
-          },
-          "maximum_displacement_m": {
-            "type": "number",
-            "minimum": 0
-          },
-          "require_measured_parameters": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "dt_s",
-          "duration_s",
-          "timeout_s",
-          "maximum_displacement_m",
-          "require_measured_parameters"
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
       "id": "scene.audit.files",
       "pack": "scene.audit",
       "check": "files",
@@ -843,6 +797,1105 @@
         "required": [
           "max_samples_per_prim",
           "max_total_samples"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.metadata",
+      "pack": "brief.measurements",
+      "check": "metadata",
+      "description": "Authored stage metadata matches specified values",
+      "coverage": "Selected authored metadata fields",
+      "limitations": [
+        "No active motion or world-coordinate interpretation claim"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "object",
+            "minProperties": 1,
+            "properties": {
+              "upAxis": {
+                "enum": [
+                  "Y",
+                  "Z"
+                ]
+              },
+              "metersPerUnit": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "startTimeCode": {
+                "type": "number"
+              },
+              "endTimeCode": {
+                "type": "number"
+              },
+              "timeCodesPerSecond": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "additionalProperties": false
+          },
+          "tolerance": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "values",
+          "tolerance"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.bounds",
+      "pack": "brief.measurements",
+      "check": "bounds",
+      "description": "Named geometry size and centre",
+      "coverage": "World Cube/Mesh bounds at one time",
+      "limitations": [
+        "No shape equivalence"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "time_code": {
+            "type": "number"
+          },
+          "size_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "center_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "path",
+          "time_code",
+          "tolerance_m"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "size_m"
+            ]
+          },
+          {
+            "required": [
+              "center_m"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "brief.measurements.children",
+      "pack": "brief.measurements",
+      "check": "children",
+      "description": "Required direct-child count",
+      "coverage": "One parent and type",
+      "limitations": [
+        "Count does not establish function or dimensions"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "parent": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "parent",
+          "type",
+          "count"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.axis_gap",
+      "pack": "brief.measurements",
+      "check": "axis_gap",
+      "description": "Required directed axis gap",
+      "coverage": "Two named Cube/Mesh world bounding boxes",
+      "limitations": [
+        "Not a walkability or safety test"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "string",
+            "minLength": 1
+          },
+          "b": {
+            "type": "string",
+            "minLength": 1
+          },
+          "axis": {
+            "enum": [
+              "x",
+              "y",
+              "z"
+            ]
+          },
+          "time_code": {
+            "type": "number"
+          },
+          "minimum_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "axis",
+          "time_code",
+          "minimum_m",
+          "tolerance_m"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.image_pixels",
+      "pack": "brief.measurements",
+      "check": "image_pixels",
+      "description": "Delivered texture matches a reference image",
+      "coverage": "Declared regions/mask of static decoded RGB source pixels",
+      "limitations": [
+        "Does not prove rendered appearance; excluded pixels are not accepted"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "asset_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference_image": {
+            "type": "string",
+            "minLength": 1
+          },
+          "max_channel_error": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "max_mean_channel_error": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "excluded_regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 64
+          },
+          "mask_image": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "asset_attribute",
+          "reference_image",
+          "max_channel_error"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "behavior.state.agreement",
+      "pack": "behavior.state",
+      "check": "agreement",
+      "description": "Require two held state attributes to agree, optionally while an occupancy attribute is true",
+      "coverage": "Named USD token/string/bool state over every authored transition and the final endpoint",
+      "limitations": [
+        "Not a continuous geometry or physics proof",
+        "Reference and activation state must be supplied and justified by the caller"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "observed_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "active_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end_s": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "observed_attribute",
+          "expected_attribute",
+          "start_s",
+          "end_s"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "process.connections.match",
+      "pack": "process.connections",
+      "check": "match",
+      "description": "Compare tagged equipment and directed port relationships",
+      "coverage": "Declared static equipment/port metadata and connection-list agreement",
+      "limitations": [
+        "A correct graph is not process fitness or physical connectivity proof"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tag": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "direction": {
+                        "enum": [
+                          "in",
+                          "out",
+                          "bidirectional"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "name",
+                      "direction"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 64
+                }
+              },
+              "required": [
+                "path",
+                "tag",
+                "ports"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 256
+          },
+          "connections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "to": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 4096
+          },
+          "tag_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "port_name_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "connection_relationship": {
+            "type": "string",
+            "minLength": 1
+          },
+          "allow_extra_connections": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "assets",
+          "connections",
+          "tag_attribute",
+          "port_name_attribute",
+          "direction_attribute",
+          "connection_relationship",
+          "allow_extra_connections"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "usd.layers.metadata",
+      "pack": "usd.layers",
+      "check": "metadata",
+      "description": "Require declared units and up axis",
+      "coverage": "Every admitted layer",
+      "limitations": [
+        "Missing metadata is unknown unless explicitly forbidden."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "meters_per_unit": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "up_axis": {
+            "enum": [
+              "Y",
+              "Z"
+            ]
+          },
+          "require_authored_on_every_layer": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "meters_per_unit",
+          "up_axis",
+          "require_authored_on_every_layer"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "usd.layers.dependencies",
+      "pack": "usd.layers",
+      "check": "dependencies",
+      "description": "Cross-check dependency readers",
+      "coverage": "OpenUSD and harness file sets",
+      "limitations": [
+        "Disagreement stays unknown; this is not a resolver sandbox."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "motion.continuous.connection",
+      "pack": "motion.continuous",
+      "check": "connection",
+      "description": "Bound connection distance throughout an interval",
+      "coverage": "All segments of admitted saved translation animation",
+      "limitations": [
+        "Unsupported transform animation stays unknown. Caller-defined points are not inferred joints."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "b": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "interval_s": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "max_gap_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "interval_s",
+          "max_gap_m",
+          "numeric_margin_m"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "geometry.clearance.distance",
+      "pack": "geometry.clearance",
+      "check": "distance",
+      "description": "Measure mesh or cube clearance",
+      "coverage": "Selected surfaces at a named time",
+      "limitations": [
+        "Closed solids must be consistently oriented and free of self-intersections."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "string",
+            "minLength": 1
+          },
+          "b": {
+            "type": "string",
+            "minLength": 1
+          },
+          "representation": {
+            "enum": [
+              "surfaces",
+              "closed-solids"
+            ]
+          },
+          "minimum_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "max_triangle_pairs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 250000
+          },
+          "time_s": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "representation",
+          "minimum_m",
+          "numeric_margin_m",
+          "max_triangle_pairs",
+          "time_s"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "geometry.clearance.sweep",
+      "pack": "geometry.clearance",
+      "check": "sweep",
+      "description": "Bound swept clearance",
+      "coverage": "Whole interval under piecewise affine translation",
+      "limitations": [
+        "Unsupported motion and budget exhaustion remain unknown."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "string",
+            "minLength": 1
+          },
+          "b": {
+            "type": "string",
+            "minLength": 1
+          },
+          "representation": {
+            "enum": [
+              "surfaces",
+              "closed-solids"
+            ]
+          },
+          "minimum_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "max_triangle_pairs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 250000
+          },
+          "interval_s": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "max_evaluations": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "minimum_interval_s": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "a",
+          "b",
+          "representation",
+          "minimum_m",
+          "numeric_margin_m",
+          "max_triangle_pairs",
+          "interval_s",
+          "max_evaluations",
+          "minimum_interval_s"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "geometry.clearance.clear_zone",
+      "pack": "geometry.clearance",
+      "check": "clear_zone",
+      "description": "Check a clear-height volume",
+      "coverage": "Caller-selected obstacles and world-space box",
+      "limitations": [
+        "A clear list is not proof that the caller named every obstacle."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "zone_min_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "zone_max_m": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "obstacles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true
+          },
+          "time_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "max_triangle_pairs": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 250000
+          }
+        },
+        "required": [
+          "zone_min_m",
+          "zone_max_m",
+          "obstacles",
+          "time_s",
+          "numeric_margin_m",
+          "max_triangle_pairs"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "external.evidence.viewer_performance",
+      "pack": "external.evidence",
+      "check": "viewer_performance",
+      "description": "Check a named viewer workload",
+      "coverage": "Caller-provided frame times",
+      "limitations": [
+        "Draw callbacks stay unknown; the harness does not render."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "receipt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "viewer": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "environment_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "environment_sha256"
+            ],
+            "additionalProperties": false
+          },
+          "resolution": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 16384
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "camera_path_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "min_frames": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          },
+          "min_warmup_seconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "minimum_median_fps": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "maximum_p95_frame_seconds": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "receipt",
+          "viewer",
+          "resolution",
+          "camera_path_sha256",
+          "min_frames",
+          "min_warmup_seconds",
+          "minimum_median_fps",
+          "maximum_p95_frame_seconds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "external.evidence.engine_tests",
+      "pack": "external.evidence",
+      "check": "engine_tests",
+      "description": "Import SimReady/PhysX or other engine tests",
+      "coverage": "Named tests, engine and profile with hashed native evidence",
+      "limitations": [
+        "A normalized receipt is caller evidence; it does not authenticate execution or replace a tested engine adapter."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "receipt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engine": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "environment_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "environment_sha256"
+            ],
+            "additionalProperties": false
+          },
+          "provider": {
+            "enum": [
+              "simready",
+              "physx",
+              "other"
+            ]
+          },
+          "profile_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profile_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "required_tests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "phase": {
+                  "enum": [
+                    "profile",
+                    "runtime"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "phase"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 256,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "receipt",
+          "engine",
+          "provider",
+          "profile_id",
+          "profile_sha256",
+          "required_tests"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "textures.appearance.compare",
+      "pack": "textures.appearance",
+      "check": "compare",
+      "description": "Compare color-managed source pixels",
+      "coverage": "Declared encoding and orientation; all RGB pixels",
+      "limitations": [
+        "Legacy stored-pixel checks retain their original semantics. This is not a render comparison."
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "asset_attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference_image": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actual_space": {
+            "enum": [
+              "srgb",
+              "linear-rgb8",
+              "embedded-icc"
+            ]
+          },
+          "reference_space": {
+            "enum": [
+              "srgb",
+              "linear-rgb8",
+              "embedded-icc"
+            ]
+          },
+          "orientation": {
+            "enum": [
+              "stored",
+              "exif"
+            ]
+          },
+          "max_linear_channel_error": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "asset_attribute",
+          "reference_image",
+          "actual_space",
+          "reference_space",
+          "orientation",
+          "max_linear_channel_error"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "pack_versions": {
+    "openusd": "1.1.0",
+    "geometry": "1.0.0",
+    "materials": "1.1.0",
+    "motion": "1.1.0",
+    "nvidia.asset-validator": "1.1.0",
+    "motion.timing": "1.1.0",
+    "textures.decode": "0.3.0",
+    "motion.connection": "0.1.0",
+    "scene.audit": "1.2.0",
+    "brief.measurements": "1.3.0",
+    "behavior.state": "1.0.0",
+    "process.connections": "1.0.0",
+    "usd.layers": "1.0.0",
+    "motion.continuous": "1.0.0",
+    "geometry.clearance": "1.0.0",
+    "external.evidence": "1.0.0",
+    "textures.appearance": "1.0.0",
+    "physics.incline-worker": "0.2.0",
+    "brief.four-job": "1.1.0"
+  },
+  "baseline_profile": {
+    "id": "usd-delivery-baseline",
+    "version": "1.2.0"
+  },
+  "example_checks": [
+    {
+      "id": "physics.incline-worker.displacement",
+      "pack": "physics.incline-worker",
+      "check": "displacement",
+      "description": "Run the fixed incline model and compare displacement",
+      "coverage": "A one-body CPU experiment and its execution record",
+      "limitations": [
+        "Fixed fixture profile; no general USD physics importer or hostile-code sandbox",
+        "Assumed friction does not establish real-world task validity"
+      ],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "dt_s": {
+            "type": "number",
+            "minimum": 0.0001,
+            "maximum": 0.01
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 2
+          },
+          "timeout_s": {
+            "type": "number",
+            "minimum": 0.001,
+            "maximum": 60
+          },
+          "maximum_displacement_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "require_measured_parameters": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "dt_s",
+          "duration_s",
+          "timeout_s",
+          "maximum_displacement_m",
+          "require_measured_parameters"
         ],
         "additionalProperties": false
       }
@@ -1420,494 +2473,6 @@
         ],
         "additionalProperties": false
       }
-    },
-    {
-      "id": "brief.measurements.metadata",
-      "pack": "brief.measurements",
-      "check": "metadata",
-      "description": "Authored stage metadata matches specified values",
-      "coverage": "Selected authored metadata fields",
-      "limitations": [
-        "No active motion or world-coordinate interpretation claim"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "values": {
-            "type": "object",
-            "minProperties": 1,
-            "properties": {
-              "upAxis": {
-                "enum": [
-                  "Y",
-                  "Z"
-                ]
-              },
-              "metersPerUnit": {
-                "type": "number",
-                "exclusiveMinimum": 0
-              },
-              "startTimeCode": {
-                "type": "number"
-              },
-              "endTimeCode": {
-                "type": "number"
-              },
-              "timeCodesPerSecond": {
-                "type": "number",
-                "exclusiveMinimum": 0
-              }
-            },
-            "additionalProperties": false
-          },
-          "tolerance": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": [
-          "values",
-          "tolerance"
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
-      "id": "brief.measurements.bounds",
-      "pack": "brief.measurements",
-      "check": "bounds",
-      "description": "Named geometry size and centre",
-      "coverage": "World Cube/Mesh bounds at one time",
-      "limitations": [
-        "No shape equivalence"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "string",
-            "minLength": 1
-          },
-          "time_code": {
-            "type": "number"
-          },
-          "size_m": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            },
-            "minItems": 3,
-            "maxItems": 3
-          },
-          "center_m": {
-            "type": "array",
-            "items": {
-              "type": "number"
-            },
-            "minItems": 3,
-            "maxItems": 3
-          },
-          "tolerance_m": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": [
-          "path",
-          "time_code",
-          "tolerance_m"
-        ],
-        "additionalProperties": false,
-        "anyOf": [
-          {
-            "required": [
-              "size_m"
-            ]
-          },
-          {
-            "required": [
-              "center_m"
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "id": "brief.measurements.children",
-      "pack": "brief.measurements",
-      "check": "children",
-      "description": "Required direct-child count",
-      "coverage": "One parent and type",
-      "limitations": [
-        "Count does not establish function or dimensions"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "parent": {
-            "type": "string",
-            "minLength": 1
-          },
-          "type": {
-            "type": "string",
-            "minLength": 1
-          },
-          "count": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 10000
-          }
-        },
-        "required": [
-          "parent",
-          "type",
-          "count"
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
-      "id": "brief.measurements.axis_gap",
-      "pack": "brief.measurements",
-      "check": "axis_gap",
-      "description": "Required directed axis gap",
-      "coverage": "Two named Cube/Mesh world bounding boxes",
-      "limitations": [
-        "Not a walkability or safety test"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "a": {
-            "type": "string",
-            "minLength": 1
-          },
-          "b": {
-            "type": "string",
-            "minLength": 1
-          },
-          "axis": {
-            "enum": [
-              "x",
-              "y",
-              "z"
-            ]
-          },
-          "time_code": {
-            "type": "number"
-          },
-          "minimum_m": {
-            "type": "number",
-            "minimum": 0
-          },
-          "tolerance_m": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": [
-          "a",
-          "b",
-          "axis",
-          "time_code",
-          "minimum_m",
-          "tolerance_m"
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
-      "id": "brief.measurements.image_pixels",
-      "pack": "brief.measurements",
-      "check": "image_pixels",
-      "description": "Delivered texture matches a reference image",
-      "coverage": "Declared regions/mask of static decoded RGB source pixels",
-      "limitations": [
-        "Does not prove rendered appearance; excluded pixels are not accepted"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "asset_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "reference_image": {
-            "type": "string",
-            "minLength": 1
-          },
-          "max_channel_error": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 255
-          },
-          "max_mean_channel_error": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 255
-          },
-          "regions": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "x": {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "y": {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "width": {
-                  "type": "integer",
-                  "minimum": 1
-                },
-                "height": {
-                  "type": "integer",
-                  "minimum": 1
-                }
-              },
-              "required": [
-                "x",
-                "y",
-                "width",
-                "height"
-              ],
-              "additionalProperties": false
-            },
-            "minItems": 1,
-            "maxItems": 64
-          },
-          "excluded_regions": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "x": {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "y": {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                "width": {
-                  "type": "integer",
-                  "minimum": 1
-                },
-                "height": {
-                  "type": "integer",
-                  "minimum": 1
-                }
-              },
-              "required": [
-                "x",
-                "y",
-                "width",
-                "height"
-              ],
-              "additionalProperties": false
-            },
-            "minItems": 1,
-            "maxItems": 64
-          },
-          "mask_image": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "required": [
-          "asset_attribute",
-          "reference_image",
-          "max_channel_error"
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
-      "id": "behavior.state.agreement",
-      "pack": "behavior.state",
-      "check": "agreement",
-      "description": "Require two held state attributes to agree, optionally while an occupancy attribute is true",
-      "coverage": "Named USD token/string/bool state over every authored transition and the final endpoint",
-      "limitations": [
-        "Not a continuous geometry or physics proof",
-        "Reference and activation state must be supplied and justified by the caller"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "observed_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "expected_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "active_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "start_s": {
-            "type": "number",
-            "minimum": 0
-          },
-          "end_s": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": [
-          "observed_attribute",
-          "expected_attribute",
-          "start_s",
-          "end_s"
-        ],
-        "additionalProperties": false
-      }
-    },
-    {
-      "id": "process.connections.match",
-      "pack": "process.connections",
-      "check": "match",
-      "description": "Compare tagged equipment and directed port relationships",
-      "coverage": "Declared static equipment/port metadata and connection-list agreement",
-      "limitations": [
-        "A correct graph is not process fitness or physical connectivity proof"
-      ],
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "assets": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "path": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "tag": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "ports": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "path": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "name": {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      "direction": {
-                        "enum": [
-                          "in",
-                          "out",
-                          "bidirectional"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "path",
-                      "name",
-                      "direction"
-                    ],
-                    "additionalProperties": false
-                  },
-                  "minItems": 1,
-                  "maxItems": 64
-                }
-              },
-              "required": [
-                "path",
-                "tag",
-                "ports"
-              ],
-              "additionalProperties": false
-            },
-            "minItems": 1,
-            "maxItems": 256
-          },
-          "connections": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "from": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "to": {
-                  "type": "string",
-                  "minLength": 1
-                }
-              },
-              "required": [
-                "from",
-                "to"
-              ],
-              "additionalProperties": false
-            },
-            "maxItems": 4096
-          },
-          "tag_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "port_name_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "direction_attribute": {
-            "type": "string",
-            "minLength": 1
-          },
-          "connection_relationship": {
-            "type": "string",
-            "minLength": 1
-          },
-          "allow_extra_connections": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "assets",
-          "connections",
-          "tag_attribute",
-          "port_name_attribute",
-          "direction_attribute",
-          "connection_relationship",
-          "allow_extra_connections"
-        ],
-        "additionalProperties": false
-      }
     }
-  ],
-  "pack_versions": {
-    "openusd": "1.1.0",
-    "geometry": "1.0.0",
-    "materials": "1.1.0",
-    "motion": "1.1.0",
-    "nvidia.asset-validator": "1.1.0",
-    "motion.timing": "1.1.0",
-    "textures.decode": "0.2.0",
-    "motion.connection": "0.1.0",
-    "physics.incline-worker": "0.2.0",
-    "scene.audit": "1.1.0",
-    "brief.four-job": "1.0.0",
-    "brief.measurements": "1.2.0",
-    "behavior.state": "1.0.0",
-    "process.connections": "1.0.0"
-  },
-  "baseline_profile": {
-    "id": "usd-delivery-baseline",
-    "version": "1.2.0"
-  }
+  ]
 }

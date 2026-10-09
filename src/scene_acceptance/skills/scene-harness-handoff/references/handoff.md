@@ -24,7 +24,7 @@ Library equivalents are `scene_acceptance.preparation.prepare_scene(...)` and `s
 
 ## Raw brief
 
-Paths are relative to the scene bundle and must remain inside it. Text sources: UTF-8, at most 64 KiB each. Visual references: single-frame RGB/RGBA PNG/JPEG, at most 16 million pixels and 8 MiB each, with 32 MiB total reference bytes. Up to 16 unique sources; at most twelve images including subsequent scene views. Original bytes and alpha/profile metadata are preserved. Source metadata records that no colour conversion, compositing or EXIF rotation was applied.
+Paths are relative to the scene bundle and must remain inside it. Text sources: UTF-8, at most 64 KiB each. Visual references: single-frame RGB/RGBA PNG/JPEG, at most 16 million pixels and 8 MiB each, with 32 MiB total reference bytes. PDF inputs use `role: pdf` and explicit one-based pages/regions; install the PDF extra. The selected embedded text and rendered regions retain original-document hashes and page/region citations. Scans without embedded text remain visual evidence; no OCR or P&ID semantic extraction is claimed. Up to 16 raw sources (64 compiled sources); at most twelve images including subsequent scene views. Original bytes and alpha/profile metadata are preserved. Source metadata records that no colour conversion, compositing or EXIF rotation was applied.
 
 Exact numerical pixel comparison is separate: single-frame RGB PNG/JPEG, at most 262,144 pixels and 1 MiB each. A valid 1080p/RGBA visual reference may exceed that comparator's scope. Do not silently resize, flatten alpha or weaken the comparison to obtain a pass. Its `regions`, `excluded_regions`, optional same-size RGB black/white `mask_image`, maximum channel error and optional per-channel mean error must come from the reviewed brief/policy. Declare reference and mask files as evidence sources. Rectangles use stored-pixel coordinates, X right/Y down, half-open bounds; masks include white and exclude black. Reports retain selected/excluded counts and whole-image diagnostics. Excluded pixels are not accepted; stored channel comparisons do not establish colour-managed rendered appearance.
 
@@ -63,13 +63,15 @@ Replace the hash placeholders with actual 64-character hashes. The view manifest
 
 Missing requests or mismatched targets/times/resolution/fidelity keep the affected judge items unknown. Declaration matching does not establish actual visibility, truthful rendering or physical correctness. At least three distinct same-camera frames is an eligibility floor, not a complete motion test. Exact dimensions belong in measurement checks.
 
-The automatic interpreter maps ten bounded types: five brief measurements plus stage clock, sampled positions, sampled connection distance, material delivery and image decoding. Other scripted packs remain accessible through explicit contracts/mapped briefs. Unsupported intent stays visible; the interpreter cannot invent a new executable check.
+The automatic interpreter selects the bounded types exposed by `check-3d --capabilities`: geometry and layer policy, state and connection checks, process connectivity, timing, materials and source-image comparisons. External-engine jobs and arbitrary code are never generated from a model response. Unsupported intent stays visible and the owner must review the scope.
 
 ## Application lifecycle
 
 Use `check-3d-app {doctor,prepare,approve,bind,validate-evidence,evaluate,check}`. Every operation returns `schema_version, operation, run_id, status, exit_code, reused, data, errors, events`; inspect `data` for the operation result. Errors have code, phase, message and retryable. Code 4 can retain completed script results in a partial evaluation. Codes 0/2/3 mean scoped success/rejection/review gaps.
 
 `approve` requires expected_scope_sha256, reviewer and reason; this approves the selected requirements/evaluation policy, not outcomes. Scope includes the full general baseline and resolved pack version/implementation identities. `bind` requires the existing scope pin and a revised saved bundle/candidate; it runs no model. `evaluate --approval approval.json --previous-run previous-directory` applies that scope review and compares findings. Captures must match the new plan/scene hashes. Use snapshot-bound `--review-record` only for separately authorized caller outcome reviews.
+
+The optional `check-3d-isolated` wrapper supervises native work on POSIX with wall, memory, CPU and output limits; it honors deadline and cancellation settings. Its worker progress is buffered until completion, unlike the direct CLI. Resource containment does not isolate filesystem/network access.
 
 All operations expose `--progress` (JSONL stderr), cooperative `--deadline-seconds`, `--cancel-file`, and directory-output `--reuse-completed` (opt in on first call). Never reuse partial outputs or erase failed attempts. SIGTERM stops owned model process groups on POSIX; hard kills and detached descendants cannot be cleaned up by the harness.
 

@@ -59,6 +59,13 @@ def digest_json(data):
     )
 
 
+def save_json(path, data) -> None:
+    """Write the shared retained-record encoding; callers own overwrite policy."""
+    Path(path).write_text(
+        json.dumps(data, indent=2, allow_nan=False) + "\n", encoding="utf-8"
+    )
+
+
 def sha(path):
     return digest_bytes(Path(path).read_bytes())
 

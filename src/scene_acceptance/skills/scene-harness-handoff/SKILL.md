@@ -1,6 +1,6 @@
 ---
 name: scene-harness-handoff
-description: Prepare and evaluate saved USD scenes with the scene-acceptance harness, with or without a raw text/image brief. Use when a caller application or agent must supply requested rendered evidence and explain structural, brief-driven and advisory results.
+description: Prepare and evaluate saved USD scenes with the scene-acceptance harness, with or without a raw text/image/PDF brief. Use when a caller application or agent must supply requested rendered evidence and explain structural, brief-driven and advisory results.
 ---
 
 # Scene harness handoff
@@ -23,3 +23,7 @@ Use `--reuse-completed` on initial and replay invocations only when reusing iden
 ## Optional assumption triage
 
 When the caller requests AI help deciding which declared decisions need human review, read [the triage handoff](references/triage.md). This is a separate text-based operation after declared-scope assessment. It does not add a visual question, discover hidden assumptions or supply approval. Use caller-owned policy and preserve the distinction between the AI recommendation and the applied gate.
+
+## Experimental assumption audit
+
+Use the separate `audit` operation only when the caller requests questions about undeclared choices. Read [the audit guide](references/audit.md). Audit can compare the brief, saved scene inventory, declared decisions, pinned scripted results and supplied views. Its output is a cited question for a person, never a measured failure or approval. Preserve missing-evidence disclosures and label synthetic controls separately from measured model discovery.

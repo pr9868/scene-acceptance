@@ -61,52 +61,90 @@ def native(ctx, params):
             # Preserve the upstream issue verbatim. Only a recognized MDL
             # source-asset dependency is a resolver coverage gap; an ordinary
             # missing texture/reference remains a failure.
-            if str(err.GetIdentifier()) == "usdUtilsValidators:MissingReferenceValidator.UnresolvableDependency":
-                layers = {site.GetLayer().realPath for site in err.GetSites() if site.GetLayer()}
+            if (
+                str(err.GetIdentifier())
+                == "usdUtilsValidators:MissingReferenceValidator.UnresolvableDependency"
+            ):
+                layers = {
+                    site.GetLayer().realPath
+                    for site in err.GetSites()
+                    if site.GetLayer()
+                }
                 message = err.GetMessage()
                 prefix, suffix = "Found unresolvable external dependency '", "'."
-                if (layers and layers <= {str(p) for p in ctx.artifact.layers}
-                        and message.startswith(prefix) and message.endswith(suffix)):
-                    identifier = message[len(prefix):-len(suffix)]
+                if (
+                    layers
+                    and layers <= {str(p) for p in ctx.artifact.layers}
+                    and message.startswith(prefix)
+                    and message.endswith(suffix)
+                ):
+                    identifier = message[len(prefix) : -len(suffix)]
                     # OpenUSD can attach a composed dependency issue to the root
                     # layer and report either an authored search identifier or a
                     # normalized absolute path. Match only recorded dependencies.
                     matches = {
-                        path for path, references in ctx.artifact.dependency_references.items()
-                        if identifier == str(path) or any(
-                            identifier == ref['identifier'] for ref in references
-                        )
+                        path
+                        for path, references in ctx.artifact.dependency_references.items()
+                        if identifier == str(path)
+                        or any(identifier == ref["identifier"] for ref in references)
                     }
                     # A bare identifier can refer to files in several layers.
                     # Any ordinary use or unresolved ambiguity remains a failure.
                     deferred = bool(matches) and all(
-                        path in ctx.artifact.runtime_assets and ctx.artifact.assets.get(path) is None
+                        path in ctx.artifact.runtime_assets
+                        and ctx.artifact.assets.get(path) is None
                         for path in matches
                     )
                     if deferred:
                         from .runtime_dependencies import evidence_for
-                        runtime_evidence = [evidence_for(ctx, path) for path in sorted(matches)]
-                        if not all(runtime_evidence): runtime_evidence = []
+
+                        runtime_evidence = [
+                            evidence_for(ctx, path) for path in sorted(matches)
+                        ]
+                        if not all(runtime_evidence):
+                            runtime_evidence = []
             issues.append(
                 {
                     "validator": name,
                     "id": str(err.GetIdentifier()),
                     "severity": severity,
                     "message": err.GetMessage(),
-                    **({"assessment": "PASS", "reason": "Caller-attested runtime dependency satisfies the selected policy; the upstream local-resolver error is retained.",
-                        "runtime_dependency_evidence": runtime_evidence} if runtime_evidence else
-                       {"assessment": "UNKNOWN", "reason": "MDL source asset requires a bundled library or target-runtime resolver evidence; no external resolver was invoked."} if deferred else {}),
+                    **(
+                        {
+                            "assessment": "PASS",
+                            "reason": "Caller-attested runtime dependency satisfies the selected policy; the upstream local-resolver error is retained.",
+                            "runtime_dependency_evidence": runtime_evidence,
+                        }
+                        if runtime_evidence
+                        else (
+                            {
+                                "assessment": "UNKNOWN",
+                                "reason": "MDL source asset requires a bundled library or target-runtime resolver evidence; no external resolver was invoked.",
+                            }
+                            if deferred
+                            else {}
+                        )
+                    ),
                 }
             )
     failed = any(
-        x.get("assessment") not in ("UNKNOWN", "PASS") and (
+        x.get("assessment") not in ("UNKNOWN", "PASS")
+        and (
             x["severity"] == "Error"
             or (params["warnings_as_failures"] and x["severity"] == "Warn")
         )
         for x in issues
     )
     return Outcome(
-        "FAIL" if failed else "UNKNOWN" if any(x.get("assessment") == "UNKNOWN" for x in issues) else "PASS",
+        (
+            "FAIL"
+            if failed
+            else (
+                "UNKNOWN"
+                if any(x.get("assessment") == "UNKNOWN" for x in issues)
+                else "PASS"
+            )
+        ),
         "Selected native OpenUSD validators executed.",
         {
             "executed": executed,
@@ -198,7 +236,8 @@ def materials(ctx, params):
                 source_asset = shader.GetSourceAsset(source_type)
                 actual_id = shader.GetSourceAssetSubIdentifier(source_type)
                 shader_status = (
-                    "UNKNOWN" if not source_asset or not actual_id
+                    "UNKNOWN"
+                    if not source_asset or not actual_id
                     else "PASS" if actual_id == params["surface_shader_id"] else "FAIL"
                 )
             elif shader and implementation == UsdShade.Tokens.sourceCode:
@@ -206,7 +245,9 @@ def materials(ctx, params):
                 shader_status = "UNKNOWN"
             else:
                 actual_id = shader.GetIdAttr().Get() if shader else None
-                shader_status = "PASS" if actual_id == params["surface_shader_id"] else "FAIL"
+                shader_status = (
+                    "PASS" if actual_id == params["surface_shader_id"] else "FAIL"
+                )
             findings.append(
                 {
                     "object": str(material.GetPath()),
@@ -221,6 +262,7 @@ def materials(ctx, params):
             )
     for path, digest in sorted(ctx.artifact.assets.items()):
         from .runtime_dependencies import evidence_for
+
         runtime_evidence = evidence_for(ctx, path) if not digest else None
         findings.append(
             {
@@ -228,15 +270,36 @@ def materials(ctx, params):
                 "property": "external_asset_exists",
                 "expected": True,
                 "observed": digest is not None,
-                "status": "PASS" if digest or runtime_evidence else "UNKNOWN" if path in ctx.artifact.runtime_assets else "FAIL",
-                **({"reason": "Dependency availability accepted from caller attestation; no local file was supplied.",
-                    "runtime_dependency_evidence": runtime_evidence} if runtime_evidence else
-                   {"reason": "MDL library unresolved in the local bundle; supply target-runtime evidence or bundle the dependency."} if not digest and path in ctx.artifact.runtime_assets else {}),
+                "status": (
+                    "PASS"
+                    if digest or runtime_evidence
+                    else "UNKNOWN" if path in ctx.artifact.runtime_assets else "FAIL"
+                ),
+                **(
+                    {
+                        "reason": "Dependency availability accepted from caller attestation; no local file was supplied.",
+                        "runtime_dependency_evidence": runtime_evidence,
+                    }
+                    if runtime_evidence
+                    else (
+                        {
+                            "reason": "MDL library unresolved in the local bundle; supply target-runtime evidence or bundle the dependency."
+                        }
+                        if not digest and path in ctx.artifact.runtime_assets
+                        else {}
+                    )
+                ),
                 "sha256": digest,
             }
         )
     return Outcome(
-        "FAIL" if any(f["status"] == "FAIL" for f in findings) else "UNKNOWN" if any(f["status"] == "UNKNOWN" for f in findings) else "PASS",
+        (
+            "FAIL"
+            if any(f["status"] == "FAIL" for f in findings)
+            else (
+                "UNKNOWN" if any(f["status"] == "UNKNOWN" for f in findings) else "PASS"
+            )
+        ),
         "Resolved bindings, selected surface shader IDs and declared external file existence checked.",
         {
             "findings": findings,
@@ -285,14 +348,18 @@ def motion(ctx, params):
                 "expected": expected,
                 "tolerance_m": params["tolerance_m"],
                 "error_metric": "maximum_absolute_coordinate_error",
-                "maximum_coordinate_error_m": max(abs(a - b) for a, b in zip(actual, expected)),
+                "maximum_coordinate_error_m": max(
+                    abs(a - b) for a, b in zip(actual, expected)
+                ),
                 "euclidean_error_m": math.dist(actual, expected),
-                "status": "PASS"
-                if all(
-                    abs(a - b) <= params["tolerance_m"]
-                    for a, b in zip(actual, expected)
-                )
-                else "FAIL",
+                "status": (
+                    "PASS"
+                    if all(
+                        abs(a - b) <= params["tolerance_m"]
+                        for a, b in zip(actual, expected)
+                    )
+                    else "FAIL"
+                ),
             }
         )
     return Outcome(
@@ -331,6 +398,7 @@ def _nvidia(ctx, params):
         if rule is None:
             raise RuntimeError("NVIDIA rule unavailable: " + name)
         from .provider_coverage import observe_rule
+
         engine = nv.ValidationEngine(init_rules=False, variants=False)
         engine.enable_rule(rule)
         if engine.rules != [rule]:
@@ -362,7 +430,12 @@ def _nvidia(ctx, params):
     else:
         status = "PASS"
     from .provider_coverage import KNOWN, measured_rules
-    coverage_evidence = {"assessment": measured_rules(measured)} if all(n in KNOWN for n in executed) else {}
+
+    coverage_evidence = (
+        {"assessment": measured_rules(measured)}
+        if all(n in KNOWN for n in executed)
+        else {}
+    )
     return Outcome(
         status,
         "Selected NVIDIA Asset Validator rules executed without invoking fixers.",
@@ -377,7 +450,11 @@ def _nvidia(ctx, params):
 
 
 def builtin_packs():
-    source = (str(Path(__file__)), str(Path(__file__).with_name("provider_coverage.py")), str(Path(__file__).with_name("coverage.py")))
+    source = (
+        str(Path(__file__)),
+        str(Path(__file__).with_name("provider_coverage.py")),
+        str(Path(__file__).with_name("coverage.py")),
+    )
     limitations = ("Local USD admission limits apply.",)
     return [
         Pack(

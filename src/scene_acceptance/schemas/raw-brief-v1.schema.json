@@ -1,0 +1,187 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "intended_use": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "provenance": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "role": {
+            "enum": [
+              "text",
+              "reference_image",
+              "pdf"
+            ]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "source_location": {
+            "type": "object",
+            "properties": {
+              "document_path": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "document_sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "region_pdf_points": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 4,
+                "maxItems": 4
+              },
+              "coordinates": {
+                "const": "PDF points; origin bottom left"
+              },
+              "extraction": {
+                "enum": [
+                  "embedded_text",
+                  "rendered_page_region"
+                ]
+              }
+            },
+            "required": [
+              "document_path",
+              "document_sha256",
+              "page",
+              "region_pdf_points",
+              "coordinates",
+              "extraction"
+            ],
+            "additionalProperties": false
+          },
+          "selections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "region_pdf_points": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 4,
+                  "maxItems": 4
+                }
+              },
+              "required": [
+                "page"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 12
+          }
+        },
+        "required": [
+          "path",
+          "role",
+          "caption"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "role": {
+                  "const": "pdf"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "selections"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "selections"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "source_origin": {
+      "type": "object",
+      "properties": {
+        "provided_by": {
+          "enum": [
+            "human",
+            "application",
+            "agent",
+            "preset",
+            "unrecorded"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "provided_by",
+        "reference"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "intended_use",
+    "provenance",
+    "files"
+  ],
+  "additionalProperties": false
+}

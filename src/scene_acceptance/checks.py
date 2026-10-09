@@ -68,9 +68,11 @@ def profile(ctx):
     return check(
         "profile",
         "UNKNOWN" if s.unsupported else "PASS",
-        "Supported declared static geometry profile."
-        if not s.unsupported
-        else "Some content is outside the supported profile.",
+        (
+            "Supported declared static geometry profile."
+            if not s.unsupported
+            else "Some content is outside the supported profile."
+        ),
         {
             "unsupported": s.unsupported,
             "cube_count": len(s.cubes),
@@ -273,16 +275,16 @@ def claims(ctx):
         expected_unit = (
             "m"
             if metric in ["min_y", "center_y", "dimensions"]
-            else "kg"
-            if metric == "mass"
-            else "1"
+            else "kg" if metric == "mass" else "1"
         )
         expected_type = (
             isinstance(value, list)
             if metric == "dimensions"
-            else isinstance(value, bool)
-            if metric == "contact_support"
-            else isinstance(value, (int, float)) and not isinstance(value, bool)
+            else (
+                isinstance(value, bool)
+                if metric == "contact_support"
+                else isinstance(value, (int, float)) and not isinstance(value, bool)
+            )
         )
         if item["unit"] != expected_unit or not expected_type:
             raise ContractError(
@@ -321,14 +323,14 @@ def claims(ctx):
                 actual = (
                     box["min"][1]
                     if metric == "min_y"
-                    else box["center"][1]
-                    if metric == "center_y"
-                    else box["dimensions"]
+                    else box["center"][1] if metric == "center_y" else box["dimensions"]
                 )
                 row.update(
-                    status="PASS"
-                    if close(value, actual, ctx.contract["tolerance_m"])
-                    else "FAIL",
+                    status=(
+                        "PASS"
+                        if close(value, actual, ctx.contract["tolerance_m"])
+                        else "FAIL"
+                    ),
                     observed=actual,
                     reason="Compared with saved geometry, not a plant measurement.",
                 )
@@ -360,9 +362,11 @@ def freshness(ctx):
     return check(
         "freshness",
         "PASS" if same else "FAIL",
-        "Receipt identity matches current inputs and checker."
-        if same
-        else "Receipt is stale for these inputs, dependencies or checker.",
+        (
+            "Receipt identity matches current inputs and checker."
+            if same
+            else "Receipt is stale for these inputs, dependencies or checker."
+        ),
         {"receipt_identity": receipt["identity"], "current_identity": ctx.identity},
     )
 
@@ -475,11 +479,11 @@ def shape(ctx):
     statuses = {o["status"] for o in observations}
     return check(
         "shape",
-        "FAIL"
-        if "FAIL" in statuses
-        else "UNKNOWN"
-        if "UNKNOWN" in statuses
-        else "PASS",
+        (
+            "FAIL"
+            if "FAIL" in statuses
+            else "UNKNOWN" if "UNKNOWN" in statuses else "PASS"
+        ),
         "Only world translation is allowed on the consumer-declared shapes.",
         {
             "mode": "translation_only",

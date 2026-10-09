@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "scene_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "viewer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "environment_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "measurement": {
+      "enum": [
+        "rendered_frame_duration",
+        "draw_callback_duration"
+      ]
+    },
+    "resolution": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16384
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "camera_path": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "warmup_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "frame_seconds": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "exclusiveMinimum": 0
+      },
+      "minItems": 1,
+      "maxItems": 100000
+    },
+    "method": {
+      "type": "string",
+      "minLength": 1
+    },
+    "producer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "schema_version",
+    "scene_sha256",
+    "viewer",
+    "measurement",
+    "resolution",
+    "camera_path",
+    "warmup_seconds",
+    "frame_seconds",
+    "method",
+    "producer",
+    "limitations"
+  ],
+  "additionalProperties": false
+}

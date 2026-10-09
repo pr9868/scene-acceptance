@@ -1,0 +1,157 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "executable": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "provider": {
+      "enum": [
+        "simready",
+        "physx",
+        "other"
+      ]
+    },
+    "engine": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "environment_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "profile_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "profile_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "native_report": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "successful_exit_codes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 256,
+      "uniqueItems": true
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "phase": {
+            "enum": [
+              "profile",
+              "runtime"
+            ]
+          },
+          "status_pointer": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "status_mapping": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "enum": [
+                "PASS",
+                "FAIL",
+                "UNKNOWN",
+                "ERROR",
+                "SKIPPED"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "phase",
+          "status_pointer",
+          "status_mapping"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "wall_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 3600
+    },
+    "memory_mib": {
+      "type": "integer",
+      "minimum": 128,
+      "maximum": 65536
+    },
+    "cpu_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 3600
+    }
+  },
+  "required": [
+    "schema_version",
+    "executable",
+    "args",
+    "provider",
+    "engine",
+    "profile_id",
+    "profile_sha256",
+    "native_report",
+    "successful_exit_codes",
+    "tests",
+    "wall_seconds",
+    "memory_mib",
+    "cpu_seconds"
+  ],
+  "additionalProperties": false
+}

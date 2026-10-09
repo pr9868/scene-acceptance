@@ -3,6 +3,7 @@
 from pxr import Usd, Sdf, UsdShade
 from .usd_reader import Bundle
 from .model import BoundaryError, MissingEvidence, sha, digest_json
+from .usd_composition import prims, udim_tiles
 
 
 class EvidenceBundle(Bundle):
@@ -33,8 +34,9 @@ class EvidenceBundle(Bundle):
 class UsdArtifact:
     """Small local layer graphs and explicit local assets, including textures/time samples.
 
-    No resolver URLs, packages, variants, value clips, payloads or dynamic file formats.
-    These require an extended admission adapter, not silent partial composition.
+    Local variants, payloads, instances, inherits and specializes are admitted.
+    Every authored branch is scanned before composition, including unselected variants.
+    Resolver URLs, packages, value clips and dynamic file formats remain excluded.
     """
 
     def __init__(self, bundle, path):
@@ -42,13 +44,14 @@ class UsdArtifact:
         self.root = bundle.record(path)
         self.layers = {}
         self.assets = {}
+        self.udim_sets = {}
         # Missing MDL source assets can be supplied by a renderer's resolver.
         # Retain that uncertainty without resolving outside the admitted bundle.
         self.runtime_assets = {}
         self.dependency_references = {}
         self._ordinary_asset_paths = set()
         self._visit(self.root, set())
-        self.stage = Usd.Stage.Open(str(self.root), load=Usd.Stage.LoadNone)
+        self.stage = Usd.Stage.Open(str(self.root), load=Usd.Stage.LoadAll)
         if self.stage is None:
             raise ValueError("OpenUSD could not open the saved stage")
         if self.stage.GetCompositionErrors():
@@ -58,13 +61,9 @@ class UsdArtifact:
         for layer in self.stage.GetUsedLayers():
             if not layer.anonymous and bundle.path(layer.realPath) not in self.layers:
                 raise BoundaryError("Composition used an unrecorded layer")
-        for i, prim in enumerate(self.stage.TraverseAll()):
+        for i, prim in enumerate(prims(self.stage)):
             if i >= 10000:
                 raise BoundaryError("Stage exceeds 10,000 prim admission limit")
-            if prim.IsInstanceable():
-                raise MissingEvidence(
-                    "Instanceable content is outside local USD admission"
-                )
         self._classify_runtime_assets()
         self.identity = {
             "root": str(self.root.relative_to(bundle.root)),
@@ -99,14 +98,7 @@ class UsdArtifact:
         def inspect(p):
             spec = layer.GetObjectAtPath(p)
             if isinstance(spec, Sdf.PrimSpec):
-                for key in (
-                    "variantSetNames",
-                    "variantSelection",
-                    "clips",
-                    "payload",
-                    "inheritPaths",
-                    "specializes",
-                ):
+                for key in ("clips",):
                     if spec.HasInfo(key):
                         raise MissingEvidence(
                             "Unsupported composition: " + str(p) + ":" + key
@@ -133,12 +125,18 @@ class UsdArtifact:
                                     and asset.path.endswith(".mdl")
                                 )
                                 if is_mdl_candidate:
-                                    runtime_references.setdefault(asset.path, []).append({
-                                        "layer": str(path.relative_to(self.bundle.root)),
-                                        "attribute": str(p),
-                                        "identifier": asset.path,
-                                        "source_type": "mdl",
-                                    })
+                                    runtime_references.setdefault(
+                                        asset.path, []
+                                    ).append(
+                                        {
+                                            "layer": str(
+                                                path.relative_to(self.bundle.root)
+                                            ),
+                                            "attribute": str(p),
+                                            "identifier": asset.path,
+                                            "source_type": "mdl",
+                                        }
+                                    )
                                 else:
                                     ordinary_references.add(asset.path)
 
@@ -148,20 +146,54 @@ class UsdArtifact:
         for value in sorted(refs | assets):
             if not value:
                 continue
+            if "<UDIM>" in value and value not in refs:
+                targets = udim_tiles(self.bundle, path, value)
+                template = self.bundle.path(path.parent / value)
+                self.udim_sets[template] = (path, value, targets)
+                if not targets:
+                    # Keep an absent set in the evidence identity; never invent a tile.
+                    self.assets[template] = None
+                    self.bundle.record_optional(template)
+                    self.bundle.check_dependency_count(
+                        len(self.layers) + len(self.assets)
+                    )
+                for target in targets:
+                    if target not in self.bundle.allowed:
+                        raise MissingEvidence(
+                            "Undeclared UDIM tile: "
+                            + str(target.relative_to(self.bundle.root))
+                        )
+                    self.bundle.check_dependency_count(
+                        len(set(self.layers) | set(self.assets) | {target})
+                    )
+                    self.assets[target] = sha(self.bundle.record(target))
+                    self.dependency_references.setdefault(target, []).append(
+                        {
+                            "layer": str(path.relative_to(self.bundle.root)),
+                            "identifier": value,
+                        }
+                    )
+                continue
             if any(x in value for x in (":", "[", "]", "<", ">", "*", "?")):
                 raise BoundaryError(
                     "Only explicit local dependency paths are supported"
                 )
             target = self.bundle.path(path.parent / value)
-            self.dependency_references.setdefault(target, []).append({
-                "layer": str(path.relative_to(self.bundle.root)),
-                "identifier": value,
-            })
+            self.dependency_references.setdefault(target, []).append(
+                {
+                    "layer": str(path.relative_to(self.bundle.root)),
+                    "identifier": value,
+                }
+            )
             if value in ordinary_references or value in refs:
                 self._ordinary_asset_paths.add(target)
                 self.runtime_assets.pop(target, None)
-            elif value in runtime_references and target not in self._ordinary_asset_paths:
-                self.runtime_assets.setdefault(target, []).extend(runtime_references[value])
+            elif (
+                value in runtime_references and target not in self._ordinary_asset_paths
+            ):
+                self.runtime_assets.setdefault(target, []).extend(
+                    runtime_references[value]
+                )
             if target not in self.bundle.allowed:
                 raise MissingEvidence(
                     "Undeclared dependency: "
@@ -174,7 +206,9 @@ class UsdArtifact:
             if value in refs:
                 self._visit(target, visiting | {path})
             else:
-                self.bundle.check_dependency_count(len(self.layers) + len(self.assets) + 1)
+                self.bundle.check_dependency_count(
+                    len(self.layers) + len(self.assets) + 1
+                )
                 recorded = self.bundle.record_optional(target)
                 self.assets[target] = sha(recorded) if recorded else None
 
@@ -187,18 +221,23 @@ class UsdArtifact:
         Ordinary uses of any resolved dependency always take precedence.
         """
         shader_specs = set()
-        for prim in self.stage.TraverseAll():
+        for prim in prims(self.stage):
             shader = UsdShade.Shader(prim)
-            if not shader or shader.GetImplementationSource() != UsdShade.Tokens.sourceAsset:
+            if (
+                not shader
+                or shader.GetImplementationSource() != UsdShade.Tokens.sourceAsset
+            ):
                 continue
-            attribute = prim.GetAttribute('info:mdl:sourceAsset')
+            attribute = prim.GetAttribute("info:mdl:sourceAsset")
             if attribute:
                 for spec in attribute.GetPropertyStack():
                     if spec.layer.realPath:
-                        shader_specs.add((self.bundle.path(spec.layer.realPath), str(spec.path)))
+                        shader_specs.add(
+                            (self.bundle.path(spec.layer.realPath), str(spec.path))
+                        )
         for path, references in list(self.runtime_assets.items()):
             if path in self._ordinary_asset_paths or not all(
-                (self.bundle.path(ref['layer']), ref['attribute']) in shader_specs
+                (self.bundle.path(ref["layer"]), ref["attribute"]) in shader_specs
                 for ref in references
             ):
                 del self.runtime_assets[path]
@@ -212,4 +251,7 @@ class UsdArtifact:
         )
 
     def unchanged(self):
-        return self.memory_digest() == self._memory
+        return self.memory_digest() == self._memory and all(
+            udim_tiles(self.bundle, layer, identifier) == tiles
+            for layer, identifier, tiles in self.udim_sets.values()
+        )

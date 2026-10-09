@@ -21,3 +21,7 @@ For new code adapters, validate schemas, bounded inputs, source hashes, eligibil
 ## Optional assumption triage
 
 When the caller requests AI help deciding which declared decisions need human review, read [the triage handoff](references/triage.md). This is a separate text-based operation after declared-scope assessment. It does not add a visual question, discover hidden assumptions or supply approval. Use caller-owned policy and preserve the distinction between the AI recommendation and the applied gate.
+
+## Experimental assumption audit
+
+Use the separate `audit` operation only when the caller requests questions about undeclared choices. Read [the audit guide](references/audit.md). Audit can compare the brief, saved scene inventory, declared decisions, pinned scripted results and supplied views. Its output is a cited question for a person, never a measured failure or approval. Preserve missing-evidence disclosures and label synthetic controls separately from measured model discovery.

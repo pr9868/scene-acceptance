@@ -19,7 +19,9 @@ class Bundle:
             type(max_dependency_files) is not int
             or not 1 <= max_dependency_files <= 1024
         ):
-            raise ContractError("max_dependency_files must be an integer from 1 to 1024")
+            raise ContractError(
+                "max_dependency_files must be an integer from 1 to 1024"
+            )
         self.max_dependency_files = max_dependency_files
         self.root = Path(root).resolve(strict=True)
         if not self.root.is_dir():

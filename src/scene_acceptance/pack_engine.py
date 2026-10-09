@@ -74,15 +74,20 @@ def evaluate_packs(
     scene_inventory = None
     runtime_dependencies = None
     admission_limits = {}
-    identity = {"checker_version": VERSION, "checker_sha256": implementation_digest(),
-                'requested_candidate':str(candidate_path)}
+    identity = {
+        "checker_version": VERSION,
+        "checker_sha256": implementation_digest(),
+        "requested_candidate": str(candidate_path),
+    }
     try:
         preliminary = EvidenceBundle(
             bundle_root, [], max_dependency_files=max_dependency_files
         )
         admission_limits = {"max_dependency_files": preliminary.max_dependency_files}
         cp = preliminary.record(contract_path) if contract_data is None else None
-        identity["contract_sha256"] = sha(cp) if cp else model.digest_json(contract_data)
+        identity["contract_sha256"] = (
+            sha(cp) if cp else model.digest_json(contract_data)
+        )
         if cp is None:
             identity["contract_encoding"] = "canonical-json-sha256"
             identity["contract"] = deepcopy(contract_data)
@@ -95,7 +100,7 @@ def evaluate_packs(
             )
         c = strict_json(cp) if cp else deepcopy(contract_data)
         plan = plan_contract(c)
-        identity['report_context'] = deepcopy(c.get('report_context', {}))
+        identity["report_context"] = deepcopy(c.get("report_context", {}))
         if legacy_inputs_present:
             raise ContractError(
                 "v2 uses declared evidence_sources and pack_registry; legacy overrides are unsupported"
@@ -103,23 +108,37 @@ def evaluate_packs(
         registry = (
             pack_registry
             if pack_registry is not None
-            else default_registry(approved_packs)
+            else default_registry(approved_packs, selected=c["packs"])
         )
         bundle = EvidenceBundle(
-            bundle_root, c["allowed_dependencies"],
+            bundle_root,
+            c["allowed_dependencies"],
             max_dependency_files=max_dependency_files,
         )
-        if cp: bundle.record(cp)
+        if cp:
+            bundle.record(cp)
         for source in c["evidence_sources"]:
             bundle.record_optional(source)
         artifact = UsdArtifact(bundle, candidate_path)
         baseline = UsdArtifact(bundle, baseline_path) if baseline_path else None
         from .runtime_dependencies import RuntimeDependencies
-        runtime_dependencies = RuntimeDependencies(artifact, policy=runtime_dependency_policy,
-            environment_sha256=runtime_environment_sha256, evidence=runtime_dependency_evidence)
+
+        runtime_dependencies = RuntimeDependencies(
+            artifact,
+            policy=runtime_dependency_policy,
+            environment_sha256=runtime_environment_sha256,
+            evidence=runtime_dependency_evidence,
+        )
         identity["runtime_dependencies"] = runtime_dependencies.report()
-        ctx = Context(bundle, artifact, baseline, tuple(c["evidence_sources"]), runtime_dependencies)
+        ctx = Context(
+            bundle,
+            artifact,
+            baseline,
+            tuple(c["evidence_sources"]),
+            runtime_dependencies,
+        )
         from .coverage import inventory
+
         scene_inventory = inventory(artifact)
         identity.update(
             candidate=artifact.identity,
@@ -128,15 +147,27 @@ def evaluate_packs(
         results.append(
             check(
                 "core.artifact",
-                "UNKNOWN" if bundle.missing - {str(p.relative_to(bundle.root)) for p in runtime_dependencies.accepted} else "PASS",
+                (
+                    "UNKNOWN"
+                    if bundle.missing
+                    - {
+                        str(p.relative_to(bundle.root))
+                        for p in runtime_dependencies.accepted
+                    }
+                    else "PASS"
+                ),
                 "Admitted local USD dependencies; any runtime availability is caller-attested under the selected policy.",
-                {"missing_files": sorted(bundle.missing), "adapter": "usd-local-v1",
-                 "runtime_dependencies": runtime_dependencies.report()},
+                {
+                    "missing_files": sorted(bundle.missing),
+                    "adapter": "usd-local-v2",
+                    "runtime_dependencies": runtime_dependencies.report(),
+                },
             )
         )
         for item in plan:
             from .execution import checkpoint
-            checkpoint('check.started',check_id=item['id'])
+
+            checkpoint("check.started", check_id=item["id"])
             start = time.perf_counter()
             name = item["id"]
             pack = None
@@ -251,7 +282,8 @@ def evaluate_packs(
                 check("core.integrity", "ERROR", "Inputs changed during evaluation")
             )
     if runtime_dependencies:
-        try: runtime_dependencies.assert_unchanged()
+        try:
+            runtime_dependencies.assert_unchanged()
         except Exception as exc:
             results.append(check("core.integrity", "ERROR", str(exc)))
     identity["packs"] = descriptions
@@ -272,12 +304,16 @@ def evaluate_packs(
         "checker_version": VERSION,
         "verdict": verdict,
         "complete": complete,
-        "intended_use": c.get("intended_use")
-        if isinstance(c, dict) and isinstance(c.get("intended_use"), str)
-        else None,
-        "contract_id": c.get("id")
-        if isinstance(c, dict) and isinstance(c.get("id"), str)
-        else None,
+        "intended_use": (
+            c.get("intended_use")
+            if isinstance(c, dict) and isinstance(c.get("intended_use"), str)
+            else None
+        ),
+        "contract_id": (
+            c.get("id")
+            if isinstance(c, dict) and isinstance(c.get("id"), str)
+            else None
+        ),
         "identity": identity,
         "checks": results,
         "coverage": {
@@ -305,6 +341,7 @@ def evaluate_packs(
         },
     }
     from .coverage import enrich
+
     enrich(report, scene_inventory)
     model.validate(report, "result")
     return report

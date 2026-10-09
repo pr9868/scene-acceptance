@@ -26,6 +26,6 @@ For the earlier 256×256 quadrant policy, retain `max_channel_error: 32`, set `m
 
 ## Supported input boundary
 
-Admission is bounded local USD, with allowed dependencies and hashes. Variants, inherits, specializes, instanceable content, payloads, value clips, USD packages and resolver URLs remain unsupported. These are legitimate production authoring patterns, so failure to assess them must not be presented as proof of an invalid asset. `check-3d-doctor` discloses the boundary and resource limits before evaluation.
+Admission now includes bounded local variants, payloads, inherits, specializes, instance proxies and UDIM sets. Value clips, packages, resolver URLs and dynamic formats remain unsupported; an unsupported representation is not proof of a defective scene. `check-3d-doctor` discloses the active boundary and limits. See [extended capabilities](EXTENSIONS.md) for the supervised native worker and explicit layer-policy checks.
 
 Regression sources: `tests/test_mdl_support.py`, `test_texture_reference_policy.py`, `test_motion_boundaries.py`, `test_scope_policy.py`, `test_judge_applicability.py`, `test_worker_identity.py` and `test_reproduce_integrity.py`. The retained fresh-wheel run belongs with its recorded revision; older counts and reports are evidence only for their recorded versions.

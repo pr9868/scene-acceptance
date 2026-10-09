@@ -119,7 +119,7 @@ Deterministic adapters test implementation and boundaries. Real model reviews an
 
 ## Raw-brief preparation and adopter skills
 
-[Preparation](PREPARATION_AND_SKILLS.md) can propose ten bounded mapping types: five brief measurements plus clock, sampled positions, sampled connection distance, material delivery and selected-image decoding. It also requests caller-rendered evidence. Other mapped checks remain explicit integrations; unsupported or ambiguous intent stays visible. The wheel includes caller-handoff and judge-authoring skills, with versioned rubric and capture-override customization. Software controls include `tests/test_preparation.py`, `tests/test_scope_policy.py`, `tests/test_worker_identity.py` and `tests/test_judge_applicability.py`. Passing these controls does not establish model accuracy or full production-scene coverage.
+The automatic interpreter selects the bounded types exposed by `check-3d --capabilities`: geometry and layer policy, state and connection checks, process connectivity, timing, materials and source-image comparisons. External-engine jobs and arbitrary code are never generated from a model response. Unsupported intent stays visible and the owner must review the scope. See [extended capabilities](EXTENSIONS.md) for parameters, boundaries and test evidence.
 
 
 ## Explicit state and process topology (development candidate)

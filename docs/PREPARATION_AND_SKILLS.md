@@ -90,7 +90,7 @@ Pass `--rubric` to preparation to freeze custom review questions. Pass `--captur
 
 ## Implemented scope and limits
 
-Automatic raw-brief mapping selects ten bounded types: authored metadata, world Cube/Mesh bounds, direct-child count, directed axis gap, exact reference-image pixels, stage clock, sampled positions, sampled connection distance, material delivery and image decoding. The larger scripted catalog still works through explicit contracts/mapped briefs. New tests are code in an explicitly selected pack; neither interpreter responses nor skill prompts become executable code. Raw images can inform qualitative scope but do not establish hidden dimensions.
+The automatic interpreter selects the bounded types exposed by `check-3d --capabilities`: geometry and layer policy, state and connection checks, process connectivity, timing, materials and source-image comparisons. External-engine jobs and arbitrary code are never generated from a model response. Unsupported intent stays visible and the owner must review the scope.
 
 Raw and mapped visual references accept single-frame RGB/RGBA PNG/JPEG up to 8 MiB and 16 million pixels each, 32 MiB total reference bytes. Their original bytes, alpha and profile metadata are preserved; no colour conversion, alpha compositing or EXIF rotation is applied. Source metadata records those limits. The combined reference/view count remains twelve. This visual admission is separate from the smaller RGB-only exact-pixel comparator: 1 MiB and 262,144 pixels per image. A photo can therefore be valid interpretation input while remaining outside that numerical comparator. See [comparison regions and image policy](BRIEFS_AND_MODEL_REVIEW.md#comparison-regions-and-image-policy).
 

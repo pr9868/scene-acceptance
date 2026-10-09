@@ -263,7 +263,7 @@ def test_discovery_does_not_import_plugins(monkeypatch):
 
 
 @pytest.mark.parametrize(
-    "value", ["https://example.invalid/a.png", "../outside.png", "tile.<UDIM>.png"]
+    "value", ["https://example.invalid/a.png", "../outside.png", "tile.<UVTILE>.png"]
 )
 def test_asset_path_admission_before_stage_open(bundle, value, monkeypatch):
     p = bundle / "scene.usda"
