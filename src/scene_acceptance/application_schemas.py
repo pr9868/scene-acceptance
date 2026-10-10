@@ -67,6 +67,30 @@ PLAN_SCHEMA = obj(
     }
 )
 PLAN_SCHEMA["properties"].update(
+    readiness=obj(
+        {
+            "status": {"enum": ["ready", "ready_with_limits", "unresolved"]},
+            "ready_for_capture": {"type": "boolean"},
+            "blockers": array(
+                obj(
+                    {
+                        "kind": TEXT,
+                        "id": TEXT,
+                        "gaps": array(obj({"subject": TEXT, "reason": TEXT})),
+                    }
+                )
+            ),
+            "checks_without_preflight": array(TEXT),
+            "next_action": {
+                "enum": ["revise_preparation", "review_scope_then_capture"]
+            },
+            "diagnostic_checks_allowed": {"const": True},
+            "note": TEXT,
+        }
+    ),
+    exit_code={"enum": [0, 3]},
+    execution_status={"const": "completed"},
+    next_action={"enum": ["revise_preparation", "review_scope_then_capture"]},
     previous_plan_sha256=HASH,
     binding=obj(
         {

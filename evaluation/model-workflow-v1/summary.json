@@ -1,0 +1,266 @@
+{
+  "study": "Constructed model-workflow controls",
+  "visual_confirmation": [
+    {
+      "case": "correct",
+      "repeat": 1,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "consistent": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "consistent",
+          "explanation": "The supplied front view visibly reads KEEP AISLE CLEAR in normal left-to-right lettering, and the arrow points to the viewer's right.",
+          "evidence_ids": [
+            "view:front"
+          ]
+        }
+      ],
+      "model_invoked": true,
+      "review_method": "model",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 7.932
+    },
+    {
+      "case": "correct",
+      "repeat": 2,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "consistent": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "consistent",
+          "explanation": "The supplied front view visibly reads KEEP AISLE CLEAR in normal left-to-right lettering, and the arrow points to the viewer\u2019s right.",
+          "evidence_ids": [
+            "view:front"
+          ]
+        }
+      ],
+      "model_invoked": true,
+      "review_method": "model",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 7.85
+    },
+    {
+      "case": "mirrored",
+      "repeat": 1,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "concern": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "concern",
+          "explanation": "The visible sign lettering is horizontally mirrored, and the arrow points to the viewer's left. Both contradict the required normal left-to-right lettering and right-pointing arrow.",
+          "evidence_ids": [
+            "view:front"
+          ]
+        }
+      ],
+      "model_invoked": true,
+      "review_method": "model",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 8.024
+    },
+    {
+      "case": "mirrored",
+      "repeat": 2,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "concern": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "concern",
+          "explanation": "The visible sign lettering is horizontally mirrored, and the arrow points to the viewer's left. Both conflict with the required normal left-to-right lettering and right-pointing arrow.",
+          "evidence_ids": [
+            "view:front"
+          ]
+        }
+      ],
+      "model_invoked": true,
+      "review_method": "model",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 8.794
+    },
+    {
+      "case": "missing",
+      "repeat": 1,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "unknown": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "unknown",
+          "explanation": "Required evidence is absent or unsupported; no model call was made.",
+          "evidence_ids": []
+        }
+      ],
+      "model_invoked": false,
+      "review_method": "deterministic_missing_evidence",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 0
+    },
+    {
+      "case": "missing",
+      "repeat": 2,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "unknown": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "unknown",
+          "explanation": "Required evidence is absent or unsupported; no model call was made.",
+          "evidence_ids": []
+        }
+      ],
+      "model_invoked": false,
+      "review_method": "deterministic_missing_evidence",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 0
+    },
+    {
+      "case": "occluded",
+      "repeat": 1,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "unknown": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "unknown",
+          "explanation": "The supplied front view shows a solid gray rectangle; the sign lettering and arrow are not visible. Please provide a clear front view showing the sign face so its text and arrow direction can be assessed.",
+          "evidence_ids": [
+            "view:front"
+          ]
+        }
+      ],
+      "model_invoked": true,
+      "review_method": "model",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 7.712
+    },
+    {
+      "case": "occluded",
+      "repeat": 2,
+      "script_verdict": "ACCEPT_FOR_USE",
+      "source_pixel_status": "PASS",
+      "judge_counts": {
+        "unknown": 1
+      },
+      "findings": [
+        {
+          "requirement_id": "review.sign",
+          "assessment": "unknown",
+          "explanation": "The supplied front view shows a solid gray rectangle; no sign lettering or arrow is visible. Please supply a clear front view showing the sign face so the text and arrow direction can be assessed.",
+          "evidence_ids": [
+            "view:front"
+          ]
+        }
+      ],
+      "model_invoked": true,
+      "review_method": "model",
+      "model_requested": "gpt-6-astra",
+      "resolved_model": null,
+      "model_seconds": 7.495
+    }
+  ],
+  "source_pixel_reference_controls": [
+    {
+      "case": "correct",
+      "status": "PASS",
+      "actual_sha256": "14f6885d253337aa014b3a1443df357bd3a538bd816a3174c75637d1a43d9ab5",
+      "reference_sha256": "14f6885d253337aa014b3a1443df357bd3a538bd816a3174c75637d1a43d9ab5",
+      "maximum_linear_channel_error": 0.0
+    },
+    {
+      "case": "mirrored",
+      "status": "PASS",
+      "actual_sha256": "14f6885d253337aa014b3a1443df357bd3a538bd816a3174c75637d1a43d9ab5",
+      "reference_sha256": "14f6885d253337aa014b3a1443df357bd3a538bd816a3174c75637d1a43d9ab5",
+      "maximum_linear_channel_error": 0.0
+    },
+    {
+      "case": "occluded",
+      "status": "PASS",
+      "actual_sha256": "14f6885d253337aa014b3a1443df357bd3a538bd816a3174c75637d1a43d9ab5",
+      "reference_sha256": "14f6885d253337aa014b3a1443df357bd3a538bd816a3174c75637d1a43d9ab5",
+      "maximum_linear_channel_error": 0.0
+    }
+  ],
+  "confirmation_model_calls": 6,
+  "missing_evidence_guards": 2,
+  "seeded_plan_revision": {
+    "before": "unresolved",
+    "after": "ready",
+    "model_status": "INTERPRETATION_COMPLETE",
+    "before_check": [
+      {
+        "id": "spec.clear",
+        "status": "unresolved",
+        "gaps": [
+          {
+            "subject": "/World/Group",
+            "reason": "Clearance supports Cube, planar Mesh and selected implicit shapes: /World/Group"
+          }
+        ],
+        "reason": "Prerequisites only; no acceptance claim"
+      }
+    ],
+    "after_check": [
+      {
+        "id": "spec.clear",
+        "status": "ready",
+        "gaps": [],
+        "reason": "Prerequisites only; no acceptance claim"
+      }
+    ],
+    "disclosure": "Bad aggregate binding was deliberately seeded. This tests a fresh revision response, not natural mistake frequency."
+  },
+  "retained_preparation_replay": {
+    "exit_code": 3,
+    "status": "completed",
+    "ready_for_capture": false,
+    "next_action": "revise_preparation",
+    "check_prerequisites_unresolved": 2,
+    "capture_slots_needed": 13,
+    "capture_slots_available": 8,
+    "method": "Saved interpreter answer replay; no fresh model call"
+  },
+  "fresh_interpretations": {
+    "runs": 2,
+    "initially_ready": 2,
+    "revision_calls": 0
+  },
+  "limitations": [
+    "Developer-authored sign controls, one requested model, two repeats per rendered case; not a general accuracy estimate.",
+    "The first fixture attempt omitted authored mesh extent; structural validation caught it. That attempt and all responses remain retained separately.",
+    "The requested model was gpt-6-astra at high effort; the resolved snapshot was not independently verified.",
+    "No human-labelled triage calibration, independent holdout or reviewer-time study was performed."
+  ]
+}

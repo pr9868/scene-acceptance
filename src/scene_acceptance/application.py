@@ -480,6 +480,13 @@ def parser():
                 "--approve-pack", dest="approved_packs", action="append", default=[]
             )
         if operation == "prepare":
+            q.add_argument(
+                "--plan-revision-attempts",
+                type=int,
+                choices=[0, 1, 2],
+                default=0,
+                help="Opt into at most this many additional interpreter calls; no policy relaxation",
+            )
             for key in (
                 "raw-brief",
                 "interpreter-config",

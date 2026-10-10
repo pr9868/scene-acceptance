@@ -63,7 +63,7 @@ def test_explicit_output_and_verified_replay_stay_unchanged(tmp_path, bundle):
     output = tmp_path / 'explicit'
     args = dict(bundle_root=bundle, candidate='scene.usda', out=output, reuse_completed=True)
     first = invoke('prepare', **args)
-    assert first['exit_code'] == 0 and 'storage' not in first
+    assert first['exit_code'] == 3 and 'storage' not in first
     saved = {str(p): sha(p) for p in output.rglob('*') if p.is_file()}
     assert invoke('prepare', **args)['reused']
     assert saved == {str(p): sha(p) for p in output.rglob('*') if p.is_file()}
@@ -85,7 +85,7 @@ def test_default_history_cannot_pollute_scene_bundle(tmp_path, bundle, monkeypat
 
 def test_history_cli_defaults_and_doctor_has_no_output_side_effect(tmp_path, bundle, monkeypatch, capsys):
     monkeypatch.chdir(tmp_path)
-    assert main(['prepare', '--bundle-root', str(bundle), '--candidate', 'scene.usda']) == 0
+    assert main(['prepare', '--bundle-root', str(bundle), '--candidate', 'scene.usda']) == 3
     prepared = json.loads(capsys.readouterr().out)
     assert Path(prepared['storage']['summary_report']).exists()
     folders = set((tmp_path / 'scene-acceptance-runs').iterdir())

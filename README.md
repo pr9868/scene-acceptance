@@ -74,6 +74,10 @@ The [first-delivery upgrades](docs/USEFULNESS_UPGRADE.md) add read-only geometry
 
 The [developer replay](evaluation/first-delivery-upgrade-v1/README.md) shows what changed on three original deliveries, which seeded problems still escaped, and the measured runtime of the clearance checks. It separates implementation improvements from changes to a job's acceptance policy.
 
+Preparation also reports whether the plan is ready for capture, with named blockers and an optional bounded interpreter revision. See [preparation readiness and model adapters](docs/MODEL_WORKFLOW.md).
+
+The [rendered-sign controls](evaluation/model-workflow-v1/README.md) show a concrete split: source pixels pass while visual review flags mirrored lettering. Missing and occluded views remain unknown. This is a small constructed test, not general model qualification.
+
 ## Use or extend it
 
 - [Adopter guide: your brief, responsibilities and reusable packs](docs/ACCEPTANCE_WORKFLOW.md)

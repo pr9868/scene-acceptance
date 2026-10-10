@@ -244,7 +244,7 @@ def run_request(
         raise ContractError("Judge output must be a new directory")
     if any(not Path(p).is_file() or sha(p) != h for p, h in inputs.items()):
         raise ContractError("Evidence changed before judge run")
-    from .model_protocol import prepare_request
+    from .model_protocol import prepare_request, validation_context
 
     full_request = prepare_request(
         request, role, response_schema, config.get("max_context_items", 512), inputs
@@ -382,7 +382,7 @@ def run_request(
                         )
                     if event.get("type") == "turn.completed":
                         usage = event.get("usage")
-            response_validator(response, request)
+            response_validator(response, validation_context(request, full_request))
             if any(not Path(p).is_file() or sha(p) != h for p, h in inputs.items()):
                 raise ContractError("Evidence changed during judge run")
             status = complete_status

@@ -182,7 +182,7 @@ def test_cli_direct_and_prepared_retain_evidence(scene,tmp_path,capsys):
                  '--runtime-dependency-evidence',str(receipt)])==0
     assert json.loads(capsys.readouterr().out)['data']['runtime_dependencies']['supplied']
     assert main(['prepare','--bundle-root',str(root),'--candidate','scene.usda','--out',str(tmp_path/'prepared'),
-                 '--runtime-dependency-policy','caller-attested','--runtime-environment-sha256',ENVIRONMENT])==0
+                 '--runtime-dependency-policy','caller-attested','--runtime-environment-sha256',ENVIRONMENT])==3
     plan=json.loads(capsys.readouterr().out)['data']
     assert main(['evaluate','--preparation',str(tmp_path/'prepared'),'--out',str(tmp_path/'pending'),
                  '--runtime-dependency-evidence',str(receipt)])==3

@@ -156,7 +156,7 @@ def main(argv=None):
             subprocess.run([sys.executable, *command], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT,
                            check=True, env={**os.environ, 'PYTHONDONTWRITEBYTECODE': '1'})
 
-    run('pytest', ['-m', 'pytest', '-q', '-p', 'no:cacheprovider', '--junitxml', str(out / 'pytest.xml'), 'tests'])
+    run('pytest', ['-m', 'pytest', '-q', '-rs', '-p', 'no:cacheprovider', '--junitxml', str(out / 'pytest.xml'), 'tests'])
     verify_pytest(out / 'pytest.xml')
     for name, script in (
         ('packs', 'evaluation/packs-v1/run.py'), ('mesh', 'evaluation/mesh-v1/run.py'),

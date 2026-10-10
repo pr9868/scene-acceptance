@@ -149,6 +149,121 @@
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"
     },
+    "readiness": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "ready",
+            "ready_with_limits",
+            "unresolved"
+          ]
+        },
+        "ready_for_capture": {
+          "type": "boolean"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              },
+              "gaps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "subject": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "subject",
+                    "reason"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 0,
+                "maxItems": 256
+              }
+            },
+            "required": [
+              "kind",
+              "id",
+              "gaps"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "checks_without_preflight": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "next_action": {
+          "enum": [
+            "revise_preparation",
+            "review_scope_then_capture"
+          ]
+        },
+        "diagnostic_checks_allowed": {
+          "const": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "status",
+        "ready_for_capture",
+        "blockers",
+        "checks_without_preflight",
+        "next_action",
+        "diagnostic_checks_allowed",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "exit_code": {
+      "enum": [
+        0,
+        3
+      ]
+    },
+    "execution_status": {
+      "const": "completed"
+    },
+    "next_action": {
+      "enum": [
+        "revise_preparation",
+        "review_scope_then_capture"
+      ]
+    },
     "previous_plan_sha256": {
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"

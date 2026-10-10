@@ -385,7 +385,11 @@ def bind_preparation(
             image_budget_after_references=image_budget,
         ),
     )
-    from .preflight import checks as preflight_checks, capture_budget
+    from .preflight import (
+        checks as preflight_checks,
+        capture_budget,
+        preparation_readiness,
+    )
     from .profiles import discover_artifact
 
     save(
@@ -438,6 +442,14 @@ def bind_preparation(
         ),
     )
     plan.pop("plan_sha256")
+    plan["readiness"] = preparation_readiness(
+        strict_json(out / "preflight.json"),
+        captures,
+        (scope["brief"] or {}).get("requirements", []),
+    )
+    plan["exit_code"] = 0 if plan["readiness"]["ready_for_capture"] else 3
+    plan["execution_status"] = "completed"
+    plan["next_action"] = plan["readiness"]["next_action"]
     plan["plan_sha256"] = digest_json(plan)
     save(out / "plan.json", plan)
     _write_handoff(out, plan, captures, (scope["brief"] or {}).get("requirements", []))

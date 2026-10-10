@@ -189,7 +189,13 @@ def evaluate_packs(
                 descriptions[pack.id] = desc
                 pin = c["packs"][pack.id]
                 if desc["version"] != pin["version"]:
-                    raise ContractError("Pack version mismatch: " + pack.id)
+                    raise ContractError(
+                        "Pack version mismatch: "
+                        + pack.id
+                        + ". Create a separate proposal with python -m scene_acceptance.contract_upgrade"
+                        + " --contract <contract.json> --out <new-directory>, then review its changes."
+                        + " Evaluation never upgrades a contract automatically."
+                    )
                 if pin.get("sha256") and pin["sha256"] != desc["implementation_sha256"]:
                     raise ContractError(
                         "Pack implementation digest mismatch: " + pack.id

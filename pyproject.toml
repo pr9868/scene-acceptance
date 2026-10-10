@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scene-acceptance"
-version = "0.7.0.dev7"
+version = "0.7.0.dev8"
 description = "Inspectable evidence and review for saved OpenUSD deliveries"
 readme = "README.md"
 license = {file = "LICENSE"}

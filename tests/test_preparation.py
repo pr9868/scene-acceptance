@@ -236,7 +236,7 @@ def test_preparation_source_paths_cannot_escape(bundle,tmp_path):
 def test_cli_and_library_use_same_plan_without_reinterpretation(bundle,tmp_path,capsys):
     from scene_acceptance.preparation import main as prepare_cli
     from scene_acceptance.prepared_run import main as run_cli
-    assert prepare_cli(['--bundle-root',str(bundle),'--candidate','scene.usda','--out',str(tmp_path/'prepared')])==0
+    assert prepare_cli(['--bundle-root',str(bundle),'--candidate','scene.usda','--out',str(tmp_path/'prepared')])==3  # Plan saved; no capture capability declared
     response=json.loads(capsys.readouterr().out)
     assert run_cli(['--preparation',str(tmp_path/'prepared'),'--expected-plan-sha256',response['data']['plan_sha256'],'--out',str(tmp_path/'run')])==0
     assert json.loads(capsys.readouterr().out)['data']['script_verdict']=='ACCEPT_FOR_USE'

@@ -18,6 +18,8 @@ Use `check-3d-app` or `scene_acceptance.application.invoke` for a versioned appl
 
 The separate, opt-in [assumption-triage operation](ASSUMPTION_TRIAGE.md) runs after declared-scope assessment. It uses text evidence and caller-selected items, preserves existing required reviews and failures, and does not change the `checks`/`judge`/`both` modes.
 
+Preparation now separates saving a proposal from readiness: unresolved prerequisites or capture gaps return exit 3 with `data.readiness` and `data.next_action`. Do not start automated capture merely because `status` is `completed`. Checks-only diagnostics and scope review remain available. [Readiness, bounded revision and migration](MODEL_WORKFLOW.md).
+
 ## Minimal calls
 
 ```sh

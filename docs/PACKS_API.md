@@ -134,7 +134,7 @@ The CLI `--max-dependency-files N` and API `evaluate(..., max_dependency_files=N
 
 A file-budget overrun yields a required `UNKNOWN` coverage record containing `kind: resource_limit`, `limit_name`, `limit` and `observed_at_least`; selected checks that did not run remain `UNKNOWN`. The overall result is `INSUFFICIENT_EVIDENCE`, CLI exit 3. Earlier immutable reports may show this condition as `EVALUATION_ERROR`. All path, type, composition, integrity, per-file-size and prim-count controls remain active. Larger budgets increase possible resource use; the caller still provides process memory/time isolation.
 
-Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; the current development package identifies checker 0.7.0.dev7. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
+Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; the current development package identifies checker 0.7.0.dev8. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
 
 ## What to add next
 

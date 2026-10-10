@@ -131,3 +131,49 @@ def capture_budget(captures, budget):
         additional_slots_needed=max(0, count - budget),
         note="Planning compatibility is not visibility proof. Caller evidence must still establish each requested view.",
     )
+
+
+def preparation_readiness(prerequisites, captures, requirements=()):
+    """Readiness to proceed with a proposal, separate from scope/outcome approval."""
+    blockers = [
+        dict(kind="check_prerequisite", id=row["id"], gaps=row["gaps"])
+        for row in prerequisites["checks"]
+        if row["status"] == "unresolved"
+    ]
+    blockers.extend(
+        dict(
+            kind="capture_feasibility",
+            id=c["id"],
+            gaps=[dict(subject=c["id"], reason=g) for g in c["feasibility_gaps"]],
+        )
+        for c in captures
+        if c.get("feasibility_gaps")
+    )
+    blockers.extend(
+        dict(
+            kind="requirement_mapping",
+            id=r["id"],
+            gaps=[
+                dict(
+                    subject=r["id"],
+                    reason=r.get("basis", r.get("reason", "Unresolved mapping")),
+                )
+            ],
+        )
+        for r in requirements
+        if r.get("evaluation_route", r.get("route")) in ("unresolved", "unsupported")
+    )
+    unchecked = [
+        r["id"] for r in prerequisites["checks"] if r["status"] == "not_available"
+    ]
+    return dict(
+        status=(
+            "unresolved" if blockers else "ready_with_limits" if unchecked else "ready"
+        ),
+        ready_for_capture=not blockers,
+        blockers=blockers,
+        checks_without_preflight=unchecked,
+        next_action="revise_preparation" if blockers else "review_scope_then_capture",
+        diagnostic_checks_allowed=True,
+        note="Prerequisites only. Owner scope approval and evidence validation remain separate; readiness is not acceptance.",
+    )

@@ -48,3 +48,5 @@ python -m pytest -q tests/test_usefulness.py tests/test_caller_tools.py
 `reproduce.py` additionally exercises the complete software suite and the earlier packaged studies. The original delivery packets are not distributed here; the public JSON is a sanitized aggregate, not a complete replay of those scenes. Numerical controls are developer-authored. Independent holdouts, human-labelled model calibration, fresh visual-review comparisons and measured reviewer-time savings remain pending.
 
 See [supported behavior and caller examples](../../docs/USEFULNESS_UPGRADE.md) before selecting geometry or contact policy.
+
+[Adopter retest interpretation](ADOPTER_RETEST.md) separates its expanded policies, twelve mixed controls and three different timing workloads.

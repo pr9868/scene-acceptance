@@ -121,7 +121,7 @@ def test_no_evidence_means_zero_model_calls(tmp_path,bundle,monkeypatch):
 def test_replay_identical_only_and_reports_are_immutable(tmp_path,bundle,monkeypatch):
     args=dict(bundle_root=bundle,candidate='scene.usda',out=tmp_path/'prepared')
     first=invoke('prepare',reuse_completed=True,**args);valid('application-envelope-v1',first)
-    assert first['exit_code']==0,first['errors']
+    assert first['exit_code']==3,first['errors']  # Saved proposal; captures undeclared
     monkeypatch.setattr('scene_acceptance.preparation.prepare_scene',lambda **k:pytest.fail('Cache executed preparation'))
     second=invoke('prepare',reuse_completed=True,**args)
     assert second['reused'] and second['data']==first['data']
@@ -131,7 +131,7 @@ def test_replay_identical_only_and_reports_are_immutable(tmp_path,bundle,monkeyp
 
 def test_replay_refuses_modified_output(tmp_path,bundle):
     args=dict(bundle_root=bundle,candidate='scene.usda',out=tmp_path/'prepared')
-    assert invoke('prepare',reuse_completed=True,**args)['exit_code']==0
+    assert invoke('prepare',reuse_completed=True,**args)['exit_code']==3
     (tmp_path/'prepared/report.html').write_text('changed')
     r=invoke('prepare',reuse_completed=True,**args)
     assert r['exit_code']==4 and 'modified' in r['errors'][0]['message']
@@ -153,7 +153,7 @@ def test_progress_and_pre_cancel(tmp_path,bundle):
     r=invoke('prepare',control=RunControl(cancel_file=str(cancel),progress=events.append),bundle_root=bundle,candidate='scene.usda',out=tmp_path/'out')
     assert r['status']=='cancelled' and not (tmp_path/'out').exists()
     r=invoke('prepare',control=RunControl(progress=events.append),bundle_root=bundle,candidate='scene.usda',out=tmp_path/'out')
-    assert r['exit_code']==0 and events[0]['phase']=='prepare.started' and events[-1]['phase']=='prepare.completed'
+    assert r['exit_code']==3 and events[0]['phase']=='prepare.started' and events[-1]['phase']=='prepare.completed'
 
 def test_deadline_kills_adapter_and_descendants(tmp_path,bundle):
     kw=setup(tmp_path,bundle);child=tmp_path/'child.pid';leader=tmp_path/'leader.pid'

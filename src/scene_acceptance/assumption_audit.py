@@ -61,8 +61,13 @@ def validate_response(response, request):
         if row["id"] in seen:
             raise ContractError("Duplicate audit question ID")
         seen.add(row["id"])
-        if set(row["evidence_ids"]) - known or set(row["prim_paths"]) - prims:
-            raise ContractError("Audit question cites unknown evidence or scene paths")
+        unknown_evidence = sorted(set(row["evidence_ids"]) - known)
+        unknown_prims = sorted(set(row["prim_paths"]) - prims)
+        if unknown_evidence or unknown_prims:
+            raise ContractError(
+                f"Audit question {row['id']!r} cites unknown references: "
+                f"evidence IDs={unknown_evidence}; prim paths={unknown_prims}"
+            )
     return response
 
 
@@ -139,8 +144,13 @@ def run_audit(
         ):
             raise ContractError("Duplicate producer declaration ID")
         for decision in declarations["decisions"]:
-            if set(decision["prim_paths"]) - set(context["scene"]["prim_paths"]):
-                raise ContractError("Producer declaration names an unknown prim")
+            unknown = sorted(
+                set(decision["prim_paths"]) - set(context["scene"]["prim_paths"])
+            )
+            if unknown:
+                raise ContractError(
+                    f"Producer declaration {decision['id']!r} names unknown prim paths: {unknown}"
+                )
             evidence.append(
                 dict(
                     id="decision:" + decision["id"],
