@@ -11,6 +11,8 @@ LIMITS = dict(
     max_dependency_files_maximum=1024,
     source_file_bytes=33554432,
     scene_prims=10000,
+    max_prims_default=10000,
+    max_prims_maximum=250000,
     images_including_brief=12,
     view_bytes=8388608,
     view_pixels=16000000,
@@ -52,7 +54,12 @@ def environment_identity():
 
 
 def doctor(
-    *, bundle_root=None, candidate=None, max_dependency_files=64, judge_config=None
+    *,
+    bundle_root=None,
+    candidate=None,
+    max_dependency_files=64,
+    max_prims=10000,
+    judge_config=None,
 ):
     from .packs import default_registry
     from .preparation import allowed_catalog
@@ -90,7 +97,10 @@ def doctor(
             from .profiles import discover_artifact
 
             a = discover_artifact(
-                bundle_root, candidate, max_dependency_files=max_dependency_files
+                bundle_root,
+                candidate,
+                max_dependency_files=max_dependency_files,
+                max_prims=max_prims,
             )
             scene = dict(
                 admitted=True, identity=a.identity, sha256=a.artifact_set_sha256

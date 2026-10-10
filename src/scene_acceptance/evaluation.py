@@ -22,6 +22,7 @@ def scripted(
     expected_brief_sha256=None,
     approved_packs=(),
     max_dependency_files=64,
+    max_prims=10000,
     review_record=None,
     runtime_dependency_policy="local-only",
     runtime_environment_sha256=None,
@@ -38,6 +39,7 @@ def scripted(
             expected_sha256=expected_brief_sha256,
             approved_packs=approved_packs,
             max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
             review_record=review_record,
             runtime_dependency_policy=runtime_dependency_policy,
             runtime_environment_sha256=runtime_environment_sha256,
@@ -65,6 +67,7 @@ def scripted(
             bundle,
             candidate,
             max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
             runtime_dependency_policy=runtime_dependency_policy,
             runtime_environment_sha256=runtime_environment_sha256,
             runtime_dependency_evidence=runtime_dependency_evidence,
@@ -89,6 +92,7 @@ def evaluate_scene(
     judge_exposure="withheld",
     approved_packs=(),
     max_dependency_files=64,
+    max_prims=10000,
     evidence_policy=None,
     evidence_error=None,
     evidence_requirements=None,
@@ -221,6 +225,7 @@ def evaluate_scene(
                 brief=brief,
                 expected_brief_sha256=expected_brief_sha256,
                 max_dependency_files=max_dependency_files,
+                max_prims=max_prims,
             )
             context = admission
             result["scene"] = admission["scene"]
@@ -240,6 +245,7 @@ def evaluate_scene(
                 expected_brief_sha256=expected_brief_sha256,
                 approved_packs=approved_packs,
                 max_dependency_files=max_dependency_files,
+                max_prims=max_prims,
                 review_record=review_record,
                 runtime_dependency_policy=runtime_dependency_policy,
                 runtime_environment_sha256=runtime_environment_sha256,
@@ -310,6 +316,7 @@ def evaluate_scene(
                 views=views,
                 rubric=rubric,
                 max_dependency_files=max_dependency_files,
+                max_prims=max_prims,
             )
             if (
                 not intact(admission)

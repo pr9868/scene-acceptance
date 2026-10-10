@@ -98,3 +98,9 @@ python -m scene_acceptance.batch --manifest deliveries.json --out /path/to/new-a
 ```
 
 The batch creates individual reports, an HTML index, a combined check table and execution logs. Each process has a deadline; at most two run together. There is no hard memory sandbox. A timeout or process failure remains an evaluation error, not a rejected scene or a clean result. No simulation or external provider is selected by the baseline.
+
+## Measured findings and unresolved work
+
+The first-delivery upgrade retains per-subject expected/observed results and explicit omission counts in the application projection. A clearance failure remains visible even when another selected object cannot be measured. Its subject table distinguishes a measured mismatch, unsupported geometry, numerical uncertainty, missing evidence and exhausted capacity. The summary groups available causes with the corresponding next step; full provider evidence remains linked.
+
+Mechanical coverage counts declared relationships separately from evaluated knots. A single connection checked across many times is one relationship, not many accepted assets. Surface/solid choice, allowed contact and any physical contact allowance are part of the recorded requirement. Changed policy is not reported as a repaired scene.

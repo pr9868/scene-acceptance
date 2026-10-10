@@ -106,13 +106,19 @@ def connections(ctx, params):
             )
             return True
         value = attribute.Get()
+        normalized = (
+            params.get("direction_aliases", {}).get(value, value)
+            if attribute_name == params["direction_attribute"]
+            else value
+        )
         findings.append(
             dict(
                 object=path,
                 property=attribute_name,
                 expected=desired,
                 observed=value,
-                status="PASS" if value == desired else "FAIL",
+                normalized=normalized,
+                status="PASS" if normalized == desired else "FAIL",
             )
         )
         return True
@@ -190,9 +196,14 @@ def process_pack():
             "allow_extra_connections": {"type": "boolean"},
         }
     )
+    parameters["properties"]["direction_aliases"] = {
+        "type": "object",
+        "additionalProperties": direction,
+        "maxProperties": 32,
+    }
     return Pack(
         "process.connections",
-        "1.0.0",
+        "1.1.0",
         "Directed port topology against a structured reference",
         {
             "match": CheckSpec(

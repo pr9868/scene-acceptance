@@ -44,3 +44,7 @@ The state and process controls are constructed regression cases. They do not rer
 ## Qualitative review risk
 
 The owner requested low, medium and high beneath human review. Implemented in the development candidate with built-in definitions, an optional owner rubric override, optional per-item minimum, model reason/citations, separate applied level and pending-item counts. The request and result retain the active definitions and whether their source is built-in or owner-supplied; the original policy file is unchanged. Low still needs review. Unsupported grades and legacy responses without grades stay unrated; mandatory owner minimums remain enforceable. Human approval uses the same evidence-bound closure records. Published older schemas remain available. Deterministic tests check routing and integrity; no model risk-classification accuracy is established, and the binary pilot cannot supply that result.
+
+## First-delivery usefulness
+
+The next development increment adds [read-only polygon/implicit geometry, explicit clearance policy, selectors, executable preflight, mechanical relationships, caller helpers and bounded model context](USEFULNESS_UPGRADE.md). Deterministic controls and replays are separate from model-quality and reviewer-time evaluation. Current reports distinguish failures from unsupported measurements and capacity gaps. Retained earlier experiments still describe their original versions and acceptance policies.

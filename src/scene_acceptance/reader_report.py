@@ -91,6 +91,9 @@ def check_label(check):
             "axis_gap": "Specified gap between named objects",
             "image_pixels": "Delivered texture matches the supplied reference image",
             "metadata": "Authored stage settings match the brief",
+            "attribute_value": "Authored value matches the owner-held target",
+            "relative_motion": "Movement between named times matches the brief",
+            "rotation_rate": "Saved scalar rotation matches the specified rate",
         }.get(check["check"], check["check"])
     if check["pack"] == "brief.four-job":
         return PRESET_TARGETS.get(check["check"], check["check"])
@@ -132,7 +135,11 @@ E = lambda value: escape(str(value), quote=True)
 
 def area_for(check):
     p, name = check.get("pack"), check.get("check")
+    if p in ("mechanical.relationships", "motion.continuous"):
+        return "motion"
     if p == "brief.measurements":
+        if name in ("relative_motion", "rotation_rate"):
+            return "motion"
         if name == "metadata" and any(
             k in check.get("parameters", {}).get("values", {})
             for k in ("startTimeCode", "endTimeCode", "timeCodesPerSecond")
@@ -318,21 +325,9 @@ def build_overview(core, review=None):
         r = results.get(id, {})
         a = audit.get(id, {})
         observations = r.get("evidence", {}).get("observations", {})
-        values = {
-            k: observations[k]
-            for k in (
-                "maximum_sampled_gap_m",
-                "max_gap_m",
-                "maximum_recomputed_displacement_m",
-                "whole_max_channel_error",
-                "interior_max_channel_error",
-                "signed_volume_m3",
-                "expected_volume_m3",
-                "minimum_m",
-                "maximum_m",
-            )
-            if isinstance(observations, dict) and k in observations
-        }
+        from .observations import summarize
+
+        values = summarize(observations)
         checks.append(
             dict(
                 id=id,

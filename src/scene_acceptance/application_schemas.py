@@ -191,6 +191,9 @@ ENVELOPE_SCHEMA = obj(
                 "audit",
                 "collect-engine",
                 "report",
+                "identify",
+                "preflight",
+                "package-evidence",
                 "parse",
             ]
         },
@@ -220,7 +223,10 @@ ENVELOPE_SCHEMA["properties"]["metrics"] = METRICS_SCHEMA
 ENVELOPE_SCHEMA["properties"]["isolation"] = {"type": "object"}
 ENVELOPE_SCHEMA["properties"]["report"] = TEXT
 ENVELOPE_SCHEMA["properties"]["storage"] = obj(
-    {key: TEXT for key in ("run_directory", "output_directory", "summary_report", "record")}
+    {
+        key: TEXT
+        for key in ("run_directory", "output_directory", "summary_report", "record")
+    }
 )
 # Progress and result counts can exceed the review item limit; they are not model prompts.
 for schema, key in ((ENVELOPE_SCHEMA, "events"), (PREPARED_RESULT_SCHEMA, "findings")):
@@ -282,3 +288,20 @@ SCHEMAS["raw-brief-v1"] = RAW_BRIEF_SCHEMA
 from .engine_adapter import CONFIG as ENGINE_ADAPTER_SCHEMA
 
 SCHEMAS["engine-adapter-v1"] = ENGINE_ADAPTER_SCHEMA
+
+# Additive capacity setting; older preparations retain the original 10,000 default.
+PLAN_SCHEMA["properties"]["max_prims"] = {
+    "type": "integer",
+    "minimum": 1,
+    "maximum": 250000,
+}
+
+from .judge import (
+    RESPONSE_SCHEMA as JUDGE_RESPONSE_SCHEMA,
+    CONFIG_SCHEMA as MODEL_CONFIG_SCHEMA,
+)
+from .preparation import INTERPRETATION_SCHEMA
+
+SCHEMAS["judge-response-v1"] = JUDGE_RESPONSE_SCHEMA
+SCHEMAS["interpreter-response-v1"] = INTERPRETATION_SCHEMA
+SCHEMAS["model-config-v1"] = MODEL_CONFIG_SCHEMA

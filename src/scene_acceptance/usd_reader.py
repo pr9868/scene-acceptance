@@ -14,7 +14,7 @@ from .model import (
 
 
 class Bundle:
-    def __init__(self, root, dependencies, *, max_dependency_files=64):
+    def __init__(self, root, dependencies, *, max_dependency_files=64, max_prims=10000):
         if (
             type(max_dependency_files) is not int
             or not 1 <= max_dependency_files <= 1024
@@ -22,6 +22,9 @@ class Bundle:
             raise ContractError(
                 "max_dependency_files must be an integer from 1 to 1024"
             )
+        if type(max_prims) is not int or not 1 <= max_prims <= 250000:
+            raise ContractError("max_prims must be an integer from 1 to 250000")
+        self.max_prims = max_prims
         self.max_dependency_files = max_dependency_files
         self.root = Path(root).resolve(strict=True)
         if not self.root.is_dir():
@@ -102,8 +105,10 @@ class Scene:
             allowed.append("Mesh")
         self.xforms = UsdGeom.XformCache(Usd.TimeCode.Default())
         for index, prim in enumerate(self.stage.TraverseAll()):
-            if index >= 10000:
-                raise BoundaryError("Stage exceeds the 10,000 prim pilot limit")
+            if index >= bundle.max_prims:
+                from .model import PrimLimitExceeded
+
+                raise PrimLimitExceeded(bundle.max_prims, index + 1)
             path = str(prim.GetPath())
             if prim.IsInstanceable() or not prim.IsActive() or not prim.IsDefined():
                 self.unsupported.append(path + ": instanced/inactive/undefined prim")

@@ -47,7 +47,7 @@ Legend: blue = human responsibility; purple = producer agent; gray = application
 |---|---|---|
 | `openusd` 1.1.0 | Named `UsdValidation` validators; warning policy is explicit | Native provider-specific scope. Available validators include geometry, shading and physics schema checks; they are not all enabled or individually certified by this project. |
 | `geometry` 1.0.0 | Existing contract v1 through the compatibility evaluator | Current cube/polygon/edit rules and their original coverage limits. A nested contract must be declared as evidence and cannot add undeclared dependencies. |
-| `materials` 1.1.0 | Named resolved bindings, expected surface shader IDs and external asset existence | Does not decode textures, validate UV mapping or render/reference appearance. A material shader says nothing about measured friction. |
+| `materials` 1.2.0 | Named resolved bindings, expected surface shader IDs and dependencies connected to selected materials | Does not decode textures, validate UV mapping or render/reference appearance. A material shader says nothing about measured friction. |
 | `motion` 1.1.0 | World transform origin at specified time codes, in meters | Does not prove orientation, collision, continuous motion or physical feasibility. Time codes are not implicitly seconds. |
 | `motion.timing` 1.1.0 | Authored stage duration, optional exact rate, and world origins at elapsed seconds from stage start | Requires an explicit valid clock/range. Does not infer active motion duration or prove a continuous path. See [timing requirements](MOTION_TIMING.md). |
 | `nvidia.asset-validator` 1.1.0 | Named rules from `usd-validation-nvidia==1.20.0`; optional dependency | Reports upstream rule and severity. Does not call fixers, stamp an asset or claim SimReady profile/task acceptance. |
@@ -81,7 +81,7 @@ The base install only requires OpenUSD and JSON Schema. Listing the default pack
 
 ## A use profile is a contract, not a pack
 
-`contract-v2.schema.json` defines the format. A profile has an ID and version, with its requirements embedded in the contract. Version 0.3 does not yet implement profile inheritance, a remote catalog or profile includes. Reuse a reviewed contract template and pin its hash in the calling application when needed.
+`contract-v2.schema.json` defines the format. A profile has an ID and version, with its requirements embedded in the contract. The package does not implement profile inheritance, a remote catalog or profile includes. Reuse a reviewed contract template and pin its hash in the calling application when needed.
 
 Each check instance has a unique ID, pack ID, check name, required/advisory flag, strict parameters and optional `after` prerequisites. This permits the same measurement under different tolerances or consumers. Pack versions must match exactly; an optional `sha256` pins the descriptor, declared source hashes and dependency identities. Repeated checks still retain individual findings. No averaged quality score can hide a required failure.
 
@@ -128,13 +128,13 @@ A required failure yields `REJECT`; required unknowns or errors remain visible e
 
 ## Admission and limits
 
-The `usd-local-v1` contract format now uses the bounded local reader v2. It admits local references, sublayers, selected variants, loaded payloads, inherits, specializes and instance proxies; all authored dependency branches are checked before composition. Explicit local `<UDIM>` filenames expand tiles 1001–1999 under the same file budget. Limits remain 32 MiB per file, a caller-configurable dependency budget (default 64), 10,000 composed prims including instance proxies and 10,000 samples per asset attribute. URLs, packages, value clips, cycles and dynamic formats remain unsupported. [Layer policy and dependency cross-checks](EXTENSIONS.md) are separate selected checks; successful admission is not acceptance.
+The `usd-local-v1` contract format now uses the bounded local reader v2. It admits local references, sublayers, selected variants, loaded payloads, inherits, specializes and instance proxies; all authored dependency branches are checked before composition. Explicit local `<UDIM>` filenames expand tiles 1001–1999 under the same file budget. Limits remain 32 MiB per file, a caller-configurable dependency budget (default 64), a caller-configurable composed-prim budget (default 10,000, maximum 250,000) including instance proxies and 10,000 samples per asset attribute. URLs, packages, value clips, cycles and dynamic formats remain unsupported. [Layer policy and dependency cross-checks](EXTENSIONS.md) are separate selected checks; successful admission is not acceptance.
 
 The CLI `--max-dependency-files N` and API `evaluate(..., max_dependency_files=N)` accept integers from 1 to 1024. This is caller-owned resource configuration, not a contract field or producer-selectable acceptance threshold. The effective value is recorded in `runtime.admission_limits.max_dependency_files`. Candidate and baseline closures are counted separately; each count includes its root and unique dependent layers/assets, including missing declared assets. The v1 static evaluator and the v2 geometry compatibility adapter also honor the caller's file budget.
 
 A file-budget overrun yields a required `UNKNOWN` coverage record containing `kind: resource_limit`, `limit_name`, `limit` and `observed_at_least`; selected checks that did not run remain `UNKNOWN`. The overall result is `INSUFFICIENT_EVIDENCE`, CLI exit 3. Earlier immutable reports may show this condition as `EVALUATION_ERROR`. All path, type, composition, integrity, per-file-size and prim-count controls remain active. Larger budgets increase possible resource use; the caller still provides process memory/time isolation.
 
-Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; this release identifies checker 0.5.0. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
+Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; the current development package identifies checker 0.7.0.dev7. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
 
 ## What to add next
 
@@ -145,3 +145,7 @@ The SimReady validator is publicly discoverable in the package index inspected f
 ## Coverage reports and baseline
 
 See [REPORTING.md](REPORTING.md) for count definitions, provider coverage, the caller-selected baseline, generated contracts and portable report formats. Per-check assessments do not alter the original contract reducer. The historical release remains unchanged.
+
+## Optional prerequisite declarations
+
+`CheckSpec` accepts additive `capabilities` metadata and a `preflight(context, parameters)` callback returning a list of subject/reason gaps. The callback must be read-only and bounded. Parameter validation happens before invocation; preparation retains the result with scene identity. Legacy packs remain usable and report unavailable preflight. A ready prerequisite check is never a content PASS. Bump pack versions when measurement semantics change and include helper modules in `source_files`.

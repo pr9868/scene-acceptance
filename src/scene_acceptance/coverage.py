@@ -158,6 +158,7 @@ def summarize_observations(item, record):
             "motion.timing",
             "behavior.state",
             "process.connections",
+            "brief.measurements",
         )
         and "findings" in obs
     ):
@@ -183,6 +184,14 @@ def summarize_observations(item, record):
                 )
             ],
             "One explicitly selected image; no appearance comparison.",
+        )
+    if pack in ("mechanical.relationships", "motion.continuous"):
+        return assessment(
+            "declared relationships",
+            [dict(subject="declared pair", status=record["status"])],
+            obs.get("coverage", "Only the declared pair and time interval"),
+            interval_s=obs.get("interval_s"),
+            knot_count=len(obs.get("knots", obs.get("findings", []))),
         )
     if pack == "motion.connection" and "samples" in obs:
         rows = [
@@ -213,7 +222,11 @@ def summarize_observations(item, record):
 def domain_for(item):
     pack = item["pack"]
     params = item.get("parameters", {})
+    if pack in ("mechanical.relationships", "motion.continuous"):
+        return "motion_requirements"
     if pack == "brief.measurements":
+        if item["check"] in ("relative_motion", "rotation_rate"):
+            return "motion_requirements"
         if item["check"] == "metadata" and any(
             k in params.get("values", {})
             for k in ("startTimeCode", "endTimeCode", "timeCodesPerSecond")

@@ -39,8 +39,24 @@ def actionable_findings(evaluation, captures=(), mapping_review=None, approval=N
                 )
             )
         )
+        observed = c.get("observed_values") or {}
+        subjects = observed.get("findings", [])
+        resolutions = {
+            "scene_mismatch": "repair_scene",
+            "unsupported_geometry": "choose_supported_measurement",
+            "numeric_uncertainty": "resolve_measurement_uncertainty",
+            "capacity_limit": "raise_resource_budget",
+            "missing_evidence": "provide_evidence",
+        }
+        codes = sorted(
+            {resolutions[r["cause"]] for r in subjects if r.get("cause") in resolutions}
+        )
+        if observed.get("kind") == "resource_limit":
+            codes = ["raise_resource_budget"]
         rows.append(
             dict(
+                resolution_codes=codes,
+                subject_findings=subjects,
                 id="check:" + c["id"],
                 kind="script",
                 status=status,

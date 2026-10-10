@@ -1,0 +1,738 @@
+{
+  "kind": "developer regression replay, not independent validation",
+  "original_scene_count": 3,
+  "original_and_policy_variant_runs": 9,
+  "control_runs": 16,
+  "original_inputs_unchanged": true,
+  "deliveries": [
+    {
+      "scene": "s2",
+      "policy": "original-policy",
+      "counts": {
+        "PASS": 16,
+        "UNKNOWN": 6
+      },
+      "previous_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "verdict": "INSUFFICIENT_EVIDENCE",
+      "policy_changes": [],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s2",
+      "policy": "explicit-surface-policy",
+      "counts": {
+        "PASS": 22
+      },
+      "previous_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "verdict": "ACCEPT_FOR_USE",
+      "policy_changes": [
+        {
+          "check": "envelope-main-t0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "envelope-branch-t0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "envelope-main-t4",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "envelope-branch-t4",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "envelope-main-t6",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "envelope-branch-t6",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s2",
+      "policy": "explicit-1mm-contact-allowance",
+      "counts": {
+        "PASS": 22
+      },
+      "previous_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "verdict": "ACCEPT_FOR_USE",
+      "policy_changes": [
+        {
+          "check": "envelope-main-t0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "envelope-branch-t0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "envelope-main-t4",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "envelope-branch-t4",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "envelope-main-t6",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "envelope-branch-t6",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s3",
+      "policy": "original-policy",
+      "counts": {
+        "PASS": 6,
+        "FAIL": 3
+      },
+      "previous_counts": {
+        "PASS": 6,
+        "FAIL": 1,
+        "UNKNOWN": 2
+      },
+      "verdict": "REJECT",
+      "policy_changes": [],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s3",
+      "policy": "explicit-surface-policy",
+      "counts": {
+        "PASS": 7,
+        "UNKNOWN": 2
+      },
+      "previous_counts": {
+        "PASS": 6,
+        "FAIL": 1,
+        "UNKNOWN": 2
+      },
+      "verdict": "INSUFFICIENT_EVIDENCE",
+      "policy_changes": [
+        {
+          "check": "pid-connectivity",
+          "direction_aliases": {
+            "bidir": "bidirectional"
+          }
+        },
+        {
+          "check": "access-zone-t0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "access-zone-t5",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s3",
+      "policy": "explicit-1mm-contact-allowance",
+      "counts": {
+        "PASS": 9
+      },
+      "previous_counts": {
+        "PASS": 6,
+        "FAIL": 1,
+        "UNKNOWN": 2
+      },
+      "verdict": "ACCEPT_FOR_USE",
+      "policy_changes": [
+        {
+          "check": "pid-connectivity",
+          "direction_aliases": {
+            "bidir": "bidirectional"
+          }
+        },
+        {
+          "check": "access-zone-t0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "access-zone-t5",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s4",
+      "policy": "original-policy",
+      "counts": {
+        "PASS": 9,
+        "FAIL": 3,
+        "UNKNOWN": 2
+      },
+      "previous_counts": {
+        "PASS": 9,
+        "UNKNOWN": 5
+      },
+      "verdict": "REJECT",
+      "policy_changes": [],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s4",
+      "policy": "explicit-surface-policy",
+      "counts": {
+        "PASS": 11,
+        "UNKNOWN": 3
+      },
+      "previous_counts": {
+        "PASS": 9,
+        "UNKNOWN": 5
+      },
+      "verdict": "INSUFFICIENT_EVIDENCE",
+      "policy_changes": [
+        {
+          "check": "aisle-envelope-t0_0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "aisle-envelope-t8_0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "aisle-envelope-t16_5",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "rowa-load-height",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        },
+        {
+          "check": "rowb-load-height",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0
+        }
+      ],
+      "input_unchanged": true
+    },
+    {
+      "scene": "s4",
+      "policy": "explicit-1mm-contact-allowance",
+      "counts": {
+        "PASS": 14
+      },
+      "previous_counts": {
+        "PASS": 9,
+        "UNKNOWN": 5
+      },
+      "verdict": "ACCEPT_FOR_USE",
+      "policy_changes": [
+        {
+          "check": "aisle-envelope-t0_0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "aisle-envelope-t8_0",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "aisle-envelope-t16_5",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "rowa-load-height",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        },
+        {
+          "check": "rowb-load-height",
+          "representation": "surfaces",
+          "contact_policy": "allow",
+          "contact_tolerance_m": 0.001
+        }
+      ],
+      "input_unchanged": true
+    }
+  ],
+  "controls": [
+    {
+      "case": "s2-c01-indicator-wrong-window-contract",
+      "counts": {
+        "PASS": 15,
+        "FAIL": 1,
+        "UNKNOWN": 6
+      },
+      "prior_counts": {
+        "PASS": 9,
+        "FAIL": 1,
+        "UNKNOWN": 12
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c02-duct-low-contract",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 3,
+        "UNKNOWN": 3
+      },
+      "prior_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c03-sign-uv-mirrored-contract",
+      "counts": {
+        "PASS": 16,
+        "UNKNOWN": 6
+      },
+      "prior_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c04-sign-texture-rotated-contract",
+      "counts": {
+        "PASS": 15,
+        "UNKNOWN": 6,
+        "FAIL": 1
+      },
+      "prior_counts": {
+        "PASS": 9,
+        "UNKNOWN": 12,
+        "FAIL": 1
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c05-p01-late-contract",
+      "counts": {
+        "PASS": 15,
+        "FAIL": 1,
+        "UNKNOWN": 6
+      },
+      "prior_counts": {
+        "PASS": 9,
+        "FAIL": 1,
+        "UNKNOWN": 12
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c06-outb-wrong-material-contract",
+      "counts": {
+        "PASS": 15,
+        "UNKNOWN": 6,
+        "FAIL": 1
+      },
+      "prior_counts": {
+        "PASS": 9,
+        "UNKNOWN": 12,
+        "FAIL": 1
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c07-fence-posts-skinned-contract",
+      "counts": {
+        "PASS": 14,
+        "UNKNOWN": 8
+      },
+      "prior_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c08-duct-rotated-separated-contract",
+      "counts": {
+        "PASS": 16,
+        "UNKNOWN": 6
+      },
+      "prior_counts": {
+        "PASS": 10,
+        "UNKNOWN": 12
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-c09-texture-missing-contract",
+      "counts": {
+        "UNKNOWN": 8,
+        "PASS": 14
+      },
+      "prior_counts": {
+        "UNKNOWN": 14,
+        "PASS": 7,
+        "FAIL": 1
+      },
+      "lost_prior_failures": [
+        "belt-material"
+      ],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-v2-c02-duct-low-contract",
+      "counts": {
+        "PASS": 19,
+        "FAIL": 3
+      },
+      "prior_counts": {
+        "PASS": 19,
+        "FAIL": 3
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-v2-c07-fence-posts-skinned-contract",
+      "counts": {
+        "PASS": 14,
+        "UNKNOWN": 8
+      },
+      "prior_counts": {
+        "PASS": 14,
+        "UNKNOWN": 8
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s2-v2-c08-duct-rotated-separated-contract",
+      "counts": {
+        "PASS": 22
+      },
+      "prior_counts": {
+        "PASS": 22
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s4-c01-limit-12k-contract-capacity-10000",
+      "counts": {
+        "UNKNOWN": 14
+      },
+      "prior_counts": {
+        "ERROR": 1,
+        "UNKNOWN": 13
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s4-c01-limit-12k-contract-capacity-20000",
+      "counts": {
+        "PASS": 9,
+        "FAIL": 3,
+        "UNKNOWN": 2
+      },
+      "prior_counts": {
+        "ERROR": 1,
+        "UNKNOWN": 13
+      },
+      "lost_prior_failures": [],
+      "max_prims": 20000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s4-v2-c02-stray-carton-high-contract-v1.1",
+      "counts": {
+        "PASS": 14
+      },
+      "prior_counts": {
+        "PASS": 14
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    },
+    {
+      "case": "s4-v2-c03-rowb-into-aisle-contract-v1.1",
+      "counts": {
+        "PASS": 11,
+        "FAIL": 3
+      },
+      "prior_counts": {
+        "PASS": 11,
+        "FAIL": 3
+      },
+      "lost_prior_failures": [],
+      "max_prims": 10000,
+      "scene_files_unchanged": true
+    }
+  ],
+  "attribution_correction": {
+    "case": "s2-c09-texture-missing-contract",
+    "old_failure": "belt-material",
+    "new_belt_status": "PASS",
+    "delivery_remains_blocked": true,
+    "missing_dependency": "textures/lane-sign.png",
+    "explanation": "The missing file belongs to the lane sign, not the belt network. Admission records the missing file and image comparison remains UNKNOWN. No sign material or global dependency rule was selected in this contract."
+  },
+  "benchmarks": [
+    {
+      "case": "general",
+      "runtime": "baseline",
+      "max_peak_memory_bytes": 157761536,
+      "outcomes": [
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        }
+      ],
+      "fresh-process-first-call": {
+        "repetitions": 3,
+        "median_s": 5.557850459008478,
+        "range_s": [
+          5.499351333943196,
+          5.576632999931462
+        ]
+      },
+      "warm": {
+        "repetitions": 3,
+        "median_s": 5.225888167042285,
+        "range_s": [
+          5.199241416994482,
+          5.231910750037059
+        ]
+      }
+    },
+    {
+      "case": "general",
+      "runtime": "candidate",
+      "max_peak_memory_bytes": 157450240,
+      "outcomes": [
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        },
+        {
+          "PASS": 28
+        }
+      ],
+      "fresh-process-first-call": {
+        "repetitions": 3,
+        "median_s": 6.0171005830634385,
+        "range_s": [
+          5.975813457975164,
+          6.258256874978542
+        ]
+      },
+      "warm": {
+        "repetitions": 3,
+        "median_s": 5.463802375015803,
+        "range_s": [
+          5.456511125084944,
+          5.480060040950775
+        ]
+      }
+    },
+    {
+      "case": "clearance",
+      "runtime": "baseline",
+      "max_peak_memory_bytes": 108019712,
+      "outcomes": [
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        }
+      ],
+      "fresh-process-first-call": {
+        "repetitions": 3,
+        "median_s": 135.0046730840113,
+        "range_s": [
+          131.2820079579251,
+          137.06532245897688
+        ]
+      },
+      "warm": {
+        "repetitions": 3,
+        "median_s": 134.4740525840316,
+        "range_s": [
+          133.5873682500096,
+          135.76883770804852
+        ]
+      }
+    },
+    {
+      "case": "clearance",
+      "runtime": "candidate",
+      "max_peak_memory_bytes": 109215744,
+      "outcomes": [
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        },
+        {
+          "PASS": 6
+        }
+      ],
+      "fresh-process-first-call": {
+        "repetitions": 3,
+        "median_s": 2.3089102499652654,
+        "range_s": [
+          2.276930082938634,
+          2.349650959018618
+        ]
+      },
+      "warm": {
+        "repetitions": 3,
+        "median_s": 2.142764416988939,
+        "range_s": [
+          2.13833312492352,
+          2.152478208998218
+        ]
+      }
+    }
+  ],
+  "benchmark_notes": [
+    "Same host and Python/dependency environment; first-call is not OS cold-cache.",
+    "General candidate was repeated after final reporting changes; earlier measurements are retained separately.",
+    "Other lightweight editing/validation occurred on this desktop; this is a local workload comparison, not a controlled hardware benchmark.",
+    "Peak RSS is a process high-water mark."
+  ],
+  "pending": [
+    "independent holdout evaluation",
+    "paired reviewer effort study",
+    "human-labelled triage calibration",
+    "fresh rendered judge/audit quality comparison"
+  ]
+}

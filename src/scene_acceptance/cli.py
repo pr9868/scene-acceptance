@@ -80,6 +80,7 @@ def main(argv=None):
     parser.add_argument(
         "--reviews", help="Caller-selected reviewer JSON relative to review root"
     )
+    parser.add_argument("--max-prims", type=int, default=10000)
     parser.add_argument(
         "--max-dependency-files",
         type=int,
@@ -183,6 +184,7 @@ def main(argv=None):
                 judge_exposure=args.judge_exposure,
                 approved_packs=args.allow_pack,
                 max_dependency_files=args.max_dependency_files,
+                max_prims=args.max_prims,
             )
         except Exception as exc:
             print("Cannot start evaluation: " + str(exc), file=sys.stderr)
@@ -236,6 +238,7 @@ def main(argv=None):
                 expected_sha256=args.expected_brief_sha256,
                 approved_packs=args.allow_pack,
                 max_dependency_files=args.max_dependency_files,
+                max_prims=args.max_prims,
             )
         except Exception as exc:
             print("Cannot complete brief assessment: " + str(exc), file=sys.stderr)
@@ -286,6 +289,8 @@ def main(argv=None):
             args.out,
             "--max-dependency-files",
             str(args.max_dependency_files),
+            "--max-prims",
+            str(args.max_prims),
         ]
         for flag, value in (
             ("--decisions", args.decisions),
@@ -331,6 +336,7 @@ def main(argv=None):
             bundle,
             args.candidate,
             max_dependency_files=args.max_dependency_files,
+            max_prims=args.max_prims,
             implicit=implicit_profile,
         )
     else:
@@ -344,6 +350,7 @@ def main(argv=None):
             expected_contract_sha256=args.expected_contract_sha256,
             approved_packs=args.allow_pack,
             max_dependency_files=args.max_dependency_files,
+            max_prims=args.max_prims,
         )
     try:
         write_report(report, out)

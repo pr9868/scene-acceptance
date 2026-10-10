@@ -11,12 +11,14 @@ from .model import ContractError, digest_json, sha, strict_json
 # digest pins remain untouched, so negative controls cannot become valid by migration.
 PREVIOUS_VERSIONS = {
     "openusd": ("1.0.0",),
-    "materials": ("1.0.0",),
+    "materials": ("1.0.0", "1.1.0"),
     "motion": ("1.0.0",),
     "nvidia.asset-validator": ("1.0.0",),
     "motion.timing": ("1.0.0",),
     "scene.audit": ("1.0.0", "1.1.0"),
-    "brief.measurements": ("1.0.0", "1.1.0", "1.2.0"),
+    "brief.measurements": ("1.0.0", "1.1.0", "1.2.0", "1.3.0"),
+    "geometry.clearance": ("1.0.0", "1.0.1"),
+    "process.connections": ("1.0.0",),
     "textures.decode": ("0.1.0", "0.2.0"),
     "brief.four-job": ("1.0.0",),
     "physics.incline-worker": ("0.1.0",),

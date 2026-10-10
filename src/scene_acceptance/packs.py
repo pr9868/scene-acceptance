@@ -28,6 +28,8 @@ class CheckSpec:
     description: str
     coverage: str
     limitations: tuple[str, ...] = ()
+    capabilities: dict = field(default_factory=dict)
+    preflight: Callable | None = None
 
 
 @dataclass(frozen=True)
@@ -56,6 +58,11 @@ class Pack:
                 raise ContractError(
                     "A check needs a callable, description and coverage"
                 )
+            if spec.preflight is not None and not callable(spec.preflight):
+                raise ContractError("Preflight must be callable")
+            if not isinstance(spec.capabilities, dict):
+                raise ContractError("Capabilities must be a JSON object")
+            digest_json(spec.capabilities)
             Draft202012Validator.check_schema(spec.parameters)
         object.__setattr__(self, "checks", MappingProxyType(dict(self.checks)))
 
@@ -84,6 +91,14 @@ class Pack:
                     "coverage": s.coverage,
                     "limitations": list(s.limitations),
                     "parameters": s.parameters,
+                    **(
+                        {
+                            "capabilities": s.capabilities,
+                            "preflight_available": s.preflight is not None,
+                        }
+                        if s.capabilities or s.preflight
+                        else {}
+                    ),
                 }
                 for name, s in self.checks.items()
             },
@@ -142,6 +157,7 @@ def default_registry(approved=(), *, selected=(), include_examples=False):
     from .process_connections import process_pack
     from .layer_policy import layer_pack
     from .continuous_motion import continuous_pack
+    from .mechanical import mechanical_pack
     from .clearance import clearance_pack
     from .external_evidence import external_pack
     from .image_policy import appearance_pack
@@ -165,6 +181,7 @@ def default_registry(approved=(), *, selected=(), include_examples=False):
             layer_pack(),
             continuous_pack(),
             clearance_pack(),
+            mechanical_pack(),
             external_pack(),
             appearance_pack(),
         ]

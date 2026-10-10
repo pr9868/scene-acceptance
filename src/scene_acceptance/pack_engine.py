@@ -61,6 +61,7 @@ def evaluate_packs(
     approved_packs=(),
     legacy_inputs_present=False,
     max_dependency_files=64,
+    max_prims=10000,
     contract_data=None,
     runtime_dependency_policy="local-only",
     runtime_environment_sha256=None,
@@ -81,9 +82,15 @@ def evaluate_packs(
     }
     try:
         preliminary = EvidenceBundle(
-            bundle_root, [], max_dependency_files=max_dependency_files
+            bundle_root,
+            [],
+            max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
         )
-        admission_limits = {"max_dependency_files": preliminary.max_dependency_files}
+        admission_limits = {
+            "max_dependency_files": preliminary.max_dependency_files,
+            "max_prims": preliminary.max_prims,
+        }
         cp = preliminary.record(contract_path) if contract_data is None else None
         identity["contract_sha256"] = (
             sha(cp) if cp else model.digest_json(contract_data)
@@ -114,6 +121,7 @@ def evaluate_packs(
             bundle_root,
             c["allowed_dependencies"],
             max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
         )
         if cp:
             bundle.record(cp)

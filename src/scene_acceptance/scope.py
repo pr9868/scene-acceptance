@@ -257,6 +257,7 @@ def bind_preparation(
     expected_scope_sha256,
     capture_capabilities=None,
     max_dependency_files=None,
+    max_prims=None,
     migrate_runtime=False,
     reviewer=None,
     reason=None,
@@ -300,13 +301,18 @@ def bind_preparation(
         else cap["capabilities"]
     )
     Draft202012Validator(CAPABILITIES_SCHEMA).validate(caps)
+    prim_budget = previous.get("max_prims", 10000) if max_prims is None else max_prims
     budget = (
         previous.get("max_dependency_files", 64)
         if max_dependency_files is None
         else max_dependency_files
     )
     context = context_for(
-        root, candidate, out / "admission", max_dependency_files=budget
+        root,
+        candidate,
+        out / "admission",
+        max_dependency_files=budget,
+        max_prims=prim_budget,
     )
     original_request = strict_json(old / "preparation-request.json")
     drift = judge_coverage_drift(
@@ -379,6 +385,26 @@ def bind_preparation(
             image_budget_after_references=image_budget,
         ),
     )
+    from .preflight import checks as preflight_checks, capture_budget
+    from .profiles import discover_artifact
+
+    save(
+        out / "preflight.json",
+        preflight_checks(
+            discover_artifact(
+                bundle,
+                context["candidate"],
+                max_dependency_files=budget,
+                max_prims=prim_budget,
+            ),
+            (scope["brief"] or {}).get("checks", []),
+        ),
+    )
+    save(out / "capture-feasibility.json", capture_budget(captures, image_budget))
+    # Persist aggregate gaps in the candidate's capture plan as well.
+    cap_file = json.loads((out / "capture-plan.json").read_text())
+    cap_file["requests"] = captures
+    save(out / "capture-plan.json", cap_file)
     files = {str(p.relative_to(out)): sha(p) for p in bundle.rglob("*") if p.is_file()}
     files.update({p.name: sha(p) for p in out.glob("*.json")})
     plan = dict(
@@ -389,6 +415,7 @@ def bind_preparation(
         scene_identity=context["scene"]["identity"],
         scene_sha256=context["scene"]["sha256"],
         max_dependency_files=budget,
+        max_prims=prim_budget,
         runtime_sha256=implementation_digest(),
         environment=environment_identity(),
         scope_sha256=scope["scope_sha256"],

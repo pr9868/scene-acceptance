@@ -64,11 +64,15 @@ A brief can include a P&ID, equipment list, dimensions, photos or intended behav
 | Visual review | Optional model opinions on suitable caller-rendered views; no built-in renderer or GPU requirement. |
 | Assumption triage | Optional model recommendations on selected declared decisions. Human-review items use default low, medium and high definitions that owners can override, with owner minimums enforced. Low still requires review; items without a supported grade stay unrated. A matching human record can close a triage request; it cannot clear measured failures or missing required evidence. |
 | Assumption audit | A separate experimental operation proposes cited questions about undeclared choices. Questions are never automatic findings or approvals. |
-| Extended checks | Triangle clearance, bounded translation sweeps, continuous connections, layer policy, UDIM dependencies and explicit color/orientation comparisons. [Scope and limits](docs/EXTENSIONS.md). |
+| Extended checks | Planar polygon and bounded implicit-shape clearance, bounded translation sweeps, continuous connections, layer policy, UDIM dependencies and explicit color/orientation comparisons. [Scope and limits](docs/EXTENSIONS.md). |
 | External measurements | Caller-verified viewer traces and engine profile/runtime tests with retained native evidence. Unverified receipts remain unknown. |
 | Simulation | A fixed CPU ramp-and-block example remains available as an explicitly selected example pack; general simulation stays with the calling engine. |
 
 Where a [SimReady profile](https://docs.omniverse.nvidia.com/simready/latest/simready-faq.html) fits the job, I would use its validation and runtime tests within this workflow. The [external-engine bridge](docs/EXTENSIONS.md#engine-bridge-and-caller-evidence) can invoke a caller-configured CLI and import selected native results. Its transport controls are tested; a specific SimReady/PhysX installation still needs its own passing/failing runtime validation. The NVIDIA baseline pack continues to select USD Validation rules.
+
+The [first-delivery upgrades](docs/USEFULNESS_UPGRADE.md) add read-only geometry adaptation, explicit surface/contact policy, subject selectors, mechanical relationship checks, preflight and caller evidence helpers. Their scope remains bounded and experimental.
+
+The [developer replay](evaluation/first-delivery-upgrade-v1/README.md) shows what changed on three original deliveries, which seeded problems still escaped, and the measured runtime of the clearance checks. It separates implementation improvements from changes to a job's acceptance policy.
 
 ## Use or extend it
 

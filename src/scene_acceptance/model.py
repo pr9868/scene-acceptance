@@ -43,6 +43,24 @@ class DependencyLimitExceeded(MissingEvidence):
         }
 
 
+class PrimLimitExceeded(MissingEvidence):
+    """Capacity is a caller setting, not evidence of a defective delivery."""
+
+    def __init__(self, limit, observed):
+        super().__init__(
+            f"Scene exceeds caller capacity of {limit} composed prims; observed at least {observed}"
+        )
+        self.evidence = {
+            "kind": "resource_limit",
+            "cause": "capacity_limit",
+            "limit_name": "max_prims",
+            "limit": limit,
+            "observed_at_least": observed,
+            "resolution": "raise_resource_budget",
+            "scope": "composed prims including instance proxies",
+        }
+
+
 class BoundaryError(ValueError):
     pass
 

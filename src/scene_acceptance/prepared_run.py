@@ -161,6 +161,7 @@ def _evidence_preflight(folder, plan, bundle, out, views, receipt):
             views=views,
             rubric=folder / "rubric.json",
             max_dependency_files=plan["max_dependency_files"],
+            max_prims=plan.get("max_prims", 10000),
         )
         rows, policy = validate_receipt(
             plan,
@@ -283,6 +284,7 @@ def evaluate_prepared(
         )
     bundle = folder / plan["bundle"]
     budget = plan.get("max_dependency_files", 64)
+    prim_budget = plan.get("max_prims", 10000)
     if approval:
         from .scope import read_approval
 
@@ -332,6 +334,7 @@ def evaluate_prepared(
         evidence_error=evidence_error,
         evidence_requirements=dict(requests=capture["requests"], receipts=rows),
         max_dependency_files=budget,
+        max_prims=prim_budget,
         review_record=review_record,
         runtime_dependency_evidence=runtime_dependency_evidence,
         runtime_dependency_policy=runtime_policy.get("policy", "local-only"),
@@ -456,13 +459,24 @@ def evaluate_prepared(
     _report(out, report)
     from .delivery_report import write_delivery_report
 
-    evaluation_path = out / 'evaluation/evaluation.json'
-    assessment_path = out / 'evaluation/script/report/assessment.json'
-    write_delivery_report(out, prepared=report,
-                          evaluation=strict_json(evaluation_path) if evaluation_path.is_file() else None,
-                          assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
-                          core=strict_json(out / 'evaluation/script/result.json') if (out / 'evaluation/script/result.json').is_file() else None,
-                          review_context=strict_json(out / 'evaluation/evidence/context.json') if (out / 'evaluation/evidence/context.json').is_file() else None)
+    evaluation_path = out / "evaluation/evaluation.json"
+    assessment_path = out / "evaluation/script/report/assessment.json"
+    write_delivery_report(
+        out,
+        prepared=report,
+        evaluation=strict_json(evaluation_path) if evaluation_path.is_file() else None,
+        assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
+        core=(
+            strict_json(out / "evaluation/script/result.json")
+            if (out / "evaluation/script/result.json").is_file()
+            else None
+        ),
+        review_context=(
+            strict_json(out / "evaluation/evidence/context.json")
+            if (out / "evaluation/evidence/context.json").is_file()
+            else None
+        ),
+    )
     save(
         out / "manifest.json",
         {

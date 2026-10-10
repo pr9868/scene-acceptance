@@ -802,6 +802,157 @@
       }
     },
     {
+      "id": "brief.measurements.rotation_rate",
+      "pack": "brief.measurements",
+      "check": "rotation_rate",
+      "description": "Compare authored scalar rotation rate",
+      "coverage": "Every linear scalar angle segment; local coordinates",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "interval_s": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "expected_rpm": {
+            "type": "number"
+          },
+          "tolerance_rpm": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "attribute",
+          "interval_s",
+          "expected_rpm",
+          "tolerance_rpm"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.attribute_value",
+      "pack": "brief.measurements",
+      "check": "attribute_value",
+      "description": "Compare an authored value",
+      "coverage": "One owner-selected attribute and time; no rendered appearance",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "attribute": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            ]
+          },
+          "time_code": {
+            "type": "number"
+          },
+          "tolerance": {
+            "type": "number",
+            "minimum": 0
+          },
+          "unit_scale": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "expected_encoding": {
+            "enum": [
+              "raw",
+              "srgb",
+              "linear_rgb"
+            ]
+          }
+        },
+        "required": [
+          "attribute",
+          "expected",
+          "time_code",
+          "tolerance"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "brief.measurements.relative_motion",
+      "pack": "brief.measurements",
+      "check": "relative_motion",
+      "description": "Compare relative world displacement",
+      "coverage": "Two saved times; no path or continuous-motion claim",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end_s": {
+            "type": "number",
+            "minimum": 0
+          },
+          "delta_m": {
+            "type": "array",
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "path",
+          "start_s",
+          "end_s",
+          "delta_m",
+          "tolerance_m"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
       "id": "brief.measurements.metadata",
       "pack": "brief.measurements",
       "check": "metadata",
@@ -857,7 +1008,7 @@
       "pack": "brief.measurements",
       "check": "bounds",
       "description": "Named geometry size and centre",
-      "coverage": "World Cube/Mesh bounds at one time",
+      "coverage": "World Cube/Mesh/Cylinder/Sphere bounds at one time",
       "limitations": [
         "No shape equivalence"
       ],
@@ -874,7 +1025,10 @@
           "size_m": {
             "type": "array",
             "items": {
-              "type": "number"
+              "type": [
+                "number",
+                "null"
+              ]
             },
             "minItems": 3,
             "maxItems": 3
@@ -882,7 +1036,32 @@
           "center_m": {
             "type": "array",
             "items": {
-              "type": "number"
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "minimum_m": {
+            "type": "array",
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "maximum_m": {
+            "type": "array",
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ]
             },
             "minItems": 3,
             "maxItems": 3
@@ -908,9 +1087,29 @@
             "required": [
               "center_m"
             ]
+          },
+          {
+            "required": [
+              "minimum_m"
+            ]
+          },
+          {
+            "required": [
+              "maximum_m"
+            ]
           }
         ]
-      }
+      },
+      "capabilities": {
+        "geometry": [
+          "Cube",
+          "Mesh",
+          "Cylinder",
+          "Sphere"
+        ],
+        "time": "named"
+      },
+      "preflight_available": true
     },
     {
       "id": "brief.measurements.children",
@@ -1318,6 +1517,17 @@
           },
           "allow_extra_connections": {
             "type": "boolean"
+          },
+          "direction_aliases": {
+            "type": "object",
+            "additionalProperties": {
+              "enum": [
+                "in",
+                "out",
+                "bidirectional"
+              ]
+            },
+            "maxProperties": 32
           }
         },
         "required": [
@@ -1508,6 +1718,10 @@
           "time_s": {
             "type": "number",
             "minimum": 0
+          },
+          "approximation_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
           }
         },
         "required": [
@@ -1520,7 +1734,17 @@
           "time_s"
         ],
         "additionalProperties": false
-      }
+      },
+      "capabilities": {
+        "geometry": [
+          "Cube",
+          "planar-Mesh",
+          "Cylinder",
+          "Sphere"
+        ],
+        "time": "named"
+      },
+      "preflight_available": true
     },
     {
       "id": "geometry.clearance.sweep",
@@ -1592,7 +1816,11 @@
           "minimum_interval_s"
         ],
         "additionalProperties": false
-      }
+      },
+      "capabilities": {
+        "time": "piecewise-affine-translation"
+      },
+      "preflight_available": true
     },
     {
       "id": "geometry.clearance.clear_zone",
@@ -1606,6 +1834,77 @@
       "parameters": {
         "type": "object",
         "properties": {
+          "selector": {
+            "type": "object",
+            "properties": {
+              "root": {
+                "type": "string"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 4096
+              },
+              "collection": {
+                "type": "string"
+              },
+              "tag": {
+                "type": "object",
+                "properties": {
+                  "attribute": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean"
+                    ]
+                  }
+                },
+                "required": [
+                  "attribute",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              "exclude": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 256
+              },
+              "max_subjects": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100000
+              }
+            },
+            "additionalProperties": false
+          },
+          "representation": {
+            "enum": [
+              "surfaces",
+              "closed-solids"
+            ]
+          },
+          "contact_policy": {
+            "enum": [
+              "forbid",
+              "allow"
+            ]
+          },
+          "contact_tolerance_m": {
+            "type": "number",
+            "minimum": 0
+          },
+          "approximation_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
           "zone_min_m": {
             "type": "array",
             "items": {
@@ -1649,13 +1948,268 @@
         "required": [
           "zone_min_m",
           "zone_max_m",
-          "obstacles",
           "time_s",
           "numeric_margin_m",
           "max_triangle_pairs"
         ],
         "additionalProperties": false
-      }
+      },
+      "capabilities": {
+        "subjects": [
+          "paths",
+          "selector"
+        ],
+        "time": "named"
+      },
+      "preflight_available": true
+    },
+    {
+      "id": "mechanical.relationships.attachment",
+      "pack": "mechanical.relationships",
+      "check": "attachment",
+      "description": "Bound declared anchor separation",
+      "coverage": "Whole admitted translation interval",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "interval_s": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "a": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "b": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "max_gap_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "interval_s",
+          "numeric_margin_m",
+          "a",
+          "b",
+          "max_gap_m"
+        ],
+        "additionalProperties": false
+      },
+      "capabilities": {
+        "time": "piecewise-affine-translation"
+      },
+      "preflight_available": true
+    },
+    {
+      "id": "mechanical.relationships.sliding",
+      "pack": "mechanical.relationships",
+      "check": "sliding",
+      "description": "Bound lateral alignment and signed travel",
+      "coverage": "Whole admitted translation interval",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "interval_s": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "a": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "b": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "local_point": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [
+              "path",
+              "local_point"
+            ],
+            "additionalProperties": false
+          },
+          "axis_world": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "max_lateral_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "minimum_travel_m": {
+            "type": "number"
+          },
+          "maximum_travel_m": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "interval_s",
+          "numeric_margin_m",
+          "a",
+          "b",
+          "axis_world",
+          "max_lateral_m",
+          "minimum_travel_m",
+          "maximum_travel_m"
+        ],
+        "additionalProperties": false
+      },
+      "capabilities": {
+        "time": "piecewise-affine-translation"
+      },
+      "preflight_available": true
+    },
+    {
+      "id": "mechanical.relationships.engagement",
+      "pack": "mechanical.relationships",
+      "check": "engagement",
+      "description": "Bound minimum projected overlap",
+      "coverage": "Whole admitted translation interval; projection only",
+      "limitations": [],
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "interval_s": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "numeric_margin_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "a": {
+            "type": "string",
+            "minLength": 1
+          },
+          "b": {
+            "type": "string",
+            "minLength": 1
+          },
+          "axis_world": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "minimum_overlap_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "interval_s",
+          "numeric_margin_m",
+          "a",
+          "b",
+          "axis_world",
+          "minimum_overlap_m"
+        ],
+        "additionalProperties": false
+      },
+      "capabilities": {
+        "time": "piecewise-affine-translation"
+      },
+      "preflight_available": true
     },
     {
       "id": "external.evidence.viewer_performance",
@@ -1984,19 +2538,20 @@
   "pack_versions": {
     "openusd": "1.1.0",
     "geometry": "1.0.0",
-    "materials": "1.1.0",
+    "materials": "1.2.0",
     "motion": "1.1.0",
     "nvidia.asset-validator": "1.1.0",
     "motion.timing": "1.1.0",
     "textures.decode": "0.3.0",
     "motion.connection": "0.1.0",
     "scene.audit": "1.2.0",
-    "brief.measurements": "1.3.0",
+    "brief.measurements": "1.4.0",
     "behavior.state": "1.1.0",
-    "process.connections": "1.0.0",
+    "process.connections": "1.1.0",
     "usd.layers": "1.0.0",
     "motion.continuous": "1.0.1",
-    "geometry.clearance": "1.0.1",
+    "geometry.clearance": "1.1.0",
+    "mechanical.relationships": "1.0.0",
     "external.evidence": "1.1.0",
     "textures.appearance": "1.0.0",
     "physics.incline-worker": "0.2.0",

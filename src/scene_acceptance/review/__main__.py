@@ -235,6 +235,7 @@ def main(argv=None):
         "--reviews", help="Relative caller-selected reviewer JSON, inside review root"
     )
     parser.add_argument("--approve-pack", action="append", default=[])
+    parser.add_argument("--max-prims", type=int, default=10000)
     parser.add_argument("--max-dependency-files", type=int, default=64)
     parser.add_argument(
         "--out",
@@ -261,6 +262,7 @@ def main(argv=None):
         review_record=args.reviews,
         approved_packs=args.approve_pack,
         max_dependency_files=args.max_dependency_files,
+        max_prims=args.max_prims,
     )
     try:
         write_report(report, args.out)

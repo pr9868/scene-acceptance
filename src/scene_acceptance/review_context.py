@@ -232,12 +232,13 @@ def context_for(
     views=None,
     rubric=None,
     max_dependency_files=64,
+    max_prims=10000,
 ):
     """Snapshot only admitted files; all original and copied hashes remain checked."""
     root = Path(bundle_root).resolve()
     dest = Path(destination).resolve()
     artifact = discover_artifact(
-        root, candidate, max_dependency_files=max_dependency_files
+        root, candidate, max_dependency_files=max_dependency_files, max_prims=max_prims
     )
     inv = inventory(artifact)
     hashes = {}
@@ -463,6 +464,7 @@ def context_for(
         dest / "scene",
         artifact.identity["root"],
         max_dependency_files=max_dependency_files,
+        max_prims=max_prims,
     )
     if copied.identity != artifact.identity:
         raise ContractError("Snapshot changed scene dependency resolution")

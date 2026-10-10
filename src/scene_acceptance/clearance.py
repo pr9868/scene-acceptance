@@ -1,138 +1,19 @@
 """Triangle-surface distance and conservative sweeps of translating closed solids."""
 
-from collections import Counter
 from fractions import Fraction
 from pathlib import Path
 import math
 
-from pxr import Gf, Usd, UsdGeom
+from pxr import Gf
 
 from .builtin_packs import obj, TEXT, VEC3
 from .continuous_motion import affine_times, matrix_at
 from .model import ContractError, MissingEvidence
-from .motion_timing import elapsed_time_code, read_clock
 from .packs import CheckSpec, Outcome, Pack
 
-BOX_FACES = [
-    (0, 1, 3),
-    (0, 3, 2),
-    (4, 6, 7),
-    (4, 7, 5),
-    (0, 4, 5),
-    (0, 5, 1),
-    (2, 3, 7),
-    (2, 7, 6),
-    (0, 2, 6),
-    (0, 6, 4),
-    (1, 5, 7),
-    (1, 7, 3),
-]
-
-
-def box(lo, hi):
-    vertices = [
-        Gf.Vec3d(x, y, z)
-        for x in (lo[0], hi[0])
-        for y in (lo[1], hi[1])
-        for z in (lo[2], hi[2])
-    ]
-    return [tuple(vertices[i] for i in face) for face in BOX_FACES]
-
-
-def read_triangles(stage, path, seconds, solid):
-    prim = stage.GetPrimAtPath(path)
-    if not prim:
-        raise MissingEvidence("Missing clearance subject: " + path)
-    # Rest points are not evaluated skinning/blend-shape geometry. Bindings can
-    # be inherited, so inspect the composed ancestor chain as well as the mesh.
-    current = prim
-    while current and not current.IsPseudoRoot():
-        for prop in current.GetAuthoredProperties():
-            if prop.GetName().startswith(("skel:", "primvars:skel:")):
-                raise MissingEvidence(
-                    "Clearance does not evaluate skinning or blend-shape bindings; "
-                    "supply baked geometry: " + str(prop.GetPath())
-                )
-        current = current.GetParent()
-    clock = read_clock(stage)
-    matrix = matrix_at(stage, path, clock, seconds)
-    units = UsdGeom.GetStageMetersPerUnit(stage)
-    if (
-        not stage.HasAuthoredMetadata("metersPerUnit")
-        or not math.isfinite(units)
-        or units <= 0
-    ):
-        raise MissingEvidence("Clearance requires authored positive stage units")
-    if prim.IsA(UsdGeom.Cube):
-        attr = UsdGeom.Cube(prim).GetSizeAttr()
-        size = attr.Get()
-        if (
-            attr.GetNumTimeSamples()
-            or attr.HasSpline()
-            or size is None
-            or not math.isfinite(size)
-            or size <= 0
-        ):
-            raise MissingEvidence("Only static positive cube size is admitted")
-        triangles = box([-size / 2] * 3, [size / 2] * 3)
-    elif prim.IsA(UsdGeom.Mesh):
-        mesh = UsdGeom.Mesh(prim)
-        attrs = [
-            mesh.GetPointsAttr(),
-            mesh.GetFaceVertexCountsAttr(),
-            mesh.GetFaceVertexIndicesAttr(),
-        ]
-        if (
-            any(
-                a.GetNumTimeSamples() or a.HasSpline()
-                for a in [
-                    *attrs,
-                    mesh.GetSubdivisionSchemeAttr(),
-                    mesh.GetHoleIndicesAttr(),
-                ]
-            )
-            or mesh.GetSubdivisionSchemeAttr().Get() != "none"
-            or mesh.GetHoleIndicesAttr().Get()
-        ):
-            raise MissingEvidence(
-                "Clearance requires static unsubdivided triangle topology without holes"
-            )
-        points, counts, indices = [a.Get() for a in attrs]
-        if (
-            points is None
-            or counts is None
-            or indices is None
-            or not len(counts)
-            or any(c != 3 for c in counts)
-            or len(indices) != 3 * len(counts)
-        ):
-            raise MissingEvidence("Clearance requires explicit triangular faces")
-        if (
-            len(points) > 100000
-            or len(counts) > 100000
-            or any(i < 0 or i >= len(points) for i in indices)
-        ):
-            raise MissingEvidence("Invalid topology or clearance mesh budget exceeded")
-        faces = [list(indices[i : i + 3]) for i in range(0, len(indices), 3)]
-        if solid:
-            edges = Counter((f[i], f[(i + 1) % 3]) for f in faces for i in range(3))
-            if any(n != 1 or edges.get((b, a)) != 1 for (a, b), n in edges.items()):
-                raise MissingEvidence(
-                    "Closed-solid policy requires a consistently oriented two-manifold mesh"
-                )
-        triangles = [tuple(Gf.Vec3d(*points[i]) for i in f) for f in faces]
-    else:
-        raise MissingEvidence("Clearance supports selected Cube or triangle Mesh prims")
-    result = [
-        tuple(matrix.Transform(p) * units for p in triangle) for triangle in triangles
-    ]
-    for a, b, c in result:
-        if (
-            not all(math.isfinite(x) for p in (a, b, c) for x in p)
-            or Gf.Cross(b - a, c - a).GetLength() <= 1e-15
-        ):
-            raise MissingEvidence("Non-finite or degenerate triangle")
-    return result
+from .geometry_access import box, read_triangles, read_geometry
+from .subjects import SELECTOR
+from .preflight import geometry as geometry_preflight
 
 
 def segment_distance(a, b, c, d):
@@ -284,10 +165,23 @@ def distance(a, b, solid, max_pairs):
 
 def static(ctx, params):
     solid = params["representation"] == "closed-solids"
-    a = read_triangles(ctx.artifact.stage, params["a"], params["time_s"], solid)
-    b = read_triangles(ctx.artifact.stage, params["b"], params["time_s"], solid)
+    ga = read_geometry(
+        ctx.artifact.stage,
+        params["a"],
+        params["time_s"],
+        solid,
+        approximation_m=params.get("approximation_m", 0.001),
+    )
+    gb = read_geometry(
+        ctx.artifact.stage,
+        params["b"],
+        params["time_s"],
+        solid,
+        approximation_m=params.get("approximation_m", 0.001),
+    )
+    a, b = ga.triangles, gb.triangles
     value = distance(a, b, solid, params["max_triangle_pairs"])
-    margin = params["numeric_margin_m"]
+    margin = params["numeric_margin_m"] + ga.error_m + gb.error_m
     target = params["minimum_m"]
     status = (
         "FAIL"
@@ -302,6 +196,8 @@ def static(ctx, params):
             minimum_m=target,
             numeric_margin_m=margin,
             triangle_counts=[len(a), len(b)],
+            approximation_error_m=ga.error_m + gb.error_m,
+            geometry_methods=[ga.method, gb.method],
             time_s=params["time_s"],
             representation=params["representation"],
             subjects=[params["a"], params["b"]],
@@ -377,40 +273,213 @@ def sweep(ctx, params):
     )
 
 
+def _clip_triangle(triangle, lo, hi):
+    polygon = list(triangle)
+    for axis in range(3):
+        for edge, direction in [(lo[axis], 1), (hi[axis], -1)]:
+            if not polygon:
+                return []
+            result = []
+            for p, q in zip(polygon, polygon[1:] + polygon[:1]):
+                a = (p[axis] - edge) * direction
+                b = (q[axis] - edge) * direction
+                if a >= 0:
+                    result.append(p)
+                if (a < 0 and b >= 0) or (a >= 0 and b < 0):
+                    t = a / (a - b)
+                    hit = p + (q - p) * t
+                    hit[axis] = edge
+                    result.append(hit)
+            polygon = result
+    return polygon
+
+
 def zone(ctx, params):
+    from .subjects import resolve
+    from .observations import status_of
+    from .coverage import assessment
+
     lo, hi = params["zone_min_m"], params["zone_max_m"]
+    contact_tolerance = params.get("contact_tolerance_m", 0)
+    if contact_tolerance and params.get("contact_policy", "forbid") != "allow":
+        raise ContractError("A contact allowance requires contact_policy=allow")
+    lo = [x + contact_tolerance for x in lo]
+    hi = [x - contact_tolerance for x in hi]
     if any(a >= b for a, b in zip(lo, hi)):
         raise ContractError("Clear-height zone bounds must increase on every axis")
+    if "selector" in params and "obstacles" in params:
+        raise ContractError("Choose selector or obstacles, not both")
+    selection = (
+        resolve(ctx.artifact.stage, params["selector"])
+        if "selector" in params
+        else dict(
+            paths=params.get("obstacles", []), excluded=[], missing=[], unavailable=[]
+        )
+    )
+    paths = selection["paths"]
     target = box(lo, hi)
     rows = []
-    for path in params["obstacles"]:
-        triangles = read_triangles(ctx.artifact.stage, path, params["time_s"], True)
-        value = distance(triangles, target, True, params["max_triangle_pairs"])
+    if selection.get("capacity_exhausted"):
         rows.append(
             dict(
-                path=path,
-                distance_m=value,
-                status=(
-                    "FAIL"
-                    if value == 0
-                    else "UNKNOWN" if value <= params["numeric_margin_m"] else "PASS"
-                ),
+                path="selection",
+                status="UNKNOWN",
+                cause="capacity_limit",
+                reason="Subject selection capacity exhausted; unvisited subjects remain unassessed",
+                resolution="raise_resource_budget",
             )
         )
-    statuses = {r["status"] for r in rows}
+    for p in selection.get("missing", []):
+        rows.append(
+            dict(
+                path=p,
+                status="FAIL",
+                reason="Required selected subject absent",
+                cause="scene_mismatch",
+            )
+        )
+    for p in selection.get("unavailable", []):
+        rows.append(
+            dict(
+                path=p,
+                status="UNKNOWN",
+                reason="Subject inactive, undefined or unloaded",
+                cause="missing_evidence",
+            )
+        )
+    if not paths and not rows:
+        rows.append(
+            dict(
+                path="selection",
+                status="UNKNOWN",
+                reason="No obstacles selected",
+                cause="missing_evidence",
+            )
+        )
+    solid = params.get("representation", "closed-solids") == "closed-solids"
+    contact = params.get("contact_policy", "forbid")
+    for path in paths:
+        try:
+            geom = read_geometry(
+                ctx.artifact.stage,
+                path,
+                params["time_s"],
+                solid,
+                approximation_m=params.get("approximation_m", 0.001),
+            )
+            lower, upper = geom.bounds()
+            margin = params["numeric_margin_m"] + geom.error_m
+            separation = math.sqrt(
+                sum(max(lo[i] - upper[i], lower[i] - hi[i], 0) ** 2 for i in range(3))
+            )
+            if separation > margin:
+                rows.append(
+                    dict(
+                        path=path,
+                        status="PASS",
+                        distance_lower_bound_m=max(0, separation - geom.error_m),
+                        method="conservative-bounds-separation",
+                        approximation_error_m=geom.error_m,
+                    )
+                )
+                continue
+            touched = False
+            ambiguous = False
+            penetrated = False
+            for index, triangle in enumerate(geom.triangles):
+                if index * 12 >= params["max_triangle_pairs"]:
+                    raise MissingEvidence("Triangle-pair capacity exceeded: " + path)
+                polygon = _clip_triangle(triangle, lo, hi)
+                if not polygon:
+                    continue
+                touched = True
+                center = sum(polygon, Gf.Vec3d(0)) / len(polygon)
+                depth = min(min(center[i] - lo[i], hi[i] - center[i]) for i in range(3))
+                if depth > margin:
+                    penetrated = True
+                    break
+                # Exact planar boundary contact is distinguishable from shallow
+                # penetration. Approximate surfaces cannot certify this equality.
+                boundary = any(
+                    all(p[i] == edge for p in polygon)
+                    for i in range(3)
+                    for edge in (lo[i], hi[i])
+                )
+                ambiguous |= not boundary or geom.error_m > 0
+            if not touched and solid:
+                # This also catches a solid containing the entire clear zone.
+                center = Gf.Vec3d(*[(a + b) / 2 for a, b in zip(lo, hi)])
+                if inside(center, geom.triangles):
+                    penetrated = True
+            if penetrated:
+                status = "FAIL"
+            elif touched and contact == "forbid":
+                status = "FAIL" if geom.error_m == 0 else "UNKNOWN"
+            elif touched:
+                status = "UNKNOWN" if ambiguous else "PASS"
+            else:
+                value = distance(
+                    geom.triangles, target, False, params["max_triangle_pairs"]
+                )
+                status = "PASS" if value > margin else "UNKNOWN"
+            rows.append(
+                dict(
+                    path=path,
+                    status=status,
+                    intersection=(
+                        "penetration"
+                        if penetrated
+                        else "contact" if touched else "separated"
+                    ),
+                    geometry_method=geom.method,
+                    approximation_error_m=geom.error_m,
+                    contact_policy=contact,
+                    representation="closed-solids" if solid else "surfaces",
+                    cause=(
+                        "scene_mismatch"
+                        if status == "FAIL"
+                        else "numeric_uncertainty" if status == "UNKNOWN" else None
+                    ),
+                )
+            )
+        except MissingEvidence as exc:
+            rows.append(
+                dict(
+                    path=path,
+                    status="UNKNOWN",
+                    reason=str(exc),
+                    cause=(
+                        "capacity_limit"
+                        if "capacity" in str(exc) or "budget" in str(exc)
+                        else "unsupported_geometry"
+                    ),
+                    resolution="Choose supported evidence, geometry policy or a caller resource budget",
+                )
+            )
+    scope = "Selected composed obstacles at one saved time; no navigation or reachability inference."
     return Outcome(
-        (
-            "FAIL"
-            if "FAIL" in statuses
-            else "UNKNOWN" if "UNKNOWN" in statuses else "PASS"
-        ),
-        "Checked caller-named obstacles against the declared world-space clear volume.",
+        status_of(rows),
+        "Compared selected geometry with the declared clear volume and contact policy.",
         dict(
             findings=rows,
-            zone_min_m=lo,
-            zone_max_m=hi,
+            assessment=assessment(
+                "selected obstacle evaluations",
+                [
+                    dict(
+                        subject=r["path"], **{k: v for k, v in r.items() if k != "path"}
+                    )
+                    for r in rows
+                ],
+                scope,
+            ),
+            selection=selection,
+            zone_min_m=params["zone_min_m"],
+            zone_max_m=params["zone_max_m"],
+            contact_tolerance_m=contact_tolerance,
+            evaluated_interior_min_m=lo,
+            evaluated_interior_max_m=hi,
             time_s=params["time_s"],
-            coverage="Named obstacles only; the caller must include every relevant obstacle. Stage axes, metres; no navigation or reachability inference.",
+            coverage=scope,
         ),
     )
 
@@ -426,17 +495,29 @@ def clearance_pack():
     )
     return Pack(
         "geometry.clearance",
-        "1.0.1",
+        "1.1.0",
         "Triangle clearance, clear volumes and bounded translating sweeps",
         {
             "distance": CheckSpec(
                 static,
-                obj({**common, "time_s": {"type": "number", "minimum": 0}}),
+                obj(
+                    {
+                        **common,
+                        "time_s": {"type": "number", "minimum": 0},
+                        "approximation_m": {"type": "number", "exclusiveMinimum": 0},
+                    },
+                    required=[*common, "time_s"],
+                ),
                 "Measure mesh or cube clearance",
                 "Selected surfaces at a named time",
                 (
                     "Closed solids must be consistently oriented and free of self-intersections.",
                 ),
+                capabilities={
+                    "geometry": ["Cube", "planar-Mesh", "Cylinder", "Sphere"],
+                    "time": "named",
+                },
+                preflight=geometry_preflight,
             ),
             "sweep": CheckSpec(
                 sweep,
@@ -460,11 +541,18 @@ def clearance_pack():
                 "Bound swept clearance",
                 "Whole interval under piecewise affine translation",
                 ("Unsupported motion and budget exhaustion remain unknown.",),
+                capabilities={"time": "piecewise-affine-translation"},
+                preflight=geometry_preflight,
             ),
             "clear_zone": CheckSpec(
                 zone,
                 obj(
                     {
+                        "selector": SELECTOR,
+                        "representation": {"enum": ["surfaces", "closed-solids"]},
+                        "contact_policy": {"enum": ["forbid", "allow"]},
+                        "contact_tolerance_m": {"type": "number", "minimum": 0},
+                        "approximation_m": {"type": "number", "exclusiveMinimum": 0},
                         "zone_min_m": VEC3,
                         "zone_max_m": VEC3,
                         "obstacles": {
@@ -477,17 +565,30 @@ def clearance_pack():
                         "time_s": {"type": "number", "minimum": 0},
                         "numeric_margin_m": {"type": "number", "exclusiveMinimum": 0},
                         "max_triangle_pairs": common["max_triangle_pairs"],
-                    }
+                    },
+                    required=[
+                        "zone_min_m",
+                        "zone_max_m",
+                        "time_s",
+                        "numeric_margin_m",
+                        "max_triangle_pairs",
+                    ],
                 ),
                 "Check a clear-height volume",
                 "Caller-selected obstacles and world-space box",
                 ("A clear list is not proof that the caller named every obstacle.",),
+                capabilities={"subjects": ["paths", "selector"], "time": "named"},
+                preflight=geometry_preflight,
             ),
         },
         (
             str(Path(__file__)),
             str(Path(__file__).with_name("continuous_motion.py")),
             str(Path(__file__).with_name("motion_timing.py")),
+            str(Path(__file__).with_name("geometry_access.py")),
+            str(Path(__file__).with_name("subjects.py")),
+            str(Path(__file__).with_name("observations.py")),
+            str(Path(__file__).with_name("preflight.py")),
         ),
         ("usd-core",),
     )

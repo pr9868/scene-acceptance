@@ -179,6 +179,7 @@ def geometry(ctx, params):
         bundle_root=ctx.bundle.root,
         baseline_path=ctx.baseline.root if ctx.baseline else None,
         max_dependency_files=ctx.bundle.max_dependency_files,
+        max_prims=ctx.bundle.max_prims,
     )
     mapping = {
         "ACCEPT_FOR_USE": "PASS",
@@ -200,6 +201,7 @@ def geometry(ctx, params):
 def materials(ctx, params):
     stage = ctx.artifact.stage
     findings = []
+    selected_materials = set()
     for path, expected in params["bindings"].items():
         p = prim(stage, path)
         if not p:
@@ -217,6 +219,8 @@ def materials(ctx, params):
             params["purpose"]
         )
         actual = str(material.GetPath()) if material else None
+        if actual:
+            selected_materials.add(actual)
         findings.append(
             {
                 "object": path,
@@ -260,7 +264,23 @@ def materials(ctx, params):
                     "reason": "Compared declared surface implementation identity; no shader compilation or rendered appearance assessment.",
                 }
             )
-    for path, digest in sorted(ctx.artifact.assets.items()):
+    from .material_dependencies import dependencies
+
+    try:
+        selected_assets, network_gaps = dependencies(ctx, selected_materials)
+        findings.extend(network_gaps)
+    except MissingEvidence as exc:
+        selected_assets = {}
+        findings.append(
+            dict(
+                status="UNKNOWN",
+                property="material_network",
+                reason=str(exc),
+                cause="missing_evidence",
+            )
+        )
+    for path, owners in sorted(selected_assets.items()):
+        digest = ctx.artifact.assets[path]
         from .runtime_dependencies import evidence_for
 
         runtime_evidence = evidence_for(ctx, path) if not digest else None
@@ -268,6 +288,7 @@ def materials(ctx, params):
             {
                 "object": str(path.relative_to(ctx.bundle.root)),
                 "property": "external_asset_exists",
+                "materials": owners,
                 "expected": True,
                 "observed": digest is not None,
                 "status": (
@@ -303,7 +324,7 @@ def materials(ctx, params):
         "Resolved bindings, selected surface shader IDs and declared external file existence checked.",
         {
             "findings": findings,
-            "coverage": "Bindings and surface shader IDs at default time; external file existence across authored asset values. No image decode, UV fidelity, rendered appearance or friction inference.",
+            "coverage": "Bindings and surface shader IDs at default time; dependencies in selected materials' connected networks. Global dependencies are assessed separately. No image decode, UV fidelity, rendered appearance or friction inference.",
         },
     )
 
@@ -508,7 +529,7 @@ def builtin_packs():
         ),
         Pack(
             "materials",
-            "1.1.0",
+            "1.2.0",
             "Material structure and delivery requirements",
             {
                 "delivery": CheckSpec(
@@ -533,7 +554,7 @@ def builtin_packs():
                     ),
                 )
             },
-            source,
+            (*source, str(Path(__file__).with_name("material_dependencies.py"))),
             ("usd-core",),
         ),
         Pack(

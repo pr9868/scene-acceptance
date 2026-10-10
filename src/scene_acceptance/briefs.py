@@ -153,11 +153,18 @@ def add_brief_to_report(report_dir, context, input_root):
         + "\n"
     )
     from .delivery_report import write_delivery_report
-    assessment_path = report_dir / 'assessment.json'
-    write_delivery_report(report_dir,
-                          assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
-                          core=strict_json(report_dir / 'result.json') if not assessment_path.is_file() else None,
-                          brief_context=context)
+
+    assessment_path = report_dir / "assessment.json"
+    write_delivery_report(
+        report_dir,
+        assessment=strict_json(assessment_path) if assessment_path.is_file() else None,
+        core=(
+            strict_json(report_dir / "result.json")
+            if not assessment_path.is_file()
+            else None
+        ),
+        brief_context=context,
+    )
     save(
         report_dir / "manifest.json",
         {
@@ -179,6 +186,7 @@ def evaluate_brief(
     expected_sha256=None,
     approved_packs=(),
     max_dependency_files=64,
+    max_prims=10000,
     review_record=None,
     runtime_dependency_policy="local-only",
     runtime_environment_sha256=None,
@@ -202,7 +210,10 @@ def evaluate_brief(
     )
     try:
         contract, identity = baseline_contract(
-            root, candidate, max_dependency_files=max_dependency_files
+            root,
+            candidate,
+            max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
         )
     except Exception as exc:
         out.mkdir(parents=True)
@@ -314,6 +325,7 @@ def evaluate_brief(
         expected_plan_sha256=sha(owner / "plan.json"),
         pack_registry=registry,
         max_dependency_files=max_dependency_files,
+        max_prims=max_prims,
         review_record=review_name,
         runtime_dependency_policy=runtime_dependency_policy,
         runtime_environment_sha256=runtime_environment_sha256,

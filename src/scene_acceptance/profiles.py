@@ -7,7 +7,9 @@ from .model import ContractError
 from .packs import default_registry
 
 
-def discover_artifact(bundle_root, candidate, *, max_dependency_files=64):
+def discover_artifact(
+    bundle_root, candidate, *, max_dependency_files=64, max_prims=10000
+):
     """Admit and inventory inputs without importing or running content-check packs."""
 
     class Discovered(set):
@@ -17,7 +19,9 @@ def discover_artifact(bundle_root, candidate, *, max_dependency_files=64):
             self.add(path)
             return True
 
-    bundle = EvidenceBundle(bundle_root, [], max_dependency_files=max_dependency_files)
+    bundle = EvidenceBundle(
+        bundle_root, [], max_dependency_files=max_dependency_files, max_prims=max_prims
+    )
     bundle.allowed = Discovered()
     artifact = UsdArtifact(bundle, candidate)
     if not bundle.unchanged() or not artifact.unchanged():
@@ -25,9 +29,14 @@ def discover_artifact(bundle_root, candidate, *, max_dependency_files=64):
     return artifact
 
 
-def baseline_contract(bundle_root, candidate, *, max_dependency_files=64):
+def baseline_contract(
+    bundle_root, candidate, *, max_dependency_files=64, max_prims=10000
+):
     artifact = discover_artifact(
-        bundle_root, candidate, max_dependency_files=max_dependency_files
+        bundle_root,
+        candidate,
+        max_dependency_files=max_dependency_files,
+        max_prims=max_prims,
     )
     bundle = artifact.bundle
     contract = json.loads(
@@ -116,6 +125,7 @@ def evaluate_baseline(
     candidate,
     *,
     max_dependency_files=64,
+    max_prims=10000,
     implicit=True,
     runtime_dependency_policy="local-only",
     runtime_environment_sha256=None,
@@ -126,7 +136,10 @@ def evaluate_baseline(
 
     try:
         contract, identity = baseline_contract(
-            bundle_root, candidate, max_dependency_files=max_dependency_files
+            bundle_root,
+            candidate,
+            max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
         )
     except Exception as exc:
         report = discovery_failure_report(
@@ -138,6 +151,7 @@ def evaluate_baseline(
             candidate,
             bundle_root=bundle_root,
             max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
             contract_data=contract,
             runtime_dependency_policy=runtime_dependency_policy,
             runtime_environment_sha256=runtime_environment_sha256,

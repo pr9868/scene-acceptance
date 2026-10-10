@@ -18,6 +18,9 @@
         "audit",
         "collect-engine",
         "report",
+        "identify",
+        "preflight",
+        "package-evidence",
         "parse"
       ]
     },

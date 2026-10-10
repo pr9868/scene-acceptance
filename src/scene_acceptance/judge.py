@@ -43,6 +43,7 @@ CONFIG_SCHEMA = obj(
 )
 CONFIG_SCHEMA["properties"].update(
     {
+        "max_context_items": {"type": "integer", "minimum": 16, "maximum": 250000},
         "max_model_calls": {"type": "integer", "minimum": 0, "maximum": 1},
         "max_request_bytes": {"type": "integer", "minimum": 1, "maximum": 8388608},
         "max_output_bytes": {"type": "integer", "minimum": 1, "maximum": 8388608},
@@ -243,6 +244,11 @@ def run_request(
         raise ContractError("Judge output must be a new directory")
     if any(not Path(p).is_file() or sha(p) != h for p, h in inputs.items()):
         raise ContractError("Evidence changed before judge run")
+    from .model_protocol import prepare_request
+
+    full_request = prepare_request(
+        request, role, response_schema, config.get("max_context_items", 512), inputs
+    )
     if len(json.dumps(request).encode()) > config.get("max_request_bytes", 8388608):
         raise ContractError("Model request byte budget exceeded")
     if config.get("max_model_calls", 1) == 0:
@@ -253,6 +259,7 @@ def run_request(
     if len(images) > 12:
         raise ContractError("Judge supports at most twelve image inputs")
     out.mkdir(parents=True)
+    save(out / "full-context.json", full_request)
     save(out / "request.json", request)
     save(out / "response-schema.json", response_schema)
     save(out / "config.json", config)
@@ -331,9 +338,9 @@ def run_request(
                     ):
                         stop_process(proc)
                         raise ContractError(
-                            "Judge output budget exceeded"
+                            f"{role.capitalize()} output budget exceeded"
                             if too_big
-                            else "Judge CLI timed out"
+                            else f"{role.capitalize()} CLI timed out"
                         )
                     time.sleep(0.05)
                 code = proc.returncode
@@ -341,9 +348,11 @@ def run_request(
                 p.exists() and p.stat().st_size > output_limit
                 for p in (out / "stdout.log", out / "stderr.log", out / "response.json")
             ):
-                raise ContractError("Judge output budget exceeded")
+                raise ContractError(f"{role.capitalize()} output budget exceeded")
             if code != 0:
-                raise ContractError(f"Judge CLI exited {code}; native logs retained")
+                raise ContractError(
+                    f"{role.capitalize()} CLI exited {code}; native logs retained"
+                )
             if config["driver"] == "json-cli":
                 response = strict_json(out / "stdout.log")
                 save(out / "response.json", response)

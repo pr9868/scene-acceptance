@@ -1,0 +1,313 @@
+{
+  "type": "object",
+  "properties": {
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]*$"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            "minItems": 1,
+            "maxItems": 256,
+            "uniqueItems": true
+          },
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                }
+              },
+              "required": [
+                "source_id",
+                "quote"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "route": {
+            "enum": [
+              "script",
+              "visual",
+              "both",
+              "unresolved",
+              "unsupported"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "area": {
+            "enum": [
+              "geometry",
+              "materials",
+              "textures",
+              "uv",
+              "motion",
+              "physics",
+              "simulation",
+              "appearance",
+              "delivery",
+              "other"
+            ]
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^spec\\.[a-z][a-z0-9_.-]*$"
+                },
+                "type_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                },
+                "parameters_json": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "\\S"
+                }
+              },
+              "required": [
+                "id",
+                "type_id",
+                "parameters_json"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0,
+            "maxItems": 256
+          },
+          "visual": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "\\S"
+                  },
+                  "evidence_kind": {
+                    "enum": [
+                      "scene_view",
+                      "textured_view",
+                      "motion_frames"
+                    ]
+                  },
+                  "captures": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_.-]*$"
+                        },
+                        "purpose": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "\\S"
+                        },
+                        "targets": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "\\S"
+                          },
+                          "minItems": 0,
+                          "maxItems": 256,
+                          "uniqueItems": true
+                        },
+                        "times_seconds": {
+                          "type": "array",
+                          "items": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "minItems": 1,
+                          "maxItems": 12,
+                          "uniqueItems": true
+                        },
+                        "camera_guidance": {
+                          "type": "string",
+                          "minLength": 1,
+                          "pattern": "\\S"
+                        },
+                        "view_role": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9_.-]*$"
+                        },
+                        "sharing_group": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9_.-]*$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "camera_id": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "minLength": 1,
+                              "pattern": "\\S"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "projection": {
+                          "anyOf": [
+                            {
+                              "enum": [
+                                "orthographic",
+                                "perspective"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "capabilities": {
+                          "type": "array",
+                          "items": {
+                            "enum": [
+                              "geometry",
+                              "surface_materials"
+                            ]
+                          },
+                          "minItems": 1,
+                          "maxItems": 256,
+                          "uniqueItems": true
+                        },
+                        "min_width": {
+                          "type": "integer",
+                          "minimum": 64,
+                          "maximum": 4096
+                        },
+                        "min_height": {
+                          "type": "integer",
+                          "minimum": 64,
+                          "maximum": 4096
+                        },
+                        "limitations": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "\\S"
+                          },
+                          "minItems": 1,
+                          "maxItems": 256
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "purpose",
+                        "targets",
+                        "times_seconds",
+                        "camera_guidance",
+                        "view_role",
+                        "sharing_group",
+                        "camera_id",
+                        "projection",
+                        "capabilities",
+                        "min_width",
+                        "min_height",
+                        "limitations"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 256
+                  }
+                },
+                "required": [
+                  "statement",
+                  "evidence_kind",
+                  "captures"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "statement",
+          "source_ids",
+          "quotes",
+          "route",
+          "reason",
+          "area",
+          "checks",
+          "visual"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 64
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "request_sha256",
+    "requirements",
+    "limitations"
+  ],
+  "additionalProperties": false
+}

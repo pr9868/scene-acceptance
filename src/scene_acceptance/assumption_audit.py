@@ -78,6 +78,7 @@ def run_audit(
     expected_script_sha256=None,
     views=None,
     max_dependency_files=64,
+    max_prims=10000,
 ):
     from .judge import load_config, run_request
     from .preparation import _read_raw
@@ -101,6 +102,7 @@ def run_audit(
         out / "evidence",
         views=views,
         max_dependency_files=max_dependency_files,
+        max_prims=max_prims,
     )
     inputs = {**context["original_hashes"], **context["snapshot_hashes"]}
     evidence = deepcopy(context["evidence"])
@@ -190,6 +192,7 @@ def run_audit(
         response_validator=validate_response,
         role="audit",
     )
+    save(out / "audit-request.json", request)
     if not intact(context):
         raise ContractError("Audit evidence changed during review")
     completed = result["status"] == "AUDIT_COMPLETE"

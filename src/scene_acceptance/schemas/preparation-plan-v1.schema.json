@@ -368,6 +368,11 @@
         "previous_runtime_sha256"
       ],
       "additionalProperties": false
+    },
+    "max_prims": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 250000
     }
   },
   "required": [

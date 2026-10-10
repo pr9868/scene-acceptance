@@ -8,8 +8,8 @@ These features are in the 0.7 development candidate. They broaden what a caller 
 | Composed USD | Local layers and assets | Selected variants, loaded payloads, inherited/specialized prims and instance proxies available to checks | All authored branches are admitted; no URLs, packages, value clips or dynamic formats |
 | Layer policy | Required units and up axis | Mismatches by layer | Metadata checks do not convert geometry |
 | UDIM dependencies | Local `<UDIM>` filenames and explicit dependency budget | Hashed tiles and a cross-check against OpenUSD discovery | Tiles 1001–1999; available tiles do not establish which tiles the brief intended |
-| Mesh clearance | Two Cube/triangle-Mesh paths, time, representation and minimum distance | Triangle distance and pass/fail/unknown | Static, undeformed topology; skinning and blend shapes stay unknown. Closed-solid containment requires valid consistently oriented solids |
-| Clear-height zone | A world-space box and explicit obstacle list | Obstructions for each named obstacle | Does not infer a complete obstacle list or navigability |
+| Mesh clearance | Two Cube/planar-Mesh/Cylinder/Sphere paths, time, representation and minimum distance | Triangle distance and pass/fail/unknown | Static, undeformed topology; skinning and blend shapes stay unknown. Closed-solid containment requires valid consistently oriented solids |
+| Clear-height zone | A world-space box and explicit obstacle list or bounded selector | Obstructions for each named obstacle | Records selected/excluded/unresolved subjects; no navigability claim |
 | Swept clearance | Interval, translation paths, clearance and calculation budget | Conservative lower bounds over each certified interval | Animated rotation, splines, deformation or an exhausted budget stays unknown |
 | Continuous connection | Two local points, interval, allowed gap and numerical margin | A maximum-gap bound across every piecewise-linear segment | Saved sampled translations with static other transforms; spline animation stays unknown. No runtime-controller proof |
 | Viewer performance | Named viewer/machine, resolution, camera path and rendered frame times | Median FPS, p95 frame time and threshold results | Unverified receipts and draw callbacks stay unknown; the caller runs and verifies the viewer |
@@ -18,7 +18,7 @@ These features are in the 0.7 development candidate. They broaden what a caller 
 | Assumption audit | Scene, brief, optional declared decisions, script report and views | Cited questions for a person | Experimental model opinion; no finding, approval or acceptance decision |
 | Native isolation | POSIX worker memory/CPU/time budgets | Bounded worker result or explicit execution error | Resource containment, not a hostile-code security sandbox |
 
-The admission boundary still limits a stage to 10,000 composed prims, including instance proxies, and 32 MiB per file. These extensions do not by themselves replay the complete 125,000-prim distribution-centre delivery. A larger admission and context strategy remains necessary for that original-scene audit.
+Admission defaults to 10,000 composed prims, including instance proxies. The caller can set `--max-prims` up to 250,000; exceeding it is an unresolved capacity gap. The 32 MiB per-file limit and other budgets still apply. These configurable limits do not establish performance on the original 125,000-prim scene. See [first-delivery upgrades](USEFULNESS_UPGRADE.md) for geometry, policy and caller helpers.
 
 Discover exact parameters through `check-3d-packs` and `check-3d --list-tests`. Fixture-specific incline and four-job packs live in the example catalog (`check-3d-packs --include-examples`). A contract explicitly naming one still loads it for replay. Third-party packs still require caller approval.
 

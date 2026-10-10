@@ -20,6 +20,16 @@ def world_bounds(stage, path, time_code):
     units = UsdGeom.GetStageMetersPerUnit(stage)
     if not math.isfinite(units) or units <= 0:
         raise MissingEvidence("Stage units must be finite and positive")
+    current = prim
+    while current and not current.IsPseudoRoot():
+        if any(
+            p.GetName().startswith(("skel:", "primvars:skel:"))
+            for p in current.GetAuthoredProperties()
+        ):
+            raise MissingEvidence(
+                "Bounds cannot evaluate skinning or blend shapes: " + path
+            )
+        current = current.GetParent()
     time = Usd.TimeCode(time_code)
     if prim.IsA(UsdGeom.Cube):
         size = UsdGeom.Cube(prim).GetSizeAttr().Get(time)
@@ -31,15 +41,65 @@ def world_bounds(stage, path, time_code):
             for y in (-1, 1)
             for z in (-1, 1)
         ]
+    elif prim.IsA(UsdGeom.Cylinder) or prim.IsA(UsdGeom.Sphere):
+        shape = (
+            UsdGeom.Cylinder(prim)
+            if prim.IsA(UsdGeom.Cylinder)
+            else UsdGeom.Sphere(prim)
+        )
+        radius = shape.GetRadiusAttr().Get(time)
+        if not radius or not math.isfinite(radius) or radius <= 0:
+            raise MissingEvidence("Implicit shape needs positive radius: " + path)
+        matrix = UsdGeom.XformCache(time).GetLocalToWorldTransform(prim)
+        if (
+            any(abs(matrix[i][3]) > 1e-12 for i in range(3))
+            or abs(matrix[3][3] - 1) > 1e-12
+        ):
+            raise MissingEvidence(
+                "Projective transforms are outside implicit bounds coverage"
+            )
+        center = matrix.Transform(Gf.Vec3d(0)) * units
+        if prim.IsA(UsdGeom.Sphere):
+            half = [
+                radius * math.sqrt(sum(matrix[j][i] ** 2 for j in range(3))) * units
+                for i in range(3)
+            ]
+        else:
+            height = shape.GetHeightAttr().Get(time)
+            axis = {"X": 0, "Y": 1, "Z": 2}[str(shape.GetAxisAttr().Get(time))]
+            if not height or not math.isfinite(height) or height <= 0:
+                raise MissingEvidence("Cylinder needs positive height: " + path)
+            half = [
+                (
+                    height / 2 * abs(matrix[axis][i])
+                    + radius
+                    * math.sqrt(sum(matrix[j][i] ** 2 for j in range(3) if j != axis))
+                )
+                * units
+                for i in range(3)
+            ]
+        if not all(math.isfinite(x) for x in [*center, *half]):
+            raise MissingEvidence("Nonfinite implicit bounds")
+        return dict(
+            minimum_m=[center[i] - half[i] for i in range(3)],
+            maximum_m=[center[i] + half[i] for i in range(3)],
+            size_m=[2 * h for h in half],
+            center_m=list(center),
+        )
     elif prim.IsA(UsdGeom.Mesh):
         points = UsdGeom.Mesh(prim).GetPointsAttr().Get(time)
         if points is None or not len(points) or len(points) > 100000:
             raise MissingEvidence("Mesh needs 1–100000 points")
     else:
         raise MissingEvidence(
-            "Named bounds support a Cube or Mesh, not an aggregate or other primitive"
+            "Named bounds support Cube, planar Mesh, Cylinder and Sphere; aggregate bounds need an explicit selection"
         )
     matrix = UsdGeom.XformCache(time).GetLocalToWorldTransform(prim)
+    if (
+        any(abs(matrix[i][3]) > 1e-12 for i in range(3))
+        or abs(matrix[3][3] - 1) > 1e-12
+    ):
+        raise MissingEvidence("Projective transforms are outside bounds coverage")
     points = [matrix.Transform(Gf.Vec3d(*p)) * units for p in points]
     if not all(math.isfinite(v) for p in points for v in p):
         raise MissingEvidence("Non-finite geometry or transform")
@@ -76,10 +136,15 @@ def bounds(ctx, params):
             "Named world bounds",
         )
     rows = []
-    for key in ("size_m", "center_m"):
+    for key in ("size_m", "center_m", "minimum_m", "maximum_m"):
         if key not in params:
             continue
-        error = max(abs(a - b) for a, b in zip(observed[key], params[key]))
+        errors = [
+            abs(a - b) for a, b in zip(observed[key], params[key]) if b is not None
+        ]
+        if not errors:
+            raise ContractError("At least one bounds axis must be constrained")
+        error = max(errors)
         rows.append(
             dict(
                 subject=params["path"] + ":" + key,
@@ -336,18 +401,30 @@ def image_pixels(ctx, params):
 
 
 def brief_measurement_pack():
+    from .preflight import bounds as bounds_preflight
+    from .requirement_values import (
+        attribute_value,
+        relative_motion,
+        VALUE_SCHEMA,
+        RELATIVE_SCHEMA,
+    )
+
     nonnegative = {"type": "number", "minimum": 0}
     bounds_schema = obj(
         {
             "path": TEXT,
             "time_code": {"type": "number"},
-            "size_m": VEC3,
-            "center_m": VEC3,
+            "size_m": {**VEC3, "items": {"type": ["number", "null"]}},
+            "center_m": {**VEC3, "items": {"type": ["number", "null"]}},
+            "minimum_m": {**VEC3, "items": {"type": ["number", "null"]}},
+            "maximum_m": {**VEC3, "items": {"type": ["number", "null"]}},
             "tolerance_m": nonnegative,
         },
         required=["path", "time_code", "tolerance_m"],
     )
-    bounds_schema["anyOf"] = [{"required": ["size_m"]}, {"required": ["center_m"]}]
+    bounds_schema["anyOf"] = [
+        {"required": [k]} for k in ("size_m", "center_m", "minimum_m", "maximum_m")
+    ]
     rectangle = obj(
         {
             "x": {"type": "integer", "minimum": 0},
@@ -369,11 +446,43 @@ def brief_measurement_pack():
         },
         required=["asset_attribute", "reference_image", "max_channel_error"],
     )
+    from .requirement_values import rotation_rate
+
     return Pack(
         "brief.measurements",
-        "1.3.0",
+        "1.4.0",
         "Explicit named-geometry, stage metadata and reference-image comparisons",
         {
+            "rotation_rate": CheckSpec(
+                rotation_rate,
+                obj(
+                    dict(
+                        attribute=TEXT,
+                        interval_s={
+                            "type": "array",
+                            "items": {"type": "number", "minimum": 0},
+                            "minItems": 2,
+                            "maxItems": 2,
+                        },
+                        expected_rpm={"type": "number"},
+                        tolerance_rpm={"type": "number", "minimum": 0},
+                    )
+                ),
+                "Compare authored scalar rotation rate",
+                "Every linear scalar angle segment; local coordinates",
+            ),
+            "attribute_value": CheckSpec(
+                attribute_value,
+                VALUE_SCHEMA,
+                "Compare an authored value",
+                "One owner-selected attribute and time; no rendered appearance",
+            ),
+            "relative_motion": CheckSpec(
+                relative_motion,
+                RELATIVE_SCHEMA,
+                "Compare relative world displacement",
+                "Two saved times; no path or continuous-motion claim",
+            ),
             "metadata": CheckSpec(
                 metadata,
                 obj(
@@ -407,8 +516,13 @@ def brief_measurement_pack():
                 bounds,
                 bounds_schema,
                 "Named geometry size and centre",
-                "World Cube/Mesh bounds at one time",
+                "World Cube/Mesh/Cylinder/Sphere bounds at one time",
                 ("No shape equivalence",),
+                capabilities={
+                    "geometry": ["Cube", "Mesh", "Cylinder", "Sphere"],
+                    "time": "named",
+                },
+                preflight=bounds_preflight,
             ),
             "children": CheckSpec(
                 children,
@@ -451,7 +565,16 @@ def brief_measurement_pack():
         },
         tuple(
             str(Path(__file__).with_name(n))
-            for n in ("brief_measurements.py", "image_evidence.py", "image_policy.py")
+            for n in (
+                "brief_measurements.py",
+                "image_evidence.py",
+                "image_policy.py",
+                "preflight.py",
+                "requirement_values.py",
+                "continuous_motion.py",
+                "motion_timing.py",
+                "observations.py",
+            )
         ),
         ("usd-core", "Pillow"),
     )

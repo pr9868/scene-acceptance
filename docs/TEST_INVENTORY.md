@@ -131,3 +131,7 @@ The automatic interpreter selects the bounded types exposed by `check-3d --capab
 | `process.connections.match` | Script | Equipment tags, port names/directions, directed edges and extra-edge policy | Equipment/port/edge totals plus each comparison | Structured graph only; no drawing extraction, physical pipe connection or process-engineering certification |
 
 Both are contract-selected, outside the general baseline. See [parameters and controls](SEMANTIC_CHECKS.md). Model interpretation does not automatically create these checks from a P&ID. Review the explicit reference and its mapping to saved scene metadata.
+
+## First-delivery additions
+
+`brief.measurements` adds `attribute_value`, `relative_motion` and `rotation_rate`; bounds permit null for unconstrained axes. `mechanical.relationships` adds `attachment`, `sliding` and `engagement`. `geometry.clearance` adds bounded subject selectors and explicit contact/surface policy for clear zones. See the [parameter examples and measurement limits](USEFULNESS_UPGRADE.md); generated `test-catalog.json` contains the current schemas and pack versions. None of these become default intent checks without a selected contract or reviewed brief.

@@ -7,8 +7,13 @@ from .usd_composition import prims, udim_tiles
 
 
 class EvidenceBundle(Bundle):
-    def __init__(self, root, dependencies, *, max_dependency_files=64):
-        super().__init__(root, dependencies, max_dependency_files=max_dependency_files)
+    def __init__(self, root, dependencies, *, max_dependency_files=64, max_prims=10000):
+        super().__init__(
+            root,
+            dependencies,
+            max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
+        )
         self.missing = set()
 
     def record(self, path, missing=False):
@@ -62,8 +67,10 @@ class UsdArtifact:
             if not layer.anonymous and bundle.path(layer.realPath) not in self.layers:
                 raise BoundaryError("Composition used an unrecorded layer")
         for i, prim in enumerate(prims(self.stage)):
-            if i >= 10000:
-                raise BoundaryError("Stage exceeds 10,000 prim admission limit")
+            if i >= bundle.max_prims:
+                from .model import PrimLimitExceeded
+
+                raise PrimLimitExceeded(bundle.max_prims, i + 1)
         self._classify_runtime_assets()
         self.identity = {
             "root": str(self.root.relative_to(bundle.root)),

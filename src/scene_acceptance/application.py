@@ -22,6 +22,9 @@ OPERATIONS = (
     "audit",
     "collect-engine",
     "report",
+    "identify",
+    "preflight",
+    "package-evidence",
 )
 
 
@@ -35,6 +38,7 @@ def _operation(name):
     from .triage_review import resolve_triage
     from .assumption_audit import run_audit
     from .engine_adapter import collect_engine
+    from .caller_tools import identify, preflight, package_evidence
     from .delivery_report import assemble_report
 
     return dict(
@@ -53,6 +57,9 @@ def _operation(name):
                 run_audit,
                 collect_engine,
                 assemble_report,
+                identify,
+                preflight,
+                package_evidence,
             ),
         )
     )[name]
@@ -91,13 +98,13 @@ def _fingerprint(operation, params):
             }
         )
         hashes.update(context[4])
-    if operation == 'report':
-        for key in ('evaluation_run', 'triage_run'):
+    if operation == "report":
+        for key in ("evaluation_run", "triage_run"):
             if params.get(key):
                 root = Path(params[key]).resolve()
                 # Reporting is local and model-free; verified replay binds the
                 # complete retained input packet, including optional review.
-                for path in root.rglob('*'):
+                for path in root.rglob("*"):
                     if path.is_file():
                         record(path, limit=536870912)
     if operation == "resolve-triage":
@@ -131,6 +138,7 @@ def _fingerprint(operation, params):
             root,
             params["candidate"],
             max_dependency_files=params.get("max_dependency_files") or 64,
+            max_prims=params.get("max_prims") or 10000,
         )
         for name in artifact.identity["files"]:
             record(root / name)
@@ -160,6 +168,8 @@ def _fingerprint(operation, params):
         "review_record",
         "runtime_dependency_evidence",
         "cost_context",
+        "checks_file",
+        "view_spec",
     ):
         if operation == "resolve-triage" and key == "review_record":
             continue
@@ -174,7 +184,7 @@ def _fingerprint(operation, params):
             from .runtime_dependencies import read_receipt
 
             read_receipt(path)
-        if path.is_file() and key == "views":
+        if path.is_file() and key in ("views", "view_spec"):
             for view in strict_json(path)["views"]:
                 child = (path.parent / view["path"]).resolve()
                 if not child.is_relative_to(path.parent):
@@ -241,10 +251,14 @@ def invoke(
         if operation not in OPERATIONS:
             raise ContractError("Unknown operation: " + operation)
         if run_root is not None and (out or operation in ("approve", "doctor")):
-            raise ContractError("--run-root requires a directory operation without --out")
+            raise ContractError(
+                "--run-root requires a directory operation without --out"
+            )
         if not out and operation not in ("approve", "doctor"):
             if reuse_completed:
-                raise ContractError("Verified replay requires the original explicit --out")
+                raise ContractError(
+                    "Verified replay requires the original explicit --out"
+                )
             from .run_storage import start_run
 
             retained = start_run(operation, params, run_root, control.run_id)
@@ -375,9 +389,9 @@ def invoke(
             time.monotonic() - started, out if owned else None, costs, operation
         ),
     )
-    primary_report = out / 'delivery-report/index.html' if out else None
+    primary_report = out / "delivery-report/index.html" if out else None
     if owned and primary_report and primary_report.is_file():
-        result['report'] = str(primary_report)
+        result["report"] = str(primary_report)
     if retained:
         from .run_storage import storage_paths
 
@@ -423,10 +437,15 @@ def parser():
             help="Reuse only identical inputs and verified completed outputs",
         )
         if operation != "doctor":
-            q.add_argument("--out", required=operation == "approve",
-                           help="Explicit output; otherwise retain a unique dated run")
+            q.add_argument(
+                "--out",
+                required=operation == "approve",
+                help="Explicit output; otherwise retain a unique dated run",
+            )
         if operation not in ("approve", "doctor"):
-            q.add_argument("--run-root", help="History folder (default: ./scene-acceptance-runs)")
+            q.add_argument(
+                "--run-root", help="History folder (default: ./scene-acceptance-runs)"
+            )
         if operation in (
             "prepare",
             "check",
@@ -434,9 +453,14 @@ def parser():
             "doctor",
             "audit",
             "collect-engine",
+            "identify",
+            "preflight",
         ):
             q.add_argument("--bundle-root", required=operation != "doctor")
             q.add_argument("--candidate", required=operation != "doctor")
+            q.add_argument(
+                "--max-prims", type=int, default=None if operation == "bind" else 10000
+            )
             q.add_argument(
                 "--max-dependency-files",
                 type=int,
@@ -446,6 +470,15 @@ def parser():
             q.add_argument("--preparation", required=True)
         if operation in ("prepare", "bind"):
             q.add_argument("--capture-capabilities")
+        if operation == "package-evidence":
+            q.add_argument("--preparation", required=True)
+            q.add_argument("--view-spec", required=True)
+            q.add_argument("--expected-plan-sha256", required=True)
+        if operation == "preflight":
+            q.add_argument("--checks-file", required=True)
+            q.add_argument(
+                "--approve-pack", dest="approved_packs", action="append", default=[]
+            )
         if operation == "prepare":
             for key in (
                 "raw-brief",
@@ -504,9 +537,9 @@ def parser():
         if operation == "resolve-triage":
             for key in ("triage-run", "expected-triage-sha256", "review-record"):
                 q.add_argument("--" + key, required=True)
-        if operation == 'report':
-            q.add_argument('--evaluation-run', required=True)
-            q.add_argument('--triage-run')
+        if operation == "report":
+            q.add_argument("--evaluation-run", required=True)
+            q.add_argument("--triage-run")
         if operation == "triage":
             for key in (
                 "assessment",

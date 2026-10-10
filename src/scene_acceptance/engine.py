@@ -44,6 +44,7 @@ def _evaluate_v1(
     expected_contract_sha256=None,
     registry=None,
     max_dependency_files=64,
+    max_prims=10000,
 ):
     started = time.perf_counter()
     results = []
@@ -53,8 +54,16 @@ def _evaluate_v1(
     ctx = None
     admission_limits = {}
     try:
-        preliminary = Bundle(bundle_root, [], max_dependency_files=max_dependency_files)
-        admission_limits = {"max_dependency_files": preliminary.max_dependency_files}
+        preliminary = Bundle(
+            bundle_root,
+            [],
+            max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
+        )
+        admission_limits = {
+            "max_dependency_files": preliminary.max_dependency_files,
+            "max_prims": preliminary.max_prims,
+        }
         cp = preliminary.record(contract_path)
         contract_sha = sha(cp)
         identity = {"contract_sha256": contract_sha}
@@ -74,6 +83,7 @@ def _evaluate_v1(
             bundle_root,
             contract["allowed_dependencies"],
             max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
         )
         bundle.record(cp)
         for source in contract["evidence_sources"]:
@@ -242,6 +252,7 @@ def evaluate(
     pack_registry=None,
     approved_packs=(),
     max_dependency_files=64,
+    max_prims=10000,
     runtime_dependency_policy="local-only",
     runtime_environment_sha256=None,
     runtime_dependency_evidence=None,
@@ -264,6 +275,7 @@ def evaluate(
             pack_registry=pack_registry,
             approved_packs=approved_packs,
             max_dependency_files=max_dependency_files,
+            max_prims=max_prims,
             runtime_dependency_policy=runtime_dependency_policy,
             runtime_environment_sha256=runtime_environment_sha256,
             runtime_dependency_evidence=runtime_dependency_evidence,
@@ -287,4 +299,5 @@ def evaluate(
         expected_contract_sha256=expected_contract_sha256,
         registry=registry,
         max_dependency_files=max_dependency_files,
+        max_prims=max_prims,
     )

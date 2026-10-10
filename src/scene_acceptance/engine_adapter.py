@@ -37,7 +37,13 @@ CONFIG = obj(
 
 
 def collect_engine(
-    *, bundle_root, candidate, adapter_config, out, max_dependency_files=64
+    *,
+    bundle_root,
+    candidate,
+    adapter_config,
+    out,
+    max_dependency_files=64,
+    max_prims=10000,
 ):
     from .profiles import discover_artifact
     from .isolation import supervise
@@ -60,7 +66,7 @@ def collect_engine(
     if len(set(keys)) != len(keys):
         raise ContractError("Duplicate configured engine test ID")
     artifact = discover_artifact(
-        root, candidate, max_dependency_files=max_dependency_files
+        root, candidate, max_dependency_files=max_dependency_files, max_prims=max_prims
     )
     out.mkdir(parents=True)
     copy = out / "scene"
