@@ -47,4 +47,4 @@ The owner requested low, medium and high beneath human review. Implemented in th
 
 ## First-delivery usefulness
 
-The next development increment adds [read-only polygon/implicit geometry, explicit clearance policy, selectors, executable preflight, mechanical relationships, caller helpers and bounded model context](USEFULNESS_UPGRADE.md). Deterministic controls and replays are separate from model-quality and reviewer-time evaluation. Current reports distinguish failures from unsupported measurements and capacity gaps. Retained earlier experiments still describe their original versions and acceptance policies.
+The current development candidate includes [read-only polygon/implicit geometry, explicit clearance policy, selectors, executable preflight, mechanical relationships, caller helpers and bounded model context](USEFULNESS_UPGRADE.md). Deterministic controls and replays are separate from model-quality and reviewer-time evaluation. Current reports distinguish failures from unsupported measurements and capacity gaps. Retained earlier experiments still describe their original versions and acceptance policies.

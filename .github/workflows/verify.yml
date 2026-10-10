@@ -17,8 +17,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
       - name: Install pinned dependencies and packaged providers
@@ -26,11 +28,17 @@ jobs:
           python -m pip install -r requirements-test.lock -r requirements-articles.txt
           python -m pip install --no-deps --no-build-isolation .
           python -m pip install --no-deps --no-build-isolation ./examples/studio-mesh-pack
+      - name: Check current metadata and packaged distributions
+        run: |
+          python scripts/check-maintenance.py
+          python -c 'import setuptools.build_meta as b; b.build_sdist("dist"); b.build_wheel("dist")'
+          python scripts/verify-distributions.py dist/*.tar.gz dist/*.whl
+          python -m pip install --no-deps --force-reinstall dist/*.whl
       - name: Verify files and reproduce observations
         run: python reproduce.py --out "$RUNNER_TEMP/scene-acceptance-replay"
       - name: Preserve replay logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: replay-results-${{ matrix.os }}
           path: ${{ runner.temp }}/scene-acceptance-replay

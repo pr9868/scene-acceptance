@@ -12,16 +12,19 @@ Start from `examples/studio-mesh-pack`. A pack can remain a separate Python dist
 From the project root:
 
 ```sh
-python -m pip install '.[test,nvidia]'
-python -m pip install ./examples/studio-mesh-pack
+python -m pip install -r requirements-test.lock -r requirements-articles.txt
+python -m pip install --no-deps --no-build-isolation .
+python -m pip install --no-deps --no-build-isolation ./examples/studio-mesh-pack
 python -m pytest -q
 python evaluation/packs-v1/run.py --out /tmp/pack-review
 ```
 
-The output path must be new. Without optional NVIDIA/example dependencies, their dedicated tests skip explicitly; the full release evidence uses both installed. Do not cite skipped checks as evaluated coverage.
+The output path must be new. The full suite needs the pinned optional packages and example provider shown above. A core-only install is sufficient for selected library checks, not full test collection. Full release reproduction rejects skipped tests. Do not cite skipped checks as evaluated coverage.
 
 Keep the evaluator/producer boundary intact. Expensive simulation, renderer or model-based checks should run in an explicitly managed environment with their own input identity, versions, timeout and reference protocol. The core supports trusted local function packs and an optional [supervised native worker](docs/EXTENSIONS.md#supervised-native-execution). That worker bounds execution resources; it does not isolate filesystem or network access. A package import executes trusted code.
 
 This project uses the MIT license. Include appropriate licenses and attribution for dependencies and separately distributed packs. Keep changes focused on a consuming requirement, with reproducible passing and failing examples.
 
 For a release, preserve historical fixtures and reports, update the file manifest with `python scripts/update-manifest.py`, then run the full README replay from a fresh packaged install. This command records current files; it does not establish that changes are correct. Review the manifest diff and the corresponding evidence before committing it. CI verifies the committed manifest and retained observations. Do not rewrite old expected outcomes merely to make a new implementation pass.
+
+Use the [maintenance checklist](docs/MAINTENANCE.md) for current versus historical documentation, dependency review, packaged-file checks and release evidence.

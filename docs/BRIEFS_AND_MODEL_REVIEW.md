@@ -51,7 +51,7 @@ The direct runner consumes a saved map. A caller can author it or use the prepar
 
 | `brief.measurements` check | Measurement | Boundary |
 |---|---|---|
-| `bounds` | Recomputed world size/centre of one Cube or Mesh | One time; no shape equivalence; ignores untrusted authored extent hints |
+| `bounds` | Recomputed world size/centre of one Cube, Mesh, Cylinder or Sphere | One time; no shape equivalence; ignores untrusted authored extent hints |
 | `children` | Active direct children of the requested USD type | Counts do not prove useful geometry or machine function |
 | `axis_gap` | Directed gap between two named world bounding boxes | One axis/time; no walkability, safety or swept-volume proof |
 | `metadata` | Explicit authored up axis, units and/or clock endpoints/rate | Missing authoring cannot pass on a USD fallback; values do not prove behavior |

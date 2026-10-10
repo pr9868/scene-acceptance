@@ -347,25 +347,16 @@ def bind_preparation(
     refs = sum(
         f["role"] == "reference_image" for f in (scope["brief"] or {}).get("files", [])
     )
-    image_budget = min(caps["max_images"], 12 - refs)
+    from .capture_planning import capture_feasibility
+
     captures = deepcopy(scope["capture_requirements"])
-    for c in captures:
-        gaps = []
-        if set(c["targets"]) - set(context["scene"]["prim_paths"]):
-            gaps.append("Required target is absent from this candidate")
-        if any(t > duration + 1e-6 for t in c["times_seconds"]):
-            gaps.append(
-                "Requested time is outside this candidate; requirement remains unchanged"
-            )
-        if set(c["capabilities"]) - set(caps["capabilities"]):
-            gaps.append("Caller lacks requested capture capability")
-        if c["min_width"] > caps["max_width"] or c["min_height"] > caps["max_height"]:
-            gaps.append("Requested resolution exceeds caller capability")
-        if len(c["times_seconds"]) > image_budget:
-            gaps.append("Request exceeds image budget")
-        if c["evidence_kind"] == "motion_frames" and len(c["times_seconds"]) < 3:
-            gaps.append("Scope has no eligible motion sample set")
-        c["feasibility_gaps"] = gaps
+    image_budget, budget_report = capture_feasibility(
+        captures,
+        caps,
+        refs,
+        prim_paths=context["scene"]["prim_paths"],
+        duration=duration,
+    )
     for name in (
         "rubric.json",
         "interpretation.json",
@@ -387,7 +378,6 @@ def bind_preparation(
     )
     from .preflight import (
         checks as preflight_checks,
-        capture_budget,
         preparation_readiness,
     )
     from .profiles import discover_artifact
@@ -404,7 +394,7 @@ def bind_preparation(
             (scope["brief"] or {}).get("checks", []),
         ),
     )
-    save(out / "capture-feasibility.json", capture_budget(captures, image_budget))
+    save(out / "capture-feasibility.json", budget_report)
     # Persist aggregate gaps in the candidate's capture plan as well.
     cap_file = json.loads((out / "capture-plan.json").read_text())
     cap_file["requests"] = captures
@@ -446,6 +436,7 @@ def bind_preparation(
         strict_json(out / "preflight.json"),
         captures,
         (scope["brief"] or {}).get("requirements", []),
+        judge_drift=drift,
     )
     plan["exit_code"] = 0 if plan["readiness"]["ready_for_capture"] else 3
     plan["execution_status"] = "completed"

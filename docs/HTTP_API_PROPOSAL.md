@@ -23,7 +23,7 @@ The flow is: upload a bundle, start an evaluation, poll its status, then retriev
 | `POST /v1/evaluations/{id}/model-reviews` | Opt in to an advisory model review of the saved result | Follow-on adapter; CLI capability exists |
 | `GET /v1/model-reviews/{id}` | Read the separate model-review status and opinions | With model-review endpoint |
 | `POST /v1/evaluation-batches` | Submit a list of ordinary evaluation requests, with per-scene outcomes | Later convenience layer |
-| `POST /v1/brief-drafts` | Turn raw text/images into a proposed requirement map using an explicitly configured model | Future capability; not implemented in the harness |
+| `POST /v1/brief-drafts` | Turn raw text/images into a proposed requirement map using an explicitly configured model | HTTP endpoint proposed; local `check-3d-app prepare` already interprets text, images and selected PDF pages |
 
 The report route also needs namespaced access to its generated assets, source copies and evidence files, for example `GET /v1/evaluations/{id}/report/{relative_resource_path}`. It serves only files in the saved report manifest. An HTML link must not expose an arbitrary server path.
 

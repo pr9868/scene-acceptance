@@ -25,6 +25,8 @@ def reuse_key(request, provider_identity):
     return digest(
         dict(
             role=p["role"],
+            protocol_version=p["version"],
+            protocol_instruction=p["instruction"],
             schema=p["response_schema_sha256"],
             semantic_input=p["semantic_input_sha256"],
             projection=p["projected_context_sha256"],

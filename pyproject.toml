@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=75"]
+requires = ["setuptools>=83"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "scene-acceptance"
-version = "0.7.0.dev8"
+version = "0.7.0.dev9"
 description = "Inspectable evidence and review for saved OpenUSD deliveries"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -18,7 +18,7 @@ Repository = "https://github.com/pr9868/scene-acceptance"
 Issues = "https://github.com/pr9868/scene-acceptance/issues"
 
 [project.optional-dependencies]
-test = ["pytest==8.4.2"]
+test = ["pytest==9.0.3"]
 nvidia = ["usd-validation-nvidia==1.20.0"]
 visual = ["Pillow==12.3.0"]
 pdf = ["pypdfium2==5.14.0", "Pillow==12.3.0"]

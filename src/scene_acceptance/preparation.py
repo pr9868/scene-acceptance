@@ -497,6 +497,8 @@ def prepare_scene(
         )
     reserved.mkdir()
     input_hashes = {**context["original_hashes"], **context["snapshot_hashes"]}
+    if interpreter_config:
+        input_hashes[str(Path(interpreter_config).resolve())] = sha(interpreter_config)
     if capture_capabilities:
         input_hashes[str(Path(capture_capabilities).resolve())] = sha(
             capture_capabilities
@@ -597,6 +599,7 @@ def prepare_scene(
                     artifact,
                     _general_captures(selected, duration),
                     len(images),
+                    overrides=overrides,
                 )
                 if feedback["readiness"]["ready_for_capture"]:
                     break
@@ -606,7 +609,7 @@ def prepare_scene(
                     maximum_attempts=plan_revision_attempts,
                     previous_interpretation=interpretation,
                     feedback=feedback,
-                    constraints="Preserve every requirement ID, statement, source/quote, route, check ID/type, target value, tolerance, representation and contact policy. Do not drop checks, captures, targets, times or fidelity. Only replace a single aggregate obstacle path with selector={root: that exact path}, or propose sharing_group and fill null camera_id/projection. Preserve camera_guidance and every already-declared camera/projection. No exclusions. Keep an unfixable requirement unresolved. Framing remains a proposal for owner review; never claim visibility or approval. Return the complete interpretation with the current request_sha256.",
+                    constraints="Preserve every requirement ID, statement, source/quote, route, check ID/type, target value, tolerance, representation and contact policy. Do not drop checks, captures, targets, times or fidelity. Only replace a single aggregate obstacle path with selector={root: that exact path}, or propose sharing_group and fill null camera_id/projection. Preserve camera_guidance and every already-declared camera/projection. No exclusions. If a blocker cannot be fixed within these constraints, retain its unchanged requirement and explain the blocker in limitations. Framing remains a proposal for owner review; never claim visibility or approval. Return the complete interpretation with the current request_sha256.",
                 )
 
                 def validate_revised(response, validation_request):
@@ -715,35 +718,12 @@ def prepare_scene(
         requirements.append(item)
     if len({c["id"] for c in captures}) != len(captures):
         raise ContractError("Brief capture ID collides with general capture ID")
-    if overrides is not None:
-        lookup = {c["id"]: c for c in captures}
-        used = set()
-        for c in overrides["requests"]:
-            if c["id"] not in lookup or c["id"] in used:
-                raise ContractError("Unknown or duplicate capture override ID")
-            used.add(c["id"])
-            original = lookup[c["id"]]
-            if set(c["targets"]) - set(context["scene"]["prim_paths"]):
-                raise ContractError("Capture override names unknown target")
-            if any(t > duration + 1e-6 for t in c["times_seconds"]):
-                raise ContractError("Capture override exceeds scene duration")
-            required = (
-                "surface_materials"
-                if original["evidence_kind"] == "textured_view"
-                else "geometry"
-            )
-            if required not in c["capabilities"]:
-                raise ContractError("Capture override removes required fidelity")
-            if (
-                original["evidence_kind"] == "motion_frames"
-                and len(c["times_seconds"]) < 3
-            ):
-                raise ContractError("Motion override needs three or more timestamps")
-            original.update(c)
+    from .capture_planning import apply_overrides, capture_feasibility
+
+    apply_overrides(captures, overrides, context["scene"]["prim_paths"], duration)
     from .profiles import discover_artifact
     from .preflight import (
         checks as preflight_checks,
-        capture_budget,
         preparation_readiness,
     )
 
@@ -773,8 +753,6 @@ def prepare_scene(
         brief_name = "__preparation__/brief.json"
         save(bundle / brief_name, brief)
         load_brief(bundle, brief_name)
-    from .plan_revision import capture_feasibility
-
     budget, budget_report = capture_feasibility(captures, caps, len(images))
     save(
         out / "revision-attempts.json",

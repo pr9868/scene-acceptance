@@ -11,7 +11,7 @@ Read these fields before starting capture:
 | `data.next_action` | `revise_preparation` means address those blockers; `review_scope_then_capture` means the proposal can proceed. |
 | `data.readiness.checks_without_preflight` | These providers do not advertise prerequisite checks. Their outcome is still unknown until evaluated. |
 
-An unresolved plan is retained with `status: completed`, **exit 3** and its blockers. Exit 0 means no known preparation blocker; it does not approve the scope. This also applies when capture capabilities were omitted. `bind` recomputes readiness for the new delivery. Checks-only diagnostics can still run. An owner may approve the intended requirements while execution remains unresolved: scope approval does not manufacture missing geometry or evidence.
+An unresolved plan is retained with `status: completed`, **exit 3** and its blockers. Exit 0 means no known preparation blocker; it does not approve the scope. This also applies when capture capabilities were omitted. `bind` recomputes readiness for the new delivery, including `judge_scope` blockers when new motion or materials lack a frozen review question. That requires a new preparation; approving the old scope cannot add coverage. Checks-only diagnostics can still run. An owner may approve the intended requirements while execution remains unresolved: scope approval does not manufacture missing geometry or evidence.
 
 ## Optional, bounded plan revision
 
@@ -22,7 +22,7 @@ check-3d-app prepare --bundle-root delivery --candidate scene.usda \
   --out prepared
 ```
 
-The default is zero additional interpreter calls. Set one or two only when you want that bounded extra work. That is an initial interpretation plus at most the requested number of additional calls. The adapter's per-request budgets still apply. Each attempt receives the prior interpretation, deterministic prerequisite results and capture budget. Calls stop when ready, when the attempt limit is reached or when a response fails validation. The last valid proposal remains saved if a revision fails; inspect `revision-attempts.json` and the retained model logs.
+The default is zero additional interpreter calls. Set one or two only when you want that bounded extra work. That is an initial interpretation plus at most the requested number of additional calls. The adapter's per-request budgets still apply. Each attempt receives the prior interpretation, deterministic prerequisite results and capture budget after caller capture overrides. The final plan uses the same override and feasibility logic. Calls stop when ready, when the attempt limit is reached or when a response fails validation. The last valid proposal remains saved if a revision fails; inspect `revision-attempts.json` and the retained model logs.
 
 This revision path is deliberately narrow:
 

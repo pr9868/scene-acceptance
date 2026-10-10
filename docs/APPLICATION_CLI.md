@@ -32,11 +32,11 @@ Use a configured installed executable, preferably pinned in the application's en
 
 Each call needs a new output directory outside the bundle and its ancestors. The scene, optional text/images and brief manifest are inside the bundle; the manifest refers to them with bundle-relative paths. The app owns saving the scene, mapping/approving requirements, deadlines, run history and any revision loop. The harness owns admission, selected checks, evidence and report generation. A failed run must not silently select another scope.
 
-The [brief guide](BRIEFS_AND_MODEL_REVIEW.md) explains the prepared JSON manifest. Arbitrary prose and images do not become complete tests automatically. A human, application or agent prepares an explicit map and keeps unresolved scope visible.
+The [brief guide](BRIEFS_AND_MODEL_REVIEW.md) explains the prepared JSON manifest. Arbitrary prose and images do not become complete tests automatically. Use `check-3d-app prepare` to propose that map from raw text, images or selected PDF pages, or supply a caller-authored map. The owner reviews scope; unresolved requirements stay visible.
 
 ## Read results, including rejected scenes
 
-The current CLI writes a compact JSON summary to stdout when it finishes a report. Its fields differ by mode; this is not yet a single versioned invocation-response schema. Detailed machine-readable evidence lives in the report directory.
+The direct `check-3d` CLI writes a compact JSON summary to stdout when it finishes a report. Its fields differ by mode; this legacy interface has no single versioned invocation-response schema. The current `check-3d-app` interface does. Detailed machine-readable evidence lives in the report directory.
 
 | Mode | Stdout fields | Full evidence relative to `--out` |
 |---|---|---|

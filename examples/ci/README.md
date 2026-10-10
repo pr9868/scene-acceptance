@@ -6,4 +6,4 @@ The workflow makes no model calls and has no write permissions. A rejection, mis
 
 The caller's contract, references and pack policy are trusted code/configuration. Protect them with review ownership so an untrusted scene change cannot weaken its own acceptance criteria. Configure artifact visibility and retention for the data in your scenes and reports.
 
-The harness's own workflow now schedules macOS and Linux reproduction. Adding that matrix does not establish that a Linux run has passed; inspect the actual CI result after pushing.
+The harness runs full reproduction on macOS and Linux. Inspect the actual CI result for the immutable revision you adopt; a workflow definition alone is not passing evidence.

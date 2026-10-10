@@ -180,6 +180,9 @@ def test_new_applicable_feature_is_not_silently_accepted_by_frozen_judge(tmp_pat
                                out=tmp_path/'rebound', expected_scope_sha256=prepared['scope_sha256'])
     assert rebound['scope_sha256'] == prepared['scope_sha256']
     assert rebound['binding']['judge_coverage_drift']['missing_requirement_ids'] == [requirement]
+    assert not rebound['readiness']['ready_for_capture']
+    assert rebound['exit_code'] == 3 and rebound['next_action'] == 'revise_preparation'
+    assert any(b['kind'] == 'judge_scope' and b['id'] == requirement for b in rebound['readiness']['blockers'])
     evidence = _overview_evidence(tmp_path, tmp_path/'rebound', rebound)
     result = evaluate_prepared(preparation=tmp_path/'rebound', out=tmp_path/'run', mode='both',
                                judge_config=config(tmp_path), approval=approval, **evidence)

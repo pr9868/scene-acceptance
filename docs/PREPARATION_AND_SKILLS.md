@@ -39,6 +39,8 @@ check-3d-prepare --bundle-root ./scene --candidate scene.usda \
   --capture-capabilities ./capture-capabilities.json \
   --review-profile static-visual --out ./prepared
 
+# Inspect data.readiness first. Exit 3 retains a proposal with blockers.
+# Revise those blockers before capture; see MODEL_WORKFLOW.md.
 # 2. After the caller has reviewed the mapping, rubric and capture plan:
 check-3d-approve --preparation ./prepared --expected-scope-sha256 SCOPE_HASH \
   --reviewer "Application reviewer" --reason "Compared mapping with supplied brief" \

@@ -3,32 +3,13 @@
 from copy import deepcopy
 import json
 from .model import ContractError
-from .preflight import checks as preflight_checks, capture_budget, preparation_readiness
+from .capture_planning import apply_overrides, capture_feasibility
+from .preflight import checks as preflight_checks, preparation_readiness
 
 
-def capture_feasibility(captures, caps, reference_count):
-    budget = min(caps["max_images"], 12 - reference_count)
-    for capture in captures:
-        gaps = []
-        if set(capture["capabilities"]) - set(caps["capabilities"]):
-            gaps.append("Caller lacks requested capture capability")
-        if (
-            capture["min_width"] > caps["max_width"]
-            or capture["min_height"] > caps["max_height"]
-        ):
-            gaps.append("Requested resolution exceeds caller capability")
-        if (
-            capture["evidence_kind"] == "motion_frames"
-            and len(capture["times_seconds"]) < 3
-        ):
-            gaps.append("Scene has no positive authored motion interval")
-        if len(capture["times_seconds"]) > budget:
-            gaps.append("This request exceeds the declared image budget")
-        capture["feasibility_gaps"] = gaps
-    return budget, capture_budget(captures, budget)
-
-
-def preview(interpretation, request, artifact, general_captures, reference_count):
+def preview(
+    interpretation, request, artifact, general_captures, reference_count, overrides=None
+):
     catalog = {c["id"]: c for c in request["allowed_checks"]}
     captures = deepcopy(general_captures)
     checks = []
@@ -52,6 +33,9 @@ def preview(interpretation, request, artifact, general_captures, reference_count
                 )
                 for c in r["visual"]["captures"]
             )
+    apply_overrides(
+        captures, overrides, request["scene"]["prim_paths"], request["duration_seconds"]
+    )
     prerequisites = preflight_checks(artifact, checks)
     _, budget = capture_feasibility(
         captures, request["capture_capabilities"], reference_count

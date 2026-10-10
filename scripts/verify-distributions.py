@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import json
 import tarfile
+import zipfile
 
 
 def verify(archive):
@@ -48,9 +49,42 @@ def verify(archive):
                 }
             )
         )
+        return manifest
+
+
+def verify_wheel(archive, manifest):
+    expected = {
+        name.removeprefix("src/"): digest
+        for name, digest in manifest["files"].items()
+        if name.startswith("src/scene_acceptance/")
+    }
+    with zipfile.ZipFile(archive) as wheel:
+        names = [name for name in wheel.namelist() if not name.endswith("/")]
+        if len(names) != len(set(names)):
+            raise ValueError("Duplicate wheel member")
+        actual = {name for name in names if ".dist-info/" not in name}
+        if actual != expected.keys():
+            raise ValueError("Wheel runtime file set differs from reviewed source")
+        for name, digest in expected.items():
+            if hashlib.sha256(wheel.read(name)).hexdigest() != digest:
+                raise ValueError("Changed wheel runtime file: " + name)
+    print(
+        json.dumps(
+            dict(archive=Path(archive).name, runtime_files=len(expected), verified=True)
+        )
+    )
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("archive")
-    verify(parser.parse_args().archive)
+    parser.add_argument("archive", nargs="+")
+    archives = parser.parse_args().archive
+    manifest = json.loads(
+        (Path(__file__).resolve().parents[1] / "MANIFEST.json").read_text()
+    )
+    for archive in archives:
+        if not archive.endswith(".whl"):
+            manifest = verify(archive)
+    for archive in archives:
+        if archive.endswith(".whl"):
+            verify_wheel(archive, manifest)

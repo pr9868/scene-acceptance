@@ -88,6 +88,7 @@ The [rendered-sign controls](evaluation/model-workflow-v1/README.md) show a conc
 - [Two-scene findings and repairs](examples/two-scene-repair-study/README.md), including the route-indicator finding from separate review
 - [Human labels and triage evaluation](evaluation/triage-value-v1/README.md): how to measure the model's review recommendations; labels are not required for ordinary harness runs. Human labels and independent baseline are still pending.
 - [Detailed reference and retained experiments](docs/REFERENCE_GUIDE.md)
+- [Maintenance checks and open risks](docs/MAINTENANCE.md)
 
 Checks and providers run as trusted local code. The optional supervised worker bounds native execution resources; it is not a filesystem/network security sandbox. The application enforces release policy. Reports can contain caller paths and evidence. Review them before publishing outside the receiving application.
 

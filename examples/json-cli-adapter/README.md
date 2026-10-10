@@ -22,6 +22,6 @@ Configure the harness `json-cli` executable as Python, with arguments pointing t
 | `semantic_input_sha256` | Full supplied context, role and schema, with admitted file locations replaced by content hashes. This survives relocation of those files. |
 | `projected_context_sha256` | The context actually sent after bounded projection. A smaller inventory budget can change this even when the full semantic input is unchanged. |
 
-The example also binds the complete provider configuration to its reuse key. Change that identity when model snapshot, reasoning settings, adapter behavior or other result-affecting settings change. Do not use the semantic hash alone as a cache key.
+The example also binds the protocol version, protocol instructions and complete provider configuration to its reuse key. Change that identity when model snapshot, reasoning settings, adapter behavior or other result-affecting settings change. Do not use the semantic hash alone as a cache key.
 
 `--replay previous-record.json` is explicit and labelled `adapter_mode=replay` in stderr and in the new record. It verifies all these identities before rebinding the old answer to the new transport hash. This tests transport/workflow compatibility. It is **not a fresh model run** and must not count towards model-quality evidence. There is no automatic cache lookup or fallback from a failed fresh call to an old answer.

@@ -120,7 +120,7 @@ The factory returns `Pack(id, version, description, checks, source_files, depend
 
 Discovery reads entry-point metadata without importing third-party code. Installation alone does not enable a pack. Pass `--allow-pack` or explicitly register a trusted `Pack` in the Python API. Duplicate pack IDs, mismatched entry-point IDs, invalid parameter schemas and incompatible API versions are rejected. Candidate contracts name approved packs; they cannot supply module paths or installation commands.
 
-The plugin and its dependencies are trusted installed code. In-process functions have no security isolation or enforced wall-clock timeout. They must not mutate submitted files or USD layers; the core checks file, in-memory layer and declared pack identity changes and invalidates affected runs. These checks are not a sandbox against hostile Python. Put expensive/untrusted evaluators in a caller-managed process/container with read-only input mounts before using such providers. A versioned worker protocol and scheduler remain future work.
+The plugin and its dependencies are trusted installed code. In-process functions have no security isolation or enforced wall-clock timeout. They must not mutate submitted files or USD layers; the core checks file, in-memory layer and declared pack identity changes and invalidates affected runs. These checks are not a sandbox against hostile Python. Put expensive/untrusted evaluators in a caller-managed process/container with read-only input mounts before using such providers. The [supervised native worker](EXTENSIONS.md#supervised-native-execution) is available for bounded execution; a general worker scheduler remains future work.
 
 ## Verdict and dependency behavior
 
@@ -134,7 +134,7 @@ The CLI `--max-dependency-files N` and API `evaluate(..., max_dependency_files=N
 
 A file-budget overrun yields a required `UNKNOWN` coverage record containing `kind: resource_limit`, `limit_name`, `limit` and `observed_at_least`; selected checks that did not run remain `UNKNOWN`. The overall result is `INSUFFICIENT_EVIDENCE`, CLI exit 3. Earlier immutable reports may show this condition as `EVALUATION_ERROR`. All path, type, composition, integrity, per-file-size and prim-count controls remain active. Larger budgets increase possible resource use; the caller still provides process memory/time isolation.
 
-Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; the current development package identifies checker 0.7.0.dev8. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
+Old contract v1 still dispatches to the static compatibility evaluator. Old records remain immutable; the current development package identifies checker 0.7.0.dev9. The GitHub v0.3.0 release retains its original implementation and separate content/physics experiments. See [the evidence guide](EVIDENCE.md) for the boundaries between them.
 
 ## What to add next
 

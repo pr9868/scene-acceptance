@@ -1,6 +1,6 @@
 # Caller contract
 
-The core requires Python 3.12 and local USD. Textured references/views additionally need Pillow (`scene-acceptance[visual]` includes it). The harness does not supply a renderer or require a GPU. A configured model CLI may send the explicit inputs to its provider. Ordinary structural evaluation remains model-free.
+The core requires Python 3.12 and local USD. Textured references/views additionally need Pillow (install the checkout with `pip install '.[visual]'`). The harness does not supply a renderer or require a GPU. A configured model CLI may send the explicit inputs to its provider. Ordinary structural evaluation remains model-free.
 
 | Stage | Caller supplies | Harness returns |
 |---|---|---|
@@ -67,7 +67,7 @@ The automatic interpreter selects the bounded types exposed by `check-3d --capab
 
 ## Application lifecycle
 
-Use `check-3d-app {doctor,prepare,approve,bind,validate-evidence,evaluate,check}`. Every operation returns `schema_version, operation, run_id, status, exit_code, reused, data, errors, events`; inspect `data` for the operation result. Errors have code, phase, message and retryable. Code 4 can retain completed script results in a partial evaluation. Codes 0/2/3 mean scoped success/rejection/review gaps.
+Use `check-3d-app {doctor,prepare,approve,bind,validate-evidence,evaluate,check}`. Every operation returns `schema_version, operation, run_id, status, exit_code, reused, data, errors, events`; inspect `data` for the operation result. Errors have code, phase, message and retryable. Code 4 can retain completed script results in a partial evaluation. Evaluation codes 0/2/3 mean scoped success/rejection/review gaps. For prepare/bind, code 0 means the proposal is ready for scope review and capture, and 3 means named readiness blockers remain. Neither approves the scope.
 
 `approve` requires expected_scope_sha256, reviewer and reason; this approves the selected requirements/evaluation policy, not outcomes. Scope includes the full general baseline and resolved pack version/implementation identities. `bind` requires the existing scope pin and a revised saved bundle/candidate; it runs no model. `evaluate --approval approval.json --previous-run previous-directory` applies that scope review and compares findings. Captures must match the new plan/scene hashes. Use snapshot-bound `--review-record` only for separately authorized caller outcome reviews.
 

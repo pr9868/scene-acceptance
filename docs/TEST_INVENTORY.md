@@ -79,9 +79,9 @@ These run only when selected by a contract, mapped brief or supported preset. Pr
 | `brief.four-job.physics.parameters` | `/World/Block` mass 1.25 kg; `/World/Contact` static/dynamic friction .22/.42/.68 | Requested saved parameters; assumptions are not physical measurements |
 | `brief.four-job.physics.preserved` | Supplied `physics-base.usda` fields equal except those three values | Extra/changed authoring caught; does not replace runtime simulation or calibration |
 | `brief.measurements.metadata` | Authored stage metadata matches specified values | Selected authored metadata fields. No active motion or world-coordinate interpretation claim |
-| `brief.measurements.bounds` | Named geometry size and centre | World Cube/Mesh bounds at one time. No shape equivalence |
+| `brief.measurements.bounds` | Named geometry size and centre | World Cube, Mesh, Cylinder or Sphere bounds at one time. No shape equivalence |
 | `brief.measurements.children` | Required direct-child count | One parent and type. Count does not establish function or dimensions |
-| `brief.measurements.axis_gap` | Required directed axis gap | Two named Cube/Mesh world bounding boxes. Not a walkability or safety test |
+| `brief.measurements.axis_gap` | Required directed axis gap | Two named supported world bounding boxes. Not a walkability or safety test |
 | `brief.measurements.image_pixels` | Delivered texture matches a reference image under saved regions/mask and maximum/optional mean channel-error limits | RGB source pixels only; 1 MiB/262,144 pixels per image. Reports included/excluded counts and whole-image diagnostics; excluded pixels are unassessed. No colour conversion or rendered-appearance proof |
 
 ## Optional model review: selected criteria and disclosed exclusions

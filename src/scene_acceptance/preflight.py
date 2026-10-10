@@ -133,7 +133,9 @@ def capture_budget(captures, budget):
     )
 
 
-def preparation_readiness(prerequisites, captures, requirements=()):
+def preparation_readiness(
+    prerequisites, captures, requirements=(), *, judge_drift=None
+):
     """Readiness to proceed with a proposal, separate from scope/outcome approval."""
     blockers = [
         dict(kind="check_prerequisite", id=row["id"], gaps=row["gaps"])
@@ -163,6 +165,15 @@ def preparation_readiness(prerequisites, captures, requirements=()):
         for r in requirements
         if r.get("evaluation_route", r.get("route")) in ("unresolved", "unsupported")
     )
+    if judge_drift and judge_drift["status"] == "needs_review":
+        blockers.extend(
+            dict(
+                kind="judge_scope",
+                id=rid,
+                gaps=[dict(subject=rid, reason=judge_drift["reason"])],
+            )
+            for rid in judge_drift["missing_requirement_ids"]
+        )
     unchecked = [
         r["id"] for r in prerequisites["checks"] if r["status"] == "not_available"
     ]
